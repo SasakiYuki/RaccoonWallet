@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/fingerprintDefaultView"
+        layout="@layout/view_send_fingerprint_default" />
+
+    <include
+        android:id="@+id/fingerprintErrorView"
+        layout="@layout/view_send_fingerprint_error"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/fingerprintSuccessView"
+        layout="@layout/view_send_fingerprint_success"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/pinCodeRootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:src="@drawable/shadow_top" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:text="@string/send_confirm_fragment_finger_print_ready"
+                android:textColor="@color/hintGray"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/userPinCde2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_pin_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="@string/send_confirm_fragment_pin_code_send"
+                android:textColor="@color/hintGray"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@color/nemGreen" />
+    </LinearLayout>
+</FrameLayout>

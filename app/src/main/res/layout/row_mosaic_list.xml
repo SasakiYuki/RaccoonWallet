@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="mosaic"
+            type="wacode.yamada.yuki.nempaymentapp.rest.item.MosaicItem" />
+
+        <variable
+            name="itemClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="19dp"
+            android:layout_marginTop="15dp"
+            android:onClick="@{itemClickListener}"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{mosaic.checked}"
+                android:onClick="@{itemClickListener}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_weight="1"
+                android:text="@{mosaic.fullName}"
+                android:textColor="@color/textGray"
+                android:textSize="14sp"
+                tools:text="neko:nuko" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:text="@{mosaic.quantity}"
+                android:textColor="@color/textGray"
+                android:textSize="16dp"
+                tools:text="10.00000000" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="13dp"
+            android:background="@color/colorDividerLight" />
+    </LinearLayout>
+</layout>

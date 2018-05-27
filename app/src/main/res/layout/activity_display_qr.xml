@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolBar"
+        app:titleTextColor="@color/toolbarTextColor">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="@string/display_qr_activity_title"
+                android:textColor="@color/toolbarTextColor"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/toolbarCheckButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="12dp"
+                android:padding="12dp"
+                android:src="@mipmap/icon_check_gray" />
+        </FrameLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <wacode.yamada.yuki.nempaymentapp.view.WalletBarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/qrImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calculator_amount"
+            android:textColor="@color/nemGreen"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/mainAmountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/textBlack"
+            android:textSize="24sp"
+            tools:text="1,200 XEM" />
+
+        <TextView
+            android:id="@+id/subAmountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/textBlack"
+            android:textSize="20sp"
+            tools:text="=120,000 JPY" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/calculator_send_user"
+            android:textColor="@color/nemGreen" />
+
+        <TextView
+            android:id="@+id/myAddressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="@color/textBlack"
+            android:textSize="12sp"
+            tools:text="NCR2CQ-E6AI3D-IRHPHE-PBSVDB-OQFSHX-FSQF4N-IUAH" />
+    </LinearLayout>
+</LinearLayout>

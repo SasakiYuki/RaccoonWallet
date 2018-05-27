@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottomQrLabo"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/main_bottom_navigation_qr_labo"/>
+    <item
+        android:id="@+id/bottomReceive"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/main_bottom_navigation_receive"/>
+    <item
+        android:id="@+id/bottomHome"
+        android:icon="@android:drawable/ic_menu_call"
+        android:title="@string/main_bottom_navigation_home"/>
+    <item
+        android:id="@+id/bottomSend"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="@string/main_bottom_navigation_send"/>
+    <item
+        android:id="@+id/bottomScan"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/main_bottom_navigation_scan"/>
+</menu>

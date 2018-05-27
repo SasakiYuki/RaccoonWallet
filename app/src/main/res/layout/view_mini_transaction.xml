@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="70dp"
+        android:textSize="12sp"
+        tools:text="12/30,2018"
+        android:gravity="right"
+        android:textColor="@color/textGray"
+        android:id="@+id/dateTimeTextView"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/transactionTypeIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:src="@drawable/icon_transaction_receive_green"
+        android:layout_marginLeft="16dp" />
+
+    <ImageView
+        android:id="@+id/isMultisigTypeIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:src="@mipmap/icon_transaction_receive_red"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:textColor="@color/textBlack"
+        android:textSize="12sp"
+        tools:text="23,000 xem"
+        android:gravity="right"
+        android:id="@+id/amountTextView"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+</LinearLayout>

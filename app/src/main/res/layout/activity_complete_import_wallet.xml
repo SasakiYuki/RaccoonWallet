@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/ToolBar"
+            app:titleTextColor="@color/toolbarTextColor" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#53A3FA"
+            android:src="@mipmap/heroimage_login_large" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_normal"
+            android:layout_marginRight="@dimen/space_normal"
+            android:layout_marginTop="@dimen/space_normal"
+            android:gravity="center"
+            android:text="@string/complete_import_wallet_activity_message"
+            android:textColor="@color/textBlack"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/nextLessonButton"
+            android:layout_width="192dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/space_normal"
+            android:background="@color/nemGreen"
+            android:gravity="center"
+            android:text="@string/complete_import_wallet_activity_lesson_button"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/nextHomeButton"
+            android:layout_width="90dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="@dimen/space_normal"
+            android:background="@color/buttonDisable"
+            android:gravity="center"
+            android:text="@string/com_home_uppercase"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>

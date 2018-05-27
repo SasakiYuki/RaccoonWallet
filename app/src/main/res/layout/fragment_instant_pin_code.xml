@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/nemGreen"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/top_icon" />
+
+        <TextView
+            android:id="@+id/displayText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="@string/pin_code_fragment_enter" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/inputView1"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/frame_round_transparent" />
+
+            <View
+                android:id="@+id/inputView2"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/frame_round_transparent" />
+
+            <View
+                android:id="@+id/inputView3"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/frame_round_transparent" />
+
+            <View
+                android:id="@+id/inputView4"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/frame_round_transparent" />
+
+            <View
+                android:id="@+id/inputView5"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/frame_round_transparent" />
+
+            <View
+                android:id="@+id/inputView6"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@drawable/frame_round_transparent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/button1"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/button2"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/button3"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/button4"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/button5"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/button6"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="6"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/button7"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="7"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/button8"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="8"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/button9"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="9"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/button0"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/frame_round_transparent_large"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="24dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_normal"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@mipmap/icon_dialog_close" />
+    </LinearLayout>
+
+</FrameLayout>

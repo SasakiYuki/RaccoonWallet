@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolBar"
+        app:titleTextColor="@color/toolbarTextColor" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:background="@color/nemGreen">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/heroimage_wallet_small" />
+
+        <wacode.yamada.yuki.nempaymentapp.view.WalletBarView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorDarkWhite"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_caution" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/private_key_description_fragment_description_1"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:gravity="center|top"
+            android:text="@string/wallet_remove_message"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|center"
+            android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/removeButton"
+                android:layout_width="90dp"
+                android:layout_height="36dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginRight="@dimen/space_large"
+                android:background="@color/nemGreen"
+                android:text="@string/wallet_remove_button"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="90dp"
+                android:layout_height="36dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginLeft="@dimen/space_large"
+                android:background="@color/textLightGray"
+                android:text="@string/com_cancel"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

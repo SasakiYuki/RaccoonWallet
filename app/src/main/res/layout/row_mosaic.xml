@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.MosaicRowViewModel"/>
+
+        <variable
+            name="handlers"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.MosaicRowEventHandler"/>
+
+        <variable
+            name="longHandlers"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.MosaicRowLongEventHandler"/>
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:longClickable="true"
+        android:padding="1dp"
+        android:onClick="@{(theView) -> handlers.onMosaicClick(theView, viewModel)}"
+        android:onLongClick="@{(theView) -> longHandlers.onMosaicLongClick(theView, viewModel)}"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical">
+
+        <wacode.yamada.yuki.nempaymentapp.view.SquareImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:loadImg="@{viewModel.imageUrl()}"/>
+    </LinearLayout>
+</layout>

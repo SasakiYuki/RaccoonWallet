@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#53A3FA"
+            android:src="@mipmap/heroimage_login_large" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_normal"
+            android:gravity="center"
+            android:text="@string/import_wallet_name_fragment_message"
+            android:textColor="@color/textBlack"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/walletNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:inputType="text"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="60dp"
+            android:hint="@string/import_wallet_name_fragment_hint" />
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="90dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="@dimen/space_large_half"
+            android:background="@color/nemGreen"
+            android:gravity="center"
+            android:text="@string/com_ok"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>

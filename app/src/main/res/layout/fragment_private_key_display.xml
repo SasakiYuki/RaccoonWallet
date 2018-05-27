@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:background="@color/nemGreen">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_height="match_parent"
+            android:src="@mipmap/heroimage_wallet_small" />
+
+        <wacode.yamada.yuki.nempaymentapp.view.WalletBarView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="36dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_caution"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/textBlack"
+                android:text="@string/private_key_display_fragment_description_1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="36dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginBottom="36dp"
+            android:gravity="center"
+            android:text="@string/private_key_display_fragment_description_2"
+            android:textColor="@color/textBlack"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="17dp"
+            android:gravity="center"
+            android:layout_marginTop="24dp"
+            android:text="@string/private_key_display_fragment_hint"
+            android:textColor="@color/textOrange" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="43dp"
+            android:layout_marginRight="43dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="@color/textBlack"
+            tools:text="aa9f89ad88c2236520bf8588bf36dcb5ae42fe2949e558725bd7e0251df7ab18" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="90dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="32dp"
+        android:background="@color/nemGreen"
+        android:text="@string/com_enter"
+        android:textColor="@android:color/white" />
+</LinearLayout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="wacode.yamada.yuki.nempaymentapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
+    <application
+        android:name=".NemPaymentApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:resizeableActivity="false"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+
+        <activity
+            android:name=".view.activity.drawer.MosaicListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.TransactionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.activity.SelectWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CreateWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.PrivateKeyStoreSupportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.WalletImportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CompleteImportWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ChooseCreateOrScanWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CalculatorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.DisplayQRActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.FingerPrintSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.WalletCreatedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ImportWalletPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.WalletSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.WalletBackupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.WalletRemoveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.WalletRenameActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity
+            android:name=".view.activity.NewPinCodeSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.NewCheckPinCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.TutorialPinCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.FirstTutorialActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.drawer.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SendMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.drawer.RaccoonDonateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.BalanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/OssLicenceTheme" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/OssLicenceTheme" />
+    </application>
+
+</manifest>

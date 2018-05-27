@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/round_nem_green_selected_true" android:state_pressed="true" />
+    <item android:drawable="@drawable/round_nem_green_selected_false" android:state_pressed="false" />
+</selector>

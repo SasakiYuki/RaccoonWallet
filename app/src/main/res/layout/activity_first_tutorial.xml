@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="192dp"
+        android:layout_height="36dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="56dp"
+        android:background="@android:color/white"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/first_tutorial_button"
+        android:textColor="@color/nemGreen" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <wacode.yamada.yuki.nempaymentapp.view.ViewPagerIndicator
+        android:id="@+id/pagerIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="24dp"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="173dp"
+        android:gravity="center"
+        android:text="@string/first_tutorial_title"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="141dp"
+        android:gravity="center"
+        android:id="@+id/messageTextView"
+        android:text="@string/first_tutorial_message1"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+</FrameLayout>

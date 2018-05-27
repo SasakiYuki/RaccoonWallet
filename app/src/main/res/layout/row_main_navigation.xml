@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.MainNavigationRowViewModel"/>
+
+        <variable
+            name="handlers"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.MainNavigationRowEventHandler"/>
+
+        <variable
+            name="longHandlers"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.MainNavigationRowLongEventHandlers"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@{viewModel.background(context)}"
+        android:clickable="true"
+        android:gravity="center"
+        android:longClickable="true"
+        android:onClick="@{(theView) -> handlers.onClick(theView, viewModel)}"
+        android:onLongClick="@{(theView) -> longHandlers.onLongClick(theView, viewModel)}"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="@dimen/main_navigation_margin_left_header"
+                android:src="@{viewModel.drawable()}"
+                android:visibility="@{viewModel.header ? android.view.View.VISIBLE : android.view.View.GONE}"
+                android:tint="@android:color/white"/>
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="@dimen/main_navigation_margin_left_row"
+                android:src="@{viewModel.drawable()}"
+                android:visibility="@{viewModel.header ? android.view.View.GONE : android.view.View.VISIBLE}"
+                android:tint="@android:color/white"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@{viewModel.text()}"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"/>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionViewModel" />
+
+        <variable
+            name="handlers"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionRowEventHandler" />
+
+        <variable
+            name="longHandlers"
+            type="wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionRowLongEventHandler" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:foreground="?selectableItemBackground"
+        android:onClick="@{(theView) -> handlers.onTransactionClick(theView, viewModel)}"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_normal"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50px"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@{viewModel.date()}"
+                    android:textColor="@color/textBlack"
+                    android:textSize="14sp"
+                    tools:text="12/12,2018" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="@{viewModel.isMessage() ? android.view.View.VISIBLE : android.view.View.GONE }">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/com_message"
+                            android:textColor="@color/textGray"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="40px"
+                            android:layout_height="40px"
+                            android:layout_marginLeft="@dimen/space_small"
+                            android:src="@mipmap/icon_check_gray_on" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_normal"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="@{viewModel.isMosaic() ? android.view.View.VISIBLE : android.view.View.GONE }">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/com_mosaic"
+                            android:textColor="@color/textGray"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="40px"
+                            android:layout_height="40px"
+                            android:layout_marginLeft="@dimen/space_small"
+                            android:src="@mipmap/icon_check_gray_on" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_normal_half"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:id="@+id/typeRootView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40px"
+                        android:layout_height="40px"
+                        android:src="@{viewModel.isReceiveNem() ? @drawable/icon_transaction_receive_green : @drawable/icon_transaction_send_red}"
+                        tools:src="@drawable/icon_transaction_receive_green" />
+
+                    <ImageView
+                        android:layout_width="40px"
+                        android:layout_height="40px"
+                        android:layout_marginLeft="@dimen/space_normal_half"
+                        android:src="@{viewModel.isReceiveNem() ? @drawable/icon_multisignature_green : @drawable/icon_multisignature_red}"
+                        android:visibility="@{viewModel.multisig() ? android.view.View.VISIBLE : android.view.View.INVISIBLE}"
+                        tools:src="@drawable/icon_multisignature_green" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/prefixText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/space_normal"
+                    android:layout_toRightOf="@+id/typeRootView"
+                    android:gravity="center"
+                    android:text="@{viewModel.isReceiveNem() ? @string/com_prefix_plus : @string/com_prefix_minus}"
+                    android:textColor="@{viewModel.isReceiveNem() ? @color/colorTransactionGreen : @color/colorTransactionRed}"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="+"
+                    tools:textColor="@color/colorTransactionGreen" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/space_small"
+                    android:layout_toRightOf="@+id/prefixText"
+                    android:gravity="center"
+                    android:text="@{viewModel.amount()}"
+                    android:textColor="#1a1a1a"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="100000 XEM" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@{viewModel.isUnconfirm() ? @drawable/icon_transaction_unconfirmed : @drawable/icon_transaction_check}"
+                    tools:src="@mipmap/icon_transaction_unconfirmed" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_normal"
+                android:text="@{viewModel.address()}"
+                android:textSize="12sp"
+                tools:text="NCR2CQ-E6AI3D-IRHPHE-PBSVDB-OQFSHX-FSQF4N-IUAH" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/shapeGray" />
+    </LinearLayout>
+</layout>

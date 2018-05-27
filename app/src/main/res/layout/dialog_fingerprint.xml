@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/themeBackground"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:background="@color/nemGreen">
+
+        <View
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/oval_white_background" />
+
+        <ImageView
+            android:id="@+id/authenticateIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/icon_fingerprint_green" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/authenticateTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_normal"
+        android:gravity="center"
+        android:textColor="@color/textBlack"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="@string/fingerprint_authenticate_title" />
+
+    <TextView
+        android:id="@+id/authenticateMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_marginRight="@dimen/space_normal"
+        tools:text="@string/fingerprint_authenticate_message" />
+
+    <TextView
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="@dimen/space_normal"
+        android:foreground="?selectableItemBackground"
+        android:padding="@dimen/space_small"
+        android:text="@string/com_cancel"
+        android:textStyle="bold" />
+</LinearLayout>

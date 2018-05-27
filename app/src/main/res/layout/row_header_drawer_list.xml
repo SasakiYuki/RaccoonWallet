@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="address"
+            type="String" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/nemGreen">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/image_menu_default" />
+
+        <LinearLayout
+            android:layout_width="288dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@mipmap/logo_pyoko" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{name}"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    tools:text="GUEST" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{address}"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    tools:text="NCTYCQ-E6AI8D-IRHPHE-PBSVDB-OQFSHX-GBVF4N-IJYH" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

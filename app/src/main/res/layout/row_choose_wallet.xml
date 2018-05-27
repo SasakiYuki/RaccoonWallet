@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="simpleWallet"
+            type="wacode.yamada.yuki.nempaymentapp.model.SimpleWalletEntity" />
+
+        <variable
+            name="rowClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="settingClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="radioClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="26dp"
+        android:paddingRight="26dp"
+        android:paddingTop="18dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/nemGreen"
+                android:checked="@{simpleWallet.isSelected}"
+                android:gravity="center"
+                android:onClick="@{radioClickListener}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="18dp"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:onClick="@{rowClickListener}"
+                android:text="@{simpleWallet.walletName}"
+                android:textColor="@color/textBlack"
+                android:textSize="14sp"
+                tools:text="Wallet Name" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_multisignature_green"
+                android:visibility="@{simpleWallet.multisig ? android.view.View.VISIBLE : android.view.View.GONE}" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:foreground="?selectableItemBackground"
+                android:onClick="@{settingClickListener}"
+                android:padding="@dimen/space_small"
+                android:src="@drawable/ic_settings_black_24dp"
+                android:tint="@color/nemGreen" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorDividerLight" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_small">4dp</dimen>
+    <dimen name="space_normal_half">8dp</dimen>
+    <dimen name="space_normal">16dp</dimen>
+    <dimen name="space_large_half">24dp</dimen>
+    <dimen name="space_large">32dp</dimen>
+    <dimen name="main_navigation_margin_left_header">13dp</dimen>
+    <dimen name="main_navigation_margin_left_row">16dp</dimen>
+</resources>

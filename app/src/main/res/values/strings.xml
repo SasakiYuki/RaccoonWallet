@@ -1,0 +1,520 @@
+<resources>
+    <string name="app_name">Raccoon Wallet</string>
+    <string name="app_store_url">https://play.google.com/store/apps/details?id=wacode.yamada.yuki.nempaymentapp</string>
+    <string name="com_ok">OK</string>
+    <string name="com_yes">YES</string>
+    <string name="com_no">NO</string>
+    <string name="com_cancel">CANCEL</string>
+    <string name="com_nem">nem</string>
+    <string name="com_xem_uppercase">XEM</string>
+    <string name="com_nem_uppercase">NEM</string>
+    <string name="com_jpy_uppercase">JPY</string>
+    <string name="com_jp_yen">円</string>
+    <string name="com_copied">クリップボードにコピーしました</string>
+    <string name="com_message">Message</string>
+    <string name="com_mosaic">Mosaic</string>
+    <string name="com_prefix_plus">+</string>
+    <string name="com_prefix_minus">-</string>
+    <string name="com_enter">完了</string>
+    <string name="com_home_uppercase">HOME</string>
+    <string name="com_node">ノード</string>
+    <string name="com_authenticate">認証</string>
+    <string name="com_success">成功</string>
+    <string name="com_failed">失敗</string>
+    <string name="com_coming_soon">Coming Soon!</string>
+
+    <!-- Menu -->
+    <string name="menu_search">検索</string>
+
+    <!-- SplashFragment -->
+    <string name="splash_title">Splash Screen</string>
+    <string name="splash_node_select_error">Node : Alice2を選択しました</string>
+
+    <!-- MainActivity -->
+    <string name="main_toolbar">Hello NEMber</string>
+    <string name="main_navigation_menu">MENU</string>
+    <string name="main_navigation_home">HOME</string>
+    <string name="main_navigation_address_book">アドレス帳</string>
+    <string name="main_navigation_qr_labo">QR Labo</string>
+    <string name="main_navigation_scan">Scan</string>
+    <string name="main_navigation_mosaic_gallery">モザイクギャラリー</string>
+    <string name="main_navigation_donate">寄付</string>
+    <string name="main_navigation_faucet">Faucet</string>
+    <string name="main_navigation_about">About</string>
+    <string name="main_navigation_help">Help</string>
+    <string name="main_navigation_setting">設定</string>
+    <string name="main_bottom_navigation_receive">RECEIVE</string>
+    <string name="main_bottom_navigation_home">HOME</string>
+    <string name="main_bottom_navigation_send">SEND</string>
+    <string name="main_bottom_navigation_qr_labo">QR Lab</string>
+    <string name="main_bottom_navigation_scan">SCAN</string>
+    <string name="main_navigation_null">ウォレット未選択</string>
+
+    <!-- FirstTutorialActivity -->
+    <string name="first_tutorial_button">GET STARTED</string>
+    <string name="first_tutorial_title">Hello,NEM. Hello,UX.</string>
+    <string name="first_tutorial_message1">支払いの新世代へ。</string>
+    <string name="first_tutorial_message2">信頼の革新を手のひらに。</string>
+    <string name="first_tutorial_message3">愉快でイマドキな金融の形。</string>
+
+    <string name="fragment_qr_lab_dentaku">指定金額を受けとる</string>
+    <string name="fragment_qr_lab_sell_list">売り物リスト機能を使う</string>
+    <string name="fragment_qr_lab_register">QRレジスター</string>
+    <string name="fragment_qr_lab_register_description">対応コードをスキャンして、合計金額を請求するQRコードを生成する</string>
+
+    <!-- HomeFragment -->
+    <string name="home_fragment_jpy_before">JPY : </string>
+    <string name="home_fragment_error_account">アカウント取得エラー</string>
+    <string name="home_fragment_error_transaction">トランザクション取得エラー</string>
+    <string name="home_fragment_empty_transaction">You have no current transaction.</string>
+    <string name="home_fragment_empty_harvest">You have no current harvesting.</string>
+    <string name="home_fragment_not_select_wallet">ウォレットが選択されていません</string>
+
+    <!-- SendMessageActivity -->
+    <string name="activity_send_mosaic_hint">メッセージを入力</string>
+    <string name="activity_send_mosaic_prefix">%d / 1024</string>
+
+    <!-- MosaicListActivity -->
+    <string name="activity_mosaic_list_title">モザイクギャラリー</string>
+    <string name="activity_mosaic_empty_title">モザイクなど存在しない。</string>
+    <string name="activity_mosaic_empty_description">お見せできるモザイクは、これっぽっちもないよ。\n涙がちょちょ切れるほどコレクションに励もう。</string>
+
+    <!-- PinCodeFragment -->
+    <string name="pin_code_fragment_enter">Enter PIN</string>
+    <string name="pin_code_fragment_confirm">Confirm PIN</string>
+    <string name="pin_code_setting_success">設定完了しました</string>
+    <string name="pin_code_setting_confirm_error">PIN Codeが一致しません。もう一度</string>
+
+    <!-- CalculatorActivity -->
+    <string name="calculator_title">金額の指定</string>
+    <string name="calculator_digit_0">0</string>
+    <string name="calculator_digit_1">1</string>
+    <string name="calculator_digit_2">2</string>
+    <string name="calculator_digit_3">3</string>
+    <string name="calculator_digit_4">4</string>
+    <string name="calculator_digit_5">5</string>
+    <string name="calculator_digit_6">6</string>
+    <string name="calculator_digit_7">7</string>
+    <string name="calculator_digit_8">8</string>
+    <string name="calculator_digit_9">9</string>
+    <string name="calculator_dot_sign">.</string>
+    <string name="calculator_plus_sign">+</string>
+    <string name="calculator_minus_sign">-</string>
+    <string name="calculator_multiplication_sign">×</string>
+    <string name="calculator_division_sign">÷</string>
+    <string name="calculator_equals_sign">=</string>
+    <string name="calculator_backspace">⌫</string>
+    <string name="calculator_ce">CE</string>
+    <string name="calculator_max">MAX</string>
+    <string name="calculator_right_arrow">→</string>
+    <string name="calculator_error">Error</string>
+    <string name="calculator_amount">金額</string>
+    <string name="calculator_send_user">送り先</string>
+    <string name="calculator_error_max">最大値の取得に失敗しました。ネットワーク環境をご確認ください。</string>
+
+    <!-- NemConverterActivity -->
+    <string name="nem_converter_activity_title">NEM/JPY 通貨コンバータ</string>
+    <string name="nem_converter_number_input_error">数字以外入力できません</string>
+    <string name="nem_converter_error_price">取得できませんでした</string>
+    <string name="nem_converter_current_nem_price">1 NEM = %1$s JPY (Zaif)</string>
+
+    <!-- ReceiveFragment -->
+    <string name="receive_fragment_address">Your Address</string>
+    <string name="receive_fragment_address_toast">Address Copied</string>
+
+    <!-- invoiceActivity -->
+    <string name="invoice_activity_title">請求書の発行</string>
+    <string name="invoice_activity_hint_name">名前</string>
+    <string name="invoice_activity_hint_address">アドレス</string>
+    <string name="invoice_activity_hint_count">数量</string>
+    <string name="invoice_activity_hint_message">メッセージ</string>
+
+    <!-- SelectWalletActivity -->
+    <string name="select_wallet_activity_header_main">Hi,Wallet maintenance?</string>
+    <string name="select_wallet_activity_create_new_wallet">Create New Wallet</string>
+    <string name="select_wallet_activity_login">LOGIN</string>
+    <string name="select_wallet_empty_title">ウォレットがないみたい。</string>
+    <string name="select_wallet_empty_message">上のボタンからウォレットを作成するか\nアカウントをリンクすると、ここに一覧で表示されるよ。</string>
+
+    <!-- InstantSendNEMActivity -->
+    <string name="instant_send_nem_activity_title">簡易送金</string>
+    <string name="instant_send_nem_activity_setting_account">設定済みアドレス</string>
+    <string name="instant_send_nem_activity_name">名前:</string>
+    <string name="instant_send_nem_activity_address">アドレス:</string>
+    <string name="instant_send_nem_balance">残高</string>
+    <string name="instant_send_nem_change_address">変更</string>
+
+    <!-- TransactionListActivity -->
+    <string name="transaction_list_activity_title">トランザクション一覧</string>
+    <string name="transaction_list_activity_row_multisig_transaction">これはマルチシグトランザクションです</string>
+    <string name="transaction_list_activity_row_unconfirmed">oops!まだ未承認のトランザクション</string>
+    <string name="transaction_list_activity_row_address">アドレス</string>
+    <string name="transaction_list_activity_row_message">メッセージ</string>
+    <string name="transaction_list_activity_empty_title">おっと。まだ取引はないみたい。</string>
+    <string name="transaction_list_activity_empty_message">トランザクションが発生したら、\nここに一覧で表示されるよ。</string>
+
+    <!-- TransactionDetailFragment -->
+    <string name="transaction_detail_title">トランザクション詳細</string>
+    <string name="transaction_detail_first_amount">%1$s XEM</string>
+    <string name="transaction_detail_second_amount">Amount : %1$s XEM</string>
+    <string name="transaction_detail_second_non_amount">Amount : 取引量不明</string>
+    <string name="transaction_detail_fee">Fee : %1$s XEM</string>
+    <string name="transaction_detail_block">Block : %1$d</string>
+    <string name="transaction_detail_hash">Hash : </string>
+    <string name="transaction_detail_non_message">no message</string>
+    <string name="transaction_detail_mosaic_count">Mosaic : %1$d type</string>
+    <string name="transaction_detail_mosaic_name">Name : %1$s</string>
+    <string name="transaction_detail_mosaic_amount">Amount : %1$s</string>
+    <string name="transaction_detail_non_amount">取引量不明</string>
+    <string name="transaction_detail_non_address">アドレス不明</string>
+    <string name="transaction_detail_encrypt_message">メッセージは暗号化されています</string>
+    <string name="transaction_detail_decrypt_error_message">複号に失敗しました</string>
+    <string name="transaction_detail_pin_code_title">認証を行いメッセージを開封します</string>
+
+    <!-- SendTopFragment -->
+    <string name="send_top_fragment_send">送信先</string>
+    <string name="send_top_fragment_hint">送信先アドレスを入力</string>
+    <string name="send_top_fragment_address_error">有効なアドレスではありません</string>
+    <string name="send_top_fragment_not_select_wallet">ウォレットが選択されていません</string>
+    <string name="send_top_fragment_confirm_title">気をつけて。送り先はニュービーだ。</string>
+    <string name="send_top_fragment_confirm_message">君が送ろうとしているアドレスは、これまで一度もブロックチェーン上で活動していない新参者みたいだね。とはいえアドレスがちゃんとした形式なら、送金は可能だよ。\nアドレスは正しいか、送り先は信頼できるか、よく確かめてから手続きしてね。</string>
+
+    <!-- SelectSendModeFragment -->
+    <string name="select_send_mode_fragment_title">送信モードを選んでね</string>
+    <string name="select_send_mode_fragment_sub_title">メッセージを添付しますか？</string>
+    <string name="select_send_mode_fragment_standard_title">STANDARD SEND</string>
+    <string name="select_send_mode_fragment_standard_hint">メッセージは添付せず送金します。</string>
+    <string name="select_send_mode_fragment_standard_message">普通の送金でいいよ</string>
+    <string name="select_send_mode_fragment_message_title">Message SEND</string>
+    <string name="select_send_mode_fragment_message_hint">1024文字以内。取引所への認証番号にも使うよ。</string>
+    <string name="select_send_mode_fragment_message_message">トランザクションにメッセージを添えます</string>
+
+    <!-- SelectMessageTypeFragment -->
+    <string name="select_message_type_fragment_title">メッセージタイプを選択</string>
+    <string name="select_message_type_fragment_normal_message_title">通常のメッセージ</string>
+    <string name="select_message_type_fragment_normal_message_description">普通のお手紙です。\nお礼の言葉を添えたりするときは、こっちでいいと思うよ。\n認証番号もこっち。</string>
+    <string name="select_message_type_fragment_crypt_message_title">暗号化メッセージ</string>
+    <string name="select_message_type_fragment_crypt_message_description">軍事レベルの暗号化技術でプライバシーを確保しましょう。認証番号などに使う場合は、問題の原因になるからオススメしないよ！</string>
+
+    <!-- EnterSendFragment -->
+    <string name="enter_send_fragment_title">金額を入力</string>
+    <string name="enter_send_fragment_tab1">送金操作</string>
+    <string name="enter_send_fragment_tab2">モザイク添付</string>
+    <string name="enter_send_fragment_mosaic_only">XEMを一緒に送る</string>
+    <string name="enter_send_fragment_xem_amount_error">自身の残高が取得できませんでした</string>
+
+    <!-- SendConfirmFragment -->
+    <string name="send_confirm_fragment_title">送金の最終確認画面です</string>
+    <string name="send_confirm_fragment_amount">金額</string>
+    <string name="send_confirm_fragment_fee">手数料</string>
+    <string name="send_confirm_fragment_send_address">送り先</string>
+    <string name="send_confirm_fragment_send_title">メッセージ</string>
+    <string name="send_confirm_fragment_finger_print_ready">準備はいいですか？</string>
+    <string name="send_confirm_fragment_finger_print_send">指紋認証で送金します</string>
+    <string name="send_confirm_fragment_pin_code_send">PIN画面を表示します</string>
+    <string name="send_confirm_fragment_confirm_dialog_title">送金の最終確認画面です</string>
+    <string name="send_confirm_fragment_confirm_dialog_message">この画面で指紋認証またはPINの認証が完了すると、送金が完了します。\n表示された情報をよくご確認の上、操作してください。</string>
+    <string name="send_confirm_fingerprint_limit_error">5回の制限回数を超えました。PINコードを入力してください。</string>
+    <string name="send_confirm_fingerprint_error">もう一度センサーに触れてください。</string>
+
+    <!-- CreateWalletTutorialFragment -->
+    <string name="create_wallet_tutorial_title">Welcome to Raccoon Wallet</string>
+    <string name="create_wallet_tutorial_message">やあ。はじめまして。\nラクーンウォレットへようこそ。\n気分はどう？\n\nさてこれから君がラクーンを始めるにあたって、僕がガイダンスしていくんだけど、何よりまず、君にはウォレットの準備をしてもらいたい。\n次の画面で新しくウォレットを作るか、それともすでにブロックチェーンに登録済みのアカウントでログインするかを選んでくれるかい？</string>
+    <string name="create_wallet_tutorial_dialog_title">おっと！</string>
+    <string name="create_wallet_tutorial_dialog_message">もうPINは設定してあるみたいだね。\nOKを押してレッスンを終えてもらっていいよ。\nお疲れ様！</string>
+
+    <!-- SelectWalletActivity -->
+    <string name="select_wallet_activity_title">ウォレットを選択</string>
+
+    <!-- SelectCreateOrScanWalletFragment -->
+    <string name="select_create_or_scan_wallet_create_text">Create New Wallet</string>
+    <string name="select_create_or_scan_wallet_login_text">LOGIN</string>
+
+    <!-- CreateWalletActivity -->
+    <string name="create_wallet_activity_title">ようこそ、お客人</string>
+
+    <!-- CreateWalletFragment -->
+    <string name="create_wallet_fragment_greeting">ハロー。ウェルカム・トゥ・ラクーン。\n早速、君のウォレットを作っていこう。\nまず最初にウォレットにイケてる名前をつけてくれ。</string>
+    <string name="create_wallet_fragment_edit_text_wallet_name_hint">一番いいウォレットネームを頼む</string>
+    <string name="create_wallet_fragment_confirm_description">アプリの利用を開始する前に、ご確認ください。</string>
+    <string name="create_wallet_fragment_terms_of_service"><u>利用規約とプライバシーポリシー</u></string>
+
+    <!-- CreatedWalletActivity -->
+    <string name="created_wallet_activity_title">準備完了</string>
+
+    <!-- CreatedWalletFragment -->
+    <string name="created_wallet_fragment_greeting">すばらしい！ウォレット作成完了です。\nあっという間。驚いた？\nとりあえず君のアドレスはこんな感じ。</string>
+    <string name="created_wallet_fragment_address_hint">Your Address</string>
+    <string name="created_wallet_fragment_wallet_bar_description">…上に出てきたバーはなにかって？\nウォレットのメンテナンスをしたいときは押すが良い。\nこの画面では動作しないからあとで試してみてくれ。</string>
+
+    <!-- ChooseStartSecurityActivity -->
+    <string name="choose_start_security_activity_title">お疲れ様！レッスンはどう？</string>
+
+    <!-- ChooseStartSecurityFragment -->
+    <string name="choose_start_security_fragment_description_for_first">以上でウォレットの新規作成作業は完了です。\nもし君が仮想通貨ニュービーなら、\nこの後のセキュリティレッスンの受講をオススメします。\nPINコードの設定やウォレットのバックアップを行うぞ。\n\nとりあえず今のままで使い始めたい人は\nHOMEからスキップもできるよ。</string>
+    <string name="choose_start_security_fragment_description_for_second">以上でウォレットの新規作成作業は完了です。\nこのままウォレットのバックアップなどを行いたい人はレッスンに移動してね。\n\nとりあえず今のままで使い始めたい人は\nHOMEからスキップもできるよ。</string>
+    <string name="choose_start_security_fragment_security_lesson">セキュリティレッスン</string>
+    <string name="choose_start_security_fragment_home">home</string>
+    <string name="choose_start_security_fragment_dialog_title">おっと！</string>
+    <string name="choose_start_security_fragment_dialog_message">ほんとにHOMEに行くのかい？\nセキュリティはちゃんとしといたほうがいいよ。</string>
+    <string name="choose_start_security_fragment_dialog_title_second">ほんとに？</string>
+    <string name="choose_start_security_fragment_dialog_message_second">ほんとにほんとだね？止めはしないよ。\nもしウォレットのバックアップやPINコードを設定したくなったら、ウォレットバーやメニューのアプリ設定からいつでも行えるよ。それにレッスンもアプリ設定のセキュリティの項目から受講できるからね。</string>
+
+    <!-- PrivateKeyStoreSupportActivity -->
+    <string name="private_key_store_support_hero_message">Backup? You\'re smart!</string>
+
+    <!-- TutorialDescriptionFragment -->
+    <string name="tutorial_description_fragment_title">セキュリティレッスン</string>
+    <string name="tutorial_description_fragment_main">やあ。セキュリティレッスンを受けに来たのかい？\n感心感心。\nよーし、それじゃあ早速やっていこう。\n\nじゃあ、まず最初に君のことを教えてくれないかい？\n次の画面で自分に合うものを選択してくれ。\n特別にみんなに最適なレッスン用意したからさ。</string>
+    <string name="tutorial_description_fragment_button">ウォレットのバックアップ</string>
+
+    <!-- PrivateKeyDescriptionFragment -->
+    <string name="private_key_description_fragment_title">秘密鍵について</string>
+    <string name="private_key_description_fragment_description_1">プライベートキー(秘密鍵)について</string>
+    <string name="private_key_description_fragment_description">プライベートキー（秘密鍵）はあなたのアカウント情報において最も重要であり、機密事項として注意して取り扱わなければなりません。\n\nプライベートキーは、関連する資金と資産を制御し、あなたのアカウントを元に戻すために必要なものであり、この知識は誰もが身につける必要があります。\n\nこのプライベートキーは、決してなくさないようにしてください。 また絶対に外部に漏れないように注意して扱ってください。</string>
+
+    <!-- PrivateKeyDisplayFragment -->
+    <string name="private_key_display_fragment_title">バックアップ</string>
+    <string name="private_key_display_fragment_description_1">スクリーンショットに撮るのは危険です。</string>
+    <string name="private_key_display_fragment_description_2">\n\n紙に書き留める、またはパスワード管理アプリ・ソフトウェアを使って厳重に保管してください。</string>
+    <string name="private_key_display_fragment_hint">Private Key</string>
+    <string name="private_key_display_fragment_copied_click">PrivateKey copied to clipboard.</string>
+
+    <!-- DisplayQRActivity -->
+    <string name="display_qr_activity_title">My Wallet QR</string>
+
+    <!-- SendFinishFragment -->
+    <string name="send_finish_fragment_title">送金完了！</string>
+    <string name="send_finish_fragment_send_finish">NEM/XEM\nの送金が完了しました。</string>
+    <string name="send_finish_fragment_home">HOME</string>
+    <string name="send_finish_fragment_transaction">TRANSACTION</string>
+    <string name="send_error_message_balance">残高が足りません！</string>
+
+    <!-- SelectTutorialLevelFragment -->
+    <string name="select_tutorial_level_fragment_title">セレクトユアレベル！</string>
+    <string name="select_tutorial_level_fragment_newbie_title">NEM初心者です！</string>
+    <string name="select_tutorial_level_fragment_newbie_subtitle">秘密鍵のバックアップ＋PINコードの設定</string>
+    <string name="select_tutorial_level_fragment_newbie_description">ようこそNEMの世界へ。</string>
+    <string name="select_tutorial_level_fragment_login_title">秘密鍵からのログインです</string>
+    <string name="select_tutorial_level_fragment_login_subtitle">PINコードの設定</string>
+    <string name="select_tutorial_level_fragment_login_description">ラクーンを選んでくれてありがとう～</string>
+    <string name="select_tutorial_level_fragment_raccoon_title">ラクーンユーザーです</string>
+    <string name="select_tutorial_level_fragment_raccoon_subtitle">ウォレットのバックアップ</string>
+    <string name="select_tutorial_level_fragment_raccoon_description">毎度どうも。今日もいい天気ですね。</string>
+
+    <!-- AboutActivity -->
+    <string name="about_activity_title">About This APP</string>
+    <string name="about_activity_message">信頼性が高く、\n使いやすいUIで、\n仮想通貨をもっと楽しく。\n\nラクーンウォレットは、これら３つを目標に作られた仮 想通貨ウォレットです。</string>
+    <string name="about_activity_section_header">RaccoonWallet</string>
+    <string name="about_activity_official_web_page">公式サイト｜raccoonwallet.com</string>
+    <string name="about_activity_official_discord">公式DISCORDサーバー｜紹介リンク</string>
+    <string name="about_activity_official_licence">オープンソースライセンス</string>
+    <string name="about_activity_terms_of_service"><u>利用規約とプライバシーポリシー</u></string>
+
+    <!-- TutorialNewbieDescriptionFragment -->
+    <string name="tutorial_newbie_description_fragment_title">ニュービーな君へ</string>
+    <string name="tutorial_newbie_description_fragment_description">NEM初心者の君へ捧ぐメッセージ！\n知っている人もいるかもしれないけど、秘密鍵というのは仮想通貨にとって、すごく大事なものなんだ。NEMの場合もそれは同じだよ。バックアップはしっかりね。\n\nそれからアプリ本体のPINコード。\nスマホをもし落としてしまったりしたとき、アプリにロックをかけておかないと、勝手に送金されてしまうかもしれないよ。\nどっちも大事だ。これから対策していくよ。\n準備はいいかい？\nそれじゃあ、やっていこう。</string>
+
+    <!-- TutorialLoginDescriptionFragment -->
+    <string name="tutorial_login_description_fragment_title">PINコードの設定</string>
+    <string name="tutorial_login_description_fragment_description">NEMユーザーのあなた！\nラクーンウォレットを選んでくれて嬉しいよ。 すでによく知っている君には、\n僕から説明することはあまりないかな。\nここの画面から、PINコードを設定できるから、\nサクッと設定しといてくれ。\n\nもし秘密鍵のバックアップを取り忘れてたなら、初心者のカードからレッスンを受けてね。\n</string>
+
+    <!-- TutorialRaccoonDescriptionFragment -->
+    <string name="tutorial_raccoon_description_fragment_title">また君か～</string>
+    <string name="tutorial_raccoon_description_fragment_description">あっ、なんだ君か。\n人にものを教えるのって大変だよね。\nなんでも３倍理解してないとダメだとか。\n僕の苦労も報われるといいだけど。そう思わない？\n\nえ？秘密鍵のバックアップ？次の画面だよ。\nそうそう、それでさ～この間さ～...</string>
+
+    <!-- ImportSecretKeyFragment -->
+    <string name="import_secret_key_fragment_title">秘密鍵のインポート</string>
+    <string name="import_secret_key_fragment_message">開けゴマ！\n1. NEMの秘密鍵を入力する。\nもしくはQRコードで読み取りましょう。\n2. あなたのNEMアカウントをラクーンにリンクします！</string>
+    <string name="import_secret_key_fragment_hint">Enter secret key</string>
+    <string name="import_secret_key_fragment_empty_error">秘密鍵を入力</string>
+    <string name="import_secret_key_fragment_policy_message">アプリの利用を開始する前に、ご確認ください。</string>
+    <string name="import_secret_key_fragment_policy_button"><u>利用規約とプライバシーポリシー</u></string>
+    <string name="import_secret_key_invalid_password">パスワードが一致しません</string>
+    <string name="import_secret_key_import_error">ウォレットをインポートできませんでした</string>
+    <string name="import_secret_key_input_error">無効な秘密鍵です</string>
+
+    <!-- ImportWalletPasswordActivity -->
+    <string name="import_wallet_password_activity_title">パスワード入力</string>
+    <string name="import_wallet_password_title">NanoWalletのパスワードを入力</string>
+    <string name="import_wallet_password_message">NanoWalletで生成したQRコードからNEMアカウントをリンクしようとしています。\nこの操作には、NanoWalletのパスワードの入力が必要です。</string>
+    <string name="import_wallet_password_hint">パスワードを入れてね</string>
+    <string name="import_wallet_password_paste_error">貼り付けできませんでした</string>
+
+    <!-- ImportWalletNameFragment -->
+    <string name="import_wallet_name_fragment_title">Walletの名前をインポート</string>
+    <string name="import_wallet_name_fragment_message">グレイト！\nアカウントのリンクが正常に行われました。\nウォレットに名前をつけると便利です。</string>
+    <string name="import_wallet_name_fragment_hint">Wallet name</string>
+
+    <!-- TutorialPinCodeFragment -->
+    <string name="tutorial_pin_code_fragment_title">次はPINの設定だ！</string>
+    <string name="tutorial_pin_code_fragment_main">また会ったな。\nウォレットのバックアップはできたかい？\nさあ次は、アプリのPINコード設定だ。\n\nグッドラック！</string>
+    <string name="tutorial_pin_code_fragment_button">PINコードの設定</string>
+
+    <!-- PinCodeSettingFragment -->
+    <string name="pin_code_setting_fragment_dialog_title">PINコードの設定</string>
+    <string name="pin_code_setting_fragment_dialog_1">アプリ本体を保護するためのPINコードを設定します。6桁のPINコードを入力してください。\n確認のため二度入力します。\n※数字の繰り返しや誕生日などを含むコードはセキュリティの観点からおすすめしません。</string>
+    <string name="pin_code_setting_fragment_dialog_2">このPINコードを忘れた場合、アプリの操作ができなくなります。忘れないようにしてください。ただしPINコードを忘れた場合でもウォレットのXEMが無くなるわけではありません。\nアドレスごとの秘密鍵を紛失した場合のみ資産にアクセスできなくなります。</string>
+    <string name="pin_code_setting_fragment_dialog_confirm_title">SUCCESS</string>
+    <string name="pin_code_setting_fragment_dialog_confirm_message">アプリ本体を保護するための6桁のPINコードが設定されました。</string>
+
+    <!-- CompletedPinCodeSettingFragmentment -->
+    <string name="pin_code_setting_end_fragment_title">お疲れ様、よかったら指紋認証も</string>
+    <string name="pin_code_setting_end_fragment_description">PIN設定できたみたいだね。\nいい調子だ。\nさてレッスンもこれで最後。\n\n実は合わせて指紋認証でアプリにアクセスできるように設定できるんだけど、ここで設定しておくかい？</string>
+    <string name="pin_code_setting_end_fragment_button_finger">指紋認証を設定する</string>
+    <string name="pin_code_setting_end_fragment_button_end">レッスンを終える</string>
+    <string name="pin_code_setting_end_not_available_title">おっと！</string>
+    <string name="pin_code_setting_end_not_available_message">端末自体の指紋認証が未設定のようです。\nAndroidOSの設定画面に移動して、指紋認証の設定を開始しますか？</string>
+
+    <!-- CompleteImportWalletActivity -->
+    <string name="complete_import_wallet_activity_title">リンク完了</string>
+    <string name="complete_import_wallet_activity_message">いいセンスだ。\n以上でリンク作業は完了しました。\nウォレットの変更や追加をしたい場合は、\nウォレットバーのボタンから管理画面に\nアクセスしてみてくださいね。\nもし時間があるなら、この後のセキュリティレッスンの受講をオススメします。PINコードの設定やウォレットのバックアップを行うぞ。</string>
+    <string name="complete_import_wallet_activity_lesson_button">セキュリティレッスン</string>
+
+    <!-- QrScanFragment -->
+    <string name="qr_scan_fragment_title">QRコードのインポート</string>
+    <string name="qr_scan_fragment_scan_error">QRコードのスキャンに失敗しました</string>
+
+    <!-- WalletCreatedFragment -->
+    <string name="wallet_created_fragment_title">お疲れ様！</string>
+    <string name="wallet_created_fragment_description_newbie">すばらしい！！\nこれで君も立派なクリプトコイナーというわけだ。\n感慨深いね。\n\nてなわけで、セキュリティレッスンは以上で終わり。\n暇があったらメニューからヘルプも覗くと良いよ。\nまあ後は使いながら覚えていってくれ。\n月に叢雲花に風。\nさよならだけが人生さ。\nまた会おうぜ。グッドラック。</string>
+    <string name="wallet_created_fragment_description_login">レッスンお疲れ様。仮想通貨の活動をラクーンで行うことを選択した君を後悔させないように頑張るよ。\nこのウォレット自体の使い方は、メニューからアクセスできるヘルプから学習してほしい。\n\nゆく河の流れは絶えずして、しかももとの水にあらず。\nいづかたより来たりて、いづかたへか去る君との出会いに感謝するよ。\nグッドラック。</string>
+    <string name="wallet_created_fragment_description_raccoon">いつもラクーンウォレットを使ってくれてありがとう。\n\nてなわけで、セキュリティレッスンは以上で終わり。\nウォレットにもそろそろ慣れてきたんじゃないかい？\nとはいえ事前の対策を疎かにはしないでね。\n\n曾子曰く、人生とは、\n死而後巳（死してのち巳む）。\nくたばって初めて油断できるのさ。\nまた会おうぜ。グッドラック。</string>
+
+    <!-- Fingerprint -->
+    <string name="fingerprint_authenticate_title">指紋認証でロックを解除します</string>
+    <string name="fingerprint_authenticate_message">アプリのロックを指紋認証を使用して解除します。 端末のセンサーに触れてください。</string>
+    <string name="fingerprint_authenticate_success_title">SUCCESS！</string>
+    <string name="fingerprint_authenticate_success_message">指紋認証が完了しました。</string>
+    <string name="fingerprint_authenticate_failed_title">認証に失敗しました</string>
+    <string name="fingerprint_authenticate_failed_message">指紋認証に失敗しました。\nもう一度、端末のセンサーに触れてください。</string>
+    <string name="fingerprint_authenticate_error_over_limit_title">制限回数を超えました</string>
+    <string name="fingerprint_authenticate_error_over_limit_message">5回の制限回数を超えました。\nPINコードを入力してください。</string>
+
+    <!-- FingerprintSettingDialog -->
+    <string name="fingerprint_setting_authenticate_title">指紋認証によるアクセス設定</string>
+    <string name="fingerprint_setting_authenticate_message">指紋認証を使用してアプリのロックを解除できるように設定できます。\nOKを押すと、設定を完了します。</string>
+    <string name="fingerprint_setting_authenticate_success_title">SUCCESS！</string>
+    <string name="fingerprint_setting_authenticate_success_message">指紋認証を使用したログインが設定されました。</string>
+
+    <!-- SettingHome -->
+    <string name="setting_home_title">設定</string>
+    <string name="setting_home_common_section">一般</string>
+    <string name="setting_home_language">言語選択</string>
+    <string name="setting_home_notification">通知設定</string>
+    <string name="setting_home_security_section">セキュリティ</string>
+    <string name="setting_home_password">パスワードの設定・変更</string>
+    <string name="setting_home_fingerprint">指紋の要求</string>
+    <string name="setting_home_app_lock">起動時にPIN入力を要求する</string>
+    <string name="setting_home_security_lesson">セキュリティレッスンを受ける</string>
+
+    <!-- SelectNode -->
+    <string name="setting_node_title">ノード選択</string>
+
+    <!-- SettingPinCode -->
+    <string name="setting_pin_code_check_title">Check PIN</string>
+    <string name="setting_pin_code_success">パスワードの設定を完了しました</string>
+
+    <!-- SettingFingerprint -->
+    <string name="setting_pincodd_not_available_title">おっと!</string>
+    <string name="setting_pincodd_not_available_message">PINの設定がまだのようですね。先にPINの設定をしてください。</string>
+    <string name="setting_fingerprint_success">指紋認証の設定を完了しました</string>
+
+    <!-- SettingAppLock -->
+    <string name="setting_app_lock_complete_message">アプリロックの設定が完了しました</string>
+
+    <!-- InstantPinCodeFragment -->
+    <string name="instant_pin_code_message">PINを入力して送金を確定する</string>
+
+    <!-- WalletSettingFragment -->
+    <string name="wallet_setting_fragment_title">ウォレットの設定</string>
+    <string name="wallet_setting_currency_title">NEM/XEM</string>
+    <string name="wallet_setting_general">一般設定</string>
+    <string name="wallet_setting_detail">ウォレットの詳細</string>
+    <string name="wallet_setting_address">ウォレットのアドレス</string>
+    <string name="wallet_setting_backup">ウォレットのバックアップ</string>
+    <string name="wallet_setting_rename">ウォレットの名前を変更する</string>
+    <string name="wallet_setting_remove">ウォレットを削除</string>
+    <string name="wallet_setting_type_standard">WalletType : Standard</string>
+    <string name="wallet_setting_type_multisig">WalletType : Multisig</string>
+    <string name="wallet_setting_address_title">アドレス</string>
+
+    <!-- WalletDetailFragment -->
+    <string name="wallet_detail_fragment_title">ウォレットの詳細</string>
+    <string name="wallet_detail_general">一般情報</string>
+    <string name="wallet_detail_constitution">ウォレット構成（m-of-n）</string>
+    <string name="wallet_detail_score">重要性スコア</string>
+    <string name="wallet_detail_public_key">公開鍵</string>
+    <string name="wallet_detail_public_key_empty">未取得</string>
+
+    <!-- WalletBackupActivity -->
+    <string name="wallet_backup_activity_title">バックアップ</string>
+
+    <!-- WalletRemoveActivity -->
+    <string name="wallet_remove_activity_title">削除</string>
+    <string name="wallet_remove_title">ウォレットの削除について</string>
+    <string name="wallet_remove_message">ウォレットを削除します。秘密鍵がないと復元できなくなります。\n本当にウォレットを削除しますか？</string>
+    <string name="wallet_remove_button">Remove</string>
+
+    <!-- WalletRenameActivity -->
+    <string name="wallet_rename_activity_title">ウォレット名変更</string>
+
+    <!-- WalletBar -->
+    <string name="wallet_bar_balance_error">取得失敗</string>
+    <string name="wallet_bar_name_error">未選択</string>
+
+    <!-- RaccoonErrorDialog -->
+    <string name="raccoon_error_pin_title">送信画面に移動できません</string>
+    <string name="raccoon_error_pin_message">PINが設定されていないため、送信画面に移動できません。\n送金操作を行うには、設定からPINの設定を行ってください。</string>
+    <string name="raccoon_error_pin_button">PIN設定画面に移動する</string>
+
+    <!-- AddressErrorDialog -->
+    <string name="address_error_dialog_title">送り先が暗号化メッセージに 対応していません。</string>
+    <string name="address_error_dialog_message">暗号化メッセージを送るには、暗号化に必要な公開鍵と呼ばれるコードを送り先が所持している必要があります。\n現在指定されている送り先は公開鍵を所持していないため、暗号化メッセージは送れません。</string>
+
+    <!-- BalanceActivity -->
+    <string name="balance_activity_title">ウォレット残高</string>
+    <string name="balance_activity_list_title">モザイク一覧</string>
+
+    <!-- RaccoonDonateActivity -->
+    <string name="raccoon_donate_activity_title">おや？寄付してくれるのかい！？</string>
+    <string name="raccoon_donate_activity_android">Android Developer</string>
+    <string name="raccoon_donate_activity_engineer">エンジニア</string>
+    <string name="raccoon_donate_activity_rhime">Rhime</string>
+    <string name="raccoon_donate_activity_ui_design">UIデザイナー</string>
+    <string name="raccoon_donate_activity_ios">Ryuta</string>
+    <string name="raccoon_donate_activity_ios_engineer">iOSエンジニア</string>
+
+    <string name="donate_detail_fragment_title">開発の励みになるよ～</string>
+    <string name="donate_detail_fragment_android_message">God of Raccoon。創造主でエンジニア。\nすべてはココからはじまった。彼らがいなかったらラクーンは存在していない。\nRaccoonのAndroidエンジニアは二人。@YukiYamadaJPと@Riberd_Puzzle1だ\n\n・リードエンジニア / コア開発者\n・ベースアプリ（NEM総合アプリ） 開発\n・Android版アプリ開発</string>
+    <string name="donate_detail_fragment_rhime_message">Raccoonの名付け親。デザイナー。\nこのアプリふざけてんなぁと思ったら、この人のせい。\nラクーンにおけるデザインの大体は、この人が作った。\n使いやすいアプリの構造を考えたりする情報アーキテクチャも兼任した。\n\n・総合コンテンツデザイナー\n・Android / iOSアプリのIA/UI/UXデザイン\n・ビジュアルデザイン/ブランディング（ロゴ・サイト）</string>
+    <string name="donate_detail_fragment_ios_message">Raccoonの命綱。iOSエンジニア。最強の後衛。\n将棋で例えるなら飛車。\nラクーンを林檎の楽園へといざなう。\n\n・Android→iOS版アプリ移植・開発主任\n・nem-kotlinの創造主。</string>
+    <string name="donate_detail_fragment_donate">Donate</string>
+
+    <!--Dialog-->
+    <string name="dialog_update_forward_title">アプリのアップデートがあります</string>
+    <string name="dialog_update_forward_button">アップデートする</string>
+    <string name="dialog_add_goods_name_hint">品名</string>
+    <string name="dialog_add_goods_price_hint">価格</string>
+    <string name="dialog_add_goods_nem_mode">ねむもーど</string>
+    <string name="dialog_add_goods_jpy_mode">えんもーど</string>
+    <string name="dialog_count_goods_count">購入個数</string>
+    <string name="dialog_count_error">個数が未入力です</string>
+    <string name="dialog_address_name_hint">ウォレット名（任意の名前）</string>
+    <string name="dialog_address_hint">アドレス</string>
+    <string name="dialog_address_valid_name_error">名前が未入力です</string>
+    <string name="dialog_address_valid_address_error">アドレスが未入力です</string>
+    <string name="dialog_main_confirm_title">確認</string>
+    <string name="dialog_main_confirm_message_sub_total">小計をリセットしてよろしいですか？</string>
+    <string name="dialog_main_confirm_message_goods_delete">このアイテムを削除してよろしいですか？</string>
+    <string name="dialog_select_import_address_not_use_secret_key">いずれの方法でも秘密鍵の情報は取得しません</string>
+    <string name="dialog_select_import_address_configured_address">設定済みのアドレスを確認する</string>
+    <string name="dialog_select_import_address_not_auto">手動入力</string>
+    <string name="dialog_select_import_address_auto">QRコード読み取り</string>
+    <string name="dialog_select_import_address_auto_description">NanoWalletの「アカウント情報をQRで共有」を読み込む\nXEMBookの「NEMアドレス」を読み込む</string>
+    <string name="dialog_address_confirm_name">名前</string>
+    <string name="dialog_address_confirm_address">アドレス</string>
+    <string name="dialog_configured_address_name">名前は設定されていません</string>
+    <string name="dialog_current_nem_price_for_zaif">1 NEM = %1$s JPY (Zaif)</string>
+    <string name="dialog_confirm_display_twice">再度表示させない</string>
+</resources>

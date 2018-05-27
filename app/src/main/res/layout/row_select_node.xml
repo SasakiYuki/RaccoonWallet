@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="nodeEntity"
+            type="wacode.yamada.yuki.nempaymentapp.model.NodeEntity" />
+
+        <variable
+            name="itemClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="radioButtonClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:onClick="@{itemClickListener}"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/selectNodeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/nodeTextView"
+                android:layout_alignBottom="@+id/nodeTextView"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="@color/nemGreen"
+                android:buttonTint="@color/nemGreen"
+                android:checked="@{nodeEntity.selected}"
+                android:onClick="@{radioButtonClickListener}" />
+
+            <TextView
+                android:id="@+id/nodeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/space_large_half"
+                android:layout_toRightOf="@+id/selectNodeButton"
+                android:text="@{nodeEntity.nodeName}"
+                tools:text="sample node" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDividerLight" />
+    </LinearLayout>
+</layout>
