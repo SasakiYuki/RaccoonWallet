@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NemPaymentApp.iml" filepath="$PROJECT_DIR$/NemPaymentApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RaccoonWallet.iml" filepath="$PROJECT_DIR$/RaccoonWallet.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
