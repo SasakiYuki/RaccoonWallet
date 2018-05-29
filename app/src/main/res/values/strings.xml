@@ -517,4 +517,5 @@
     <string name="dialog_configured_address_name">名前は設定されていません</string>
     <string name="dialog_current_nem_price_for_zaif">1 NEM = %1$s JPY (Zaif)</string>
     <string name="dialog_confirm_display_twice">再度表示させない</string>
+    <string name="dialog_confirm_title">message</string>
 </resources>
