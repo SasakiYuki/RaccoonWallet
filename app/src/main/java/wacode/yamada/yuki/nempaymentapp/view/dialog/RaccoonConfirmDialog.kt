@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.view.dialog
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import io.reactivex.subjects.PublishSubject
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.utils.SharedPreferenceUtils
 
 class RaccoonConfirmDialog : SimpleDialogFragment() {
     private val title by lazy {
@@ -100,5 +102,13 @@ class RaccoonConfirmViewModel {
 
     fun onClose() {
         closeEvent.onNext(Unit)
+    }
+
+    fun saveSPTwiceDisplay(context: Context, spKey: String, checked: Boolean) = SharedPreferenceUtils.put(context, spKey, checked)
+
+    fun shouldTwiceDisplay(context: Context, spKey: String) = SharedPreferenceUtils[context, spKey, true]
+
+    companion object {
+        const val KEY_REVIEW = "sp_key_review"
     }
 }
