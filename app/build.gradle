@@ -103,6 +103,8 @@ dependencies {
 
     compile 'org.mindrot:jbcrypt:0.4'
 
+    compile 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }

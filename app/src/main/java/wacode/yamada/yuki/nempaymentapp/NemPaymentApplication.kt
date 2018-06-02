@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.jakewharton.threetenabp.AndroidThreeTen
 import io.fabric.sdk.android.Fabric
 import wacode.yamada.yuki.nempaymentapp.extentions.objectOf
 import wacode.yamada.yuki.nempaymentapp.room.DataBase
@@ -17,6 +18,8 @@ class NemPaymentApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        AndroidThreeTen.init(this)
 
         database = Room.databaseBuilder(this, objectOf<DataBase>(), "room_nem_payment_app.db").build()
         FirebaseAnalytics.getInstance(this)
