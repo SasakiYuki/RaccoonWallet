@@ -107,8 +107,4 @@ class RaccoonConfirmViewModel {
     fun saveSPTwiceDisplay(context: Context, spKey: String, checked: Boolean) = SharedPreferenceUtils.put(context, spKey, checked)
 
     fun shouldTwiceDisplay(context: Context, spKey: String) = SharedPreferenceUtils[context, spKey, true]
-
-    companion object {
-        const val KEY_REVIEW = "sp_key_review"
-    }
 }
