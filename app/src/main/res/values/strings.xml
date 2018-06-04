@@ -312,7 +312,7 @@
     <string name="about_activity_official_review">レビューを書く</string>
     <string name="about_activity_terms_of_service"><u>利用規約とプライバシーポリシー</u></string>
     <string name="about_activity_review_title">毎度、どうも。</string>
-    <string name="about_activity_review_message">RaccoonWalletを利用してくれてありがとう。\n突然だけど、もしよかったらレビューを書いてくれないかい？\n書いてくれた君には特別に、ラクーンエバンジェリスト・ライセンスを贈呈しよう。\n…何かよこせって！？もうライセンスはあなたの心に届いているようだけど！</string>
+    <string name="about_activity_review_message">RaccoonWalletを利用してくれてありがとう。\n突然だけど、もしよかったらレビューを書いてくれないかい？\n書いてくれた君には特別に、ラクーンエバンジェリスト・ライセンスを贈呈しよう。\n…何かよこせって？もうライセンスはあなたの心に届いているようだけど？</string>
     <string name="about_activity_review_button">レビューを書く</string>
 
     <!-- TutorialNewbieDescriptionFragment -->

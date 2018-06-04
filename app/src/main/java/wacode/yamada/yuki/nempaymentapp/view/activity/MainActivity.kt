@@ -29,10 +29,7 @@ import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.types.MainBottomNavigationType
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
-import wacode.yamada.yuki.nempaymentapp.utils.SharedPreferenceUtils
-import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
+import wacode.yamada.yuki.nempaymentapp.utils.*
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.QrScanCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.AboutActivity
@@ -40,6 +37,8 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.MosaicListActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.ExampleFragmentPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.controller.DrawerListController
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmDialog
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
 import wacode.yamada.yuki.nempaymentapp.view.fragment.SplashFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.top.SendTopFragment
 
@@ -212,6 +211,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
 
     override fun hideSplash() {
         if (isAlreadyRaccoonWallet()) {
+            saveRegisterDate()
             startActivity(FirstTutorialActivity.createIntent(this))
             finish()
         } else {
@@ -219,6 +219,45 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             setupViewPager()
             setupBottomTabLayout()
             setupNemIcon()
+            if (!isAlreadyShownReviewDialog() && RegisterDateUtils.isThreeDaysLater(this)) {
+                val viewModel = RaccoonConfirmViewModel()
+                saveAlreadyShownReviewDialog()
+                createReviewDialog(viewModel)
+            }
+        }
+    }
+
+    private fun createReviewDialog(viewModel: RaccoonConfirmViewModel) {
+        val title = getString(R.string.about_activity_review_title)
+        val message = getString(R.string.about_activity_review_message)
+        val buttonText = getString(R.string.about_activity_review_button)
+        viewModel.checkEvent
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { item ->
+                    viewModel.saveSPTwiceDisplay(this, RaccoonConfirmViewModel.KEY_REVIEW, item)
+                }
+        viewModel.clickEvent
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    openPlayStore()
+                }
+
+        val dialog = RaccoonConfirmDialog.createDialog(
+                viewModel,
+                title,
+                message,
+                buttonText,
+                viewModel.shouldTwiceDisplay(this, RaccoonConfirmViewModel.KEY_REVIEW)
+        )
+
+        dialog.show(supportFragmentManager, RaccoonConfirmDialog::class.java.toString())
+    }
+
+    private fun openPlayStore() {
+        try {
+            this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + this.packageName)))
+        } catch (exception: android.content.ActivityNotFoundException) {
+            this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + this.packageName)))
         }
     }
 
@@ -305,8 +344,15 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
 
     private fun isAlreadyRaccoonWallet() = SharedPreferenceUtils[this, SP_IS_FIRST_RACCOON, true]
 
+    private fun isAlreadyShownReviewDialog() = SharedPreferenceUtils[this, SP_IS_ALREADY_SHOWN_REVIEW_DIALOG, false]
+
+    private fun saveAlreadyShownReviewDialog() = SharedPreferenceUtils[this, SP_IS_ALREADY_SHOWN_REVIEW_DIALOG, true]
+
+    private fun saveRegisterDate() = RegisterDateUtils.saveRegisterDate(this)
+
     companion object {
         const val SP_IS_FIRST_RACCOON = "sp_is_first_raccoon"
+        private const val SP_IS_ALREADY_SHOWN_REVIEW_DIALOG = "sp_is_already_shown_review_dialog"
         private const val HOME_POSITION = 2
         private const val ARG_SHOULD_SHOW_SPLASH = "args_show_splash"
         fun createIntent(context: Context) = Intent(context, MainActivity::class.java)

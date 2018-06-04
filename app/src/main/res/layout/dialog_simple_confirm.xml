@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_confirm_display_twice"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
 
             <CheckBox
                 android:id="@+id/checkbox"
@@ -77,8 +77,10 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="96dp"
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:background="@drawable/frame_nem_green"
             android:textColor="@android:color/white" />
     </LinearLayout>
