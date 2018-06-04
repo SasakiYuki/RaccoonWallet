@@ -26,7 +26,7 @@ object RegisterDateUtils {
         } else {
             val dateTime = LocalDateTime.parse(registerDateString, dateTimeFormatter)
             val between = Duration.between(now, dateTime)
-            between.toDays() <= -3L
+            between.toDays() <= ReviewAppealUtils.REVIEW_APPEAL_DAYS
         }
     }
 }

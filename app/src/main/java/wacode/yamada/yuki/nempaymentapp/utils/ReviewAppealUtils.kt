@@ -11,6 +11,7 @@ import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
 
 object ReviewAppealUtils {
     const val KEY_REVIEW = "sp_key_review"
+    const val REVIEW_APPEAL_DAYS = -3 // 三日経ったら表示する
     private const val SP_IS_ALREADY_SHOWN_REVIEW_DIALOG = "sp_is_already_shown_review_dialog"
 
     fun createReviewDialog(context: Context, supportFragmentManager: FragmentManager, viewModel: RaccoonConfirmViewModel) {
