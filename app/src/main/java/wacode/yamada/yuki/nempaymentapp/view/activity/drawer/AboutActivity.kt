@@ -82,7 +82,7 @@ class AboutActivity : BaseActivity() {
         viewModel.checkEvent
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { item ->
-                    viewModel.saveSPTwiceDisplay(this, RaccoonConfirmViewModel.KEY_REVIEW, item)
+                    viewModel.saveSPTwiceDisplay(this, RaccoonConfirmViewModel.KEY_REVIEW, !item)
                 }
         viewModel.clickEvent
                 .observeOn(AndroidSchedulers.mainThread())
