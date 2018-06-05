@@ -8,7 +8,10 @@ import android.support.customtabs.CustomTabsIntent
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import kotlinx.android.synthetic.main.activity_about.*
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.utils.ReviewAppealUtils
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
+
 
 class AboutActivity : BaseActivity() {
     override fun setLayout() = R.layout.activity_about
@@ -22,6 +25,7 @@ class AboutActivity : BaseActivity() {
         setupOfficialSiteLink()
         setupDiscordLink()
         setupOssLicenceButton()
+        setupReviewButton()
     }
 
     private fun setupPolicyTextView() {
@@ -56,6 +60,18 @@ class AboutActivity : BaseActivity() {
             val intent = Intent(this, OssLicensesMenuActivity::class.java)
             intent.putExtra("title", getString(R.string.about_activity_official_licence))
             startActivity(intent)
+        }
+    }
+
+    private fun setupReviewButton() {
+        plzReviewLayout.setOnClickListener {
+            val viewModel = RaccoonConfirmViewModel()
+            if (viewModel.shouldTwiceDisplay(this, ReviewAppealUtils.KEY_REVIEW)) {
+                ReviewAppealUtils.saveAlreadyShownReviewDialog(this)
+                ReviewAppealUtils.createReviewDialog(this, supportFragmentManager, viewModel)
+            } else {
+                ReviewAppealUtils.openPlayStore(this)
+            }
         }
     }
 

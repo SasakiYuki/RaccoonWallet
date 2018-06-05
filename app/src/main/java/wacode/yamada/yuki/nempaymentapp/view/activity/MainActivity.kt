@@ -29,10 +29,7 @@ import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.types.MainBottomNavigationType
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
-import wacode.yamada.yuki.nempaymentapp.utils.SharedPreferenceUtils
-import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
+import wacode.yamada.yuki.nempaymentapp.utils.*
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.QrScanCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.AboutActivity
@@ -40,6 +37,7 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.MosaicListActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.ExampleFragmentPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.controller.DrawerListController
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
 import wacode.yamada.yuki.nempaymentapp.view.fragment.SplashFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.top.SendTopFragment
 
@@ -212,6 +210,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
 
     override fun hideSplash() {
         if (isAlreadyRaccoonWallet()) {
+            saveRegisterDate()
             startActivity(FirstTutorialActivity.createIntent(this))
             finish()
         } else {
@@ -219,6 +218,11 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             setupViewPager()
             setupBottomTabLayout()
             setupNemIcon()
+            if (!ReviewAppealUtils.isAlreadyShownReviewDialog(this) && RegisterDateUtils.isThreeDaysLater(this)) {
+                val viewModel = RaccoonConfirmViewModel()
+                ReviewAppealUtils.saveAlreadyShownReviewDialog(this)
+                ReviewAppealUtils.createReviewDialog(this, supportFragmentManager, viewModel)
+            }
         }
     }
 
@@ -304,6 +308,8 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     }
 
     private fun isAlreadyRaccoonWallet() = SharedPreferenceUtils[this, SP_IS_FIRST_RACCOON, true]
+
+    private fun saveRegisterDate() = RegisterDateUtils.saveRegisterDate(this)
 
     companion object {
         const val SP_IS_FIRST_RACCOON = "sp_is_first_raccoon"
