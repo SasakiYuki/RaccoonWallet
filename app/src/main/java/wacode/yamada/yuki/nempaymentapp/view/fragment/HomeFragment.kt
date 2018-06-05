@@ -33,6 +33,7 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRxBus()
         setupWallet()
+        setupSwipeRefresh()
     }
 
     override fun onResume() {
@@ -63,6 +64,13 @@ class HomeFragment : BaseFragment() {
                 }
     }
 
+    private fun setupSwipeRefresh() {
+        swipeRefreshLayout.setColorSchemeResources(R.color.nemGreen, R.color.nemBlue, R.color.nemOrange)
+        swipeRefreshLayout.setOnRefreshListener {
+            setupBalanceItem()
+        }
+    }
+
     private fun setupViews() {
         showTransactionButton.setOnClickListener {
             async(UI) {
@@ -89,9 +97,11 @@ class HomeFragment : BaseFragment() {
                             .subscribe({ response ->
                                 setupAccountViews(accountMetaDataPair = response)
                                 hideProgress()
+                                hideSwipeRefreshIcon()
                             }, { e ->
                                 e.printStackTrace()
                                 hideProgress()
+                                hideSwipeRefreshIcon()
                                 context.showToast(R.string.home_fragment_error_account)
                             })
             )
@@ -100,8 +110,10 @@ class HomeFragment : BaseFragment() {
                             .subscribe({ response ->
                                 setupTransactionItems(response)
                                 hideProgress()
+                                hideSwipeRefreshIcon()
                             }, { e ->
                                 e.printStackTrace()
+                                hideSwipeRefreshIcon()
                                 hideProgress()
                                 context.showToast(R.string.home_fragment_error_transaction)
                             })
@@ -110,9 +122,11 @@ class HomeFragment : BaseFragment() {
                     NemCommons.getHarvestInfo(it.address)
                             .subscribe({ response ->
                                 setupHarvestItem(response)
+                                hideSwipeRefreshIcon()
                                 hideProgress()
                             }, { e ->
                                 e.printStackTrace()
+                                hideSwipeRefreshIcon()
                                 hideProgress()
                                 context.showToast(R.string.home_fragment_error_transaction)
                             })
@@ -123,6 +137,12 @@ class HomeFragment : BaseFragment() {
             hideProgress()
             harvestEmptyView.visibility = View.VISIBLE
             transactionEmptyView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideSwipeRefreshIcon() {
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 
