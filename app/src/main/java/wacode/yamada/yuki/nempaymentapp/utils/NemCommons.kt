@@ -52,6 +52,9 @@ object NemCommons {
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
 
+    fun getNamespaceMosaics(nameSpace: String) =
+            getClient().namespaceMosaicDefinitionPage(nameSpace)
+
     fun getHarvestInfo(address: String) =
             getClient().accountHarvests(address)
                     .subscribeOn(Schedulers.newThread())
