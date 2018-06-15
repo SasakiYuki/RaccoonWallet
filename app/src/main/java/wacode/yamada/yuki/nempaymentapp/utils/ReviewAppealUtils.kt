@@ -48,7 +48,7 @@ object ReviewAppealUtils {
         }
     }
 
-    fun saveAlreadyShownReviewDialog(context: Context) = SharedPreferenceUtils[context, SP_IS_ALREADY_SHOWN_REVIEW_DIALOG, true]
+    fun saveAlreadyShownReviewDialog(context: Context) = SharedPreferenceUtils.put(context, SP_IS_ALREADY_SHOWN_REVIEW_DIALOG, true)
 
     fun isAlreadyShownReviewDialog(context: Context) = SharedPreferenceUtils[context, SP_IS_ALREADY_SHOWN_REVIEW_DIALOG, false]
 }
