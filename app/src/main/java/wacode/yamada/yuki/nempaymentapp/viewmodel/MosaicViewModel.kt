@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import com.ryuta46.nemkotlin.model.Mosaic
 import com.ryuta46.nemkotlin.model.MosaicDefinitionMetaDataPair
 import io.reactivex.disposables.CompositeDisposable
@@ -9,18 +10,18 @@ import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
 import java.util.HashMap
 import kotlin.collections.ArrayList
 
-class MosaicViewModel {
+class MosaicViewModel :ViewModel(){
     private val compositeDisposable = CompositeDisposable()
     val fullItemMosaic: MutableLiveData<MosaicFullItem> = MutableLiveData()
 
     private fun getOwnedMosaicFullData(address: String) {
         compositeDisposable.add(NemCommons.getAccountMosaicOwned(address)
                 .subscribe({ response ->
-
+                    getMosaicList(response)
                 }, { e -> e.printStackTrace() }))
     }
 
-    private fun a(list: List<Mosaic>) {
+    private fun getMosaicList(list: List<Mosaic>) {
         val nameSpaceHashMap = HashMap<String, List<Mosaic>>()
         for (namespaceMosaic in list) {
             val namespaceList = ArrayList<Mosaic>()
@@ -31,28 +32,24 @@ class MosaicViewModel {
             compositeDisposable.add(
                     NemCommons.getNamespaceMosaics(key)
                             .subscribe({ item ->
-                                ab(nameSpaceHashMap, key, item)
+                                getFullMosaicItems(nameSpaceHashMap, key, item)
                             }, {})
             )
         }
     }
 
-    private fun ab(nameSpaceHashMap: HashMap<String, List<Mosaic>>, key: String, responseList: List<MosaicDefinitionMetaDataPair>) {
+    private fun getFullMosaicItems(nameSpaceHashMap: HashMap<String, List<Mosaic>>, key: String, responseList: List<MosaicDefinitionMetaDataPair>) {
         val mosaicList = nameSpaceHashMap[key]
         mosaicList?.let {
             for (responseItem in responseList) {
-                for (mosaicItem in it) {
-                    if (responseItem.mosaic.id.fullName == mosaicItem.mosaicId.fullName) {
-                        responseItem.mosaic.divisibility?.let {
-                            fullItemMosaic.value = MosaicFullItem(it)
+                it
+                        .filter { responseItem.mosaic.id.fullName == it.mosaicId.fullName }
+                        .forEach {
+                            responseItem.mosaic.divisibility?.let {
+                                fullItemMosaic.value = MosaicFullItem(it)
+                            }
                         }
-                    }
-                }
             }
         }
-    }
-
-    fun onPause() {
-        compositeDisposable.clear()
     }
 }

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.utils.PinCodeProvider
 import wacode.yamada.yuki.nempaymentapp.utils.WalletProvider
@@ -16,6 +18,7 @@ import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 abstract class BaseActivity : AppCompatActivity() {
     private var toolbar: Toolbar? = null
     private var loadingDialog: LoadingDialogFragment? = null
+    private val baseCompositeDisposable = CompositeDisposable()
 
     abstract fun setLayout(): Int
 
@@ -30,6 +33,13 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onResume()
         checkClearCache()
     }
+
+    override fun onDestroy() {
+        baseCompositeDisposable.clear()
+        super.onDestroy()
+    }
+
+    fun Disposable.disposeWhenDestroy() = baseCompositeDisposable.add(this)
 
     private fun setupViews() {
         toolbar = findViewById(R.id.toolbar)
