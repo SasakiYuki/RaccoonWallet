@@ -1,4 +1,6 @@
 def androidSupportVersion = '24.2.0'
+def lifecycle_version = "1.1.1"
+def dagger_version = "2.13"
 
 apply plugin: 'com.android.application'
 
@@ -55,7 +57,10 @@ dependencies {
     compile "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
-    implementation "android.arch.lifecycle:livedata:1.1.1"
+    implementation "android.arch.lifecycle:livedata:$lifecycle_version"
+    implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
 
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.20"
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.20"
@@ -109,6 +114,12 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
+
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 }
 
 kotlin {
