@@ -34,10 +34,12 @@ object ReviewAppealUtils {
                 title,
                 message,
                 buttonText,
-                viewModel.shouldTwiceDisplay(context, KEY_REVIEW)
+                true
         )
 
-        dialog.show(supportFragmentManager, RaccoonConfirmDialog::class.java.toString())
+        if (viewModel.shouldTwiceDisplay(context, KEY_REVIEW)) {
+            dialog.show(supportFragmentManager, RaccoonConfirmDialog::class.java.toString())
+        }
     }
 
     fun openPlayStore(context: Context) {
