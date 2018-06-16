@@ -52,4 +52,9 @@ class MosaicViewModel :ViewModel(){
             }
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
 }
