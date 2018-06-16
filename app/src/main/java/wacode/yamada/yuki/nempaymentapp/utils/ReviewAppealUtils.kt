@@ -34,10 +34,12 @@ object ReviewAppealUtils {
                 title,
                 message,
                 buttonText,
-                viewModel.shouldTwiceDisplay(context, KEY_REVIEW)
+                true
         )
 
-        dialog.show(supportFragmentManager, RaccoonConfirmDialog::class.java.toString())
+        if (viewModel.shouldTwiceDisplay(context, KEY_REVIEW)) {
+            dialog.show(supportFragmentManager, RaccoonConfirmDialog::class.java.toString())
+        }
     }
 
     fun openPlayStore(context: Context) {
@@ -48,7 +50,7 @@ object ReviewAppealUtils {
         }
     }
 
-    fun saveAlreadyShownReviewDialog(context: Context) = SharedPreferenceUtils[context, SP_IS_ALREADY_SHOWN_REVIEW_DIALOG, true]
+    fun saveAlreadyShownReviewDialog(context: Context) = SharedPreferenceUtils.put(context, SP_IS_ALREADY_SHOWN_REVIEW_DIALOG, true)
 
     fun isAlreadyShownReviewDialog(context: Context) = SharedPreferenceUtils[context, SP_IS_ALREADY_SHOWN_REVIEW_DIALOG, false]
 }
