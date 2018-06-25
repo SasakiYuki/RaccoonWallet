@@ -6,19 +6,24 @@ import com.ryuta46.nemkotlin.model.Mosaic
 import com.ryuta46.nemkotlin.model.MosaicDefinitionMetaDataPair
 import io.reactivex.disposables.CompositeDisposable
 import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
-import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
+import wacode.yamada.yuki.nempaymentapp.usecase.BalanceListUsecase
 import java.util.HashMap
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class MosaicViewModel :ViewModel(){
+class BalanceListViewModel @Inject constructor(
+        private val usecase: BalanceListUsecase
+) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     val fullItemMosaic: MutableLiveData<MosaicFullItem> = MutableLiveData()
+    val errorTextResource: MutableLiveData<Int> = MutableLiveData()
 
     private fun getOwnedMosaicFullData(address: String) {
-        compositeDisposable.add(NemCommons.getAccountMosaicOwned(address)
-                .subscribe({ response ->
-                    getMosaicList(response)
-                }, { e -> e.printStackTrace() }))
+        usecase.getOwnedMosaics(address)
+                .subscribe({
+                    getMosaicList(it)
+                }, { it.printStackTrace() })
+                .let { compositeDisposable.add(it) }
     }
 
     private fun getMosaicList(list: List<Mosaic>) {
@@ -29,12 +34,10 @@ class MosaicViewModel :ViewModel(){
             nameSpaceHashMap.put(namespaceMosaic.mosaicId.namespaceId, namespaceList)
         }
         for (key in nameSpaceHashMap.keys) {
-            compositeDisposable.add(
-                    NemCommons.getNamespaceMosaics(key)
-                            .subscribe({ item ->
-                                getFullMosaicItems(nameSpaceHashMap, key, item)
-                            }, {})
-            )
+            usecase.getNamespaceMosaics(key)
+                    .subscribe({ getFullMosaicItems(nameSpaceHashMap, key, it) },
+                            { it.printStackTrace() })
+                    .let { compositeDisposable.add(it) }
         }
     }
 

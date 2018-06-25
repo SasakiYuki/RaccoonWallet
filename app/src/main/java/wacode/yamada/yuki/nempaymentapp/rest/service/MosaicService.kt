@@ -4,4 +4,7 @@ class MosaicService : BaseClientService() {
 
     fun getOwnedMosaics(address: String) =
             getClient().accountMosaicOwned(address)
+
+    fun getNamespaceMosaics(nameSpace:String) =
+            getClient().namespaceMosaicDefinitionPage(nameSpace)
 }

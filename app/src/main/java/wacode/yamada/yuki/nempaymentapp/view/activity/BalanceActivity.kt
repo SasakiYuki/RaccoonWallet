@@ -15,12 +15,12 @@ import wacode.yamada.yuki.nempaymentapp.rest.model.MosaicAppEntity
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.controller.BalanceListController
-import wacode.yamada.yuki.nempaymentapp.viewmodel.MosaicViewModel
+import wacode.yamada.yuki.nempaymentapp.viewmodel.BalanceListViewModel
 
 class BalanceActivity : BaseActivity() {
     private lateinit var controller: BalanceListController
     private val mosaics = ArrayList<MosaicItem>()
-    private val mosaicViewModel:MosaicViewModel = MosaicViewModel()
+    private val balanceListViewModel: BalanceListViewModel = BalanceListViewModel()
 
     override fun setLayout() = R.layout.activity_balance
 
