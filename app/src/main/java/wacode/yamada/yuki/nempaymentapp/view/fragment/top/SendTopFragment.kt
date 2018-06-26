@@ -54,29 +54,29 @@ class SendTopFragment : BaseFragment() {
         compositeDisposable.add(
                 NemCommons.getAccountInfo(address)
                         .subscribe({ item ->
+                            hideProgress()
                             if (qrEntity != null) {
                                 startActivity(SendActivity.createIntentDirectConfirm(context, qrEntity, item.account.publicKey))
                             } else {
                                 startActivity(SendActivity.createIntent(context, address, item.account.publicKey))
                             }
-                            hideProgress()
                         }, { e ->
                             hideProgress()
-                            showNewbieConfirmDialog(qrEntity)
+                            if (qrEntity != null) {
+                                startActivity(SendActivity.createIntentDirectConfirm(context, qrEntity, ""))
+                            } else {
+                                showNewbieConfirmDialog()
+                            }
                         }))
     }
 
-    private fun showNewbieConfirmDialog(qrEntity: PaymentQREntity? = null) {
+    private fun showNewbieConfirmDialog() {
         val address = addressEditText.text.toString().remove("-")
         val viewModel = RaccoonConfirmViewModel()
         viewModel.clickEvent
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    if (qrEntity != null) {
-                        startActivity(SendActivity.createIntentDirectConfirm(context, qrEntity, ""))
-                    } else {
-                        startActivity(SendActivity.createIntent(context, address, ""))
-                    }
+                    startActivity(SendActivity.createIntent(context, address, ""))
                 }
         val title = getString(R.string.send_top_fragment_confirm_title)
         val message = getString(R.string.send_top_fragment_confirm_message)
