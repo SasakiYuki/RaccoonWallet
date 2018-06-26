@@ -178,6 +178,14 @@
     <string name="send_top_fragment_not_select_wallet">ウォレットが選択されていません</string>
     <string name="send_top_fragment_confirm_title">気をつけて。送り先はニュービーだ。</string>
     <string name="send_top_fragment_confirm_message">君が送ろうとしているアドレスは、これまで一度もブロックチェーン上で活動していない新参者みたいだね。とはいえアドレスがちゃんとした形式なら、送金は可能だよ。\nアドレスは正しいか、送り先は信頼できるか、よく確かめてから手続きしてね。</string>
+    <string name="send_top_fragment_amount_confirm_title">数量は０で合っているかい？</string>
+    <string name="send_top_fragment_amount_confirm_message">君は数量を０で送ろうとしているけど、本当に合っているかい？</string>
+    <string name="send_top_fragment_amount_confirm_dialog_positive">合っている</string>
+    <string name="send_top_fragment_amount_confirm_dialog_negative">変える</string>
+    <string name="send_top_fragment_message_confirm_title">メッセージを添付しなくて大丈夫かい？</string>
+    <string name="send_top_fragment_message_confirm_message">君はメッセージを空で送ろうとしているけど、本当に大丈夫かい？</string>
+    <string name="send_top_fragment_message_confirm_dialog_positive">大丈夫</string>
+    <string name="send_top_fragment_message_confirm_dialog_negative">添付する</string>
 
     <!-- SelectSendModeFragment -->
     <string name="select_send_mode_fragment_title">送信モードを選んでね</string>

@@ -50,16 +50,15 @@ class SendTopFragment : BaseFragment() {
 
     private fun checkEnterAddressAvailable(qrEntity: PaymentQREntity? = null) {
         val address = addressEditText.text.toString().remove("-")
+
+        if (address.isEmpty()) return
+
         showProgress()
         compositeDisposable.add(
                 NemCommons.getAccountInfo(address)
                         .subscribe({ item ->
                             hideProgress()
-                            if (qrEntity != null) {
-                                startActivity(SendActivity.createIntentDirectConfirm(context, qrEntity, item.account.publicKey))
-                            } else {
-                                startActivity(SendActivity.createIntent(context, address, item.account.publicKey))
-                            }
+                            selectNextScreen(qrEntity, item.account.publicKey)
                         }, { e ->
                             hideProgress()
                             if (qrEntity != null) {
@@ -70,13 +69,52 @@ class SendTopFragment : BaseFragment() {
                         }))
     }
 
-    private fun showNewbieConfirmDialog() {
+    private fun selectNextScreen(qrEntity: PaymentQREntity? = null, publicKey: String) {
         val address = addressEditText.text.toString().remove("-")
+
+        qrEntity?.let {
+            if (it.data.amount > 0) {
+                if (it.data.msg.isEmpty()) {
+                    showMessageConfirmDialog().clickEvent
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe {
+                                when (it) {
+                                    SelectDialogButton.POSITIVE -> {
+                                        //todo 送金確認画面に遷移
+                                    }
+                                    SelectDialogButton.NEGATIVE -> {
+                                        //todo メッセージの種類を選択する画面に遷移
+                                    }
+                                }
+                            }
+                } else {
+                    //todo intent confirm Screen
+                }
+            } else {
+                showAmountConfirmDialog().clickEvent
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            when (it) {
+                                SelectDialogButton.POSITIVE -> {
+                                    //todo intent メッセージをつけるかを確認する画面に遷移
+                                }
+                                SelectDialogButton.NEGATIVE -> {
+                                    //todo intent 金額を指定する画面に遷移
+                                }
+                            }
+                        }
+            }
+        } ?: run {
+            startActivity(SendActivity.createIntent(context, address, publicKey))
+        }
+    }
+
+    private fun showNewbieConfirmDialog() {
         val viewModel = RaccoonConfirmViewModel()
         viewModel.clickEvent
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    startActivity(SendActivity.createIntent(context, address, ""))
+                    selectNextScreen(null, "")
                 }
         val title = getString(R.string.send_top_fragment_confirm_title)
         val message = getString(R.string.send_top_fragment_confirm_message)
@@ -88,6 +126,24 @@ class SendTopFragment : BaseFragment() {
                 buttonMessage,
                 false)
         confirmDialog.show((context as AppCompatActivity).supportFragmentManager, RaccoonConfirmDialog::class.java.toString())
+    }
+
+    private fun showAmountConfirmDialog(): RaccoonSelectViewModel {
+        val viewModel = RaccoonSelectViewModel(getString(R.string.send_top_fragment_amount_confirm_dialog_positive), getString(R.string.send_top_fragment_amount_confirm_dialog_negative))
+        val title = getString(R.string.send_top_fragment_amount_confirm_title)
+        val message = getString(R.string.send_top_fragment_amount_confirm_message)
+        val selectDialog = RaccoonSelectDialog.createDialog(viewModel, title, message)
+        selectDialog.show(activity.supportFragmentManager, RaccoonSelectDialog::class.java.toString())
+        return viewModel
+    }
+
+    private fun showMessageConfirmDialog(): RaccoonSelectViewModel {
+        val viewModel = RaccoonSelectViewModel(getString(R.string.send_top_fragment_message_confirm_dialog_positive), getString(R.string.send_top_fragment_message_confirm_dialog_negative))
+        val title = getString(R.string.send_top_fragment_message_confirm_title)
+        val message = getString(R.string.send_top_fragment_message_confirm_message)
+        val selectDialog = RaccoonSelectDialog.createDialog(viewModel, title, message)
+        selectDialog.show(activity.supportFragmentManager, RaccoonSelectDialog::class.java.toString())
+        return viewModel
     }
 
     private fun showPinCodeErrorDialog() {
