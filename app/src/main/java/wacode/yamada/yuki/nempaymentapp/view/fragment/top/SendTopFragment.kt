@@ -17,6 +17,7 @@ import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.SendType
 import wacode.yamada.yuki.nempaymentapp.view.activity.SettingActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.*
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
@@ -62,33 +63,37 @@ class SendTopFragment : BaseFragment() {
                         }, { e ->
                             hideProgress()
                             if (qrEntity != null) {
-                                startActivity(SendActivity.createIntentDirectConfirm(context, qrEntity, ""))
+                                selectNextScreen(qrEntity)
                             } else {
                                 showNewbieConfirmDialog()
                             }
                         }))
     }
 
-    private fun selectNextScreen(qrEntity: PaymentQREntity? = null, publicKey: String) {
+    private fun selectNextScreen(qrEntity: PaymentQREntity? = null, publicKey: String = "") {
         val address = addressEditText.text.toString().remove("-")
 
-        qrEntity?.let {
-            if (it.data.amount > 0) {
-                if (it.data.msg.isEmpty()) {
+        qrEntity?.let { entity ->
+            if (entity.data.amount > 0) {
+                if (entity.data.msg.isEmpty()) {
                     showMessageConfirmDialog().clickEvent
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe {
                                 when (it) {
                                     SelectDialogButton.POSITIVE -> {
-                                        //todo 送金確認画面に遷移
+                                        //送金確認画面に遷移
+                                        startActivity(SendActivity.createIntent(context, address, publicKey, SendType.CONFIRM, entity))
+
                                     }
                                     SelectDialogButton.NEGATIVE -> {
-                                        //todo メッセージの種類を選択する画面に遷移
+                                        //メッセージの種類を選択する画面に遷移
+                                        startActivity(SendActivity.createIntent(context, address, publicKey, SendType.SELECT_MESSAGE, entity))
                                     }
                                 }
                             }
                 } else {
-                    //todo intent confirm Screen
+                    //送金確認画面に遷移
+                    startActivity(SendActivity.createIntent(context, address, publicKey, SendType.CONFIRM, entity))
                 }
             } else {
                 showAmountConfirmDialog().clickEvent
@@ -96,10 +101,12 @@ class SendTopFragment : BaseFragment() {
                         .subscribe {
                             when (it) {
                                 SelectDialogButton.POSITIVE -> {
-                                    //todo intent メッセージをつけるかを確認する画面に遷移
+                                    //メッセージを添付するかどうかを選択する画面に遷移
+                                    startActivity(SendActivity.createIntent(context, address, publicKey, SendType.SELECT_MODE, entity))
                                 }
                                 SelectDialogButton.NEGATIVE -> {
-                                    //todo intent 金額を指定する画面に遷移
+                                    //金額を指定する画面に遷移
+                                    startActivity(SendActivity.createIntent(context, address, publicKey, SendType.ENTER, entity))
                                 }
                             }
                         }
@@ -114,7 +121,7 @@ class SendTopFragment : BaseFragment() {
         viewModel.clickEvent
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    selectNextScreen(null, "")
+                    selectNextScreen()
                 }
         val title = getString(R.string.send_top_fragment_confirm_title)
         val message = getString(R.string.send_top_fragment_confirm_message)
