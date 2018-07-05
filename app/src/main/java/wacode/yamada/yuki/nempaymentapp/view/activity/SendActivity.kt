@@ -117,10 +117,10 @@ class SendActivity : BaseFragmentActivity() {
     companion object {
         private const val REQUEST_CODE_MESSAGE = 1129
         const val KEY_SEND_MESSAGE_LIST = "key_send_message_list"
-        private  val KEY_SEND_ADDRESS = "key_send_address"
-        private val KEY_SENDER_PUBLIC_KEY = "key_sender_public_key"
-        private val KEY_SEND_PAYMENT_ENTITY = "key_send_payment_entity"
-        private val KEY_SEND_SCREEN_TYPE = "key_send_screen_type"
+        private const val KEY_SEND_ADDRESS = "key_send_address"
+        private const val KEY_SENDER_PUBLIC_KEY = "key_sender_public_key"
+        private const val KEY_SEND_PAYMENT_ENTITY = "key_send_payment_entity"
+        private const val KEY_SEND_SCREEN_TYPE = "key_send_screen_type"
 
         fun createIntent(context: Context, address: String, senderPublicKey: String): Intent {
             val intent = Intent(context, SendActivity::class.java)
