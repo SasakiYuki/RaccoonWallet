@@ -182,9 +182,9 @@
     <string name="send_top_fragment_amount_confirm_message">君は数量を０で送ろうとしているけど、本当に合っているかい？</string>
     <string name="send_top_fragment_amount_confirm_dialog_positive">合っている</string>
     <string name="send_top_fragment_amount_confirm_dialog_negative">変える</string>
-    <string name="send_top_fragment_message_confirm_title">メッセージを添付しなくて大丈夫かい？</string>
-    <string name="send_top_fragment_message_confirm_message">君はメッセージを空で送ろうとしているけど、本当に大丈夫かい？</string>
-    <string name="send_top_fragment_message_confirm_dialog_positive">大丈夫</string>
+    <string name="send_top_fragment_message_confirm_title">メッセージが空になっているぞ！</string>
+    <string name="send_top_fragment_message_confirm_message">君は今メッセージを空で送ろうとしている。\nこのまま送ってもいいかい？</string>
+    <string name="send_top_fragment_message_confirm_dialog_positive">はい</string>
     <string name="send_top_fragment_message_confirm_dialog_negative">添付する</string>
 
     <!-- SelectSendModeFragment -->
