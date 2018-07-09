@@ -13,4 +13,5 @@ import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
 data class MosaicFullItem(val divisibility: Int, val mosaicItem: MosaicItem) {
     fun getFullName() = mosaicItem.mosaic.mosaicId.fullName
     fun getMosaicBalance() = if (mosaicItem.isNEMXEMItem()) mosaicItem.mosaic.quantity.convertNEMFromMicroToDouble().toString() else (mosaicItem.mosaic.quantity / Math.pow(10.0, divisibility.toDouble())).toString()
+    fun isChecked() = mosaicItem.checked
 }

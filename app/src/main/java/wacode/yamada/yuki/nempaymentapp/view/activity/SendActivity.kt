@@ -4,14 +4,25 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.rest.item.SendMosaicItem
 import wacode.yamada.yuki.nempaymentapp.view.fragment.send.*
+import javax.inject.Inject
 
-class SendActivity : BaseFragmentActivity() {
+class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
+    @Inject
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
+
     override fun initialFragment() = if (isDirectConfirm)
         SendConfirmFragment.newInstance(viewModel, intentSendArray, address)
     else EnterSendFragment.newInstance(viewModel)
@@ -49,6 +60,7 @@ class SendActivity : BaseFragmentActivity() {
     private val viewModel = SendViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         viewModel.replaceEvent
                 .observeOn(AndroidSchedulers.mainThread())
@@ -118,12 +130,12 @@ class SendActivity : BaseFragmentActivity() {
             return intent
         }
 
-        fun createIntentDirectConfirm(context: Context, paymentQREntity: PaymentQREntity,senderPublicKey: String): Intent {
+        fun createIntentDirectConfirm(context: Context, paymentQREntity: PaymentQREntity, senderPublicKey: String): Intent {
             val intent = Intent(context, SendActivity::class.java)
             intent.putExtra(KEY_SEND_ADDRESS, paymentQREntity.data.addr)
             intent.putExtra(KEY_SEND_DIRECT_CONFIRM, true)
             intent.putExtra(KEY_SEND_PAYMENT_ENTITY, paymentQREntity)
-            intent.putExtra(KEY_SENDER_PUBLIC_KEY,senderPublicKey)
+            intent.putExtra(KEY_SENDER_PUBLIC_KEY, senderPublicKey)
             return intent
         }
     }
