@@ -75,7 +75,7 @@ class SendTopFragment : BaseFragment() {
 
         qrEntity?.let { entity ->
             if (entity.data.amount > 0) {
-                if (entity.data.msg.isEmpty()) {
+                if (entity.data.msg.isNullOrEmpty()) {
                     showMessageConfirmDialog(address, publicKey, entity)
                 } else {
                     //送金確認画面に遷移
