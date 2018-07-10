@@ -14,6 +14,7 @@ import wacode.yamada.yuki.nempaymentapp.extentions.remove
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
+import wacode.yamada.yuki.nempaymentapp.rest.item.PaymentQrItem
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
@@ -74,8 +75,9 @@ class SendTopFragment : BaseFragment() {
         val address = addressEditText.text.toString().remove("-")
 
         qrEntity?.let { entity ->
-            if (entity.data.amount > 0) {
-                if (entity.data.msg.isNullOrEmpty()) {
+            val paymentItem = PaymentQrItem.createItem(entity)
+            if (paymentItem.existAmount()) {
+                if (paymentItem.existMessage()) {
                     showMessageConfirmDialog(address, publicKey, entity)
                 } else {
                     //送金確認画面に遷移
