@@ -68,6 +68,7 @@ class RaccoonAlertDialog : SimpleDialogFragment() {
 
 class RaccoonAlertViewModel {
     val clickEvent: PublishSubject<RaccoonAlertType> = PublishSubject.create()
+    val closeEvent: PublishSubject<Unit> = PublishSubject.create()
 
     fun onClickCloseButton() {
         onClickButton(RaccoonAlertType.CLOSE_BUTTON)
@@ -75,6 +76,10 @@ class RaccoonAlertViewModel {
 
     fun onClickBottomButton() {
         onClickButton(RaccoonAlertType.BOTTOM_BUTTON)
+    }
+
+    fun onClose() {
+        closeEvent.onNext(Unit)
     }
 
     private fun onClickButton(type: RaccoonAlertType) {

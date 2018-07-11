@@ -6,9 +6,17 @@ import android.content.Intent
 import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
+import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
+import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.rest.item.SendMosaicItem
+import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertType
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertViewModel
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonErrorDialog
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.send.*
 
@@ -51,12 +59,75 @@ class SendActivity : BaseFragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        showErrorDialogIfNeeded()
+
         viewModel.replaceEvent
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ item ->
                     replaceFragment(item.first, item.second)
                 })
         setToolBarBackButton()
+
+    }
+
+    private fun showErrorDialogIfNeeded() {
+        async {
+            val wallet = bg { WalletManager.getSelectedWallet(this@SendActivity) }.await()
+            when {
+                wallet == null -> showWalletErrorDialog()
+                !PinCodeHelper.isAvailable(this@SendActivity) -> showPinCodeErrorDialog()
+            }
+        }
+    }
+
+    private fun showPinCodeErrorDialog() {
+        val viewModel = RaccoonAlertViewModel()
+        viewModel.clickEvent
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    when (it) {
+                        RaccoonAlertType.BOTTOM_BUTTON -> {
+                            startActivity(SettingActivity.getCallingIntent(this))
+                            finish()
+                        }
+                        RaccoonAlertType.CLOSE_BUTTON -> finish()
+                    }
+                }
+
+        viewModel.closeEvent
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { finish() }
+
+        val dialog = RaccoonErrorDialog.createDialog(viewModel,
+                getString(R.string.raccoon_error_pin_title),
+                getString(R.string.raccoon_error_pin_message),
+                getString(R.string.raccoon_error_pin_button))
+        dialog.show(this.supportFragmentManager, "")
+    }
+
+    private fun showWalletErrorDialog() {
+        val viewModel = RaccoonAlertViewModel()
+        viewModel.clickEvent
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    when (it) {
+                        RaccoonAlertType.BOTTOM_BUTTON -> {
+                            startActivity(SelectWalletActivity.createIntent(this))
+                            finish()
+                        }
+                        RaccoonAlertType.CLOSE_BUTTON -> finish()
+                    }
+                }
+
+        viewModel.closeEvent
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { finish() }
+
+        val dialog = RaccoonErrorDialog.createDialog(viewModel,
+                getString(R.string.raccoon_error_pin_title),
+                getString(R.string.raccoon_error_wallet_message),
+                getString(R.string.raccoon_error_wallet_button))
+        dialog.show(this.supportFragmentManager, "")
     }
 
     private fun replaceFragmentForLaunch(): BaseFragment {

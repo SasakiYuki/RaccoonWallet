@@ -6,20 +6,13 @@ import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_send_top.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.remove
-import wacode.yamada.yuki.nempaymentapp.extentions.showToast
-import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.rest.item.PaymentQrItem
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
-import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendType
-import wacode.yamada.yuki.nempaymentapp.view.activity.SettingActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.*
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 
@@ -33,16 +26,7 @@ class SendTopFragment : BaseFragment() {
     }
 
     private fun setupButton() {
-        button.setOnClickListener {
-            async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(this@SendTopFragment.context) }.await()
-                when {
-                    wallet == null -> this@SendTopFragment.context.showToast(R.string.send_top_fragment_not_select_wallet)
-                    !PinCodeHelper.isAvailable(this@SendTopFragment.context) -> showPinCodeErrorDialog()
-                    else -> checkEnterAddressAvailable()
-                }
-            }
-        }
+        button.setOnClickListener { checkEnterAddressAvailable() }
     }
 
     fun putQRScanItems(paymentQREntity: PaymentQREntity) {
@@ -157,23 +141,6 @@ class SendTopFragment : BaseFragment() {
         val message = getString(R.string.send_top_fragment_message_confirm_message)
         val selectDialog = RaccoonSelectDialog.createDialog(viewModel, title, message)
         selectDialog.show(activity.supportFragmentManager, RaccoonSelectDialog::class.java.toString())
-    }
-
-    private fun showPinCodeErrorDialog() {
-        val viewModel = RaccoonAlertViewModel()
-        viewModel.clickEvent
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    if (it == RaccoonAlertType.BOTTOM_BUTTON) {
-                        startActivity(SettingActivity.getCallingIntent(context))
-                    }
-                }
-
-        val dialog = RaccoonErrorDialog.createDialog(viewModel,
-                getString(R.string.raccoon_error_pin_title),
-                getString(R.string.raccoon_error_pin_message),
-                getString(R.string.raccoon_error_pin_button))
-        dialog.show(activity.supportFragmentManager, "")
     }
 
     companion object {

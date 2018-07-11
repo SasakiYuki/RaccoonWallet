@@ -479,6 +479,8 @@
     <string name="raccoon_error_pin_title">送信画面に移動できません</string>
     <string name="raccoon_error_pin_message">PINが設定されていないため、送信画面に移動できません。\n送金操作を行うには、設定からPINの設定を行ってください。</string>
     <string name="raccoon_error_pin_button">PIN設定画面に移動する</string>
+    <string name="raccoon_error_wallet_message">ウォレットが選択されていないため、送信画面に移動できません。\n送金操作を行うには、ウォレットを選択してください。</string>
+    <string name="raccoon_error_wallet_button">ウォレット選択画面に移動する</string>
 
     <!-- AddressErrorDialog -->
     <string name="address_error_dialog_title">送り先が暗号化メッセージに 対応していません。</string>
