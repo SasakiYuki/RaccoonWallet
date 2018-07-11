@@ -1,7 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment
 
 import android.app.Activity
-import android.content.Intent
+import android.content.*
 import android.os.Bundle
 import android.view.View
 import com.ryuta46.nemkotlin.account.AccountGenerator
@@ -84,11 +84,22 @@ class TransactionDetailFragment : BaseFragment() {
         if (entity.senderAddress.isNullOrEmpty()) {
             firstSenderAddressText.text = getString(R.string.transaction_detail_non_address)
             secondSenderAddressText.text = getString(R.string.transaction_detail_non_address)
-
         } else {
             firstSenderAddressText.text = entity.senderAddress
             secondSenderAddressText.text = entity.senderAddress
         }
+
+        recipientAddressText.setOnClickListener { copyToClip(entity.recipientAddress!!) }
+        secondSenderAddressText.setOnClickListener { copyToClip(entity.senderAddress!!) }
+    }
+
+    private fun copyToClip(text: String) {
+        val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val mimeType = arrayOfNulls<String>(1)
+        mimeType[0] = ClipDescription.MIMETYPE_TEXT_URILIST
+        cm.primaryClip = ClipData(ClipDescription("text_data", mimeType), ClipData.Item(text))
+
+        context.showToast(R.string.com_copied)
     }
 
     private fun setupAmount(entity: TransactionAppEntity) {
