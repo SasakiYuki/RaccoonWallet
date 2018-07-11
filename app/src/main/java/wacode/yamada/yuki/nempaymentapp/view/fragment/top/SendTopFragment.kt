@@ -1,5 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment.top
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -10,6 +12,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
 import wacode.yamada.yuki.nempaymentapp.extentions.remove
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
@@ -29,10 +32,10 @@ class SendTopFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupButton()
+        setupViews()
     }
 
-    private fun setupButton() {
+    private fun setupViews() {
         button.setOnClickListener {
             async(UI) {
                 val wallet = bg { WalletManager.getSelectedWallet(this@SendTopFragment.context) }.await()
@@ -42,6 +45,36 @@ class SendTopFragment : BaseFragment() {
                     else -> checkEnterAddressAvailable()
                 }
             }
+        }
+
+        clipButton.setOnClickListener {
+            pasteAddress()
+        }
+
+        clearButton.setOnClickListener {
+            addressEditText.setText("")
+        }
+
+        addressEditText.isNotTextEmptyObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it) {
+                        clipButton.visibility = View.GONE
+                        clearButton.visibility = View.VISIBLE
+                    } else {
+                        clipButton.visibility = View.VISIBLE
+                        clearButton.visibility = View.GONE
+                    }
+                }
+    }
+
+    private fun pasteAddress() {
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+        clipboardManager.primaryClip?.let {
+            addressEditText.setText(it.getItemAt(0).text)
+        } ?: run {
+            context.showToast(R.string.com_paste_error)
         }
     }
 
