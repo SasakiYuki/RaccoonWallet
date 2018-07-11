@@ -17,8 +17,8 @@ android {
         applicationId "wacode.yamada.yuki.nempaymentapp"
         minSdkVersion 22
         targetSdkVersion 26
-        versionCode 18
-        versionName "2.0.5.0"
+        versionCode 19
+        versionName "2.0.6.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
