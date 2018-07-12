@@ -14,6 +14,7 @@ import io.reactivex.subjects.PublishSubject
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.rest.item.SendMosaicItem
+import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.send.*
 import javax.inject.Inject
 
@@ -23,9 +24,7 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
 
-    override fun initialFragment() = if (isDirectConfirm)
-        SendConfirmFragment.newInstance(viewModel, intentSendArray, address)
-    else EnterSendFragment.newInstance(viewModel)
+    override fun initialFragment() = replaceFragmentForLaunch()
 
     override fun setLayout() = SIMPLE_FRAGMENT_ONLY_LAYOUT
 
@@ -33,17 +32,20 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
         intent.getStringExtra(KEY_SEND_ADDRESS)
     }
 
-    private val isDirectConfirm by lazy {
-        val isDirectConfirm = intent.getBooleanExtra(KEY_SEND_DIRECT_CONFIRM, false)
-        if (isDirectConfirm) {
-            return@lazy paymentEntity.data.amount != null && paymentEntity.data.amount != 0L
+    private val screenType by lazy {
+        return@lazy if (intent.hasExtra(KEY_SEND_SCREEN_TYPE)) {
+            intent.getSerializableExtra(KEY_SEND_SCREEN_TYPE) as SendType
         } else {
-            return@lazy false
+            SendType.ENTER
         }
     }
 
     private val senderPublicKey by lazy {
-        intent.getStringExtra(KEY_SENDER_PUBLIC_KEY)
+        return@lazy if (intent.getStringExtra(KEY_SENDER_PUBLIC_KEY).isNullOrEmpty()) {
+            ""
+        } else {
+            intent.getStringExtra(KEY_SENDER_PUBLIC_KEY)
+        }
     }
 
     private val paymentEntity by lazy {
@@ -51,7 +53,6 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
     }
 
     private val intentSendArray by lazy {
-        val paymentEntity = paymentEntity
         val list = ArrayList<SendMosaicItem>()
         list.add(SendMosaicItem.createNEMXEMItem(paymentEntity.data.amount.convertNEMFromMicroToDouble()))
         return@lazy list
@@ -68,6 +69,15 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
                     replaceFragment(item.first, item.second)
                 })
         setToolBarBackButton()
+    }
+
+    private fun replaceFragmentForLaunch(): BaseFragment {
+        return when (screenType) {
+            SendType.SELECT_MODE -> SelectSendModeFragment.newInstance(viewModel, intentSendArray)
+            SendType.SELECT_MESSAGE -> SelectMessageTypeFragment.newInstance(viewModel, intentSendArray, senderPublicKey != "")
+            SendType.CONFIRM -> SendConfirmFragment.newInstance(viewModel, intentSendArray, address, paymentEntity.data.msg, senderPublicKey)
+            else -> EnterSendFragment.newInstance(viewModel)
+        }
     }
 
     private fun replaceFragment(sendType: SendType, list: ArrayList<SendMosaicItem>) {
@@ -119,10 +129,11 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
     companion object {
         private const val REQUEST_CODE_MESSAGE = 1129
         const val KEY_SEND_MESSAGE_LIST = "key_send_message_list"
-        private val KEY_SEND_ADDRESS = "key_send_address"
-        private val KEY_SENDER_PUBLIC_KEY = "key_sender_public_key"
-        private val KEY_SEND_DIRECT_CONFIRM = "key_send_direct_confirm"
-        private val KEY_SEND_PAYMENT_ENTITY = "key_send_payment_entity"
+        private const val KEY_SEND_ADDRESS = "key_send_address"
+        private const val KEY_SENDER_PUBLIC_KEY = "key_sender_public_key"
+        private const val KEY_SEND_PAYMENT_ENTITY = "key_send_payment_entity"
+        private const val KEY_SEND_SCREEN_TYPE = "key_send_screen_type"
+
         fun createIntent(context: Context, address: String, senderPublicKey: String): Intent {
             val intent = Intent(context, SendActivity::class.java)
             intent.putExtra(KEY_SEND_ADDRESS, address)
@@ -130,12 +141,12 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
             return intent
         }
 
-        fun createIntentDirectConfirm(context: Context, paymentQREntity: PaymentQREntity, senderPublicKey: String): Intent {
+        fun createIntent(context: Context, address: String, senderPublicKey: String?, screenType: SendType, paymentQREntity: PaymentQREntity?): Intent {
             val intent = Intent(context, SendActivity::class.java)
-            intent.putExtra(KEY_SEND_ADDRESS, paymentQREntity.data.addr)
-            intent.putExtra(KEY_SEND_DIRECT_CONFIRM, true)
-            intent.putExtra(KEY_SEND_PAYMENT_ENTITY, paymentQREntity)
+            intent.putExtra(KEY_SEND_ADDRESS, address)
             intent.putExtra(KEY_SENDER_PUBLIC_KEY, senderPublicKey)
+            intent.putExtra(KEY_SEND_PAYMENT_ENTITY, paymentQREntity)
+            intent.putExtra(KEY_SEND_SCREEN_TYPE, screenType)
             return intent
         }
     }

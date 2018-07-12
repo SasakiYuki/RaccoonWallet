@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/textBlack"
-            android:textSize="20sp"
+            android:textSize="18sp"
             tools:text="TITLE" />
 
         <TextView
@@ -49,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginRight="@dimen/space_small"
         android:gravity="right"
         android:orientation="horizontal">
 
@@ -59,6 +60,7 @@
             android:foreground="?selectableItemBackground"
             android:gravity="center"
             android:textSize="14sp"
+            android:textStyle="bold"
             tools:text="CANCEL" />
 
         <TextView
@@ -69,6 +71,7 @@
             android:gravity="center"
             android:textColor="@color/nemGreen"
             android:textSize="14sp"
+            android:textStyle="bold"
             tools:text="OK" />
     </LinearLayout>
 </LinearLayout>

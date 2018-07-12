@@ -16,6 +16,7 @@ import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
+import wacode.yamada.yuki.nempaymentapp.extentions.toHexByteArray
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.ImportWalletCallback
 
 
@@ -47,10 +48,16 @@ class ImportSecretKeyFragment : BaseFragment() {
             async(UI) {
                 showProgress()
                 try {
-                    val key = secretKeyEditText.text.toString()
-                    bg { AccountGenerator.fromSeed(ConvertUtils.swapByteArray(ConvertUtils.toByteArray(key)), Version.Main) }.await()
+                    val rawKey = secretKeyEditText.text.toString()
+                    val privateKey = if (rawKey.length == 66 && rawKey.startsWith("00")) {
+                        rawKey.substring(2, 66)
+                    } else {
+                        rawKey
+                    }
+
+                    bg { AccountGenerator.fromSeed(ConvertUtils.swapByteArray(privateKey.toHexByteArray()), Version.Main) }.await()
                     hideProgress()
-                    callback.onReplaceImportWalletName(key.toByteArray(Charsets.UTF_8))
+                    callback.onReplaceImportWalletName(privateKey.toByteArray(Charsets.UTF_8))
                 } catch (e: Exception) {
                     hideProgress()
                     this@ImportSecretKeyFragment.context.showToast(R.string.import_secret_key_input_error)

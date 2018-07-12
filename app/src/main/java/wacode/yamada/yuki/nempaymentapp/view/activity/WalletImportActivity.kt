@@ -14,6 +14,7 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import org.spongycastle.crypto.InvalidCipherTextException
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.extentions.hexToString
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.extentions.toHexByteArray
 import wacode.yamada.yuki.nempaymentapp.model.WalletQrEntity
@@ -68,11 +69,14 @@ class WalletImportActivity : BaseFragmentActivity(), ImportWalletCallback, QrSca
                 val password = data!!.getByteArrayExtra(ImportWalletPasswordActivity.KEY_PASSWORD).toString(Charsets.UTF_8)
                 walletEntity?.let { it ->
                     try {
-                        val key = AesCryptographer.decrypt(it.data.priv_key.toHexByteArray(),
-                                it.data.salt.toHexByteArray(),
-                                password)
+                        val rawKey = AesCryptographer.decrypt(it.data.priv_key.toHexByteArray(), it.data.salt.toHexByteArray(), password).hexToString()
+                        val privateKey = if (rawKey.length == 66 && rawKey.startsWith("00")) {
+                            rawKey.substring(2, 66)
+                        } else {
+                            rawKey
+                        }
 
-                        val account = AccountGenerator.fromSeed(ConvertUtils.swapByteArray(key), Version.Main)
+                        val account = AccountGenerator.fromSeed(ConvertUtils.swapByteArray(privateKey.toHexByteArray()), Version.Main)
                         bg { WalletManager.save(this@WalletImportActivity, account, it.data.name) }.await()
                         navigateCompleteImportWallet()
                     } catch (e: InvalidCipherTextException) {
