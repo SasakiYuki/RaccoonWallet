@@ -1,7 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment
 
 import android.app.Activity
-import android.content.*
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ryuta46.nemkotlin.account.AccountGenerator
@@ -16,6 +16,7 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
+import wacode.yamada.yuki.nempaymentapp.extentions.copyClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.getColor
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
@@ -89,17 +90,14 @@ class TransactionDetailFragment : BaseFragment() {
             secondSenderAddressText.text = entity.senderAddress
         }
 
-        recipientAddressText.setOnClickListener { copyToClip(entity.recipientAddress!!) }
-        secondSenderAddressText.setOnClickListener { copyToClip(entity.senderAddress!!) }
-    }
-
-    private fun copyToClip(text: String) {
-        val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val mimeType = arrayOfNulls<String>(1)
-        mimeType[0] = ClipDescription.MIMETYPE_TEXT_URILIST
-        cm.primaryClip = ClipData(ClipDescription("text_data", mimeType), ClipData.Item(text))
-
-        context.showToast(R.string.com_copied)
+        recipientAddressText.setOnClickListener {
+            entity.recipientAddress!!.copyClipBoard(context)
+            context.showToast(R.string.com_copied)
+        }
+        secondSenderAddressText.setOnClickListener {
+            entity.senderAddress!!.copyClipBoard(context)
+            context.showToast(R.string.com_copied)
+        }
     }
 
     private fun setupAmount(entity: TransactionAppEntity) {
