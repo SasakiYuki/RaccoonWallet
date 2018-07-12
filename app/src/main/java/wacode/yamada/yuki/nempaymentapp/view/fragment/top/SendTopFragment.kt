@@ -1,7 +1,5 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment.top
 
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -13,6 +11,7 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
+import wacode.yamada.yuki.nempaymentapp.extentions.pasteFromClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.remove
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
@@ -48,7 +47,7 @@ class SendTopFragment : BaseFragment() {
         }
 
         clipButton.setOnClickListener {
-            pasteAddress()
+            addressEditText.setText(context.pasteFromClipBoard())
         }
 
         clearButton.setOnClickListener {
@@ -66,16 +65,6 @@ class SendTopFragment : BaseFragment() {
                         clearButton.visibility = View.GONE
                     }
                 }
-    }
-
-    private fun pasteAddress() {
-        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-        clipboardManager.primaryClip?.let {
-            addressEditText.setText(it.getItemAt(0).text)
-        } ?: run {
-            context.showToast(R.string.com_paste_error)
-        }
     }
 
     fun putQRScanItems(paymentQREntity: PaymentQREntity) {
