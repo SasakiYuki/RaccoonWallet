@@ -6,14 +6,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import com.ryuta46.nemkotlin.model.AccountMetaDataPair
-import com.ryuta46.nemkotlin.model.TransactionMetaDataPair
-import com.ryuta46.nemkotlin.model.UnconfirmedTransactionMetaDataPair
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Function3
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
@@ -29,7 +23,6 @@ import wacode.yamada.yuki.nempaymentapp.view.adapter.TransactionAdapter
 class TransactionListFragment : BaseFragment() {
 
     private val adapter = TransactionAdapter()
-    private val compositeDisposable = CompositeDisposable()
 
     override fun layoutRes() = R.layout.fragment_transaction_list
 
@@ -84,70 +77,49 @@ class TransactionListFragment : BaseFragment() {
         val address = wallet.address
 
         val accountTransfersIncoming = NemCommons.getAccountTransfersIncoming(address)
-                .singleOrError()
+                .flatMap { Observable.fromIterable(it) }
+                .map { TransactionAppConverter.convert(TransactionType.INCOMING, it) }
 
         val accountTransfersOutgoing = NemCommons.getAccountTransfersOutgoing(address)
-                .singleOrError()
+                .flatMap { Observable.fromIterable(it) }
+                .map { TransactionAppConverter.convert(TransactionType.OUTGOING, it) }
 
         val accountUnconfirmedTransactions = NemCommons.getAccountUnconfirmedTransactions(address)
-                .singleOrError()
+                .flatMap { Observable.fromIterable(it) }
+                .map { TransactionAppConverter.convert(TransactionType.UNCONFIRMED, it) }
 
-        compositeDisposable.add(
-                Single.zip(
-                        accountTransfersIncoming,
-                        accountTransfersOutgoing,
-                        accountUnconfirmedTransactions,
-                        Function3<List<TransactionMetaDataPair>, List<TransactionMetaDataPair>, List<UnconfirmedTransactionMetaDataPair>, List<TransactionAppEntity>> { incoming, outgoing, unconfirmed ->
-                            val list = Observable.fromIterable(incoming)
-                                    .map { TransactionAppConverter.convert(TransactionType.INCOMING, it) }
-                                    .toList()
-                                    .blockingGet()
-
-                            list.addAll(Observable.fromIterable(outgoing)
-                                    .map { TransactionAppConverter.convert(TransactionType.OUTGOING, it) }
-                                    .toList()
-                                    .blockingGet())
-
-                            list.addAll(Observable.fromIterable(unconfirmed)
-                                    .map { TransactionAppConverter.convert(TransactionType.UNCONFIRMED, it) }
-                                    .toList()
-                                    .blockingGet())
-
-                            list
-                        })
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            if (it.isEmpty()) {
-                                hideProgress()
-                                transactionEmptyView.visibility = View.VISIBLE
-                            } else {
-                                transactionEmptyView.visibility = View.GONE
-                                fetchSenderAddress(it)
-                            }
-                        }, {
-                            commonErrorHandling(it)
-                        })
-        )
-    }
-
-    private fun fetchSenderAddress(list: List<TransactionAppEntity>) {
-        compositeDisposable.add(
-                Observable.fromIterable(list)
-                        .subscribe({ response ->
-                            NemCommons.getAccountInfoFromPublicKey(response.signer!!)
-                                    .subscribe({ account ->
-                                        response.senderAddress = convertSenderAddress(response, account)
-                                        adapter.addItem(response)
-                                        adapter.notifyDataSetChanged()
-                                        hideProgress()
-                                    }, {
-                                        commonErrorHandling(it)
-                                    })
-                        }, {
-                            commonErrorHandling(it)
-                        })
-        )
+        val singleObservable = Observable.merge(
+                accountTransfersIncoming,
+                accountTransfersOutgoing,
+                accountUnconfirmedTransactions)
+                .toList()
+                .flatMapObservable {
+                    if (it.isEmpty()) {
+                        throw IllegalArgumentException(EXCEPTION_LIST_EMPTY)
+                    } else {
+                        return@flatMapObservable Observable.fromIterable(it)
+                                .flatMap { transactionAppEntity ->
+                                    NemCommons.getAccountInfoFromPublicKey(transactionAppEntity.signer!!)
+                                            .map { account ->
+                                                transactionAppEntity.senderAddress = convertSenderAddress(transactionAppEntity, account)
+                                                return@map transactionAppEntity
+                                            }
+                                }
+                    }
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ it ->
+                    hideProgress()
+                    transactionEmptyView.visibility = View.GONE
+                    adapter.addItem(it)
+                }, {
+                    hideProgress()
+                    if ((it as IllegalArgumentException).message == EXCEPTION_LIST_EMPTY) {
+                        transactionEmptyView.visibility = View.VISIBLE
+                    }
+                    it.printStackTrace()
+                })
+        addDispose(singleObservable)
     }
 
     private fun convertSenderAddress(item: TransactionAppEntity, account: AccountMetaDataPair): String? {
@@ -162,22 +134,13 @@ class TransactionListFragment : BaseFragment() {
         }
     }
 
-    private fun commonErrorHandling(e: Throwable) {
-        hideProgress()
-        e.printStackTrace()
-    }
-
     private val wallet by lazy {
         arguments.getSerializable(KEY_WALLET_MODEL) as Wallet
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
-    }
-
     companion object {
         private const val KEY_WALLET_MODEL = "key_wallet_model"
+        private const val EXCEPTION_LIST_EMPTY = "list is empty"
 
         fun newInstance(wallet: Wallet): TransactionListFragment {
             val fragment = TransactionListFragment()

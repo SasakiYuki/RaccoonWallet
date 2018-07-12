@@ -20,7 +20,7 @@ class SplashFragment : BaseFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ActiveNodeHelper.auto(context)
+        val dispose = ActiveNodeHelper.auto(context)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (AppLockPreference.isAvailable(context)) {
@@ -37,6 +37,7 @@ class SplashFragment : BaseFragment() {
                     Toast.makeText(context, R.string.splash_node_select_error, Toast.LENGTH_LONG).show()
                     finishSplash()
                 })
+        addDispose(dispose)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

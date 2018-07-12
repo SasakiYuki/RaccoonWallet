@@ -48,6 +48,7 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
         transactionList.add(transactionEntity)
         addDate(transactionEntity.date)
         Collections.sort(transactionList, DateComparator())
+        notifyDataSetChanged()
     }
 
     fun clearItems() {
