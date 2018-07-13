@@ -10,6 +10,8 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
+import wacode.yamada.yuki.nempaymentapp.extentions.pasteFromClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.remove
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
@@ -29,10 +31,10 @@ class SendTopFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupButton()
+        setupViews()
     }
 
-    private fun setupButton() {
+    private fun setupViews() {
         button.setOnClickListener {
             async(UI) {
                 val wallet = bg { WalletManager.getSelectedWallet(this@SendTopFragment.context) }.await()
@@ -43,6 +45,26 @@ class SendTopFragment : BaseFragment() {
                 }
             }
         }
+
+        clipButton.setOnClickListener {
+            addressEditText.setText(context.pasteFromClipBoard())
+        }
+
+        clearButton.setOnClickListener {
+            addressEditText.setText("")
+        }
+
+        addressEditText.isNotTextEmptyObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it) {
+                        clipButton.visibility = View.GONE
+                        clearButton.visibility = View.VISIBLE
+                    } else {
+                        clipButton.visibility = View.VISIBLE
+                        clearButton.visibility = View.GONE
+                    }
+                }
     }
 
     fun putQRScanItems(paymentQREntity: PaymentQREntity) {
