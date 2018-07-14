@@ -39,7 +39,7 @@ class DonateDetailFragment : BaseFragment() {
         compositeDisposable.add(
                 NemCommons.getAccountInfo(address)
                         .subscribe({ item ->
-                            startActivity(SendActivity.createIntent(context, address, item.account.publicKey))
+                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, item.account.publicKey)
                             hideProgress()
                         }, { e ->
                             hideProgress()

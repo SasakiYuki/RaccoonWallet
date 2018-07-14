@@ -65,13 +65,13 @@ class SendTopFragment : BaseFragment() {
                     showMessageConfirmDialog(address, publicKey, entity)
                 } else {
                     //送金確認画面に遷移
-                    startActivity(SendActivity.createIntent(context, address, publicKey, SendType.CONFIRM, entity))
+                    SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.CONFIRM, entity)
                 }
             } else {
                 showAmountConfirmDialog(address, publicKey, entity)
             }
         } ?: run {
-            startActivity(SendActivity.createIntent(context, address, publicKey))
+            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey)
         }
     }
 
@@ -103,11 +103,11 @@ class SendTopFragment : BaseFragment() {
                     when (it) {
                         SelectDialogButton.POSITIVE -> {
                             //メッセージを添付するかどうかを選択する画面に遷移
-                            startActivity(SendActivity.createIntent(context, address, publicKey, SendType.SELECT_MODE, entity))
+                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.SELECT_MODE, entity)
                         }
                         SelectDialogButton.NEGATIVE -> {
                             //金額を指定する画面に遷移
-                            startActivity(SendActivity.createIntent(context, address, publicKey, SendType.ENTER, entity))
+                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.ENTER, entity)
                         }
                     }
                 }
@@ -127,12 +127,12 @@ class SendTopFragment : BaseFragment() {
                     when (it) {
                         SelectDialogButton.POSITIVE -> {
                             //送金確認画面に遷移
-                            startActivity(SendActivity.createIntent(context, address, publicKey, SendType.CONFIRM, entity))
+                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.CONFIRM, entity)
 
                         }
                         SelectDialogButton.NEGATIVE -> {
                             //メッセージの種類を選択する画面に遷移
-                            startActivity(SendActivity.createIntent(context, address, publicKey, SendType.SELECT_MESSAGE, entity))
+                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.SELECT_MESSAGE, entity)
                         }
                     }
                 }
