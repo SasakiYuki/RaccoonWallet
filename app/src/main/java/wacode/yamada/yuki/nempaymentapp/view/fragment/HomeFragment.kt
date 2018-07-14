@@ -29,7 +29,7 @@ class HomeFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_home
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRxBus()
         setupWallet()
@@ -45,9 +45,11 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupWallet() {
-        async(UI) {
-            wallet = bg { WalletManager.getSelectedWallet(getContext()) }.await()
-            setupViews()
+        context?.let {
+            async(UI) {
+                wallet = bg { WalletManager.getSelectedWallet(it) }.await()
+                setupViews()
+            }
         }
     }
 
@@ -74,17 +76,17 @@ class HomeFragment : BaseFragment() {
     private fun setupViews() {
         showTransactionButton.setOnClickListener {
             async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(this@HomeFragment.context) }.await()
+                val wallet = bg { WalletManager.getSelectedWallet(showTransactionButton.context) }.await()
                 when {
-                    wallet == null -> this@HomeFragment.context.showToast(R.string.home_fragment_not_select_wallet)
-                    else -> startActivity(TransactionActivity.getCallingIntent(this@HomeFragment.context, wallet!!))
+                    wallet == null -> showTransactionButton.context.showToast(R.string.home_fragment_not_select_wallet)
+                    else -> startActivity(TransactionActivity.getCallingIntent(showTransactionButton.context, wallet!!))
                 }
             }
         }
         setupBalanceItem()
 
         balanceRootView.setOnClickListener {
-            startActivity(BalanceActivity.createIntent(context))
+            startActivity(BalanceActivity.createIntent(balanceRootView.context))
         }
     }
 
@@ -102,7 +104,7 @@ class HomeFragment : BaseFragment() {
                                 e.printStackTrace()
                                 hideProgress()
                                 hideSwipeRefreshIcon()
-                                context.showToast(R.string.home_fragment_error_account)
+                                context?.showToast(R.string.home_fragment_error_account)
                             })
             )
             compositeDisposable.add(
@@ -115,7 +117,7 @@ class HomeFragment : BaseFragment() {
                                 e.printStackTrace()
                                 hideSwipeRefreshIcon()
                                 hideProgress()
-                                context.showToast(R.string.home_fragment_error_transaction)
+                                context?.showToast(R.string.home_fragment_error_transaction)
                             })
             )
             compositeDisposable.add(
@@ -128,7 +130,7 @@ class HomeFragment : BaseFragment() {
                                 e.printStackTrace()
                                 hideSwipeRefreshIcon()
                                 hideProgress()
-                                context.showToast(R.string.home_fragment_error_transaction)
+                                context?.showToast(R.string.home_fragment_error_transaction)
                             })
             )
         }
@@ -153,7 +155,7 @@ class HomeFragment : BaseFragment() {
             harvestEmptyView.visibility = View.VISIBLE
         }
 
-        showHarvestButton.setOnClickListener { context.showToast(R.string.com_coming_soon) }
+        showHarvestButton.setOnClickListener { context?.showToast(R.string.com_coming_soon) }
     }
 
     private fun setupTransactionItems(list: List<TransactionMetaDataPair>) {
@@ -198,7 +200,7 @@ class HomeFragment : BaseFragment() {
             }
         }, object : SimpleNoInterface {
             override fun onClickNo() {
-                context.showToast(R.string.nem_converter_error_price)
+                context?.showToast(R.string.nem_converter_error_price)
             }
         })
     }

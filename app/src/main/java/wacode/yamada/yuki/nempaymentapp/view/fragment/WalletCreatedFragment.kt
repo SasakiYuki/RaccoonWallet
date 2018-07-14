@@ -12,14 +12,14 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.MainActivity
 class WalletCreatedFragment : BaseFragment() {
     override fun layoutRes() = getLayout(getWalletCreatedType())
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
     }
 
     private fun setupViews() {
         view?.findViewById<Button>(R.id.button)?.setOnClickListener {
-            val intent = MainActivity.createIntent(context, false)
+            val intent = MainActivity.createIntent(it.context, false)
             intent.flags = FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
 
@@ -41,7 +41,7 @@ class WalletCreatedFragment : BaseFragment() {
         }
     }
 
-    private fun getWalletCreatedType() = arguments.get(KEY_WALLET_CREATED_TYPE) as WalletCreatedType
+    private fun getWalletCreatedType() = arguments?.get(KEY_WALLET_CREATED_TYPE) as WalletCreatedType
 
     companion object {
         private const val TOOLBAR_STRING_RES = R.string.wallet_created_fragment_title

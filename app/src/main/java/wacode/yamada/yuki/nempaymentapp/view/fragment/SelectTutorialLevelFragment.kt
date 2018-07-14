@@ -12,7 +12,7 @@ class SelectTutorialLevelFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_select_tutorial_level
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButtons()
     }

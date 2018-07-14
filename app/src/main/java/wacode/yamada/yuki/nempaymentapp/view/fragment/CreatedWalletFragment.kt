@@ -22,13 +22,15 @@ class CreatedWalletFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_created_wallet
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showProgress()
         async(UI) {
             bg {
                 account = createWallet()
-                WalletManager.save(this@CreatedWalletFragment.context, account, arguments.getString(KEY_WALLET_NAME))
+                arguments?.let {
+                    WalletManager.save(view.context, account, it.getString(KEY_WALLET_NAME))
+                }
             }.await()
 
             showWalletAddress(account)

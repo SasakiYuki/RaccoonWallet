@@ -41,8 +41,8 @@ class RaccoonSelectDialog : SimpleDialogFragment() {
         }
     }
 
-    private fun getTitle() = arguments.getString(ARG_TITLE, "")
-    private fun getMessage() = arguments.getString(ARG_MESSAGE, "")
+    private fun getTitle() = arguments?.getString(ARG_TITLE, "")
+    private fun getMessage() = arguments?.getString(ARG_MESSAGE, "")
 
     companion object {
         private const val ARG_TITLE = "title"

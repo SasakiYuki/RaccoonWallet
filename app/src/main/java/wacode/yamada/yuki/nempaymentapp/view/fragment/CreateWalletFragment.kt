@@ -17,7 +17,7 @@ class CreateWalletFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_create_wallet
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupOKButtonClickListener()
         setupEditText()
