@@ -12,11 +12,11 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.oss.licenses.plugin'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     defaultConfig {
         applicationId "wacode.yamada.yuki.nempaymentapp"
         minSdkVersion 22
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 19
         versionName "2.0.6.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -49,34 +49,34 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.google.android.gms:play-services-oss-licenses:11.8.0'
 
-    compile 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
     kapt 'com.android.databinding:compiler:3.1.1'
 
-    compile "android.arch.persistence.room:runtime:1.0.0"
+    implementation "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
 
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.20"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.20"
-    compile 'org.jetbrains.anko:anko-coroutines:0.10.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.20"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.20"
+    implementation 'org.jetbrains.anko:anko-coroutines:0.10.1'
 
-    compile 'com.google.zxing:core:3.3.0'
-    compile 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
 
-    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
-    compile "com.android.support:cardview-v7:27.0.2"
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+    implementation "com.android.support:cardview-v7:27.0.2"
 
-    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
-    compile 'com.applovin:applovin-sdk:+'
+    implementation 'com.applovin:applovin-sdk:+'
     implementation 'com.ryuta46:nem-kotlin:0.4.0'
     implementation 'com.madgag.spongycastle:prov:1.51.0.0'
     implementation 'com.madgag.spongycastle:core:1.51.0.0'
     implementation 'net.i2p.crypto:eddsa:0.2.0'
     implementation 'com.google.code.gson:gson:2.8.2'
 
-    compile 'org.jsoup:jsoup:1.10.1'
+    implementation 'org.jsoup:jsoup:1.10.1'
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.1.0'
@@ -84,30 +84,32 @@ dependencies {
 
     implementation 'org.java-websocket:Java-WebSocket:1.3.6'
 
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'jp.wasabeef:picasso-transformations:2.1.2'
-    compile 'com.afollestad.material-dialogs:core:0.9.1.0'
-    compile 'com.nakama.arraypageradapter:arraypageradapter:0.1.1'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'jp.wasabeef:picasso-transformations:2.1.2'
+    implementation 'com.afollestad.material-dialogs:core:0.9.1.0'
+    implementation 'com.nakama.arraypageradapter:arraypageradapter:0.1.1'
 
     implementation 'com.airbnb.android:epoxy:2.9.0'
     implementation 'com.airbnb.android:epoxy-databinding:2.9.0'
     kapt 'com.airbnb.android:epoxy-processor:2.9.0'
     annotationProcessor 'com.airbnb.android:epoxy-processor:2.9.0'
 
-    compile 'com.android.support:customtabs:23.1.1'
+    implementation 'com.android.support:customtabs:23.1.1'
 
-    compile 'org.mindrot:jbcrypt:0.4'
+    implementation 'org.mindrot:jbcrypt:0.4'
 
-    compile 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
+
+    implementation 'com.google.android.material:material:1.0.0-beta01'
 }
 
 kotlin {
