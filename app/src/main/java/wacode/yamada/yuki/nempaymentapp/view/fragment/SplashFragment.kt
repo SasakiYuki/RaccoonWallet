@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.helper.ActiveNodeHelper
 import wacode.yamada.yuki.nempaymentapp.preference.AppLockPreference
@@ -15,12 +17,15 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
 
 
 class SplashFragment : BaseFragment() {
+
+    private val compositeDisposable = CompositeDisposable()
+
     override fun layoutRes() = R.layout.fragment_splash
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dispose = ActiveNodeHelper.auto(context)
+        ActiveNodeHelper.auto(context)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (AppLockPreference.isAvailable(context)) {
@@ -36,8 +41,12 @@ class SplashFragment : BaseFragment() {
                     ActiveNodeHelper.saveNodeType(context, NodeType.ALICE2)
                     Toast.makeText(context, R.string.splash_node_select_error, Toast.LENGTH_LONG).show()
                     finishSplash()
-                })
-        addDispose(dispose)
+                }).let { addDispose(it) }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        unSubscribe()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -48,6 +57,18 @@ class SplashFragment : BaseFragment() {
                     finishSplash()
                 }
             }
+        }
+    }
+
+    private fun addDispose(disposable: Disposable) {
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.add(disposable)
+        }
+    }
+
+    private fun unSubscribe() {
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.dispose()
         }
     }
 

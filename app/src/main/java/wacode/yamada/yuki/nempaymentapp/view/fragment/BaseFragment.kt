@@ -6,15 +6,12 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseFragmentActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.LoadingDialogFragment
 
 
 abstract class BaseFragment : Fragment() {
     private var loadingDialog: LoadingDialogFragment? = null
-    private val compositeDisposable = CompositeDisposable()
 
     abstract fun layoutRes(): Int
 
@@ -46,26 +43,8 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        hideProgress()
-        unSubscribe()
-    }
-
     protected fun finish() {
         activity.finish()
-    }
-
-    protected fun addDispose(disposable: Disposable) {
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.add(disposable)
-        }
-    }
-
-    private fun unSubscribe() {
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.dispose()
-        }
     }
 
     @NonNull

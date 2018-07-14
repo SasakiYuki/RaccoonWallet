@@ -8,6 +8,8 @@ import android.view.View
 import com.ryuta46.nemkotlin.model.AccountMetaDataPair
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
@@ -23,6 +25,7 @@ import wacode.yamada.yuki.nempaymentapp.view.adapter.TransactionAdapter
 class TransactionListFragment : BaseFragment() {
 
     private val adapter = TransactionAdapter()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun layoutRes() = R.layout.fragment_transaction_list
 
@@ -36,6 +39,11 @@ class TransactionListFragment : BaseFragment() {
         if (adapter.itemCount == adapter.HEADER_SIZE) {
             addAllTransaction()
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        unSubscribe()
     }
 
     private fun setupSwipeRefreshView() {
@@ -88,7 +96,7 @@ class TransactionListFragment : BaseFragment() {
                 .flatMap { Observable.fromIterable(it) }
                 .map { TransactionAppConverter.convert(TransactionType.UNCONFIRMED, it) }
 
-        val singleObservable = Observable.merge(
+        Observable.merge(
                 accountTransfersIncoming,
                 accountTransfersOutgoing,
                 accountUnconfirmedTransactions)
@@ -118,8 +126,19 @@ class TransactionListFragment : BaseFragment() {
                         transactionEmptyView.visibility = View.VISIBLE
                     }
                     it.printStackTrace()
-                })
-        addDispose(singleObservable)
+                }).let { addDispose(it) }
+    }
+
+    private fun addDispose(disposable: Disposable) {
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.add(disposable)
+        }
+    }
+
+    private fun unSubscribe() {
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.dispose()
+        }
     }
 
     private fun convertSenderAddress(item: TransactionAppEntity, account: AccountMetaDataPair): String? {
