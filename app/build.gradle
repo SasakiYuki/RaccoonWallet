@@ -105,6 +105,8 @@ dependencies {
 
     compile 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 
+    implementation 'com.isseiaoki:simplecropview:1.1.7'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
