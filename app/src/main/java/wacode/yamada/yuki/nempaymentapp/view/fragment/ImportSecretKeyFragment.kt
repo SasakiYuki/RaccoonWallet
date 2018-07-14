@@ -25,7 +25,7 @@ class ImportSecretKeyFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_import_secret_key
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         callback = context as ImportWalletCallback
         setupButtons()
@@ -60,7 +60,7 @@ class ImportSecretKeyFragment : BaseFragment() {
                     callback.onReplaceImportWalletName(privateKey.toByteArray(Charsets.UTF_8))
                 } catch (e: Exception) {
                     hideProgress()
-                    this@ImportSecretKeyFragment.context.showToast(R.string.import_secret_key_input_error)
+                    this@ImportSecretKeyFragment.nextButton.context.showToast(R.string.import_secret_key_input_error)
                 }
             }
         }

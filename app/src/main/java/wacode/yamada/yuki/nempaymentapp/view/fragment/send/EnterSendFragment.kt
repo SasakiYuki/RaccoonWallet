@@ -52,7 +52,7 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
         enterMosaicListViewModel = ViewModelProviders.of(this, viewModelFactory).get(EnterMosaicListViewModel::class.java)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         selectedMosaics.add(MosaicItem.createNEMXEMItem())
         setupViews()
@@ -77,10 +77,12 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = controller.adapter
 
-        async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(getContext()) }
-                    .await()
-            enterMosaicListViewModel.getOwnedMosaicFullData(wallet!!.address)
+        context?.let {
+            async(UI) {
+                val wallet = bg { WalletManager.getSelectedWallet(it) }
+                        .await()
+                enterMosaicListViewModel.getOwnedMosaicFullData(wallet!!.address)
+            }
         }
     }
 
@@ -195,7 +197,7 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
         val list = ArrayList<MosaicFullItem>()
         for (mosaic in newMosaics) {
             if (checkedItem.getFullName() == mosaic.getFullName()) {
-                val newMosaic = MosaicFullItem(mosaic.divisibility,MosaicItem(mosaic.mosaicItem.mosaic, !checkedItem.checked))
+                val newMosaic = MosaicFullItem(mosaic.divisibility, MosaicItem(mosaic.mosaicItem.mosaic, !checkedItem.checked))
                 list.add(newMosaic)
             } else {
                 list.add(mosaic)

@@ -61,22 +61,22 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
         this.onDateChangeListener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_DATE -> {
-                TransactionDateRowViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.row_transaction_date, parent, false))
+                TransactionDateRowViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_transaction_date, parent, false))
             }
             VIEW_TYPE_SPACE -> {
-                TransactionSpaceHeaderViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.header_transaction_space, parent, false))
+                TransactionSpaceHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_transaction_space, parent, false))
             }
             else -> {
-                TransactionRowViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.row_transaction, parent, false))
+                TransactionRowViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_transaction, parent, false))
             }
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        when (holder!!.itemViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder.itemViewType) {
             VIEW_TYPE_NORMAL -> {
                 val viewModel = TransactionViewModel(transactionList[position - HEADER_SIZE])
                 val binding = (holder as TransactionRowViewHolder).binding
@@ -92,10 +92,10 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
         }
     }
 
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder?) {
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
         super.onViewAttachedToWindow(holder)
 
-        if (holder!!.adapterPosition == 0) {
+        if (holder.adapterPosition == 0) {
             onDateChangeListener!!.showWalletBar()
         }
 
@@ -115,10 +115,10 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
         attachOldPosition = holder.adapterPosition
     }
 
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder?) {
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         super.onViewDetachedFromWindow(holder)
 
-        if (holder!!.adapterPosition == 0) {
+        if (holder.adapterPosition == 0) {
             onDateChangeListener!!.showDateLabel(parseDate(transactionList[0].date))
         }
 

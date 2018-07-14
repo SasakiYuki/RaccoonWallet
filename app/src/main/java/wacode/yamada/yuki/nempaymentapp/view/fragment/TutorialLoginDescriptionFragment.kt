@@ -17,28 +17,30 @@ class TutorialLoginDescriptionFragment : BaseFragment() {
     private lateinit var listenerPrivateKeyStore: OnPrivateKeyStorePageChangeListener
     override fun layoutRes() = R.layout.fragment_login_description
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButton()
     }
 
     private fun setupButton() {
         button.setOnClickListener {
-            if (PinCodeHelper.isAvailable(context)) {
+            if (PinCodeHelper.isAvailable(button.context)) {
                 val viewModel = RaccoonSelectViewModel(getString(R.string.com_ok), getString(R.string.com_cancel))
 
                 viewModel.clickEvent
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe { item ->
                             if (item.equals(SelectDialogButton.POSITIVE)) {
-                                startActivity(WalletCreatedActivity.createIntent(context, WalletCreatedType.LOGIN))
+                                startActivity(WalletCreatedActivity.createIntent(button.context, WalletCreatedType.LOGIN))
                             }
                         }
 
-                RaccoonSelectDialog.createDialog(viewModel,
-                        getString(R.string.create_wallet_tutorial_dialog_title),
-                        getString(R.string.create_wallet_tutorial_dialog_message))
-                        .show(activity.supportFragmentManager, "")
+                activity?.let {
+                    RaccoonSelectDialog.createDialog(viewModel,
+                            getString(R.string.create_wallet_tutorial_dialog_title),
+                            getString(R.string.create_wallet_tutorial_dialog_message))
+                            .show(it.supportFragmentManager, "")
+                }
             } else {
                 listenerPrivateKeyStore.onClickNextButton(PrivateKeyStoreSupportDisplayType.LOGIN_DESCRIPTION)
             }

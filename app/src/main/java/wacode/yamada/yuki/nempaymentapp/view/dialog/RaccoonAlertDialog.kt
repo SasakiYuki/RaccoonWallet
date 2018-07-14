@@ -44,9 +44,9 @@ class RaccoonAlertDialog : SimpleDialogFragment() {
                 }
     }
 
-    private fun getTitle() = arguments.getString(ARG_TITLE, "")
-    private fun getMessage() = arguments.getString(ARG_MESSAGE, "")
-    private fun getButtonText() = arguments.getString(ARG_BUTTON_TEXT, "")
+    private fun getTitle() = arguments?.getString(ARG_TITLE, "")
+    private fun getMessage() = arguments?.getString(ARG_MESSAGE, "")
+    private fun getButtonText() = arguments?.getString(ARG_BUTTON_TEXT, "")
 
     companion object {
         private const val ARG_TITLE = "title"

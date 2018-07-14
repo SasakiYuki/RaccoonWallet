@@ -35,7 +35,7 @@ class NewPinCodeSettingFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_pin_code
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupConfirmMode()
         setupButtons()
@@ -62,7 +62,7 @@ class NewPinCodeSettingFragment : BaseFragment() {
 
                 }
         RaccoonPagerDialog.createDialog(RaccoonPagerViewModel(), getString(R.string.pin_code_setting_fragment_dialog_title), getString(R.string.com_ok), list)
-                .show(activity.supportFragmentManager, RaccoonPagerDialog::class.java.toString())
+                .show(activity?.supportFragmentManager, RaccoonPagerDialog::class.java.toString())
     }
 
     private fun setupConfirmMode() {
@@ -120,7 +120,7 @@ class NewPinCodeSettingFragment : BaseFragment() {
                 if (viewModel.correctPinCode()) {
                     rewriteSecretKey()
                 } else {
-                    context.showToast(R.string.pin_code_setting_confirm_error)
+                    context?.showToast(R.string.pin_code_setting_confirm_error)
                     resetViews()
                 }
             }
@@ -131,20 +131,22 @@ class NewPinCodeSettingFragment : BaseFragment() {
         showProgress()
 
         val dao = NemPaymentApplication.database.walletDao()
-        async(UI) {
-            bg {
-                val list = dao.findAll()
-                Observable.fromIterable(list)
-                        .subscribe { it ->
-                            WalletManager.updatePinCode(it,
-                                    viewModel.cachePinCode,
-                                    PinCodeProvider.getPinCode(this@NewPinCodeSettingFragment.context)!!)
-                        }
-                PinCodePreference.saveHash(this@NewPinCodeSettingFragment.context, PinCodeHelper.createHash(viewModel.cachePinCode.toString(Charsets.UTF_8)))
-                PinCodePreference.removePinCodeForFingerprint(this@NewPinCodeSettingFragment.context)
-            }.await()
-            hideProgress()
-            showSuccessDialog()
+        context?.let { context ->
+            async(UI) {
+                bg {
+                    val list = dao.findAll()
+                    Observable.fromIterable(list)
+                            .subscribe { it ->
+                                WalletManager.updatePinCode(it,
+                                        viewModel.cachePinCode,
+                                        PinCodeProvider.getPinCode(context)!!)
+                            }
+                    PinCodePreference.saveHash(context, PinCodeHelper.createHash(viewModel.cachePinCode.toString(Charsets.UTF_8)))
+                    PinCodePreference.removePinCodeForFingerprint(context)
+                }.await()
+                hideProgress()
+                showSuccessDialog()
+            }
         }
     }
 
@@ -156,11 +158,15 @@ class NewPinCodeSettingFragment : BaseFragment() {
     }
 
     private fun changeTransparentCircle(id: Int) {
-        view?.findViewById<View>(id)?.background = getDrawable(context, R.drawable.frame_round_transparent)
+        context?.let {
+            view?.findViewById<View>(id)?.background = getDrawable(it, R.drawable.frame_round_transparent)
+        }
     }
 
     private fun changeCircleState() {
-        view?.findViewById<View>(circleList[viewModel.getPinLength() - 1])?.background = getDrawable(context, R.drawable.frame_round_white)
+        context?.let {
+            view?.findViewById<View>(circleList[viewModel.getPinLength() - 1])?.background = getDrawable(it, R.drawable.frame_round_white)
+        }
     }
 
     private fun showSuccessDialog() {
@@ -172,7 +178,7 @@ class NewPinCodeSettingFragment : BaseFragment() {
                     successSettingPinCode()
                 }
 
-        RaccoonConfirmDialog.createDialog(viewModel, getString(R.string.pin_code_setting_fragment_dialog_confirm_title), getString(R.string.pin_code_setting_fragment_dialog_confirm_message), getString(R.string.com_ok)).show(activity.supportFragmentManager, "")
+        RaccoonConfirmDialog.createDialog(viewModel, getString(R.string.pin_code_setting_fragment_dialog_confirm_title), getString(R.string.pin_code_setting_fragment_dialog_confirm_message), getString(R.string.com_ok)).show(activity?.supportFragmentManager, "")
     }
 
     private fun successSettingPinCode() {
@@ -180,7 +186,7 @@ class NewPinCodeSettingFragment : BaseFragment() {
     }
 
     private val isDisplayEnterPin by lazy {
-        arguments.getBoolean(KEY_IS_DISPLAY_ENTER_PIN)
+        arguments?.getBoolean(KEY_IS_DISPLAY_ENTER_PIN) ?: true
     }
 
     companion object {

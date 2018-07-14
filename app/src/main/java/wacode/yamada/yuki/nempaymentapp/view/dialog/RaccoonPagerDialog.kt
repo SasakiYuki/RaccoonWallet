@@ -20,8 +20,8 @@ class RaccoonPagerDialog : DialogFragment() {
     private lateinit var viewModel: RaccoonPagerViewModel
     private val list = ArrayList<Fragment>()
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.dialog_simple_pager, null, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.dialog_simple_pager, null, false)
         view?.let {
             setupMessagePager(it)
             setupTitle(it)
@@ -62,8 +62,8 @@ class RaccoonPagerDialog : DialogFragment() {
         }
     }
 
-    private fun getTitle() = arguments.getString(ARG_TITLE, "")
-    private fun getButtonText() = arguments.getString(ARG_BUTTON_TEXT, "")
+    private fun getTitle() = arguments?.getString(ARG_TITLE, "")
+    private fun getButtonText() = arguments?.getString(ARG_BUTTON_TEXT, "")
 
     companion object {
         private const val ARG_TITLE = "title"

@@ -8,14 +8,14 @@ import wacode.yamada.yuki.nempaymentapp.R
 
 class FirstTutorialFragment : BaseFragment() {
     private val position by lazy {
-        arguments.getInt(ARGS_POSITION)
+        arguments?.getInt(ARGS_POSITION)
     }
 
     override fun layoutRes() = R.layout.fragment_first_tutorial
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageView.setImageDrawable(ContextCompat.getDrawable(context, setTutorialImageView()))
+        imageView.setImageDrawable(ContextCompat.getDrawable(view.context, setTutorialImageView()))
     }
 
     private fun setTutorialImageView(): Int {

@@ -13,7 +13,7 @@ class MosaicImageDialog : SimpleDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        val entity = arguments.getSerializable(KEY_MOSAIC_ID_ENTITY) as MosaicIdEntity
+        val entity = arguments?.getSerializable(KEY_MOSAIC_ID_ENTITY) as MosaicIdEntity
         setupImageView(dialog, entity)
         setupTextView(dialog, entity)
         return dialog

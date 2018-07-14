@@ -19,7 +19,7 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.callback.ImportWalletCallb
 class ImportWalletNameFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_import_wallet_name
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
     }
@@ -38,7 +38,7 @@ class ImportWalletNameFragment : BaseFragment() {
                 showProgress()
                 bg {
                     val account = AccountGenerator.fromSeed(ConvertUtils.swapByteArray(ConvertUtils.toByteArray(secretKey.toString(Charsets.UTF_8))), Version.Main)
-                    WalletManager.save(this@ImportWalletNameFragment.context, account, walletNameEditText.text.toString())
+                    WalletManager.save(submitButton.context, account, walletNameEditText.text.toString())
                 }.await()
 
                 hideProgress()
@@ -48,7 +48,7 @@ class ImportWalletNameFragment : BaseFragment() {
     }
 
     private val secretKey by lazy {
-        arguments.getByteArray(KEY_SECRET_KEY)
+        arguments?.getByteArray(KEY_SECRET_KEY) ?: "".toByteArray()
     }
 
     companion object {

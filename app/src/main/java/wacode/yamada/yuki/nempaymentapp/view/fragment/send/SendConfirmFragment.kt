@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment.send
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
@@ -57,39 +58,51 @@ class SendConfirmFragment : BaseFragment() {
     private val list = ArrayList<TransactionMosaicItem>()
 
     private val address by lazy {
-        arguments.getString(KEY_SEND_ADDRESS)
+        arguments?.getString(KEY_SEND_ADDRESS)
     }
 
     private val sendMosaicItems by lazy {
-        arguments.getSerializable(KEY_SEND_MOSAIC_ITEMS) as ArrayList<SendMosaicItem>
+        arguments?.getSerializable(KEY_SEND_MOSAIC_ITEMS) as ArrayList<SendMosaicItem>
     }
 
     private val message by lazy {
-        arguments.getString(KEY_SEND_MESSAGE, "")
+        arguments?.getString(KEY_SEND_MESSAGE, "")
     }
 
     private val senderPublicKey by lazy {
-        arguments.getString(KEY_SENDER_PUBLIC_KEY, "")
+        arguments?.getString(KEY_SENDER_PUBLIC_KEY, "")
     }
 
     override fun layoutRes() = R.layout.fragment_send_confirm
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val feeCalculatorAccount = AccountGenerator.fromRandomSeed(Version.Main)
-        val messageByteArray = when (viewModel.sendMessageType) {
-            SendMessageType.NONE,
-            SendMessageType.NORMAL ->
-                message.toByteArray(Charsets.UTF_8)
-            SendMessageType.CRYPT ->
-                MessageEncryption.encrypt(feeCalculatorAccount, ConvertUtils.toByteArray(senderPublicKey), message.toByteArray(Charsets.UTF_8))
+        arguments?.let {
+            val message = it.getString(KEY_SEND_MESSAGE, "")
+            val senderPublicKey = it.getString(KEY_SENDER_PUBLIC_KEY, "")
+            val address = it.getString(KEY_SEND_ADDRESS)
+            parseMessage(message, senderPublicKey, address)
         }
-        val fee = FeeCalculator.calculatorFeeSendMosaicItem(sendMosaicItems, messageByteArray)
-        controller = SendConfirmListController(context, fee.convertNEMFromMicroToDouble(), address, message)
+
 
         setupRecycler()
         showConfirmDialog()
+    }
+
+    private fun parseMessage(message: String, senderPublicKey: String, address: String) {
+        context?.let {
+            val feeCalculatorAccount = AccountGenerator.fromRandomSeed(Version.Main)
+            val messageByteArray = when (viewModel.sendMessageType) {
+                SendMessageType.NONE,
+                SendMessageType.NORMAL ->
+                    message.toByteArray(Charsets.UTF_8)
+                SendMessageType.CRYPT ->
+                    MessageEncryption.encrypt(feeCalculatorAccount, ConvertUtils.toByteArray(senderPublicKey), message.toByteArray(Charsets.UTF_8))
+
+            }
+            val fee = FeeCalculator.calculatorFeeSendMosaicItem(sendMosaicItems, messageByteArray)
+            controller = SendConfirmListController(it, fee.convertNEMFromMicroToDouble(), address, message)
+        }
     }
 
     private fun showConfirmDialog() {
@@ -97,7 +110,9 @@ class SendConfirmFragment : BaseFragment() {
         viewModel.checkEvent
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { item ->
-                    saveSPTwiceDisplay(!item)
+                    context?.let {
+                        saveSPTwiceDisplay(it, !item)
+                    }
                 }
 
         viewModel.closeEvent
@@ -110,11 +125,13 @@ class SendConfirmFragment : BaseFragment() {
                 getString(R.string.com_ok),
                 true)
 
-        if (shouldTwiceDisplay()) {
-            dialog.show(fragmentManager, RaccoonConfirmDialog::class.java.toString())
-            cancellationSignal?.cancel()
-        } else {
-            setupAuthenticateViews()
+        context?.let {
+            if (shouldTwiceDisplay(it)) {
+                dialog.show(fragmentManager, RaccoonConfirmDialog::class.java.toString())
+                cancellationSignal?.cancel()
+            } else {
+                setupAuthenticateViews()
+            }
         }
     }
 
@@ -127,15 +144,17 @@ class SendConfirmFragment : BaseFragment() {
     }
 
     private fun setupAuthenticateViews() {
-        if (FingerprintHelper.checkForLaunch(context)) {
-            renderStages(Stage.DEFAULT)
-            pinCodeRootView.visibility = View.GONE
-            setupFingerprint()
-        } else if (PinCodeHelper.isAvailable(context)) {
-            renderStages(Stage.NONE)
-            pinCodeRootView.visibility = View.VISIBLE
-        }
+        context?.let {
+            if (FingerprintHelper.checkForLaunch(it)) {
+                renderStages(Stage.DEFAULT)
+                pinCodeRootView.visibility = View.GONE
+                setupFingerprint()
+            } else if (PinCodeHelper.isAvailable(it)) {
+                renderStages(Stage.NONE)
+                pinCodeRootView.visibility = View.VISIBLE
+            }
 
+        }
         userPinCde1.setOnClickListener { showPinCodeAuthenticateView() }
         userPinCde2.setOnClickListener { showPinCodeAuthenticateView() }
     }
@@ -145,43 +164,45 @@ class SendConfirmFragment : BaseFragment() {
         val keyStore = FingerprintHelper.initAndGetKeyStore()
         FingerprintHelper.createKeyPair(keyStore)
 
-        cancellationSignal = CancellationSignal()
-        val iv = Base64.decode(PinCodePreference.getIv(context), Base64.DEFAULT)
-        val cryptoObject = FingerprintManager.CryptoObject(FingerprintHelper.initAndGetCipherObject(keyStore, iv))
+        context?.let {
+            cancellationSignal = CancellationSignal()
+            val iv = Base64.decode(PinCodePreference.getIv(it), Base64.DEFAULT)
+            val cryptoObject = FingerprintManager.CryptoObject(FingerprintHelper.initAndGetCipherObject(keyStore, iv))
 
-        context.getSystemService(FingerprintManager::class.java).authenticate(cryptoObject, cancellationSignal,
-                0, object : FingerprintManager.AuthenticationCallback() {
+            it.getSystemService(FingerprintManager::class.java).authenticate(cryptoObject, cancellationSignal,
+                    0, object : FingerprintManager.AuthenticationCallback() {
 
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
-                super.onAuthenticationError(errorCode, errString)
-                if (errorCode == FingerprintManager.FINGERPRINT_ERROR_LOCKOUT) {
-                    renderStages(Stage.ERROR)
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                    super.onAuthenticationError(errorCode, errString)
+                    if (errorCode == FingerprintManager.FINGERPRINT_ERROR_LOCKOUT) {
+                        renderStages(Stage.ERROR)
 
-                    FingerprintPreference.saveDialogState(context, false)
+                        FingerprintPreference.saveDialogState(it, false)
 
-                    fingerprintDefaultView.postDelayed({ setupAuthenticateViews() }, 2000)
+                        fingerprintDefaultView.postDelayed({ setupAuthenticateViews() }, 2000)
+                    }
                 }
-            }
 
-            override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult?) {
-                super.onAuthenticationSucceeded(result)
-                val data = Base64.decode(PinCodePreference.getEncryptData(context), Base64.DEFAULT)
-                val pin = FingerprintHelper.decrypt(result!!.cryptoObject.cipher, data).toByteArray(Charsets.UTF_8)
-                successAuthenticate(pin)
-            }
+                override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult?) {
+                    super.onAuthenticationSucceeded(result)
+                    val data = Base64.decode(PinCodePreference.getEncryptData(it), Base64.DEFAULT)
+                    val pin = FingerprintHelper.decrypt(result!!.cryptoObject.cipher, data).toByteArray(Charsets.UTF_8)
+                    successAuthenticate(pin)
+                }
 
-            override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
-                super.onAuthenticationHelp(helpCode, helpString)
-                renderStages(Stage.FAILED)
-                fingerprintDefaultView.postDelayed({ renderStages(Stage.DEFAULT) }, 1300)
-            }
+                override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
+                    super.onAuthenticationHelp(helpCode, helpString)
+                    renderStages(Stage.FAILED)
+                    fingerprintDefaultView.postDelayed({ renderStages(Stage.DEFAULT) }, 1300)
+                }
 
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-                renderStages(Stage.FAILED)
-                fingerprintDefaultView.postDelayed({ renderStages(Stage.DEFAULT) }, 1300)
-            }
-        }, null)
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    renderStages(Stage.FAILED)
+                    fingerprintDefaultView.postDelayed({ renderStages(Stage.DEFAULT) }, 1300)
+                }
+            }, null)
+        }
     }
 
     override fun onPause() {
@@ -225,12 +246,14 @@ class SendConfirmFragment : BaseFragment() {
     }
 
     private fun showPinCodeAuthenticateView() {
-        startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
-                context = context,
-                isDisplayFingerprint = false,
-                messageRes = R.string.instant_pin_code_message,
-                buttonPosition = NewCheckPinCodeActivity.ButtonPosition.RIGHT
-        ), REQUEST_CODE_PIN_CODE_SUCCESS)
+        context?.let {
+            startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
+                    context = it,
+                    isDisplayFingerprint = false,
+                    messageRes = R.string.instant_pin_code_message,
+                    buttonPosition = NewCheckPinCodeActivity.ButtonPosition.RIGHT
+            ), REQUEST_CODE_PIN_CODE_SUCCESS)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -252,11 +275,13 @@ class SendConfirmFragment : BaseFragment() {
         showProgress()
         renderStages(Stage.SUCCESS)
 
-        async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(this@SendConfirmFragment.context) }
-                    .await()
-            val account = NemCommons.createAccount(WalletManager.getPrivateKey(wallet!!, pin))
-            getQuantityAndSupply(account)
+        context?.let {
+            async(UI) {
+                val wallet = bg { WalletManager.getSelectedWallet(it) }
+                        .await()
+                val account = NemCommons.createAccount(WalletManager.getPrivateKey(wallet!!, pin))
+                getQuantityAndSupply(account)
+            }
         }
     }
 
@@ -316,18 +341,26 @@ class SendConfirmFragment : BaseFragment() {
     }
 
     private fun createTransaction(account: Account) {
-        compositeDisposable.add(
-                NemCommons.createTransaction(account, address, list, message, viewModel.sendMessageType, senderPublicKey)
-                        ?.subscribe({ item ->
-                            if (checkError(item.message)) {
+        arguments?.let {
+            val message = it.getString(KEY_SEND_MESSAGE, "")
+            val senderPublicKey = it.getString(KEY_SENDER_PUBLIC_KEY, "")
+            val address = it.getString(KEY_SEND_ADDRESS)
+            parseMessage(message, senderPublicKey, address)
+            NemCommons.createTransaction(account, address, list, message, viewModel.sendMessageType, senderPublicKey)
+                    ?.subscribe({ item ->
+                        context?.let {
+                            if (checkError(it, item.message)) {
                                 viewModel.replaceFragment(SendType.FINISH, ArrayList())
                             }
-                            hideProgress()
-                        }, { e ->
-                            hideProgress()
-                            e.printStackTrace()
-                        })!!
-        )
+                        }
+                        hideProgress()
+                    }, { e ->
+                        hideProgress()
+                        e.printStackTrace()
+                    })?.let {
+                compositeDisposable.add(it)
+            }
+        }
     }
 
     private fun addTransactionMosaic(response: MosaicDefinitionMetaDataPair) {
@@ -344,7 +377,7 @@ class SendConfirmFragment : BaseFragment() {
         }
     }
 
-    private fun checkError(message: String): Boolean {
+    private fun checkError(context: Context, message: String): Boolean {
         return when (message) {
             CODE_SUCCESS -> {
                 true
@@ -360,9 +393,9 @@ class SendConfirmFragment : BaseFragment() {
         }
     }
 
-    private fun saveSPTwiceDisplay(checked: Boolean) = SharedPreferenceUtils.put(context, SP_TWICE_DISPLAY, checked)
+    private fun saveSPTwiceDisplay(context: Context, checked: Boolean) = SharedPreferenceUtils.put(context, SP_TWICE_DISPLAY, checked)
 
-    private fun shouldTwiceDisplay() = SharedPreferenceUtils[context, SP_TWICE_DISPLAY, true]
+    private fun shouldTwiceDisplay(context: Context) = SharedPreferenceUtils[context, SP_TWICE_DISPLAY, true]
 
     override fun onResume() {
         super.onResume()
