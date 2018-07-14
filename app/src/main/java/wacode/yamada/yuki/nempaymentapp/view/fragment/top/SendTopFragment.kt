@@ -7,6 +7,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_send_top.*
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
+import wacode.yamada.yuki.nempaymentapp.extentions.pasteFromClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.remove
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.rest.item.PaymentQrItem
@@ -22,11 +24,31 @@ class SendTopFragment : BaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupButton()
+        setupViews()
     }
 
-    private fun setupButton() {
+    private fun setupViews() {
         button.setOnClickListener { checkEnterAddressAvailable() }
+
+        clipButton.setOnClickListener {
+            addressEditText.setText(context.pasteFromClipBoard())
+        }
+
+        clearButton.setOnClickListener {
+            addressEditText.setText("")
+        }
+
+        addressEditText.isNotTextEmptyObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it) {
+                        clipButton.visibility = View.GONE
+                        clearButton.visibility = View.VISIBLE
+                    } else {
+                        clipButton.visibility = View.VISIBLE
+                        clearButton.visibility = View.GONE
+                    }
+                }
     }
 
     fun putQRScanItems(paymentQREntity: PaymentQREntity) {

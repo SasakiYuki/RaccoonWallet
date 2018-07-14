@@ -11,6 +11,7 @@
     <string name="com_jpy_uppercase">JPY</string>
     <string name="com_jp_yen">円</string>
     <string name="com_copied">クリップボードにコピーしました</string>
+    <string name="com_paste_error">貼り付けできませんでした</string>
     <string name="com_message">Message</string>
     <string name="com_mosaic">Mosaic</string>
     <string name="com_prefix_plus">+</string>

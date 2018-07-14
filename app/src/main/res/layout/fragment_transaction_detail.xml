@@ -203,6 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_small"
+                    android:foreground="?selectableItemBackground"
                     android:textColor="@color/nemGreen"
                     tools:text="NAAJG3-QFWYZ3-7LMI7I-QAAGQN-YADGSJ-ZGJRD2-DIYA" />
 
@@ -230,6 +231,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_small"
+                    android:foreground="?selectableItemBackground"
                     android:textColor="@color/nemGreen"
                     tools:text="NAAJG3-QFWYZ3-7LMI7I-QAAGQN-YADGSJ-ZGJRD2-DIYA" />
 

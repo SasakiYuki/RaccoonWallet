@@ -16,6 +16,7 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
+import wacode.yamada.yuki.nempaymentapp.extentions.copyClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.getColor
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
@@ -84,10 +85,18 @@ class TransactionDetailFragment : BaseFragment() {
         if (entity.senderAddress.isNullOrEmpty()) {
             firstSenderAddressText.text = getString(R.string.transaction_detail_non_address)
             secondSenderAddressText.text = getString(R.string.transaction_detail_non_address)
-
         } else {
             firstSenderAddressText.text = entity.senderAddress
             secondSenderAddressText.text = entity.senderAddress
+        }
+
+        recipientAddressText.setOnClickListener {
+            entity.recipientAddress!!.copyClipBoard(context)
+            context.showToast(R.string.com_copied)
+        }
+        secondSenderAddressText.setOnClickListener {
+            entity.senderAddress!!.copyClipBoard(context)
+            context.showToast(R.string.com_copied)
         }
     }
 

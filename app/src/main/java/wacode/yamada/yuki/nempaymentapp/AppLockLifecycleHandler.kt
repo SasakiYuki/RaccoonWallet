@@ -19,9 +19,11 @@ class AppLockLifecycleHandler : Application.ActivityLifecycleCallbacks {
     override fun onActivityResumed(activity: Activity?) {
         if (appStatus == AppStatus.RETURNED_TO_FOREGROUND) {
             activity?.let {
-                val fragment = (it as BaseActivity).supportFragmentManager.findFragmentByTag(SplashFragment::class.java.simpleName)
+                if (it !is BaseActivity || it is NewCheckPinCodeActivity) return
+
+                val fragment = it.supportFragmentManager.findFragmentByTag(SplashFragment::class.java.simpleName)
                 val isAvailableAppLock = AppLockPreference.isAvailable(it)
-                if (fragment != null || activity is NewCheckPinCodeActivity || !isAvailableAppLock) return
+                if (fragment != null || !isAvailableAppLock) return
 
                 it.startActivity(NewCheckPinCodeActivity.getCallingIntent(
                         context = it,
