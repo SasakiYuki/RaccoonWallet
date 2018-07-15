@@ -34,7 +34,6 @@ class NemPaymentApplication : Application(), HasActivityInjector {
                 .build()
                 .inject(this)
 
-
         AndroidThreeTen.init(this)
 
         database = Room.databaseBuilder(this, objectOf<DataBase>(), "room_nem_payment_app.db").build()

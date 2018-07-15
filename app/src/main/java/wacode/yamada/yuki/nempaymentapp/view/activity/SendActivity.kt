@@ -22,6 +22,8 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+    private val viewModel = SendViewModel()
+
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
 
     override fun initialFragment() = replaceFragmentForLaunch()
@@ -57,8 +59,6 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
         list.add(SendMosaicItem.createNEMXEMItem(paymentEntity.data.amount.convertNEMFromMicroToDouble()))
         return@lazy list
     }
-
-    private val viewModel = SendViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

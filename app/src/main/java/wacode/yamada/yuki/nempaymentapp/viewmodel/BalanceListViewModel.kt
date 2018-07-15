@@ -12,21 +12,20 @@ import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatusImpl
 import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
 import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicItem
 import wacode.yamada.yuki.nempaymentapp.rest.model.MosaicAppEntity
-import wacode.yamada.yuki.nempaymentapp.usecase.BalanceListUsecase
+import wacode.yamada.yuki.nempaymentapp.usecase.BalanceListUseCase
 import java.util.HashMap
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 class BalanceListViewModel @Inject constructor(
-        private val usecase: BalanceListUsecase
+        private val useCase: BalanceListUseCase
 ) : ViewModel(),
         LoadingStatus by LoadingStatusImpl() {
     private val compositeDisposable = CompositeDisposable()
     val fullItemMosaic: MutableLiveData<MosaicFullItem> = MutableLiveData()
-    val errorTextResource: MutableLiveData<Int> = MutableLiveData()
 
     fun getOwnedMosaicFullData(address: String) {
-        usecase.getOwnedMosaics(address)
+        useCase.getOwnedMosaics(address)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .attachLoading()
@@ -45,7 +44,7 @@ class BalanceListViewModel @Inject constructor(
             nameSpaceHashMap.put(namespaceMosaic.mosaicId.namespaceId, namespaceList)
         }
         for (key in nameSpaceHashMap.keys) {
-            usecase.getNamespaceMosaics(key)
+            useCase.getNamespaceMosaics(key)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .attachLoading()

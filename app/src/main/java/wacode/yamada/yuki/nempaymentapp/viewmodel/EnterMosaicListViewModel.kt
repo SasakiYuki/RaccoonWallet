@@ -16,15 +16,14 @@ import wacode.yamada.yuki.nempaymentapp.usecase.EnterMosaicListUseCase
 import javax.inject.Inject
 
 class EnterMosaicListViewModel @Inject constructor(
-        private val usecase: EnterMosaicListUseCase
+        private val useCase: EnterMosaicListUseCase
 ) : ViewModel(),
         LoadingStatus by LoadingStatusImpl() {
     private val compositeDisposable = CompositeDisposable()
     val fullItemMosaic: MutableLiveData<MosaicFullItem> = MutableLiveData()
-    val errorTextResource: MutableLiveData<Int> = MutableLiveData()
 
     fun getOwnedMosaicFullData(address: String) {
-        usecase.getOwnedMosaics(address)
+        useCase.getOwnedMosaics(address)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .attachLoading()
@@ -43,7 +42,7 @@ class EnterMosaicListViewModel @Inject constructor(
             nameSpaceHashMap.put(namespaceMosaic.mosaicId.namespaceId, namespaceList)
         }
         for (key in nameSpaceHashMap.keys) {
-            usecase.getNamespaceMosaics(key)
+            useCase.getNamespaceMosaics(key)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .attachLoading()

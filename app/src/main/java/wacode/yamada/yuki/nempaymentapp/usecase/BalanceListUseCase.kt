@@ -3,7 +3,7 @@ package wacode.yamada.yuki.nempaymentapp.usecase
 import wacode.yamada.yuki.nempaymentapp.repository.MosaicRepository
 import javax.inject.Inject
 
-class BalanceListUsecase @Inject constructor(
+class BalanceListUseCase @Inject constructor(
         private val mosaicRepository: MosaicRepository
 ) {
 
