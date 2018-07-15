@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.view.dialog
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -41,6 +42,11 @@ class RaccoonErrorDialog : SimpleDialogFragment() {
                     viewModel.onClickCloseButton()
                     dismiss()
                 }
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        viewModel.onClose()
     }
 
     private val getTitle by lazy {
