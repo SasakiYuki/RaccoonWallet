@@ -13,6 +13,7 @@ import wacode.yamada.yuki.nempaymentapp.extentions.remove
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.rest.item.PaymentQrItem
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
+import wacode.yamada.yuki.nempaymentapp.utils.SendStatusUtils
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendType
 import wacode.yamada.yuki.nempaymentapp.view.dialog.*
@@ -87,13 +88,21 @@ class SendTopFragment : BaseFragment() {
                     showMessageConfirmDialog(address, publicKey, entity)
                 } else {
                     //送金確認画面に遷移
-                    SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.CONFIRM, entity)
+                    when (SendStatusUtils.isAvailable(context)) {
+                        SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(context, activity.supportFragmentManager)
+                        SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(context, activity.supportFragmentManager)
+                        SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(context, address, publicKey, SendType.CONFIRM, entity))
+                    }
                 }
             } else {
                 showAmountConfirmDialog(address, publicKey, entity)
             }
         } ?: run {
-            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey)
+            when (SendStatusUtils.isAvailable(context)) {
+                SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(context, activity.supportFragmentManager)
+                SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(context, activity.supportFragmentManager)
+                SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(context, address, publicKey))
+            }
         }
     }
 
@@ -125,11 +134,19 @@ class SendTopFragment : BaseFragment() {
                     when (it) {
                         SelectDialogButton.POSITIVE -> {
                             //メッセージを添付するかどうかを選択する画面に遷移
-                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.SELECT_MODE, entity)
+                            when (SendStatusUtils.isAvailable(context)) {
+                                SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(context, activity.supportFragmentManager)
+                                SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(context, activity.supportFragmentManager)
+                                SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(context, address, publicKey, SendType.SELECT_MODE, entity))
+                            }
                         }
                         SelectDialogButton.NEGATIVE -> {
                             //金額を指定する画面に遷移
-                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.ENTER, entity)
+                            when (SendStatusUtils.isAvailable(context)) {
+                                SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(context, activity.supportFragmentManager)
+                                SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(context, activity.supportFragmentManager)
+                                SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(context, address, publicKey, SendType.ENTER, entity))
+                            }
                         }
                     }
                 }
@@ -149,12 +166,19 @@ class SendTopFragment : BaseFragment() {
                     when (it) {
                         SelectDialogButton.POSITIVE -> {
                             //送金確認画面に遷移
-                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.CONFIRM, entity)
-
+                            when (SendStatusUtils.isAvailable(context)) {
+                                SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(context, activity.supportFragmentManager)
+                                SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(context, activity.supportFragmentManager)
+                                SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(context, address, publicKey, SendType.CONFIRM, entity))
+                            }
                         }
                         SelectDialogButton.NEGATIVE -> {
                             //メッセージの種類を選択する画面に遷移
-                            SendActivity.intentSendScreenOrShowErrorDialog(activity, address, publicKey, SendType.SELECT_MESSAGE, entity)
+                            when (SendStatusUtils.isAvailable(context)) {
+                                SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(context, activity.supportFragmentManager)
+                                SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(context, activity.supportFragmentManager)
+                                SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(context, address, publicKey, SendType.SELECT_MESSAGE, entity))
+                            }
                         }
                     }
                 }
