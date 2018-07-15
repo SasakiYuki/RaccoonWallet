@@ -87,7 +87,7 @@ class TransactionListFragment : BaseFragment() {
     private fun addAllTransaction() {
         showProgress()
         arguments?.let {
-            val wallet = it.getSerializable(ARG_CONTENTS_NAME_ID) as Wallet
+            val wallet = it.getSerializable(KEY_WALLET_MODEL) as Wallet
             addAllTransaction(address = wallet.address)
         }
     }
