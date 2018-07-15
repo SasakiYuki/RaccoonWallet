@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="mosaic"
-            type="wacode.yamada.yuki.nempaymentapp.rest.item.MosaicItem" />
+            name="mosaicFullItem"
+            type="wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem" />
 
         <variable
             name="itemClickListener"
@@ -31,7 +30,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="@{mosaic.checked}"
+                android:checked="@{mosaicFullItem.isChecked}"
                 android:onClick="@{itemClickListener}" />
 
             <TextView
@@ -39,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="11dp"
                 android:layout_weight="1"
-                android:text="@{mosaic.fullName}"
+                android:text="@{mosaicFullItem.fullName}"
                 android:textColor="@color/textGray"
                 android:textSize="14sp"
                 tools:text="neko:nuko" />
@@ -48,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="19dp"
-                android:text="@{mosaic.quantity}"
+                android:text="@{mosaicFullItem.mosaicBalance}"
                 android:textColor="@color/textGray"
                 android:textSize="16dp"
                 tools:text="10.00000000" />
