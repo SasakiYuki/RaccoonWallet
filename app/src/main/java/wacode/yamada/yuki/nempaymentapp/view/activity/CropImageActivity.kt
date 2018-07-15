@@ -68,6 +68,14 @@ class CropImageActivity : BaseActivity() {
         saveButton.setOnClickListener {
             //todo
         }
+
+        rotateLeftButton.setOnClickListener {
+            cropImageView.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D)
+        }
+
+        rotateRightButton.setOnClickListener {
+            cropImageView.rotateImage(CropImageView.RotateDegrees.ROTATE_90D)
+        }
     }
 
     private fun pickUpImageForStorage() {
