@@ -123,6 +123,9 @@
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/OssLicenceTheme" />
+        <activity
+            android:name=".view.activity.CreateFriendActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
