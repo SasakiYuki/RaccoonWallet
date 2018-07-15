@@ -11,6 +11,7 @@
     <string name="com_jpy_uppercase">JPY</string>
     <string name="com_jp_yen">円</string>
     <string name="com_copied">クリップボードにコピーしました</string>
+    <string name="com_paste_error">貼り付けできませんでした</string>
     <string name="com_message">Message</string>
     <string name="com_mosaic">Mosaic</string>
     <string name="com_prefix_plus">+</string>
@@ -479,6 +480,8 @@
     <string name="raccoon_error_pin_title">送信画面に移動できません</string>
     <string name="raccoon_error_pin_message">PINが設定されていないため、送信画面に移動できません。\n送金操作を行うには、設定からPINの設定を行ってください。</string>
     <string name="raccoon_error_pin_button">PIN設定画面に移動する</string>
+    <string name="raccoon_error_wallet_message">ウォレットが選択されていないため、送信画面に移動できません。\n送金操作を行うには、ウォレットを選択してください。</string>
+    <string name="raccoon_error_wallet_button">ウォレット選択画面に移動する</string>
 
     <!-- AddressErrorDialog -->
     <string name="address_error_dialog_title">送り先が暗号化メッセージに 対応していません。</string>
