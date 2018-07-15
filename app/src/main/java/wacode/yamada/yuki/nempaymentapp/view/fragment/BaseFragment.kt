@@ -12,6 +12,7 @@ import wacode.yamada.yuki.nempaymentapp.view.dialog.LoadingDialogFragment
 
 abstract class BaseFragment : Fragment() {
     private var loadingDialog: LoadingDialogFragment? = null
+
     abstract fun layoutRes(): Int
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -40,11 +41,6 @@ abstract class BaseFragment : Fragment() {
             loadingDialog!!.dismiss()
             loadingDialog = null
         }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        hideProgress()
     }
 
     protected fun finish() {
