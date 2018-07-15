@@ -9,7 +9,6 @@ import com.ryuta46.nemkotlin.model.AccountMetaDataPair
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
@@ -39,6 +38,11 @@ class TransactionListFragment : BaseFragment() {
         if (adapter.itemCount == adapter.HEADER_SIZE) {
             addAllTransaction()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.clear()
     }
 
     override fun onDetach() {
@@ -126,13 +130,7 @@ class TransactionListFragment : BaseFragment() {
                         transactionEmptyView.visibility = View.VISIBLE
                     }
                     it.printStackTrace()
-                }).let { addDispose(it) }
-    }
-
-    private fun addDispose(disposable: Disposable) {
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.add(disposable)
-        }
+                }).let { compositeDisposable.add(it) }
     }
 
     private fun unSubscribe() {

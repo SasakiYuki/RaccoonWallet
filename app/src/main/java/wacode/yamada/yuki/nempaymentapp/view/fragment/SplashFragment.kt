@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.helper.ActiveNodeHelper
 import wacode.yamada.yuki.nempaymentapp.preference.AppLockPreference
@@ -41,7 +40,12 @@ class SplashFragment : BaseFragment() {
                     ActiveNodeHelper.saveNodeType(context, NodeType.ALICE2)
                     Toast.makeText(context, R.string.splash_node_select_error, Toast.LENGTH_LONG).show()
                     finishSplash()
-                }).let { addDispose(it) }
+                }).let { compositeDisposable.add(it) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.clear()
     }
 
     override fun onDetach() {
@@ -57,12 +61,6 @@ class SplashFragment : BaseFragment() {
                     finishSplash()
                 }
             }
-        }
-    }
-
-    private fun addDispose(disposable: Disposable) {
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.add(disposable)
         }
     }
 
