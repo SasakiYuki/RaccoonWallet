@@ -8,6 +8,7 @@ import android.support.v4.hardware.fingerprint.FingerprintManagerCompat
 import android.view.View
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_setting_home.*
+import kotlinx.android.synthetic.main.fragment_tutorial_pin_code_end.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -31,15 +32,15 @@ import wacode.yamada.yuki.nempaymentapp.view.dialog.*
 class SettingHomeFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_setting_home
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
     }
 
     private fun setupView() {
         selectNodeButton.setOnClickListener { replaceFragment(SelectNodeFragment.newInstance(), true) }
-        languageSettingButton.setOnClickListener { context.showToast(R.string.com_coming_soon) }
-        notificationSettingButton.setOnClickListener { context.showToast(R.string.com_coming_soon) }
+        languageSettingButton.setOnClickListener { languageSettingButton.context.showToast(R.string.com_coming_soon) }
+        notificationSettingButton.setOnClickListener { notificationSettingButton.context.showToast(R.string.com_coming_soon) }
         passwordSettingButton.setOnClickListener { showSettingPinCode() }
 
         setupFingerprintSwitch()
@@ -49,12 +50,14 @@ class SettingHomeFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        if (!FingerprintManagerCompat.from(context).hasEnrolledFingerprints()) {
-            FingerprintPreference.saveFingerprintSetting(context, false)
-        }
+        context?.let {
+            if (!FingerprintManagerCompat.from(it).hasEnrolledFingerprints()) {
+                FingerprintPreference.saveFingerprintSetting(it, false)
+            }
 
-        val isValidFingerprint = FingerprintPreference.getFingerprintSetting(context)
-        fingerprintSetting.setCheck(isValidFingerprint)
+            val isValidFingerprint = FingerprintPreference.getFingerprintSetting(it)
+            fingerprintSetting.setCheck(isValidFingerprint)
+        }
     }
 
     private fun setupFingerprintSwitch() {
@@ -62,38 +65,40 @@ class SettingHomeFragment : BaseFragment() {
             override fun onClick(isCheck: Boolean) {
                 if (isCheck) {
                     fingerprintSetting.setCheck(false)
-                    if (FingerprintHelper.checkForSave(context)) {
+                    if (FingerprintHelper.checkForSave(fingerprintSetting.context)) {
                         showPinCodeChecking(REQUEST_CODE_FINGERPRINT_SETTING)
                     } else {
                         showNotAvailableFingerprintDialog()
                     }
                 } else {
-                    PinCodePreference.removePinCodeForFingerprint(context)
-                    FingerprintPreference.saveFingerprintSetting(context, false)
+                    PinCodePreference.removePinCodeForFingerprint(fingerPrintButton.context)
+                    FingerprintPreference.saveFingerprintSetting(fingerPrintButton.context, false)
                 }
             }
         })
     }
 
     private fun setupAppLockSwitch() {
-        val isAvailableAppLock = AppLockPreference.isAvailable(context)
-        appLockSetting.setCheck(isAvailableAppLock)
+        context?.let {
+            val isAvailableAppLock = AppLockPreference.isAvailable(it)
+            appLockSetting.setCheck(isAvailableAppLock)
 
-        appLockSetting.setOnSwitchClickListener(object : SettingSwitchItemView.OnSwitchClickListener {
-            override fun onClick(isCheck: Boolean) {
-                if (isCheck) {
-                    if (PinCodeHelper.isAvailable(context)) {
-                        AppLockPreference.save(context, true)
-                        context.showToast(R.string.setting_app_lock_complete_message)
+            appLockSetting.setOnSwitchClickListener(object : SettingSwitchItemView.OnSwitchClickListener {
+                override fun onClick(isCheck: Boolean) {
+                    if (isCheck) {
+                        if (PinCodeHelper.isAvailable(it)) {
+                            AppLockPreference.save(it, true)
+                            it.showToast(R.string.setting_app_lock_complete_message)
+                        } else {
+                            appLockSetting.setCheck(false)
+                            showNotAvailablePinCodeDialog()
+                        }
                     } else {
-                        appLockSetting.setCheck(false)
-                        showNotAvailablePinCodeDialog()
+                        AppLockPreference.save(it, false)
                     }
-                } else {
-                    AppLockPreference.save(context, false)
                 }
-            }
-        })
+            })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -104,15 +109,17 @@ class SettingHomeFragment : BaseFragment() {
                     val code = data?.getByteArrayExtra(NewPinCodeSettingActivity.INTENT_PIN_CODE)
                     code?.let {
                         PinCodeProvider.setPinCode(it.toString(Charsets.UTF_8))
-                        startActivityForResult(
-                                NewPinCodeSettingActivity.getCallingIntent(context, NewPinCodeSettingActivity.NextAction.BACK_FOR_RESULT),
-                                NewPinCodeSettingActivity.REQUEST_CODE_PIN_CODE_SETTING)
+                        context?.let {
+                            startActivityForResult(
+                                    NewPinCodeSettingActivity.getCallingIntent(it, NewPinCodeSettingActivity.NextAction.BACK_FOR_RESULT),
+                                    NewPinCodeSettingActivity.REQUEST_CODE_PIN_CODE_SETTING)
+                        }
                     }
 
                 }
                 NewPinCodeSettingActivity.REQUEST_CODE_PIN_CODE_SETTING -> {
                     PinCodeProvider.clearCache()
-                    context.showToast(R.string.setting_pin_code_success)
+                    context?.showToast(R.string.setting_pin_code_success)
 
                 }
                 REQUEST_CODE_FINGERPRINT_SETTING -> {
@@ -125,7 +132,9 @@ class SettingHomeFragment : BaseFragment() {
                     val code = data?.getByteArrayExtra(NewPinCodeSettingActivity.INTENT_PIN_CODE)
                     code?.let {
                         PinCodeProvider.setPinCode(it.toString(Charsets.UTF_8))
-                        startActivity(PrivateKeyStoreSupportActivity.createIntent(context))
+                        context?.let {
+                            startActivity(PrivateKeyStoreSupportActivity.createIntent(it))
+                        }
                     }
                 }
             }
@@ -133,28 +142,32 @@ class SettingHomeFragment : BaseFragment() {
     }
 
     private fun showPinCodeChecking(requestCode: Int) {
-        if (PinCodeHelper.isAvailable(context)) {
-            startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(context = context,
-                    isDisplayFingerprint = false,
-                    messageRes = R.string.setting_pin_code_check_title,
-                    buttonPosition = NewCheckPinCodeActivity.ButtonPosition.RIGHT
-            ), requestCode)
-        } else {
-            showNotAvailablePinCodeDialog()
+        context?.let {
+            if (PinCodeHelper.isAvailable(it)) {
+                startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(context = it,
+                        isDisplayFingerprint = false,
+                        messageRes = R.string.setting_pin_code_check_title,
+                        buttonPosition = NewCheckPinCodeActivity.ButtonPosition.RIGHT
+                ), requestCode)
+            } else {
+                showNotAvailablePinCodeDialog()
+            }
         }
     }
 
     private fun showSettingPinCode() {
-        if (PinCodeHelper.isAvailable(context)) {
-            startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(context = context,
-                    isDisplayFingerprint = false,
-                    messageRes = R.string.setting_pin_code_check_title,
-                    buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT),
-                    NewCheckPinCodeActivity.REQUEST_CODE_PIN_CODE_CHECK)
-        } else {
-            startActivityForResult(
-                    NewPinCodeSettingActivity.getCallingIntent(context, NewPinCodeSettingActivity.NextAction.BACK),
-                    NewPinCodeSettingActivity.REQUEST_CODE_PIN_CODE_SETTING)
+        context?.let {
+            if (PinCodeHelper.isAvailable(it)) {
+                startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(context = it,
+                        isDisplayFingerprint = false,
+                        messageRes = R.string.setting_pin_code_check_title,
+                        buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT),
+                        NewCheckPinCodeActivity.REQUEST_CODE_PIN_CODE_CHECK)
+            } else {
+                startActivityForResult(
+                        NewPinCodeSettingActivity.getCallingIntent(it, NewPinCodeSettingActivity.NextAction.BACK),
+                        NewPinCodeSettingActivity.REQUEST_CODE_PIN_CODE_SETTING)
+            }
         }
     }
 
@@ -164,26 +177,27 @@ class SettingHomeFragment : BaseFragment() {
                 getString(R.string.setting_pincodd_not_available_title),
                 getString(R.string.setting_pincodd_not_available_message),
                 getString(R.string.com_ok))
-                .show(activity.supportFragmentManager, "")
+                .show(activity?.supportFragmentManager, "")
     }
 
     private fun setupSecurityLessonClick() {
         securityLessonLayout.setOnClickListener {
+            val context = securityLessonLayout.context
             showProgress()
             async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(this@SettingHomeFragment.context) }.await()
+                val wallet = bg { WalletManager.getSelectedWallet(context) }.await()
                 WalletProvider.wallet = wallet
 
                 hideProgress()
 
-                if (PinCodeHelper.isAvailable(this@SettingHomeFragment.context)) {
+                if (PinCodeHelper.isAvailable(context)) {
                     startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
-                            context = this@SettingHomeFragment.context,
+                            context = context,
                             isDisplayFingerprint = true,
                             buttonPosition = NewCheckPinCodeActivity.ButtonPosition.RIGHT
                     ), REQUEST_CODE_TUTORIAL_CODE)
                 } else {
-                    startActivity(PrivateKeyStoreSupportActivity.createIntent(this@SettingHomeFragment.context))
+                    startActivity(PrivateKeyStoreSupportActivity.createIntent(context))
                 }
             }
         }
@@ -203,7 +217,7 @@ class SettingHomeFragment : BaseFragment() {
         RaccoonSelectDialog.createDialog(viewModel,
                 getString(R.string.pin_code_setting_end_not_available_title),
                 getString(R.string.pin_code_setting_end_not_available_message))
-                .show(activity.supportFragmentManager, "")
+                .show(activity?.supportFragmentManager, "")
     }
 
     private fun showFingerprintSettingDialog(data: ByteArray) {
@@ -215,15 +229,15 @@ class SettingHomeFragment : BaseFragment() {
                     when (item) {
                         FingerprintSettingSelectButton.POSITIVE -> {
                             fingerprintSetting.setCheck(true)
-                            PinCodePreference.savePinCodeForFingerprint(context, data.toString(Charsets.UTF_8))
+                            PinCodePreference.savePinCodeForFingerprint(fingerprintSetting.context, data.toString(Charsets.UTF_8))
                         }
                         FingerprintSettingSelectButton.COMPLETE -> {
-                            context.showToast(R.string.setting_fingerprint_success)
+                            context?.showToast(R.string.setting_fingerprint_success)
                         }
                     }
                 }
 
-        FingerprintSettingDialog.createDialog(viewModel).show(activity.supportFragmentManager, "")
+        FingerprintSettingDialog.createDialog(viewModel).show(activity?.supportFragmentManager, "")
     }
 
     companion object {

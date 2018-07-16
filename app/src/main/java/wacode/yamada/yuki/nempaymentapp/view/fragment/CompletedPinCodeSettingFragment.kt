@@ -16,14 +16,14 @@ import wacode.yamada.yuki.nempaymentapp.view.dialog.*
 class CompletedPinCodeSettingFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_tutorial_pin_code_end
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButton()
     }
 
     private fun setupButton() {
         fingerPrintButton.setOnClickListener {
-            if (FingerprintHelper.checkForSave(context)) {
+            if (FingerprintHelper.checkForSave(fingerPrintButton.context)) {
                 showFingerprintSettingDialog()
             } else {
                 showNotAvailableFingerprintDialog()
@@ -35,39 +35,45 @@ class CompletedPinCodeSettingFragment : BaseFragment() {
     }
 
     private fun showFingerprintSettingDialog() {
-        val viewModel = FingerprintSettingViewModel()
-        viewModel.clickEvent
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { item ->
-                    when (item) {
-                        FingerprintSettingSelectButton.POSITIVE -> PinCodePreference.savePinCodeForFingerprint(context, PinCodeProvider.getPinCode(context)!!.toString(Charsets.UTF_8))
-                        FingerprintSettingSelectButton.COMPLETE -> finishSetting()
+        activity?.let {
+            val viewModel = FingerprintSettingViewModel()
+            viewModel.clickEvent
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { item ->
+                        when (item) {
+                            FingerprintSettingSelectButton.POSITIVE -> PinCodePreference.savePinCodeForFingerprint(it, PinCodeProvider.getPinCode(it)!!.toString(Charsets.UTF_8))
+                            FingerprintSettingSelectButton.COMPLETE -> finishSetting()
+                        }
                     }
-                }
 
-        FingerprintSettingDialog.createDialog(viewModel).show(activity.supportFragmentManager, "")
+            FingerprintSettingDialog.createDialog(viewModel).show(it.supportFragmentManager, "")
+        }
     }
 
     private fun showNotAvailableFingerprintDialog() {
-        val viewModel = RaccoonSelectViewModel(getString(R.string.com_ok), getString(R.string.com_cancel))
+        activity?.let {
+            val viewModel = RaccoonSelectViewModel(getString(R.string.com_ok), getString(R.string.com_cancel))
 
-        viewModel.clickEvent
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { item ->
-                    if (item.equals(SelectDialogButton.POSITIVE)) {
-                        startActivity(Intent().setAction(Settings.ACTION_SECURITY_SETTINGS))
+            viewModel.clickEvent
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { item ->
+                        if (item.equals(SelectDialogButton.POSITIVE)) {
+                            startActivity(Intent().setAction(Settings.ACTION_SECURITY_SETTINGS))
+                        }
                     }
-                }
 
-        RaccoonSelectDialog.createDialog(viewModel,
-                getString(R.string.pin_code_setting_end_not_available_title),
-                getString(R.string.pin_code_setting_end_not_available_message))
-                .show(activity.supportFragmentManager, "")
+            RaccoonSelectDialog.createDialog(viewModel,
+                    getString(R.string.pin_code_setting_end_not_available_title),
+                    getString(R.string.pin_code_setting_end_not_available_message))
+                    .show(it.supportFragmentManager, "")
+        }
     }
 
     private fun finishSetting() {
-        startActivity(WalletCreatedActivity.createIntent(context, WalletCreatedType.NEWBIE))
-        finish()
+        context?.let {
+            startActivity(WalletCreatedActivity.createIntent(it, WalletCreatedType.NEWBIE))
+            finish()
+        }
     }
 
     companion object {

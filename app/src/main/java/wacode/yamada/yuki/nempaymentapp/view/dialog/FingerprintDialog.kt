@@ -29,8 +29,10 @@ class FingerprintDialog : SimpleDialogFragment() {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        if (!FingerprintHelper.checkForLaunch(context)) {
-            throw RuntimeException("fingerprint is not available")
+        context?.let {
+            if (!FingerprintHelper.checkForLaunch(it)) {
+                throw RuntimeException("fingerprint is not available")
+            }
         }
 
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -61,70 +63,72 @@ class FingerprintDialog : SimpleDialogFragment() {
         cancellationSignal = CancellationSignal()
         val cryptoObject = FingerprintManager.CryptoObject(FingerprintHelper.initAndGetCipherObject(keyStore, iv))
 
-        context.getSystemService(FingerprintManager::class.java).authenticate(cryptoObject, cancellationSignal,
-                0, object : FingerprintManager.AuthenticationCallback() {
+        context?.let {
+            it.getSystemService(FingerprintManager::class.java).authenticate(cryptoObject, cancellationSignal,
+                    0, object : FingerprintManager.AuthenticationCallback() {
 
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
-                super.onAuthenticationError(errorCode, errString)
-                if (errorCode == FingerprintManager.FINGERPRINT_ERROR_LOCKOUT) {
-                    renderViews(dialog, Stage.ERROR)
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                    super.onAuthenticationError(errorCode, errString)
+                    if (errorCode == FingerprintManager.FINGERPRINT_ERROR_LOCKOUT) {
+                        renderViews(dialog, Stage.ERROR)
 
-                    FingerprintPreference.saveDialogState(context, false)
+                        FingerprintPreference.saveDialogState(it, false)
 
+                        dialog.themeBackground.postDelayed({
+                            dismiss()
+                            listener.onError()
+                        }, 2000)
+                    }
+                }
+
+                override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult?) {
+                    super.onAuthenticationSucceeded(result)
+                    renderViews(dialog, Stage.SUCCESS)
                     dialog.themeBackground.postDelayed({
                         dismiss()
-                        listener.onError()
-                    }, 2000)
+                        listener.onSuccess(result!!.cryptoObject.cipher)
+                    }, 1300)
                 }
-            }
 
-            override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult?) {
-                super.onAuthenticationSucceeded(result)
-                renderViews(dialog, Stage.SUCCESS)
-                dialog.themeBackground.postDelayed({
-                    dismiss()
-                    listener.onSuccess(result!!.cryptoObject.cipher)
-                }, 1300)
-            }
+                override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
+                    super.onAuthenticationHelp(helpCode, helpString)
+                    renderViews(dialog, Stage.FAILED)
+                    dialog.themeBackground.postDelayed({
+                        renderViews(dialog, Stage.DEFAULT)
+                    }, 1300)
+                }
 
-            override fun onAuthenticationHelp(helpCode: Int, helpString: CharSequence?) {
-                super.onAuthenticationHelp(helpCode, helpString)
-                renderViews(dialog, Stage.FAILED)
-                dialog.themeBackground.postDelayed({
-                    renderViews(dialog, Stage.DEFAULT)
-                }, 1300)
-            }
-
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-                renderViews(dialog, Stage.FAILED)
-                dialog.themeBackground.postDelayed({
-                    renderViews(dialog, Stage.DEFAULT)
-                }, 1300)
-            }
-        }, null)
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    renderViews(dialog, Stage.FAILED)
+                    dialog.themeBackground.postDelayed({
+                        renderViews(dialog, Stage.DEFAULT)
+                    }, 1300)
+                }
+            }, null)
+        }
     }
 
     private fun renderViews(dialog: Dialog, stage: Stage) {
         dialog.authenticateTitle.text = getString(stage.titleRes)
         dialog.authenticateMessage.text = getString(stage.messageRes)
-        dialog.authenticateIcon.setImageDrawable(context.getDrawable(stage.iconRes))
+        dialog.authenticateIcon.setImageDrawable(dialog.context.getDrawable(stage.iconRes))
 
         when (stage) {
             Stage.DEFAULT -> {
-                dialog.themeBackground.setBackgroundColor(getColor(context, R.color.nemGreen))
+                dialog.themeBackground.setBackgroundColor(getColor(dialog.context, R.color.nemGreen))
                 dialog.cancelButton.visibility = View.VISIBLE
             }
             Stage.SUCCESS -> {
-                dialog.themeBackground.setBackgroundColor(getColor(context, R.color.nemGreen))
+                dialog.themeBackground.setBackgroundColor(getColor(dialog.context, R.color.nemGreen))
                 dialog.cancelButton.visibility = View.GONE
             }
             Stage.FAILED -> {
-                dialog.themeBackground.setBackgroundColor(getColor(context, R.color.colorErrorOrange))
+                dialog.themeBackground.setBackgroundColor(getColor(dialog.context, R.color.colorErrorOrange))
                 dialog.cancelButton.visibility = View.VISIBLE
             }
             Stage.ERROR -> {
-                dialog.themeBackground.setBackgroundColor(getColor(context, R.color.colorErrorOrange))
+                dialog.themeBackground.setBackgroundColor(getColor(dialog.context, R.color.colorErrorOrange))
                 dialog.cancelButton.visibility = View.GONE
             }
         }

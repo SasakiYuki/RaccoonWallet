@@ -11,19 +11,19 @@ import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 class QRLabFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_qr_lab
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupQrLabMainButton()
     }
 
     private fun setupQrLabMainButton() {
         qrGeneratorIntentButton.setOnClickListener {
-            startActivity(CalculatorActivity.createIntent(context))
+            startActivity(CalculatorActivity.createIntent(qrGeneratorIntentButton.context))
         }
 
-        sellListButton.setOnClickListener { context.showToast(R.string.com_coming_soon) }
+        sellListButton.setOnClickListener { sellListButton.context.showToast(R.string.com_coming_soon) }
 
-        qrButton.setOnClickListener { context.showToast(R.string.com_coming_soon) }
+        qrButton.setOnClickListener { qrButton.context.showToast(R.string.com_coming_soon) }
     }
 
     companion object {

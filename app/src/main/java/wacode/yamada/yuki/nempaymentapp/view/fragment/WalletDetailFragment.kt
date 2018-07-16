@@ -18,7 +18,7 @@ class WalletDetailFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_wallet_detail
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         showProgress()
@@ -27,11 +27,14 @@ class WalletDetailFragment : BaseFragment() {
 
     private fun fetchWalletDetailFromDb() {
         var wallet: Wallet? = null
-        async(UI) {
-            bg {
-                wallet = NemPaymentApplication.database.walletDao().getById(getWalletId)
-            }.await()
-            fetchWalletDetailFromApi(wallet)
+        arguments?.let {
+            val walletId = it.getLong(KEY_WALLET_ID)
+            async(UI) {
+                bg {
+                    wallet = NemPaymentApplication.database.walletDao().getById(walletId)
+                }.await()
+                fetchWalletDetailFromApi(wallet)
+            }
         }
     }
 
@@ -64,10 +67,6 @@ class WalletDetailFragment : BaseFragment() {
         }
 
         hideProgress()
-    }
-
-    private val getWalletId by lazy {
-        arguments.getLong(KEY_WALLET_ID)
     }
 
     companion object {

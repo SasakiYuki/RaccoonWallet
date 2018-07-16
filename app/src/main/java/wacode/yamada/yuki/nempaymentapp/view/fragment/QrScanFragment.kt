@@ -22,12 +22,12 @@ class QrScanFragment : BaseFragment() {
     private var isUseBackCamera: Boolean = true
 
     private val shouldCloseThisFragment by lazy {
-        arguments.getBoolean(ARG_SHOULD_CLOSE_THIS_FRAGMENT, true)
+        arguments?.getBoolean(ARG_SHOULD_CLOSE_THIS_FRAGMENT, true) ?: true
     }
 
     override fun layoutRes() = R.layout.fragment_qr_scan
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         requestCameraPermission()
@@ -67,40 +67,44 @@ class QrScanFragment : BaseFragment() {
         zxing_barcode_surface.cameraSettings = cameraSetting
         qrScanCamera.setStatusText("")
 
-        if (shouldCallbackSingle) {
-            qrScanCamera.decodeSingle(object : BarcodeCallback {
-                override fun barcodeResult(result: BarcodeResult?) {
-                    if (shouldCloseThisFragment) {
-                        activity.supportFragmentManager.beginTransaction().remove(this@QrScanFragment).commit()
+        activity?.let {
+            if (shouldCallbackSingle) {
+                qrScanCamera.decodeSingle(object : BarcodeCallback {
+                    override fun barcodeResult(result: BarcodeResult?) {
+                        if (shouldCloseThisFragment) {
+                            it.supportFragmentManager.beginTransaction().remove(this@QrScanFragment).commit()
+                        }
+                        (this@QrScanFragment.activity as QrScanCallback).onQrScanResult(result)
                     }
-                    (this@QrScanFragment.activity as QrScanCallback).onQrScanResult(result)
-                }
 
-                override fun possibleResultPoints(resultPoints: MutableList<ResultPoint>?) {
-                }
-            })
-        } else {
-            qrScanCamera.decodeContinuous(object : BarcodeCallback {
-                override fun barcodeResult(result: BarcodeResult?) {
-                    if (shouldCloseThisFragment) {
-                        activity.supportFragmentManager.beginTransaction().remove(this@QrScanFragment).commit()
+                    override fun possibleResultPoints(resultPoints: MutableList<ResultPoint>?) {
                     }
-                    (this@QrScanFragment.activity as QrScanCallback).onQrScanResult(result)
-                }
+                })
+            } else {
+                qrScanCamera.decodeContinuous(object : BarcodeCallback {
+                    override fun barcodeResult(result: BarcodeResult?) {
+                        if (shouldCloseThisFragment) {
+                            it.supportFragmentManager.beginTransaction().remove(this@QrScanFragment).commit()
+                        }
+                        (this@QrScanFragment.activity as QrScanCallback).onQrScanResult(result)
+                    }
 
-                override fun possibleResultPoints(resultPoints: MutableList<ResultPoint>?) {
-                }
-            })
+                    override fun possibleResultPoints(resultPoints: MutableList<ResultPoint>?) {
+                    }
+                })
+            }
         }
 
         qrScanCamera.resume()
     }
 
     private fun requestCameraPermission() {
-        if (context.checkPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            setupCamera(CAMERA_FACING_BACK)
-        } else {
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA), 0)
+        activity?.let {
+            if (it.checkPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                setupCamera(CAMERA_FACING_BACK)
+            } else {
+                ActivityCompat.requestPermissions(it, arrayOf(Manifest.permission.CAMERA), 0)
+            }
         }
     }
 
@@ -122,7 +126,7 @@ class QrScanFragment : BaseFragment() {
     }
 
     private val shouldCallbackSingle by lazy {
-        arguments.getBoolean(ARG_SHOULD_CALLBACK_SINGLE)
+        arguments?.getBoolean(ARG_SHOULD_CALLBACK_SINGLE) ?: true
     }
 
     companion object {

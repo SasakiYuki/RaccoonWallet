@@ -8,15 +8,14 @@ import wacode.yamada.yuki.nempaymentapp.R
 class WalletBackupWarningFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_private_key_description
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         button.setOnClickListener {
-            replaceFragment(WalletBackupFragment.newInstance(getWalletId), true)
+            arguments?.let {
+                val walletId = it.getLong(KEY_WALLET_ID)
+                replaceFragment(WalletBackupFragment.newInstance(walletId), true)
+            }
         }
-    }
-
-    private val getWalletId by lazy {
-        arguments.getLong(KEY_WALLET_ID)
     }
 
     companion object {

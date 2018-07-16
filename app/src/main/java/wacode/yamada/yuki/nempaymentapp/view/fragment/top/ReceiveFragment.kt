@@ -42,23 +42,25 @@ class ReceiveFragment : BaseFragment() {
 
     private fun setupAddressClick() {
         myAddressTextView.setOnClickListener {
-            context.showToast(R.string.receive_fragment_address_toast)
-            myAddressTextView.text.toString().copyClipBoard(context)
+            myAddressTextView.context.showToast(R.string.receive_fragment_address_toast)
+            myAddressTextView.text.toString().copyClipBoard(myAddressTextView.context)
         }
     }
 
     private fun getSelectedWallet(walletId: Long = NOT_EXIST_WALLET_ID) {
-        async(UI) {
-            val wallet = if (walletId == NOT_EXIST_WALLET_ID) {
-                bg { WalletManager.getSelectedWallet(getContext()) }.await()
-            } else {
-                bg { WalletManager.getWalletbyId(walletId) }.await()
-            }
+        context?.let {
+            async(UI) {
+                val wallet = if (walletId == NOT_EXIST_WALLET_ID) {
+                    bg { WalletManager.getSelectedWallet(it) }.await()
+                } else {
+                    bg { WalletManager.getWalletbyId(walletId) }.await()
+                }
 
-            wallet?.let {
-                putQRImage(it)
-                setupMyAddress(it)
-                setupAddressClick()
+                wallet?.let {
+                    putQRImage(it)
+                    setupMyAddress(it)
+                    setupAddressClick()
+                }
             }
         }
     }
@@ -80,7 +82,7 @@ class ReceiveFragment : BaseFragment() {
     }
 
     private val walletId by lazy {
-        arguments.getLong(ARG_WALLET_ID)
+        arguments?.getLong(ARG_WALLET_ID) ?: 0
     }
 
     companion object {

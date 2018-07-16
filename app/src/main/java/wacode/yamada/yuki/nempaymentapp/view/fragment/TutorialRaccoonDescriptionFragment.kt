@@ -11,7 +11,7 @@ class TutorialRaccoonDescriptionFragment : BaseFragment() {
     private var listenerPrivateKeyStore: OnPrivateKeyStorePageChangeListener? = null
     override fun layoutRes() = R.layout.fragment_tutorial_raccoon_description
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButton()
     }
