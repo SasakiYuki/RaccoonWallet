@@ -1,27 +1,19 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
-import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
-import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.rest.item.SendMosaicItem
-import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
-import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertType
-import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertViewModel
-import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonErrorDialog
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.send.*
 import javax.inject.Inject
@@ -143,58 +135,14 @@ class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
         private const val KEY_SEND_PAYMENT_ENTITY = "key_send_payment_entity"
         private const val KEY_SEND_SCREEN_TYPE = "key_send_screen_type"
 
-        fun intentSendScreenOrShowErrorDialog(activity: FragmentActivity, address: String, senderPublicKey: String?, screenType: SendType = SendType.ENTER, paymentQREntity: PaymentQREntity? = null) {
-            async {
-                val wallet = bg { WalletManager.getSelectedWallet(activity) }.await()
-                when {
-                    wallet == null -> showWalletErrorDialog(activity)
-                    !PinCodeHelper.isAvailable(activity) -> showPinCodeErrorDialog(activity)
-                    else -> {
-                        val intent = Intent(activity, SendActivity::class.java)
-                        intent.putExtra(KEY_SEND_ADDRESS, address)
-                        intent.putExtra(KEY_SENDER_PUBLIC_KEY, senderPublicKey)
-                        intent.putExtra(KEY_SEND_PAYMENT_ENTITY, paymentQREntity)
-                        intent.putExtra(KEY_SEND_SCREEN_TYPE, screenType)
-                        activity.startActivity(intent)
-                    }
-                }
-            }
+        fun createIntent(context: Context, address: String, senderPublicKey: String?, screenType: SendType = SendType.ENTER, paymentQREntity: PaymentQREntity? = null): Intent {
+            val intent = Intent(context, SendActivity::class.java)
+            intent.putExtra(KEY_SEND_ADDRESS, address)
+            intent.putExtra(KEY_SENDER_PUBLIC_KEY, senderPublicKey)
+            intent.putExtra(KEY_SEND_PAYMENT_ENTITY, paymentQREntity)
+            intent.putExtra(KEY_SEND_SCREEN_TYPE, screenType)
+            return intent
         }
-
-        private fun showPinCodeErrorDialog(activity: FragmentActivity) {
-            val viewModel = RaccoonAlertViewModel()
-            viewModel.clickEvent
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
-                        if (it == RaccoonAlertType.BOTTOM_BUTTON) {
-                            activity.startActivity(SettingActivity.getCallingIntent(activity))
-                        }
-                    }
-
-            val dialog = RaccoonErrorDialog.createDialog(viewModel,
-                    activity.getString(R.string.raccoon_error_pin_title),
-                    activity.getString(R.string.raccoon_error_pin_message),
-                    activity.getString(R.string.raccoon_error_pin_button))
-            dialog.show(activity.supportFragmentManager, "")
-        }
-
-        private fun showWalletErrorDialog(activity: FragmentActivity) {
-            val viewModel = RaccoonAlertViewModel()
-            viewModel.clickEvent
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
-                        if (it == RaccoonAlertType.BOTTOM_BUTTON) {
-                            activity.startActivity(SelectWalletActivity.createIntent(activity))
-                        }
-                    }
-
-            val dialog = RaccoonErrorDialog.createDialog(viewModel,
-                    activity.getString(R.string.raccoon_error_pin_title),
-                    activity.getString(R.string.raccoon_error_wallet_message),
-                    activity.getString(R.string.raccoon_error_wallet_button))
-            dialog.show(activity.supportFragmentManager, "")
-        }
-
     }
 }
 
