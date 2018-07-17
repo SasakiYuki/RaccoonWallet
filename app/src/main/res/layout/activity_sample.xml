@@ -4,9 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonMaterialButton
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:text="芸術"
+        app:src="@mipmap/icon_message_encryption"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>

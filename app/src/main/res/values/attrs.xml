@@ -7,6 +7,11 @@
         <attr name="text" />
     </declare-styleable>
 
+    <declare-styleable name="RaccoonSingleMaterialButton">
+        <attr name="text" />
+        <attr name="src" format="reference"/>
+    </declare-styleable>
+
     <declare-styleable name="WalletBackBarView">
         <attr name="is_balance_foreground" />
     </declare-styleable>

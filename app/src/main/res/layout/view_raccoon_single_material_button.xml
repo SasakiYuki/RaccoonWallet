@@ -27,6 +27,7 @@
         android:layout_marginTop="4dp"
         android:contentDescription="@null"
         android:elevation="8dp"
+        android:padding="2dp"
         android:src="@drawable/ic_check_black_24dp"
         android:tint="@color/colorDarkWhite"
         app:layout_constraintLeft_toLeftOf="@id/materialButton"
