@@ -97,7 +97,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     override fun onRowClick(drawerEntity: DrawerEntity) {
         when (drawerEntity.title) {
             getString(R.string.main_navigation_home) -> closeDrawerAndMoveHome()
-            getString(R.string.main_navigation_about) -> startActivity(SampleActivity.createIntent(this))
+            getString(R.string.main_navigation_about) -> startActivity(AboutActivity.createIntent(this))
             getString(R.string.main_navigation_mosaic_gallery) -> startActivityForResult(MosaicListActivity.createIntent(this), MosaicListActivity.RESULT_MOSAIC_LIST)
             getString(R.string.main_navigation_donate) -> startActivity(RaccoonDonateActivity.createIntent(this))
             getString(R.string.main_navigation_help) -> showHelpWeb()

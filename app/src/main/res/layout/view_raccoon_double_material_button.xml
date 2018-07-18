@@ -24,14 +24,14 @@
     <View
         android:layout_width="60dp"
         android:layout_height="30dp"
+        android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:elevation="20dp"
-        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@id/materialButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintLeft_toLeftOf="@id/materialButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/materialButton"
         app:layout_constraintTop_toTopOf="@id/materialButton" />
 
     <ImageView
@@ -42,13 +42,13 @@
         android:contentDescription="@null"
         android:elevation="8dp"
         android:padding="2dp"
-        android:src="@drawable/ic_check_black_24dp"
         android:tint="@color/colorDarkWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintLeft_toLeftOf="@id/materialButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/materialButton" />
+        app:layout_constraintTop_toTopOf="@id/materialButton"
+        tools:src="@drawable/ic_check_black_24dp" />
 
     <TextView
         android:id="@+id/leftTextView"
@@ -73,25 +73,26 @@
         android:contentDescription="@null"
         android:elevation="8dp"
         android:padding="2dp"
-        android:src="@drawable/ic_check_black_24dp"
         android:tint="@color/colorDarkWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/materialButton" />
+        app:layout_constraintTop_toTopOf="@id/materialButton"
+        tools:src="@drawable/ic_check_black_24dp" />
 
     <View
         android:layout_width="60dp"
         android:layout_height="30dp"
+        android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:elevation="20dp"
-        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@id/materialButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintLeft_toLeftOf="@id/materialButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/materialButton"
         app:layout_constraintTop_toTopOf="@id/materialButton" />
+
     <TextView
         android:id="@+id/rightTextView"
         android:layout_width="wrap_content"
