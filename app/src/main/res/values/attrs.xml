@@ -12,6 +12,13 @@
         <attr name="src" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="RaccoonDoubleMaterialButton">
+        <attr name="rightText"/>
+        <attr name="rightSrc" format="reference"/>
+        <attr name="leftText" />
+        <attr name="leftSrc" format="reference"/>
+    </declare-styleable>
+
     <declare-styleable name="WalletBackBarView">
         <attr name="is_balance_foreground" />
     </declare-styleable>

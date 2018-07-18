@@ -24,7 +24,7 @@
         android:id="@+id/imageView"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:contentDescription="@null"
         android:elevation="8dp"
         android:padding="2dp"
