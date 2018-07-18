@@ -7,8 +7,18 @@
     <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="芸術"
-        app:src="@mipmap/icon_message_encryption"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:id="@+id/single"
+        app:layout_constraintRight_toRightOf="parent"
+        app:src="@mipmap/icon_message_encryption"
+        app:text="芸術" />
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftSrc="@mipmap/icon_message_encryption"
+        app:layout_constraintTop_toBottomOf="@id/single"
+        app:leftText="モンスーン"
+        app:rightSrc="@mipmap/icon_wallet"
+        app:rightText="ゴリラ" />
 </android.support.constraint.ConstraintLayout>
