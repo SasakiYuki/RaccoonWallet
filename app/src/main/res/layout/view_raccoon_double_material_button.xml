@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/materialButton"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="192dp"
+        android:layout_height="45dp"
+        android:backgroundTint="@android:color/white"
+        android:clickable="false"
+        android:contentDescription="@null"
+        app:cornerRadius="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/materialButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintLeft_toLeftOf="@id/materialButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/materialButton" />
+
+    <ImageView
+        android:id="@+id/leftImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="6dp"
+        android:contentDescription="@null"
+        android:elevation="8dp"
+        android:padding="2dp"
+        android:tint="@color/colorDarkWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintLeft_toLeftOf="@id/materialButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/materialButton"
+        tools:src="@drawable/ic_check_black_24dp" />
+
+    <TextView
+        android:id="@+id/leftTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:elevation="8dp"
+        android:textColor="@color/colorDarkWhite"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/materialButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintLeft_toLeftOf="@id/materialButton"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="もしもし" />
+
+    <ImageView
+        android:id="@+id/rightImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="6dp"
+        android:contentDescription="@null"
+        android:elevation="8dp"
+        android:padding="2dp"
+        android:tint="@color/colorDarkWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/materialButton"
+        tools:src="@drawable/ic_check_black_24dp" />
+
+    <View
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/materialButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintLeft_toLeftOf="@id/materialButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/materialButton" />
+
+    <TextView
+        android:id="@+id/rightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:elevation="8dp"
+        android:textColor="@color/colorDarkWhite"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/materialButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="アルギニン" />
+</android.support.constraint.ConstraintLayout>

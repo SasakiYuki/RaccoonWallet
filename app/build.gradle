@@ -33,6 +33,9 @@ android {
     defaultConfig {
         multiDexEnabled true
     }
+    lintOptions {
+        disable "ResourceType"
+    }
 }
 kapt {
     correctErrorTypes = true
