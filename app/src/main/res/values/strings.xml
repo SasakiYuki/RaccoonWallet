@@ -505,6 +505,15 @@
     <string name="donate_detail_fragment_rhime_message">Raccoonの名付け親。デザイナー。\nこのアプリふざけてんなぁと思ったら、この人のせい。\nラクーンにおけるデザインの大体は、この人が作った。\n使いやすいアプリの構造を考えたりする情報アーキテクチャも兼任した。\n\n・総合コンテンツデザイナー\n・Android / iOSアプリのIA/UI/UXデザイン\n・ビジュアルデザイン/ブランディング（ロゴ・サイト）</string>
     <string name="donate_detail_fragment_ios_message">Raccoonの命綱。iOSエンジニア。最強の後衛。\n将棋で例えるなら飛車。\nラクーンを林檎の楽園へといざなう。\n\n・Android→iOS版アプリ移植・開発主任\n・nem-kotlinの創造主。</string>
     <string name="donate_detail_fragment_donate">Donate</string>
+    
+    <!-- ProfileAddressAddActivity -->
+    <string name="profile_address_add_activity_title">ウォレットを設定</string>
+    <string name="profile_address_add_activity_header_title_nem">NEM/XEM</string>
+    <string name="profile_address_add_activity_main_content_title">ウォレット情報の入力</string>
+    <string name="profile_address_add_activity_main_content_name_hint">ウォレットの名前を入力</string>
+    <string name="profile_address_add_activity_main_content_address_hint">アドレスを入力</string>
+    <string name="profile_address_add_activity_main_content_attribute_title">ウォレット属性の設定</string>
+    <string name="profile_address_add_activity_main_content_attribute_master">Master</string>
 
     <!--Dialog-->
     <string name="dialog_update_forward_title">アプリのアップデートがあります</string>

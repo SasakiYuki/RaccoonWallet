@@ -123,6 +123,7 @@
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/OssLicenceTheme" />
+        <activity android:name=".view.activity.profile.ProfileAddressAddActivity"></activity>
     </application>
 
 </manifest>
