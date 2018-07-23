@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.fragment_donate_detail.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
+import wacode.yamada.yuki.nempaymentapp.utils.SendStatusUtils
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
@@ -23,6 +24,16 @@ class DonateDetailFragment : BaseFragment() {
         setupButton()
     }
 
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.clear()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        compositeDisposable.dispose()
+    }
+
     private fun setupButton() {
         button.setOnClickListener {
             checkEnterAddressAvailable()
@@ -30,22 +41,27 @@ class DonateDetailFragment : BaseFragment() {
     }
 
     private fun checkEnterAddressAvailable() {
+        showProgress()
+
         val address = when (viewModel.donateType) {
             RaccoonDonateActivity.DonateType.ANDROID -> ADDRESS_ANDROID
             RaccoonDonateActivity.DonateType.IOS -> ADDRESS_IOS
             RaccoonDonateActivity.DonateType.RHIME -> ADDRESS_RHIME
         }
-        showProgress()
+
         context?.let {
-            compositeDisposable.add(
-                    NemCommons.getAccountInfo(address)
-                            .subscribe({ item ->
-                                startActivity(SendActivity.createIntent(it, address, item.account.publicKey))
-                                hideProgress()
-                            }, { e ->
-                                hideProgress()
-                                it.showToast(R.string.send_top_fragment_address_error)
-                            }))
+            NemCommons.getAccountInfo(address)
+                    .subscribe({ item ->
+                        hideProgress()
+                        when (SendStatusUtils.isAvailable(it)) {
+                            SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(it, activity!!.supportFragmentManager)
+                            SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(it, activity!!.supportFragmentManager)
+                            SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(it, address, item.account.publicKey))
+                        }
+                    }, { e ->
+                        hideProgress()
+                        it.showToast(R.string.send_top_fragment_address_error)
+                    }).let { compositeDisposable.add(it) }
         }
     }
 

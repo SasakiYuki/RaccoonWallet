@@ -1,10 +1,14 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment.send
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -15,10 +19,10 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
 import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicItem
 import wacode.yamada.yuki.nempaymentapp.rest.item.SendMosaicItem
-import wacode.yamada.yuki.nempaymentapp.rest.model.MosaicAppEntity
-import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendType
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendViewModel
@@ -26,15 +30,27 @@ import wacode.yamada.yuki.nempaymentapp.view.adapter.CalculatorPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.controller.MosaicListController
 import wacode.yamada.yuki.nempaymentapp.view.custom_view.OnClickMultiCalculator
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
+import wacode.yamada.yuki.nempaymentapp.viewmodel.EnterMosaicListViewModel
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClickListener {
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: SendViewModel
+    private lateinit var enterMosaicListViewModel: EnterMosaicListViewModel
     override fun layoutRes() = R.layout.fragment_enter_send
     private lateinit var controller: MosaicListController
     private val compositeDisposable = CompositeDisposable()
-    private val mosaics = ArrayList<MosaicItem>()
+    private val newMosaics = ArrayList<MosaicFullItem>()
     private val selectedMosaics = ArrayList<MosaicItem>()
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+
+        enterMosaicListViewModel = ViewModelProviders.of(this, viewModelFactory).get(EnterMosaicListViewModel::class.java)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +59,18 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
         setupCalculator()
         controller = MosaicListController(this, false, true)
         setupRecyclerView()
+        setupViewModelObserve()
+    }
+
+    private fun setupViewModelObserve() {
+        enterMosaicListViewModel.run {
+            fullItemMosaic.observe(this@EnterSendFragment, Observer {
+                it ?: return@Observer
+                newMosaics.add(it)
+                recycler.visibility = View.VISIBLE
+                controller.setData(newMosaics)
+            })
+        }
     }
 
     private fun setupRecyclerView() {
@@ -53,17 +81,9 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
             async(UI) {
                 val wallet = bg { WalletManager.getSelectedWallet(it) }
                         .await()
-                getData(wallet!!.address)
+                enterMosaicListViewModel.getOwnedMosaicFullData(wallet!!.address)
             }
         }
-    }
-
-    private fun getData(address: String) {
-        compositeDisposable.add(NemCommons.getAccountMosaicOwned(address)
-                .subscribe({ response ->
-                    response.mapTo(mosaics) { MosaicItem(MosaicAppEntity.convert(it)) }
-                    controller.setData(mosaics)
-                }, { e -> e.printStackTrace() }))
     }
 
     private fun setupCalculator() {
@@ -74,18 +94,18 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
                         controller.showHeader = false
                         controller.switchState = false
                     }
-                    controller.setData(mosaics)
+                    controller.setData(newMosaics)
                 }
             }
 
             override fun onPutNotZERO(mosaicItem: MosaicItem) {
                 if (!controller.showHeader) {
                     controller.showHeader = true
-                    controller.setData(mosaics)
+                    controller.setData(newMosaics)
                 }
                 if (!controller.switchState && mosaicItem.isNEMXEMItem()) {
                     controller.switchState = true
-                    controller.setData(mosaics)
+                    controller.setData(newMosaics)
                 }
             }
 
@@ -157,7 +177,7 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
         setupOnClickHeader(switchState)
         setupSelectedMosaicCount()
         addNemXEMItemIfEmpty()
-        controller.setData(mosaics)
+        controller.setData(newMosaics)
     }
 
     private fun containsNemXemItem(): Boolean {
@@ -174,10 +194,10 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
     }
 
     private fun resetListView(checkedItem: MosaicItem) {
-        val list = ArrayList<MosaicItem>()
-        for (mosaic in mosaics) {
+        val list = ArrayList<MosaicFullItem>()
+        for (mosaic in newMosaics) {
             if (checkedItem.getFullName() == mosaic.getFullName()) {
-                val newMosaic = MosaicItem(mosaic.mosaic, !checkedItem.checked)
+                val newMosaic = MosaicFullItem(mosaic.divisibility, MosaicItem(mosaic.mosaicItem.mosaic, !checkedItem.checked))
                 list.add(newMosaic)
             } else {
                 list.add(mosaic)
@@ -186,8 +206,8 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
 
         addNemXEMItemIfEmpty()
         controller.setData(list)
-        mosaics.clear()
-        mosaics.addAll(list)
+        newMosaics.clear()
+        newMosaics.addAll(list)
     }
 
     private fun addNemXEMItemIfEmpty() {

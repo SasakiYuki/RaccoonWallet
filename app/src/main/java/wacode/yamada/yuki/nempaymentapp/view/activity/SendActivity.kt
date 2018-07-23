@@ -4,6 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
@@ -11,8 +16,16 @@ import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.rest.item.SendMosaicItem
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.send.*
+import javax.inject.Inject
 
-class SendActivity : BaseFragmentActivity() {
+class SendActivity : BaseFragmentActivity(), HasSupportFragmentInjector {
+    @Inject
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    private val viewModel = SendViewModel()
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
+
     override fun initialFragment() = replaceFragmentForLaunch()
 
     override fun setLayout() = SIMPLE_FRAGMENT_ONLY_LAYOUT
@@ -47,9 +60,8 @@ class SendActivity : BaseFragmentActivity() {
         return@lazy list
     }
 
-    private val viewModel = SendViewModel()
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         viewModel.replaceEvent
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,6 +69,7 @@ class SendActivity : BaseFragmentActivity() {
                     replaceFragment(item.first, item.second)
                 })
         setToolBarBackButton()
+
     }
 
     private fun replaceFragmentForLaunch(): BaseFragment {
@@ -122,14 +135,7 @@ class SendActivity : BaseFragmentActivity() {
         private const val KEY_SEND_PAYMENT_ENTITY = "key_send_payment_entity"
         private const val KEY_SEND_SCREEN_TYPE = "key_send_screen_type"
 
-        fun createIntent(context: Context, address: String, senderPublicKey: String): Intent {
-            val intent = Intent(context, SendActivity::class.java)
-            intent.putExtra(KEY_SEND_ADDRESS, address)
-            intent.putExtra(KEY_SENDER_PUBLIC_KEY, senderPublicKey)
-            return intent
-        }
-
-        fun createIntent(context: Context, address: String, senderPublicKey: String?, screenType: SendType, paymentQREntity: PaymentQREntity?): Intent {
+        fun createIntent(context: Context, address: String, senderPublicKey: String?, screenType: SendType = SendType.ENTER, paymentQREntity: PaymentQREntity? = null): Intent {
             val intent = Intent(context, SendActivity::class.java)
             intent.putExtra(KEY_SEND_ADDRESS, address)
             intent.putExtra(KEY_SENDER_PUBLIC_KEY, senderPublicKey)

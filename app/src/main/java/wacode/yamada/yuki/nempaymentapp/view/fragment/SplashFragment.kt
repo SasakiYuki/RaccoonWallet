@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.helper.ActiveNodeHelper
 import wacode.yamada.yuki.nempaymentapp.preference.AppLockPreference
@@ -15,6 +16,9 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
 
 
 class SplashFragment : BaseFragment() {
+
+    private val compositeDisposable = CompositeDisposable()
+
     override fun layoutRes() = R.layout.fragment_splash
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +40,17 @@ class SplashFragment : BaseFragment() {
                     ActiveNodeHelper.saveNodeType(view.context, NodeType.ALICE2)
                     Toast.makeText(context, R.string.splash_node_select_error, Toast.LENGTH_LONG).show()
                     finishSplash()
-                })
+                }).let { compositeDisposable.add(it) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.clear()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        unSubscribe()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -47,6 +61,12 @@ class SplashFragment : BaseFragment() {
                     finishSplash()
                 }
             }
+        }
+    }
+
+    private fun unSubscribe() {
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.dispose()
         }
     }
 
