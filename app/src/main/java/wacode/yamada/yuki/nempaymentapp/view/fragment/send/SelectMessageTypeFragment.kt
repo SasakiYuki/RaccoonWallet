@@ -15,14 +15,10 @@ class SelectMessageTypeFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_select_message_type
 
     private val sendMosaicItems by lazy {
-        arguments.getSerializable(KEY_SEND_MOSAIC_ITEMS) as ArrayList<SendMosaicItem>
+        arguments?.getSerializable(KEY_SEND_MOSAIC_ITEMS) as ArrayList<SendMosaicItem>
     }
 
-    private val canCryptMessage by lazy {
-        arguments.getBoolean(KEY_CAN_CRYPT_MESSAGE)
-    }
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayoutClick()
     }
@@ -32,22 +28,26 @@ class SelectMessageTypeFragment : BaseFragment() {
             viewModel.putMessageTypeNormal()
             viewModel.replaceFragment(SendType.MESSAGE, sendMosaicItems)
         }
-        cryptMessageLayout.setOnClickListener {
-            if (canCryptMessage) {
-                viewModel.putMessageTypeCrypt()
-                viewModel.replaceFragment(SendType.MESSAGE, sendMosaicItems)
-            } else {
-                showCanNotCryptMessage()
+        arguments?.let { arguments ->
+            cryptMessageLayout.setOnClickListener {
+                if (arguments.getBoolean(KEY_CAN_CRYPT_MESSAGE)) {
+                    viewModel.putMessageTypeCrypt()
+                    viewModel.replaceFragment(SendType.MESSAGE, sendMosaicItems)
+                } else {
+                    showCanNotCryptMessage()
+                }
             }
         }
     }
 
     private fun showCanNotCryptMessage() {
-        AddressErrorDialog.createDialog(
-                getString(R.string.address_error_dialog_title),
-                getString(R.string.address_error_dialog_message),
-                getString(R.string.com_ok)
-        ).show(activity.supportFragmentManager, "")
+        activity?.let {
+            AddressErrorDialog.createDialog(
+                    getString(R.string.address_error_dialog_title),
+                    getString(R.string.address_error_dialog_message),
+                    getString(R.string.com_ok)
+            ).show(it.supportFragmentManager, "")
+        }
     }
 
     companion object {

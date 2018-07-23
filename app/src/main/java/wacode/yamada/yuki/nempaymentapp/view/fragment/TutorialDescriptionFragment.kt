@@ -11,7 +11,7 @@ class TutorialDescriptionFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_tutorial_description
     private var listenerPrivateKeyStore: OnPrivateKeyStorePageChangeListener? = null
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButtonClickListener()
     }

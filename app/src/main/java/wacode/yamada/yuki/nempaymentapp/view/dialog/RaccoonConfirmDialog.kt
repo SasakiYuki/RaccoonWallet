@@ -15,19 +15,15 @@ import wacode.yamada.yuki.nempaymentapp.utils.SharedPreferenceUtils
 
 class RaccoonConfirmDialog : SimpleDialogFragment() {
     private val title by lazy {
-        arguments.getString(ARG_TITLE, "")
+        arguments?.getString(ARG_TITLE, "")
     }
 
     private val message by lazy {
-        arguments.getString(ARG_MESSAGE, "")
+        arguments?.getString(ARG_MESSAGE, "")
     }
 
     private val buttonText by lazy {
-        arguments.getString(ARG_BUTTON_TEXT, "")
-    }
-
-    private val showTwiceDisplayCheckBox by lazy {
-        arguments.getBoolean(ARG_SHOW_TWICE_DISPLAY_CHECK_BOX, false)
+        arguments?.getString(ARG_BUTTON_TEXT, "")
     }
 
     private lateinit var viewModel: RaccoonConfirmViewModel
@@ -59,7 +55,10 @@ class RaccoonConfirmDialog : SimpleDialogFragment() {
         dialog.findViewById<CheckBox>(R.id.checkbox).setOnCheckedChangeListener { _, b ->
             viewModel.onCheck(b)
         }
-        dialog.findViewById<LinearLayout>(R.id.twiceDisplayLayout).visibility = if (showTwiceDisplayCheckBox) View.VISIBLE else View.GONE
+        arguments?.let {
+            val showTwiceDisplayCheckBox = it.getBoolean(ARG_SHOW_TWICE_DISPLAY_CHECK_BOX, false)
+            dialog.findViewById<LinearLayout>(R.id.twiceDisplayLayout).visibility = if (showTwiceDisplayCheckBox) View.VISIBLE else View.GONE
+        }
     }
 
     override fun onDismiss(dialog: DialogInterface?) {

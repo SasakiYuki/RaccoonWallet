@@ -36,7 +36,7 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
     private val mosaics = ArrayList<MosaicItem>()
     private val selectedMosaics = ArrayList<MosaicItem>()
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         selectedMosaics.add(MosaicItem.createNEMXEMItem())
         setupViews()
@@ -49,10 +49,12 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.adapter = controller.adapter
 
-        async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(getContext()) }
-                    .await()
-            getData(wallet!!.address)
+        context?.let {
+            async(UI) {
+                val wallet = bg { WalletManager.getSelectedWallet(it) }
+                        .await()
+                getData(wallet!!.address)
+            }
         }
     }
 

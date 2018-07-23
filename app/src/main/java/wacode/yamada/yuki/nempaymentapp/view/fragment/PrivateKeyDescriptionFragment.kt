@@ -12,7 +12,7 @@ class PrivateKeyDescriptionFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_private_key_description
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButtonClickListener()
     }

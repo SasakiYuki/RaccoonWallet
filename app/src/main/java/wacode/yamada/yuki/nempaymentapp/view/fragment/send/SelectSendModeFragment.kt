@@ -13,7 +13,7 @@ class SelectSendModeFragment : BaseFragment() {
     private lateinit var viewModel: SendViewModel
     override fun layoutRes() = R.layout.fragment_select_send_mode
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButtons()
     }
@@ -27,7 +27,7 @@ class SelectSendModeFragment : BaseFragment() {
         }
     }
 
-    private fun getSendMosaicItems() = arguments.getSerializable(KEY_SEND_MOSAIC_ITEMS) as ArrayList<SendMosaicItem>
+    private fun getSendMosaicItems() = arguments?.getSerializable(KEY_SEND_MOSAIC_ITEMS) as ArrayList<SendMosaicItem>
 
     companion object {
         private const val KEY_SEND_MOSAIC_ITEMS = "key_send_mosaic_items"

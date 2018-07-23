@@ -18,7 +18,7 @@ import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 class WalletBackupFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_private_key_display
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupViews()
@@ -27,18 +27,21 @@ class WalletBackupFragment : BaseFragment() {
     private fun setupViews() {
         showProgress()
 
-        async(UI) {
-            val wallet = bg { NemPaymentApplication.database.walletDao().getById(getWalletId) }
-                    .await()
-            textView.text = WalletManager.getPrivateKey(this@WalletBackupFragment.context, wallet)
+        arguments?.let {
+            val walletId = it.getLong(KEY_WALLET_ID)
+            async(UI) {
+                val wallet = bg { NemPaymentApplication.database.walletDao().getById(walletId) }
+                        .await()
+                textView.text = WalletManager.getPrivateKey(textView.context, wallet)
 
-            hideProgress()
+                hideProgress()
+            }
         }
 
         textView.setOnClickListener {
             val text = textView.text.toString()
             copyToClip(text)
-            context.showToast(R.string.private_key_display_fragment_copied_click)
+            textView.context.showToast(R.string.private_key_display_fragment_copied_click)
         }
 
         button.setOnClickListener {
@@ -47,19 +50,18 @@ class WalletBackupFragment : BaseFragment() {
     }
 
     private fun copyToClip(text: String) {
-        val item = ClipData.Item(text)
+        //TODO extentionsにある
+        context?.let {
+            val item = ClipData.Item(text)
 
-        val mimeType = arrayOfNulls<String>(1)
-        mimeType[0] = ClipDescription.MIMETYPE_TEXT_URILIST
+            val mimeType = arrayOfNulls<String>(1)
+            mimeType[0] = ClipDescription.MIMETYPE_TEXT_URILIST
 
-        val cd = ClipData(ClipDescription("text_data", mimeType), item)
+            val cd = ClipData(ClipDescription("text_data", mimeType), item)
 
-        val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        cm.primaryClip = cd
-    }
-
-    private val getWalletId by lazy {
-        arguments.getLong(KEY_WALLET_ID)
+            val cm = it.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            cm.primaryClip = cd
+        }
     }
 
     companion object {

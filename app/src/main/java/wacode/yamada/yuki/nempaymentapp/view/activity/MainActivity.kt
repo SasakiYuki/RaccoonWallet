@@ -88,7 +88,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             navigationRecyclerView.adapter = controller.adapter
             val drawerIconTypes = DrawerItemType.values()
             val list = ArrayList<DrawerEntity>()
-            drawerIconTypes.mapTo(list) { DrawerEntity(ContextCompat.getDrawable(this@MainActivity, it.imageResource), getString(it.titleResource), it.drawerType) }
+            drawerIconTypes.mapTo(list) { DrawerEntity(ContextCompat.getDrawable(this@MainActivity, it.imageResource)!!, getString(it.titleResource), it.drawerType) }
             controller.setData(list)
         }
     }

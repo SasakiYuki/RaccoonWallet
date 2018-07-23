@@ -16,23 +16,23 @@ import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 class SendFinishFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_send_finish
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButtons()
     }
 
     private fun setupButtons() {
         homeButton.setOnClickListener {
-            val intent = MainActivity.createIntent(context, false)
+            val intent = MainActivity.createIntent(homeButton.context, false)
             intent.flags = FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
             finish()
         }
         transactionButton.setOnClickListener {
             async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(getContext()) }.await()
+                val wallet = bg { WalletManager.getSelectedWallet(transactionButton.context) }.await()
                 wallet?.let {
-                    startActivity(TransactionActivity.getCallingIntent(getContext(),wallet))
+                    startActivity(TransactionActivity.getCallingIntent(transactionButton.context,wallet))
                 }
                 finish()
             }
