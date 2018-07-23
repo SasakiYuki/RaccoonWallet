@@ -35,22 +35,27 @@ object NemCommons {
 
     fun getAccountTransfersIncoming(address: String) =
             getClient().accountTransfersIncoming(address)
+                    .subscribeOn(Schedulers.newThread())
 
     fun getAccountTransfersOutgoing(address: String) =
             getClient().accountTransfersOutgoing(address)
+                    .subscribeOn(Schedulers.newThread())
 
     fun getAccountUnconfirmedTransactions(address: String) =
             getClient().accountUnconfirmedTransactions(address)
+                    .subscribeOn(Schedulers.newThread())
 
     fun getAccountInfoFromPublicKey(publicKey: String) =
             getClient().accountGetFromPublicKey(publicKey)
                     .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
 
     fun getAccountMosaicOwned(publicKey: String) =
             getClient().accountMosaicOwned(publicKey)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
+
+    fun getNamespaceMosaics(nameSpace: String) =
+            getClient().namespaceMosaicDefinitionPage(nameSpace)
 
     fun getHarvestInfo(address: String) =
             getClient().accountHarvests(address)

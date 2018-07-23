@@ -17,6 +17,7 @@ import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
 import wacode.yamada.yuki.nempaymentapp.utils.*
 import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.CropImageActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.TransactionActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleCallbackDoubleInterface
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleNoInterface
@@ -155,7 +156,10 @@ class HomeFragment : BaseFragment() {
             harvestEmptyView.visibility = View.VISIBLE
         }
 
-        showHarvestButton.setOnClickListener { context?.showToast(R.string.com_coming_soon) }
+        showHarvestButton.setOnClickListener {
+            //            context?.showToast(R.string.com_coming_soon)
+            startActivity(CropImageActivity.createIntent(context!!))
+        }
     }
 
     private fun setupTransactionItems(list: List<TransactionMetaDataPair>) {

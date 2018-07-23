@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="mosaic"
-            type="wacode.yamada.yuki.nempaymentapp.rest.item.MosaicItem" />
+            name="mosaicFullItem"
+            type="wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem" />
     </data>
 
     <LinearLayout
@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:gravity="center_vertical"
-                android:text="@{mosaic.fullName}"
+                android:text="@{mosaicFullItem.fullName}"
                 android:textColor="@color/textGray"
                 tools:text="neko:nuko" />
 
@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
-                android:text="@{mosaic.mosaicBalance}"
+                android:text="@{mosaicFullItem.mosaicBalance}"
                 android:textColor="@color/textGray"
                 tools:text="1000.00" />
         </RelativeLayout>

@@ -2,37 +2,37 @@ package wacode.yamada.yuki.nempaymentapp.view.activity
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentValues
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import com.isseiaoki.simplecropview.CropImageView
 import com.isseiaoki.simplecropview.util.Utils
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_crop_image.*
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.checkPermission
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
+import wacode.yamada.yuki.nempaymentapp.viewmodel.CropImageViewModel
+import javax.inject.Inject
 
 class CropImageActivity : BaseActivity() {
-    private val compositeDisposable = CompositeDisposable()
-    private val compressFormat = Bitmap.CompressFormat.JPEG
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: CropImageViewModel
 
     override fun setLayout() = R.layout.activity_crop_image
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CropImageViewModel::class.java)
+        setupViewModel()
+
         setupViews()
         if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             pickUpImageForStorage()
@@ -41,17 +41,12 @@ class CropImageActivity : BaseActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unSubscribe()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode) {
             Activity.RESULT_OK -> {
                 if (requestCode == REQUEST_CODE_PICK_IMAGE) {
-                    loadImage(Utils.ensureUriPermission(this, data))
+                    viewModel.loadImage(cropImageView, Utils.ensureUriPermission(this, data))
                 }
             }
             Activity.RESULT_CANCELED -> finish()
@@ -73,7 +68,7 @@ class CropImageActivity : BaseActivity() {
 
         closeButton.setOnClickListener { finish() }
 
-        saveButton.setOnClickListener { cropAndSaveImage() }
+        saveButton.setOnClickListener { viewModel.cropAndSaveImage(cropImageView, contentResolver) }
 
         rotateLeftButton.setOnClickListener { cropImageView.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D) }
 
@@ -87,85 +82,22 @@ class CropImageActivity : BaseActivity() {
         startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE)
     }
 
-    private fun loadImage(uri: Uri) {
-        showProgress()
-        cropImageView.load(uri).executeAsCompletable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+    private fun setupViewModel() {
+        viewModel.run {
+            loadingStatus.observe(this@CropImageActivity, Observer<Boolean> {
+                it ?: return@Observer
+                if (it) {
+                    showProgress()
+                } else {
                     hideProgress()
-                }.let { addDispose(it) }
-    }
-
-    private fun cropAndSaveImage() {
-        showProgress()
-        cropImageView.cropImage()
-                .flatMap {
-                    cropImageView.save(it)
-                            .compressFormat(compressFormat)
-                            .executeAsSingle(createNewUri())
                 }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { uri ->
-                    hideProgress()
-                    setResult(Activity.RESULT_OK, Intent().putExtra(PARAM_INTENT_RESULT_URI, uri.toString()))
-                    finish()
-                }
-                .let { addDispose(it) }
-    }
+            })
 
-    private fun CropImageView.cropImage() = this.crop(this.sourceUri).executeAsSingle()
-
-    private fun createNewUri(): Uri? {
-        val currentTimeMillis = System.currentTimeMillis()
-        val today = Date(currentTimeMillis)
-        val title = SimpleDateFormat("yyyyMMdd_HHmmss").format(today)
-        val fileName = "image" + title + ".jpeg"
-        val path = getDirPath() + "/" + fileName
-        val file = File(path)
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.TITLE, title)
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-        values.put(MediaStore.Images.Media.DATA, path)
-        val time = currentTimeMillis / 1000
-        values.put(MediaStore.MediaColumns.DATE_ADDED, time)
-        values.put(MediaStore.MediaColumns.DATE_MODIFIED, time)
-        if (file.exists()) {
-            values.put(MediaStore.Images.Media.SIZE, file.length())
-        }
-
-        return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-    }
-
-    private fun getDirPath(): String {
-        var dirPath = ""
-        var imageDir: File? = null
-        val extStorageDir = Environment.getExternalStorageDirectory()
-        if (extStorageDir.canWrite()) {
-            imageDir = File(extStorageDir.path + "/RaccoonWallet")
-        }
-        if (imageDir != null) {
-            if (!imageDir.exists()) {
-                imageDir.mkdirs()
-            }
-            if (imageDir.canWrite()) {
-                dirPath = imageDir.path
-            }
-        }
-        return dirPath
-    }
-
-    private fun addDispose(disposable: Disposable) {
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.add(disposable)
-        }
-    }
-
-    private fun unSubscribe() {
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.dispose()
+            uriLiveData.observe(this@CropImageActivity, Observer {
+                it ?: return@Observer
+                setResult(Activity.RESULT_OK, Intent().putExtra(PARAM_INTENT_RESULT_URI, it.toString()))
+                finish()
+            })
         }
     }
 
@@ -174,7 +106,6 @@ class CropImageActivity : BaseActivity() {
     }
 
     companion object {
-        const val REQUEST_CODE_CROP_IMAGE = 1000
         private const val REQUEST_PERMISSION_STORAGE = 1001
         private const val REQUEST_CODE_PICK_IMAGE = 1002
         private const val PARAM_CROP_MODE = "param_crop_mode"
