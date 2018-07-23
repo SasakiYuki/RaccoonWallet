@@ -81,7 +81,7 @@ object WalletManager {
     }
 
     fun getSelectedWalletId(context: Context): Long {
-        return SharedPreferenceUtils.get(context, SP_SELECTED_WALLET_ID, 0L)
+        return SharedPreferenceUtils[context, SP_SELECTED_WALLET_ID, 0L]
     }
 
     fun getWalletbyId(walletId: Long): Wallet {

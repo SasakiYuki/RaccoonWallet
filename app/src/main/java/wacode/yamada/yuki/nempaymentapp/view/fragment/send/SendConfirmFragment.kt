@@ -371,7 +371,7 @@ class SendConfirmFragment : BaseFragment() {
                         response.mosaic.id.name,
                         response.mosaic.initialSupply!!,
                         response.mosaic.divisibility!!,
-                        item.amount.toLong())
+                        ((item.amount * Math.pow(10.0, response.mosaic.divisibility!!.toDouble())).toLong()))
                 list.add(transactionMosaicItem)
             }
         }
