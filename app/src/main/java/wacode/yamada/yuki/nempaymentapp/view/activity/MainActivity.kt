@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.gson.Gson
 import com.journeyapps.barcodescanner.BarcodeResult
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -93,6 +95,27 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         }
     }
 
+    private fun setupFirebaseDynamicLink() {
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(intent)
+                .addOnSuccessListener { pendingDynamicLinkData ->
+                    pendingDynamicLinkData?.let {
+                        handleDynamicLink(it)
+                    }
+                }
+    }
+    private fun handleDynamicLink(pendingDynamicLinkData: PendingDynamicLinkData) {
+        when (DynamicLinkParser.checkDynamicLinkType(pendingDynamicLinkData)) {
+            DynamicLinkParser.Type.PAYMENT -> {
+                DynamicLinkParser.getUri(pendingDynamicLinkData)?.let {
+                    val paymentQrEntity = PaymentQREntity.convert(it)
+                    paymentQrEntity?.let {
+                        changeSendTopFragment(it)
+                    }
+                }
+            }
+        }
+    }
 
     override fun onRowClick(drawerEntity: DrawerEntity) {
         when (drawerEntity.title) {
@@ -224,6 +247,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
                 ReviewAppealUtils.createReviewDialog(this, supportFragmentManager, viewModel)
             }
         }
+        setupFirebaseDynamicLink()
     }
 
     private fun showHelpWeb() {
@@ -282,13 +306,17 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         return id
     }
 
+    private fun changeSendTopFragment(paymentQREntity: PaymentQREntity) {
+        viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
+        val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
+        (fragment as SendTopFragment).putQRScanItems(paymentQREntity)
+    }
+
     override fun onQrScanResult(result: BarcodeResult?) {
         result?.let {
             if (it.text.contains("addr")) {
                 val entity: PaymentQREntity = Gson().fromJson(it.text, PaymentQREntity::class.java)
-                viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
-                val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
-                (fragment as SendTopFragment).putQRScanItems(entity)
+                changeSendTopFragment(entity)
             }
         }
     }
