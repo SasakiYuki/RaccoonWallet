@@ -117,7 +117,7 @@ dependencies {
 
     implementation "com.airbnb:deeplinkdispatch:$deep_link_dispatch_version"
     annotationProcessor "com.airbnb:deeplinkdispatch-processor:$deep_link_dispatch_version"
-    kapt 'com.airbnb:deeplinkdispatch-processor:3.1.1'
+    kapt "com.airbnb:deeplinkdispatch-processor:$deep_link_dispatch_version"
 
 
     implementation 'com.android.support:customtabs:23.1.1'
