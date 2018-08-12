@@ -13,11 +13,13 @@ object DynamicLinkParser {
             }
         }
     }
+
     fun getUri(pendingDynamicLinkData: PendingDynamicLinkData): Uri? {
         pendingDynamicLinkData.link?.let {
             return it
         } ?: return null
     }
+
     enum class Type {
         HOME,
         PAYMENT,

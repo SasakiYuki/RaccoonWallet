@@ -112,6 +112,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
                     }
                 }
     }
+
     private fun handleDynamicLink(pendingDynamicLinkData: PendingDynamicLinkData) {
         when (DynamicLinkParser.checkDynamicLinkType(pendingDynamicLinkData)) {
             DynamicLinkParser.Type.PAYMENT -> {
