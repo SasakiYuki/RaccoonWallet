@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.airbnb.deeplinkdispatch.DeepLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.gson.Gson
@@ -43,7 +44,7 @@ import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
 import wacode.yamada.yuki.nempaymentapp.view.fragment.SplashFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.top.SendTopFragment
 
-
+@DeepLink("https://raccoonwallet.com/payment?amount={amount}&addr={addr}&msg={msg}&name={name}")
 class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener {
     private val compositeDisposable = CompositeDisposable()
     private lateinit var controller: DrawerListController
@@ -57,6 +58,13 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         super.onCreate(savedInstanceState)
         showSplash()
         setupRxBus()
+    }
+
+    private fun parseIntent() {
+        val paymentQrEntity = PaymentQREntity.convert(intent)
+        paymentQrEntity?.let {
+            changeSendTopFragment(it)
+        }
     }
 
     private fun setupNemIcon() {
@@ -248,6 +256,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             }
         }
         setupFirebaseDynamicLink()
+        parseIntent()
     }
 
     private fun showHelpWeb() {

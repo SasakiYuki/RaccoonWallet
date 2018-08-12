@@ -1,6 +1,7 @@
 def androidSupportVersion = '24.2.0'
 def lifecycle_version = "1.1.1"
 def dagger_version = "2.13"
+def deep_link_dispatch_version = "3.1.1"
 
 apply plugin: 'com.android.application'
 
@@ -113,6 +114,11 @@ dependencies {
     implementation 'com.airbnb.android:epoxy-databinding:2.9.0'
     kapt 'com.airbnb.android:epoxy-processor:2.9.0'
     annotationProcessor 'com.airbnb.android:epoxy-processor:2.9.0'
+
+    implementation "com.airbnb:deeplinkdispatch:$deep_link_dispatch_version"
+    annotationProcessor "com.airbnb:deeplinkdispatch-processor:$deep_link_dispatch_version"
+    kapt 'com.airbnb:deeplinkdispatch-processor:3.1.1'
+
 
     implementation 'com.android.support:customtabs:23.1.1'
 
