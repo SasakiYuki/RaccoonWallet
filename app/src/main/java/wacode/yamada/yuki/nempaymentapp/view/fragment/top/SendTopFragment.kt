@@ -195,6 +195,11 @@ class SendTopFragment : BaseFragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.clear()
+    }
+
     companion object {
         const val VIEW_PAGER_POSITION = 3
         fun newInstance(): SendTopFragment {
