@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 
 class TransactionRepository @Inject constructor(private val transactionService: TransactionService) {
-    fun geAllTransaction(address: String) =
-            transactionService.geAllTransaction(address)
+
+    fun geAllTransaction(address: String) = transactionService.geAllTransaction(address)
 }
