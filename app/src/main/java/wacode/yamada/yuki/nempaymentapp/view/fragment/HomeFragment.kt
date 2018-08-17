@@ -222,6 +222,7 @@ class HomeFragment : BaseFragment() {
     override fun onPause() {
         super.onPause()
         compositeDisposable.clear()
+        hideProgressView()
     }
 
     companion object {
