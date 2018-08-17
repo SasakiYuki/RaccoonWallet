@@ -3,9 +3,11 @@ package wacode.yamada.yuki.nempaymentapp.di
 import dagger.Module
 import dagger.Provides
 import wacode.yamada.yuki.nempaymentapp.repository.AccountRepository
+import wacode.yamada.yuki.nempaymentapp.repository.HarvestRepository
 import wacode.yamada.yuki.nempaymentapp.repository.MosaicRepository
 import wacode.yamada.yuki.nempaymentapp.repository.TransactionRepository
 import wacode.yamada.yuki.nempaymentapp.rest.service.AccountService
+import wacode.yamada.yuki.nempaymentapp.rest.service.HarvestService
 import wacode.yamada.yuki.nempaymentapp.rest.service.MosaicService
 import wacode.yamada.yuki.nempaymentapp.rest.service.TransactionService
 import javax.inject.Singleton
@@ -27,6 +29,6 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideHarvestRepository(accountService: AccountService) = AccountRepository(accountService)
+    fun provideHarvestRepository(harvestService: HarvestService) = HarvestRepository(harvestService)
 }
 
