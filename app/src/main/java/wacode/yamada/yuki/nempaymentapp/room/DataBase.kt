@@ -19,6 +19,6 @@ abstract class DataBase : RoomDatabase() {
     abstract fun goodsDao(): GoodsDao
     abstract fun addressDao(): AddressDao
     abstract fun walletDao(): WalletDao
-    abstract fun addressBook(): AddressBookDao
+    abstract fun addressBookDao(): AddressBookDao
 }
 

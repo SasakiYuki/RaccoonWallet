@@ -123,7 +123,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/OssLicenceTheme" />
         <activity
-            android:name=".view.activity.CreateFriendActivity"
+            android:name=".view.activity.CreateAddressBookActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CropImageActivity"
