@@ -30,6 +30,7 @@
     <string name="com_phone_number">電話番号</string>
     <string name="com_mail_address">メールアドレス</string>
     <string name="com_add">追加</string>
+    <string name="com_save">保存</string>
 
     <!-- Menu -->
     <string name="menu_search">検索</string>
