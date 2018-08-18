@@ -29,6 +29,7 @@
     <string name="com_fist_name_kana">なまえ</string>
     <string name="com_phone_number">電話番号</string>
     <string name="com_mail_address">メールアドレス</string>
+    <string name="com_add">追加</string>
 
     <!-- Menu -->
     <string name="menu_search">検索</string>
@@ -515,6 +516,12 @@
     <!-- CreateFriend -->
     <string name="create_friend_address_title">連絡先</string>
     <string name="create_friend_wallet_title">ウォレット</string>
+    <string name="create_friend_address_cooperation_title">連携</string>
+    <string name="create_friend_address_change_icon_title">アイコンを変更</string>
+    <string name="create_friend_wallet_count_title">ウォレット</string>
+    <string name="create_friend_address_input_title">プロフィールを入力しましょう！</string>
+    <string name="create_friend_wallet_empty_title">リストは、まだ空っぽです</string>
+    <string name="create_friend_wallet_empty_message">ここは、自分のウォレットを整理する場所です。ボタンからウォレットを追加したり、プロフィールタブから自分のデータを入力できるよ。</string>
 
     <!--Dialog-->
     <string name="dialog_update_forward_title">アプリのアップデートがあります</string>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -46,15 +47,41 @@
                         android:layout_marginTop="@dimen/space_normal"
                         android:src="@mipmap/icon_back" />
 
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/space_normal"
-                        android:src="@mipmap/ic_launcher_round" />
-                </RelativeLayout>
+                        android:layout_marginTop="@dimen/space_normal">
 
+                        <ImageView
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/ic_launcher_round" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@mipmap/icon_change_image" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/create_friend_address_change_icon_title"
+                                android:textColor="@android:color/white"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </RelativeLayout>
             </LinearLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -79,7 +106,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ウォレット"
+                    android:text="@string/create_friend_wallet_count_title"
                     android:textSize="10sp" />
 
                 <TextView
@@ -96,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="プロフィールを入力しましょう！"
+                android:text="@string/create_friend_address_input_title"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -110,12 +137,12 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginBottom="@dimen/space_small"
-                    android:src="@mipmap/ic_launcher_round" />
+                    android:src="@mipmap/icon_twitter" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="連携"
+                    android:text="@string/create_friend_address_cooperation_title"
                     android:textSize="10sp" />
             </LinearLayout>
         </RelativeLayout>
@@ -143,7 +170,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        android:visibility="gone"
         app:src="@mipmap/icon_transaction_check"
-        app:text="完了" />
+        app:text="@string/com_enter" />
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:visibility="visible"
+        app:leftSrc="@drawable/ic_add_black_24dp"
+        app:leftText="@string/com_add"
+        app:rightSrc="@mipmap/icon_transaction_check"
+        app:rightText="@string/com_enter"
+        tools:visibility="visible" />
 
 </android.support.design.widget.CoordinatorLayout>
