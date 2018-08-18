@@ -24,6 +24,10 @@ class CropImageActivity : BaseActivity() {
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: CropImageViewModel
 
+    private val cropMode by lazy {
+        intent.getSerializableExtra(PARAM_CROP_MODE) as CropImageView.CropMode
+    }
+
     override fun setLayout() = R.layout.activity_crop_image
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,10 +103,6 @@ class CropImageActivity : BaseActivity() {
                 finish()
             })
         }
-    }
-
-    private val cropMode by lazy {
-        intent.getSerializableExtra(PARAM_CROP_MODE) as CropImageView.CropMode
     }
 
     companion object {
