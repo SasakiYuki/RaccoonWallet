@@ -7,8 +7,8 @@ class CreateFriendWalletFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_create_friend_wallet
 
     companion object {
-        fun newInstance(): CreateFriendAddressFragment {
-            val fragment = CreateFriendAddressFragment()
+        fun newInstance(): CreateFriendWalletFragment {
+            val fragment = CreateFriendWalletFragment()
             val args = Bundle()
             args.putInt(ARG_CONTENTS_NAME_ID, R.string.create_friend_wallet_title)
             fragment.arguments = args

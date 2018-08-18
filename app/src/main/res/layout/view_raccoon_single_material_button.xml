@@ -12,6 +12,8 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="192dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/space_small"
+        android:layout_marginRight="@dimen/space_small"
         android:backgroundTint="@android:color/white"
         android:contentDescription="@null"
         app:cornerRadius="24sp"
