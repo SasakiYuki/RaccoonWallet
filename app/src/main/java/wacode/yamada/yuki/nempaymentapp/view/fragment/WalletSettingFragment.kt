@@ -17,52 +17,56 @@ import wacode.yamada.yuki.nempaymentapp.view.fragment.top.ReceiveFragment
 class WalletSettingFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_wallet_setting
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
     }
 
     private fun setupViews() {
-        walletType.text = if (isMultisig) {
-            getString(R.string.wallet_setting_type_multisig)
-        } else {
-            getString(R.string.wallet_setting_type_standard)
-        }
-
-        walletDetail.setOnClickListener {
-            replaceFragment(WalletDetailFragment.newInstance(getWalletId), true)
-        }
-
-        walletAddress.setOnClickListener {
-            replaceFragment(ReceiveFragment.newInstance(getWalletId, R.string.wallet_setting_address_title), true)
-        }
-
-        walletBackup.setOnClickListener {
-            if (PinCodeHelper.isAvailable(context)) {
-                startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
-                        context = context,
-                        isDisplayFingerprint = true,
-                        buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT
-                ), REQUEST_CODE_BUCK_UP_WALLET)
+        arguments?.let {
+            val isMultisig = it.getBoolean(KEY_IS_MULTISIG)
+            val walletId = it.getLong(KEY_WALLET_ID)
+            walletType.text = if (isMultisig) {
+                getString(R.string.wallet_setting_type_multisig)
             } else {
-                startActivity(WalletBackupActivity.getCallingIntent(context, getWalletId))
+                getString(R.string.wallet_setting_type_standard)
             }
-        }
 
-        walletRename.setOnClickListener {
-            startActivity(WalletRenameActivity.getCallingIntent(context, getWalletId))
-        }
+            walletDetail.setOnClickListener {
+                replaceFragment(WalletDetailFragment.newInstance(walletId), true)
+            }
 
-        walletRemove.setOnClickListener {
-            if (PinCodeHelper.isAvailable(context)) {
-                startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
-                        context = context,
-                        isDisplayFingerprint = true,
-                        buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT
-                ), REQUEST_CODE_DELETE_WALLET)
-            } else {
-                startActivity(WalletRemoveActivity.getCallingIntent(context, getWalletId))
-                finish()
+            walletAddress.setOnClickListener {
+                replaceFragment(ReceiveFragment.newInstance(walletId, R.string.wallet_setting_address_title), true)
+            }
+
+            walletBackup.setOnClickListener {
+                if (PinCodeHelper.isAvailable(walletBackup.context)) {
+                    startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
+                            context = walletBackup.context,
+                            isDisplayFingerprint = true,
+                            buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT
+                    ), REQUEST_CODE_BUCK_UP_WALLET)
+                } else {
+                    startActivity(WalletBackupActivity.getCallingIntent(walletBackup.context, walletId))
+                }
+            }
+
+            walletRename.setOnClickListener {
+                startActivity(WalletRenameActivity.getCallingIntent(walletRename.context, walletId))
+            }
+
+            walletRemove.setOnClickListener {
+                if (PinCodeHelper.isAvailable(walletRemove.context)) {
+                    startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
+                            context = walletRemove.context,
+                            isDisplayFingerprint = true,
+                            buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT
+                    ), REQUEST_CODE_DELETE_WALLET)
+                } else {
+                    startActivity(WalletRemoveActivity.getCallingIntent(walletRemove.context, walletId))
+                    finish()
+                }
             }
         }
     }
@@ -71,25 +75,27 @@ class WalletSettingFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             data?.let {
-                PinCodeProvider.setPinCode(it.getByteArrayExtra(NewCheckPinCodeActivity.INTENT_PIN_CODE).toString(Charsets.UTF_8))
+                onActivityResultPinCode(requestCode, it)
+            }
+        }
+    }
 
+    private fun onActivityResultPinCode(requestCode: Int, data: Intent) {
+        PinCodeProvider.setPinCode(data.getByteArrayExtra(NewCheckPinCodeActivity.INTENT_PIN_CODE).toString(Charsets.UTF_8))
+
+        arguments?.let {
+            val walletId = it.getLong(KEY_WALLET_ID)
+            context?.let {
                 when (requestCode) {
-                    REQUEST_CODE_BUCK_UP_WALLET -> startActivity(WalletBackupActivity.getCallingIntent(context, getWalletId))
+                    REQUEST_CODE_BUCK_UP_WALLET -> startActivity(WalletBackupActivity.getCallingIntent(it, walletId))
                     REQUEST_CODE_DELETE_WALLET -> {
-                        startActivity(WalletRemoveActivity.getCallingIntent(context, getWalletId))
+                        startActivity(WalletRemoveActivity.getCallingIntent(it, walletId))
                         finish()
                     }
                 }
             }
         }
-    }
 
-    private val getWalletId by lazy {
-        arguments.getLong(KEY_WALLET_ID)
-    }
-
-    private val isMultisig by lazy {
-        arguments.getBoolean(KEY_IS_MULTISIG)
     }
 
     companion object {

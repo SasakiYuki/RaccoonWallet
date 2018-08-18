@@ -18,16 +18,28 @@
             android:layout_marginTop="-5dp"
             android:background="@mipmap/image_walletbar" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+        <FrameLayout
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
+            android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
-            android:layout_marginTop="5dp"
-            android:scaleType="center"
-            android:src="@mipmap/icon_wallet"
-            app:backgroundTint="@color/nemGreen" />
+            android:layout_marginTop="5dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:backgroundTint="@color/nemGreen" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="20dp"
+                android:src="@mipmap/icon_wallet"
+                android:contentDescription="@null" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/walletBarTextView"

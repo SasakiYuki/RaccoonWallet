@@ -15,29 +15,29 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.WalletImportActivity
 class SelectCreateOrScanWalletFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_select_create_or_scan_wallet
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupCreateButton()
     }
 
     private fun setupCreateButton() {
         createButton.setOnClickListener {
-            if (PinCodeHelper.isAvailable(context)) {
+            if (PinCodeHelper.isAvailable(createButton.context)) {
                 startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
-                        context, true, buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT), REQUEST_CODE_CREATE_WALLET)
+                        createButton.context, true, buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT), REQUEST_CODE_CREATE_WALLET)
             } else {
-                startActivity(CreateWalletActivity.createIntent(context))
-                activity.finish()
+                startActivity(CreateWalletActivity.createIntent(createButton.context))
+                activity?.finish()
             }
         }
 
         loginButton.setOnClickListener {
-            if (PinCodeHelper.isAvailable(context)) {
+            if (PinCodeHelper.isAvailable(loginButton.context)) {
                 startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
-                        context, true, buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT), REQUEST_CODE_IMPORT_WALLET)
+                        loginButton.context, true, buttonPosition = NewCheckPinCodeActivity.ButtonPosition.LEFT), REQUEST_CODE_IMPORT_WALLET)
             } else {
-                startActivity(WalletImportActivity.getCallingIntent(context))
-                activity.finish()
+                startActivity(WalletImportActivity.getCallingIntent(loginButton.context))
+                activity?.finish()
             }
         }
     }
@@ -46,14 +46,20 @@ class SelectCreateOrScanWalletFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             data?.let {
-                PinCodeProvider.setPinCode(it.getByteArrayExtra(NewCheckPinCodeActivity.INTENT_PIN_CODE).toString(Charsets.UTF_8))
-
-                when (requestCode) {
-                    REQUEST_CODE_CREATE_WALLET -> startActivity(CreateWalletActivity.createIntent(context))
-                    REQUEST_CODE_IMPORT_WALLET -> startActivity(WalletImportActivity.getCallingIntent(context))
-                }
-                activity.finish()
+                onActivityResultRequestPinCode(requestCode, data)
             }
+        }
+    }
+
+    private fun onActivityResultRequestPinCode(requestCode: Int, data: Intent) {
+        context?.let {
+            PinCodeProvider.setPinCode(data.getByteArrayExtra(NewCheckPinCodeActivity.INTENT_PIN_CODE).toString(Charsets.UTF_8))
+
+            when (requestCode) {
+                REQUEST_CODE_CREATE_WALLET -> startActivity(CreateWalletActivity.createIntent(it))
+                REQUEST_CODE_IMPORT_WALLET -> startActivity(WalletImportActivity.getCallingIntent(it))
+            }
+            activity?.finish()
         }
     }
 

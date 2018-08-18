@@ -45,7 +45,7 @@ internal fun generateQRCode(paymentQREntity: PaymentQREntity): Bitmap {
     return generateQRCode(Gson().toJson(paymentQREntity))
 }
 
-internal fun getDrawable(context: Context, resourceId: Int): Drawable {
+internal fun getDrawable(context: Context, resourceId: Int): Drawable? {
     return ContextCompat.getDrawable(context, resourceId)
 }
 

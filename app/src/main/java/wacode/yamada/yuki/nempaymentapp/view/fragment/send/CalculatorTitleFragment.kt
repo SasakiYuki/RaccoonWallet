@@ -10,7 +10,7 @@ import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 class CalculatorTitleFragment : BaseFragment() {
     override fun layoutRes() = R.layout.view_calculator_title
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
     }
@@ -24,7 +24,7 @@ class CalculatorTitleFragment : BaseFragment() {
         mosaicCountText.text = if (mosaicItem.isNEMXEMItem()) getText(R.string.com_xem_uppercase) else mosaicItem.getFullName()
     }
 
-    private fun getMosaicItem() = arguments.get(KEY_MOSAIC_ITEM) as MosaicItem
+    private fun getMosaicItem() = arguments?.get(KEY_MOSAIC_ITEM) as MosaicItem
 
     companion object {
         private val KEY_MOSAIC_ITEM = "key_mosaic_item"

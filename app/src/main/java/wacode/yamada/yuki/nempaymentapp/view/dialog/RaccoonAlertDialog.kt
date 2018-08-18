@@ -44,9 +44,9 @@ class RaccoonAlertDialog : SimpleDialogFragment() {
                 }
     }
 
-    private fun getTitle() = arguments.getString(ARG_TITLE, "")
-    private fun getMessage() = arguments.getString(ARG_MESSAGE, "")
-    private fun getButtonText() = arguments.getString(ARG_BUTTON_TEXT, "")
+    private fun getTitle() = arguments?.getString(ARG_TITLE, "")
+    private fun getMessage() = arguments?.getString(ARG_MESSAGE, "")
+    private fun getButtonText() = arguments?.getString(ARG_BUTTON_TEXT, "")
 
     companion object {
         private const val ARG_TITLE = "title"
@@ -68,6 +68,7 @@ class RaccoonAlertDialog : SimpleDialogFragment() {
 
 class RaccoonAlertViewModel {
     val clickEvent: PublishSubject<RaccoonAlertType> = PublishSubject.create()
+    val closeEvent: PublishSubject<Unit> = PublishSubject.create()
 
     fun onClickCloseButton() {
         onClickButton(RaccoonAlertType.CLOSE_BUTTON)
@@ -75,6 +76,10 @@ class RaccoonAlertViewModel {
 
     fun onClickBottomButton() {
         onClickButton(RaccoonAlertType.BOTTOM_BUTTON)
+    }
+
+    fun onClose() {
+        closeEvent.onNext(Unit)
     }
 
     private fun onClickButton(type: RaccoonAlertType) {

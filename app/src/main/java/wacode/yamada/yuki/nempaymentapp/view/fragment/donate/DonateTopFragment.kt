@@ -11,7 +11,7 @@ class DonateTopFragment : BaseFragment() {
     private lateinit var viewModel: RaccoonDonateActivity.RaccoonDonateViewModel
     override fun layoutRes() = R.layout.fragment_raccoon_donate
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupButtons()

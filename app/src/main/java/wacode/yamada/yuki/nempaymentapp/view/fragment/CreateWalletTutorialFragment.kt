@@ -10,7 +10,7 @@ class CreateWalletTutorialFragment : BaseFragment() {
     private lateinit var viewModel: ChooseCreateOrScanWalletViewModel
     override fun layoutRes() = R.layout.fragment_create_wallet_tutorial
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupButton()
     }
