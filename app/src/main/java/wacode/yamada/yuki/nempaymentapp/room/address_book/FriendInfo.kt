@@ -14,6 +14,6 @@ data class FriendInfo constructor(
         val lastNameKana: String = "",
         val firstNameKana: String = "",
         val phoneNumber: String = "",
-        val address: String = "",
+        val mailAddress: String = "",
         val isTwitterAuth: Boolean = false
 ) : Serializable
