@@ -20,8 +20,8 @@ class CreateFriendActivity : BaseActivity() {
 
     private fun setupViews() {
         val list = ArrayList<BaseFragment>()
-        list.add(CreateFriendAddressFragment.newInstance())
         list.add(CreateFriendWalletFragment.newInstance())
+        list.add(CreateFriendAddressFragment.newInstance())
 
         val adapter = SimpleViewPagerAdapter(this, list, supportFragmentManager)
         createFriendViewPager.adapter = adapter
