@@ -3,12 +3,11 @@
     package="wacode.yamada.yuki.nempaymentapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".NemPaymentApplication"
@@ -123,6 +122,9 @@
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/OssLicenceTheme" />
+        <activity
+            android:name=".view.activity.CropImageActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

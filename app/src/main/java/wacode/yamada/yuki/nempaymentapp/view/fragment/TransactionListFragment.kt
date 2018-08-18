@@ -156,11 +156,6 @@ class TransactionListFragment : BaseFragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
-    }
-
     companion object {
         private const val KEY_WALLET_MODEL = "key_wallet_model"
         private const val EXCEPTION_LIST_EMPTY = "list is empty"
