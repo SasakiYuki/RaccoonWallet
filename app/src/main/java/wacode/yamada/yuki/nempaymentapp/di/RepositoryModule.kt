@@ -2,6 +2,7 @@ package wacode.yamada.yuki.nempaymentapp.di
 
 import dagger.Module
 import dagger.Provides
+import wacode.yamada.yuki.nempaymentapp.repository.AddressBookRepository
 import wacode.yamada.yuki.nempaymentapp.repository.MosaicRepository
 import wacode.yamada.yuki.nempaymentapp.rest.service.MosaicService
 import javax.inject.Singleton
@@ -12,5 +13,9 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideMosaicRepository(mosaicService: MosaicService) = MosaicRepository(mosaicService)
+
+    @Provides
+    @Singleton
+    fun provideAddressBookRepository() = AddressBookRepository()
 }
 

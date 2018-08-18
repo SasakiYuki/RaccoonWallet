@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -9,18 +10,30 @@ import android.provider.MediaStore
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.isseiaoki.simplecropview.CropImageView
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_create_friend.*
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendAddressFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendWalletFragment
+import wacode.yamada.yuki.nempaymentapp.viewmodel.AddressBookViewModel
+import javax.inject.Inject
 
 class CreateFriendActivity : BaseActivity() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: AddressBookViewModel
+
     override fun setLayout() = R.layout.activity_create_friend
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddressBookViewModel::class.java)
+
         setupViewPager()
         setupSelectIconButton()
     }
