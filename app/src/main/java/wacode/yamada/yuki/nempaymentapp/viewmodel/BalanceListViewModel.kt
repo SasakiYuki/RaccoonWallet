@@ -1,11 +1,9 @@
 package wacode.yamada.yuki.nempaymentapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import com.ryuta46.nemkotlin.model.Mosaic
 import com.ryuta46.nemkotlin.model.MosaicDefinitionMetaDataPair
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatus
 import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatusImpl
@@ -17,11 +15,7 @@ import java.util.HashMap
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class BalanceListViewModel @Inject constructor(
-        private val useCase: BalanceListUseCase
-) : ViewModel(),
-        LoadingStatus by LoadingStatusImpl() {
-    private val compositeDisposable = CompositeDisposable()
+class BalanceListViewModel @Inject constructor(private val useCase: BalanceListUseCase) : BaseViewModel(), LoadingStatus by LoadingStatusImpl() {
     val fullItemMosaic: MutableLiveData<MosaicFullItem> = MutableLiveData()
 
     fun getOwnedMosaicFullData(address: String) {
@@ -32,7 +26,7 @@ class BalanceListViewModel @Inject constructor(
                 .subscribe({
                     getMosaicList(it)
                 }, { it.printStackTrace() })
-                .let { compositeDisposable.add(it) }
+                .let { addDisposable(it) }
     }
 
     private fun getMosaicList(list: List<Mosaic>) {
@@ -50,7 +44,7 @@ class BalanceListViewModel @Inject constructor(
                     .attachLoading()
                     .subscribe({ getFullMosaicItems(nameSpaceHashMap, key, it) },
                             { it.printStackTrace() })
-                    .let { compositeDisposable.add(it) }
+                    .let { addDisposable(it) }
         }
     }
 
@@ -74,10 +68,5 @@ class BalanceListViewModel @Inject constructor(
                         }
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
     }
 }

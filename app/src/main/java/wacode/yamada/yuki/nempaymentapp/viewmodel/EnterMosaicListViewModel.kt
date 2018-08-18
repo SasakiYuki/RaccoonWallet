@@ -1,11 +1,9 @@
 package wacode.yamada.yuki.nempaymentapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import com.ryuta46.nemkotlin.model.Mosaic
 import com.ryuta46.nemkotlin.model.MosaicDefinitionMetaDataPair
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatus
 import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatusImpl
@@ -15,11 +13,8 @@ import wacode.yamada.yuki.nempaymentapp.rest.model.MosaicAppEntity
 import wacode.yamada.yuki.nempaymentapp.usecase.EnterMosaicListUseCase
 import javax.inject.Inject
 
-class EnterMosaicListViewModel @Inject constructor(
-        private val useCase: EnterMosaicListUseCase
-) : ViewModel(),
-        LoadingStatus by LoadingStatusImpl() {
-    private val compositeDisposable = CompositeDisposable()
+
+class EnterMosaicListViewModel @Inject constructor(private val useCase: EnterMosaicListUseCase) : BaseViewModel(), LoadingStatus by LoadingStatusImpl() {
     val fullItemMosaic: MutableLiveData<MosaicFullItem> = MutableLiveData()
 
     fun getOwnedMosaicFullData(address: String) {
@@ -30,7 +25,7 @@ class EnterMosaicListViewModel @Inject constructor(
                 .subscribe({
                     getMosaicList(it)
                 }, { it.printStackTrace() })
-                .let { compositeDisposable.add(it) }
+                .let { addDisposable(it) }
     }
 
     private fun getMosaicList(list: List<Mosaic>) {
@@ -48,7 +43,7 @@ class EnterMosaicListViewModel @Inject constructor(
                     .attachLoading()
                     .subscribe({ getFullMosaicItems(nameSpaceHashMap, key, it) },
                             { it.printStackTrace() })
-                    .let { compositeDisposable.add(it) }
+                    .let { addDisposable(it) }
         }
     }
 
@@ -72,10 +67,5 @@ class EnterMosaicListViewModel @Inject constructor(
                         }
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
     }
 }
