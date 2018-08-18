@@ -55,12 +55,14 @@
                         android:layout_marginTop="@dimen/space_normal">
 
                         <ImageView
+                            android:id="@+id/iconImageView"
                             android:layout_width="65dp"
                             android:layout_height="65dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/ic_launcher_round" />
 
                         <LinearLayout
+                            android:id="@+id/selectIconRootView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
@@ -143,12 +145,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/create_friend_address_cooperation_title"
+                    android:textColor="@color/twitter_blue"
                     android:textSize="10sp" />
             </LinearLayout>
         </RelativeLayout>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/createFriendTabLayout"
+            android:id="@+id/createAddressBookTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true" />
@@ -160,13 +163,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/createFriendViewPager"
+            android:id="@+id/createAddressBookViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </FrameLayout>
 
     <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
+        android:id="@+id/addressRootButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
@@ -175,6 +179,7 @@
         app:text="@string/com_enter" />
 
     <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
+        android:id="@+id/walletRootButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
@@ -182,7 +187,6 @@
         app:leftSrc="@drawable/ic_add_black_24dp"
         app:leftText="@string/com_add"
         app:rightSrc="@mipmap/icon_transaction_check"
-        app:rightText="@string/com_enter"
-        tools:visibility="visible" />
+        app:rightText="@string/com_enter" />
 
 </android.support.design.widget.CoordinatorLayout>
