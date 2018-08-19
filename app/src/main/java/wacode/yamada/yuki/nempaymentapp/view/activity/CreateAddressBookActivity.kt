@@ -38,8 +38,7 @@ class CreateAddressBookActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddressBookViewModel::class.java)
         setupViewModelObserve()
 
-        setupSaveButton()
-        setupSelectIconButton()
+        setupButtons()
         setupViewPager()
     }
 
@@ -69,18 +68,19 @@ class CreateAddressBookActivity : BaseActivity() {
         }
     }
 
-    private fun setupSaveButton() {
+    private fun setupButtons() {
         addressRootButton.setOnClickListener {
             //todo tap
             supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.createAddressBookViewPager + ":" + 0)
         }
 
         twitterCooperationButton.setOnClickListener {
+            //todo delete
             insertFriendData()
         }
-    }
 
-    private fun setupSelectIconButton() {
+        backImageView.setOnClickListener { finish() }
+
         iconImageView.setOnClickListener {
             startActivityForResult(CropImageActivity.createIntent(this, CropImageView.CropMode.CIRCLE_SQUARE), REQUEST_CODE_DROP_IMAGE)
         }

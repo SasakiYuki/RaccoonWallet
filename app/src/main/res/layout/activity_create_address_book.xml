@@ -38,12 +38,14 @@
                         android:background="@drawable/background_circle_light_gray" />
 
                     <ImageView
+                        android:id="@+id/backImageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="@dimen/space_normal_half"
                         android:layout_marginTop="@dimen/space_normal"
+                        android:foreground="?selectableItemBackground"
                         android:src="@mipmap/icon_back" />
 
                     <FrameLayout
@@ -58,6 +60,7 @@
                             android:layout_width="75dp"
                             android:layout_height="75dp"
                             android:layout_gravity="center"
+                            android:foreground="?selectableItemBackground"
                             android:src="@mipmap/ic_launcher_round" />
 
                         <LinearLayout
@@ -92,15 +95,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_normal_half"
             android:layout_marginLeft="@dimen/space_normal"
-            android:layout_marginRight="@dimen/space_normal"
-            android:layout_marginTop="@dimen/space_normal_half"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginRight="@dimen/space_normal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -113,9 +114,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_small"
+                    android:layout_marginTop="2dp"
                     android:text="0"
-                    android:textSize="10sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -132,12 +133,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:foreground="?selectableItemBackground"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_marginBottom="@dimen/space_small"
                     android:src="@mipmap/icon_twitter" />
 
@@ -146,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/create_friend_address_cooperation_title"
                     android:textColor="@color/twitter_blue"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </RelativeLayout>
 
