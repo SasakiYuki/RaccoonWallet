@@ -6,7 +6,7 @@ import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
 import javax.inject.Inject
 
 
-class AddressBookUseCase @Inject constructor(private val addressBookRepository: AddressBookRepository) {
+class CreateAddressBookUseCase @Inject constructor(private val addressBookRepository: AddressBookRepository) {
 
     fun insertFriendInfo(entity: FriendInfo) = addressBookRepository.insertFriendInfo(entity)
 

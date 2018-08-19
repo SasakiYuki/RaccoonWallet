@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import wacode.yamada.yuki.nempaymentapp.viewmodel.AddressBookViewModel
+import wacode.yamada.yuki.nempaymentapp.viewmodel.CreateAddressBookViewModel
 import wacode.yamada.yuki.nempaymentapp.viewmodel.BalanceListViewModel
 import wacode.yamada.yuki.nempaymentapp.viewmodel.CropImageViewModel
 import wacode.yamada.yuki.nempaymentapp.viewmodel.EnterMosaicListViewModel
@@ -33,6 +33,6 @@ internal abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AddressBookViewModel::class)
-    abstract fun bindAddressBookViewModel(viewModel: AddressBookViewModel): ViewModel
+    @ViewModelKey(CreateAddressBookViewModel::class)
+    abstract fun bindAddressBookViewModel(viewModel: CreateAddressBookViewModel): ViewModel
 }

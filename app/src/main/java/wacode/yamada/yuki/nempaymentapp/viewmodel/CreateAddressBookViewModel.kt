@@ -14,12 +14,12 @@ import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatus
 import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatusImpl
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendIcon
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
-import wacode.yamada.yuki.nempaymentapp.usecase.AddressBookUseCase
+import wacode.yamada.yuki.nempaymentapp.usecase.CreateAddressBookUseCase
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 
-class AddressBookViewModel @Inject constructor(private val useCase: AddressBookUseCase) : ViewModel(), LoadingStatus by LoadingStatusImpl() {
+class CreateAddressBookViewModel @Inject constructor(private val useCase: CreateAddressBookUseCase) : ViewModel(), LoadingStatus by LoadingStatusImpl() {
     private val compositeDisposable = CompositeDisposable()
 
     fun insertFriendData(contentResolver: ContentResolver, iconUri: Uri?, friendInfo: FriendInfo) {

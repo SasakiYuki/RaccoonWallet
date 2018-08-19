@@ -20,14 +20,14 @@ import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendAddressFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendWalletFragment
-import wacode.yamada.yuki.nempaymentapp.viewmodel.AddressBookViewModel
+import wacode.yamada.yuki.nempaymentapp.viewmodel.CreateAddressBookViewModel
 import javax.inject.Inject
 
 
 class CreateAddressBookActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var viewModel: AddressBookViewModel
+    private lateinit var viewModel: CreateAddressBookViewModel
 
     override fun setLayout() = R.layout.activity_create_address_book
 
@@ -35,7 +35,7 @@ class CreateAddressBookActivity : BaseActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddressBookViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateAddressBookViewModel::class.java)
         setupViewModelObserve()
 
         setupButtons()
