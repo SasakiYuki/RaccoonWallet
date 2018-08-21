@@ -125,6 +125,8 @@ dependencies {
 
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }

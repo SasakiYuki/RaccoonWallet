@@ -12,13 +12,12 @@ import android.view.View
 import com.isseiaoki.simplecropview.CropImageView
 import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_create_address_book.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
-import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendAddressFragment
+import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendInfoFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendWalletFragment
 import wacode.yamada.yuki.nempaymentapp.viewmodel.CreateAddressBookViewModel
 import javax.inject.Inject
@@ -49,8 +48,8 @@ class CreateAddressBookActivity : BaseActivity() {
                 REQUEST_CODE_DROP_IMAGE -> {
                     data?.let {
                         val uriString = it.getStringExtra(CropImageActivity.PARAM_INTENT_RESULT_URI)
-                        Picasso.with(this).load(uriString).transform(CropCircleTransformation()).into(iconImageView)
-                        iconImageView.tag = uriString
+                        Picasso.with(this).load(uriString).into(circleImageView)
+                        circleImageView.tag = uriString
 
                         selectIconRootView.visibility = View.GONE
                     }
@@ -63,7 +62,10 @@ class CreateAddressBookActivity : BaseActivity() {
         viewModel.run {
             loadingStatus.observe(this@CreateAddressBookActivity, Observer {
                 it ?: return@Observer
-                if (it) showProgress() else hideProgress()
+                if (it) showProgress() else {
+                    hideProgress()
+                    finish()
+                }
             })
         }
     }
@@ -81,7 +83,7 @@ class CreateAddressBookActivity : BaseActivity() {
 
         backImageView.setOnClickListener { finish() }
 
-        iconImageView.setOnClickListener {
+        circleImageView.setOnClickListener {
             startActivityForResult(CropImageActivity.createIntent(this, CropImageView.CropMode.CIRCLE_SQUARE), REQUEST_CODE_DROP_IMAGE)
         }
     }
@@ -89,7 +91,7 @@ class CreateAddressBookActivity : BaseActivity() {
     private fun setupViewPager() {
         val list = ArrayList<BaseFragment>()
         list.add(CreateFriendWalletFragment.newInstance())
-        list.add(CreateFriendAddressFragment.newInstance())
+        list.add(CreateFriendInfoFragment.newInstance())
 
         val adapter = SimpleViewPagerAdapter(this, list, supportFragmentManager)
         createAddressBookViewPager.adapter = adapter
@@ -123,12 +125,12 @@ class CreateAddressBookActivity : BaseActivity() {
 
         if (fragment1 != null && fragment2 != null) {
             val createFriendWalletFragment = fragment1 as CreateFriendWalletFragment
-            val createFriendInfoFragment = fragment2 as CreateFriendAddressFragment
+            val createFriendInfoFragment = fragment2 as CreateFriendInfoFragment
 
             val friendInfo = createFriendInfoFragment.getAndCheckFriendInfo()
 
             friendInfo?.let { friendInfo ->
-                val uriString = iconImageView.tag
+                val uriString = circleImageView.tag
                 val uri = uriString?.let { Uri.parse(it.toString()) } ?: run { null }
 
                 viewModel.insertFriendData(contentResolver, uri, friendInfo)

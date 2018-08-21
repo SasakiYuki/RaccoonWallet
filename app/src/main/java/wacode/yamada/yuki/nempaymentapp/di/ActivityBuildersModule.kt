@@ -4,10 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import wacode.yamada.yuki.nempaymentapp.di.activity.SendActivityModule
 import wacode.yamada.yuki.nempaymentapp.di.fragment.SendBuildersModule
-import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
-import wacode.yamada.yuki.nempaymentapp.view.activity.CreateAddressBookActivity
-import wacode.yamada.yuki.nempaymentapp.view.activity.CropImageActivity
-import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.*
 
 
 @Suppress("unused")
@@ -29,4 +26,8 @@ internal abstract class ActivityBuildersModule {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun bindCreateAddressBookActivity(): CreateAddressBookActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun bindAddressBookActivity(): AddressBookActivity
 }

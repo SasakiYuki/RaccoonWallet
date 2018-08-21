@@ -31,5 +31,7 @@ class AddressBookRepository @Inject constructor() {
 
     fun getLatestFriendInfo() = addressBookDao.getLatestFriendInfo()
 
-    fun getAll() = addressBookDao.findAllFriendInfo()
+    fun getFriendInfoById(friendId: Long) = addressBookDao.getSingleFriendInfo(friendId)
+
+    fun getFriendIconById(friendId: Long) = addressBookDao.getSingleFriendIcon(friendId)
 }

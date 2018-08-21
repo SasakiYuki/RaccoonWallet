@@ -128,6 +128,9 @@
         <activity
             android:name=".view.activity.CropImageActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AddressBookActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

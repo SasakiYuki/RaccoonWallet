@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,8 +27,7 @@
                 <RelativeLayout
                     android:id="@+id/rootView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_normal_half">
+                    android:layout_height="wrap_content">
 
                     <View
                         android:layout_width="match_parent"
@@ -48,42 +48,14 @@
                         android:foreground="?selectableItemBackground"
                         android:src="@mipmap/icon_back" />
 
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleImageView"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:src="@mipmap/ic_launcher_round"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/space_normal">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/circleImageView"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:foreground="?selectableItemBackground"
-                            android:src="@mipmap/ic_launcher_round" />
-
-                        <LinearLayout
-                            android:id="@+id/selectIconRootView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@mipmap/icon_change_image" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/create_friend_address_change_icon_title"
-                                android:textColor="@android:color/white"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </FrameLayout>
+                        android:layout_marginTop="@dimen/space_normal" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -119,48 +91,76 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
+            <RelativeLayout
+                android:id="@+id/nameRootView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="@string/create_friend_address_input_title"
-                android:textSize="14sp" />
+                android:layout_marginTop="12dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/friendNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textBlack"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="名字 名前" />
+
+                <TextView
+                    android:id="@+id/friendNameKanaTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/friendNameTextView"
+                    android:textColor="@color/textGray"
+                    android:textSize="12sp"
+                    tools:text="みよじ なまえ" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/twitterAuthIcon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@id/nameRootView"
+                android:src="@mipmap/icon_twitter_authmark" />
 
             <LinearLayout
-                android:id="@+id/twitterCooperationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:foreground="?selectableItemBackground"
                 android:gravity="center"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginBottom="@dimen/space_small"
-                    android:src="@mipmap/icon_twitter" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/create_friend_address_cooperation_title"
-                    android:textColor="@color/twitter_blue"
-                    android:textSize="14sp" />
+                    android:text="@string/com_currency"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="0"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
         </RelativeLayout>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/createAddressBookTabLayout"
+            android:id="@+id/addressBookTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/createAddressBookViewPager"
+        android:id="@+id/addressBookViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -170,19 +170,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:visibility="gone"
+        android:visibility="visible"
         app:src="@mipmap/icon_transaction_check"
         app:text="@string/com_enter" />
-
-    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
-        android:id="@+id/walletRootButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:visibility="visible"
-        app:leftSrc="@drawable/ic_add_black_24dp"
-        app:leftText="@string/com_add"
-        app:rightSrc="@mipmap/icon_transaction_check"
-        app:rightText="@string/com_enter" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -24,4 +24,11 @@ interface AddressBookDao {
 
     @Query("SELECT * FROM FriendInfo ORDER BY id DESC LIMIT 1")
     fun getLatestFriendInfo(): Single<FriendInfo>
+
+    @Query("SELECT * FROM FriendInfo WHERE id = :friendId")
+    fun getSingleFriendInfo(friendId: Long): Single<FriendInfo>
+
+    @Query("SELECT * FROM FriendIcon WHERE friendId = :friendId")
+    fun getSingleFriendIcon(friendId: Long): Single<FriendIcon>
+
 }
