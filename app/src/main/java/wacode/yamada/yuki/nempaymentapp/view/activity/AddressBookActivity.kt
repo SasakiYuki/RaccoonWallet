@@ -4,9 +4,9 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
+import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_address_book.*
 import wacode.yamada.yuki.nempaymentapp.R
@@ -62,8 +62,7 @@ class AddressBookActivity : BaseActivity() {
             friendIconLiveData.observe(this@AddressBookActivity, Observer {
                 it ?: return@Observer
 
-                val bitmap = BitmapFactory.decodeByteArray(it.image, 0, it.image.size)
-                circleImageView.setImageBitmap(bitmap)
+                Picasso.with(this@AddressBookActivity).load(it.iconPath).into(circleImageView)
             })
         }
     }

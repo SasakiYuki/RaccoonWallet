@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.View
@@ -130,9 +129,7 @@ class CreateAddressBookActivity : BaseActivity() {
             val friendInfo = createFriendInfoFragment.getAndCheckFriendInfo()
 
             friendInfo?.let { friendInfo ->
-                val uriString = circleImageView.tag
-                val uri = uriString?.let { Uri.parse(it.toString()) } ?: run { null }
-
+                val uri = circleImageView.tag?.let { it as String } ?: run { null }
                 viewModel.insertFriendData(contentResolver, uri, friendInfo)
             }
         }
