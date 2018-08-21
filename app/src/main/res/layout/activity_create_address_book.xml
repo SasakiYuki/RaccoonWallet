@@ -60,7 +60,7 @@
                             android:layout_width="75dp"
                             android:layout_height="75dp"
                             android:foreground="?selectableItemBackground"
-                            android:src="@mipmap/ic_launcher_round" />
+                            android:src="@mipmap/icon_default_profile" />
 
                         <LinearLayout
                             android:id="@+id/selectIconRootView"
@@ -71,8 +71,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:src="@mipmap/icon_change_image" />
 
                             <TextView

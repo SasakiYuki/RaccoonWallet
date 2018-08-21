@@ -52,10 +52,10 @@
                         android:id="@+id/circleImageView"
                         android:layout_width="75dp"
                         android:layout_height="75dp"
-                        android:src="@mipmap/ic_launcher_round"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/space_normal" />
+                        android:layout_marginTop="@dimen/space_normal"
+                        android:src="@mipmap/icon_default_profile" />
                 </RelativeLayout>
             </LinearLayout>
 
