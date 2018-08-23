@@ -30,8 +30,9 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
     abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
-    
+
     @Binds
+    @IntoMap
     @ViewModelKey(CropImageViewModel::class)
     abstract fun bindCropImageViewModel(viewModel: CropImageViewModel): ViewModel
 }
