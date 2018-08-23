@@ -115,29 +115,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         }
     }
 
-    private fun setupFirebaseDynamicLink() {
-        FirebaseDynamicLinks.getInstance()
-                .getDynamicLink(intent)
-                .addOnSuccessListener { pendingDynamicLinkData ->
-                    pendingDynamicLinkData?.let {
-                        handleDynamicLink(it)
-                    }
-                }
-    }
-
-    private fun handleDynamicLink(pendingDynamicLinkData: PendingDynamicLinkData) {
-        when (DynamicLinkParser.checkDynamicLinkType(pendingDynamicLinkData)) {
-            DynamicLinkParser.Type.PAYMENT -> {
-                DynamicLinkParser.getUri(pendingDynamicLinkData)?.let {
-                    val paymentQrEntity = PaymentQREntity.convert(it)
-                    paymentQrEntity?.let {
-                        changeSendTopFragment(it)
-                    }
-                }
-            }
-        }
-    }
-
     override fun onRowClick(drawerEntity: DrawerEntity) {
         when (drawerEntity.title) {
             getString(R.string.main_navigation_home) -> closeDrawerAndMoveHome()
@@ -268,7 +245,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
                 ReviewAppealUtils.createReviewDialog(this, supportFragmentManager, viewModel)
             }
         }
-        setupFirebaseDynamicLink()
         parseIntent()
     }
 
