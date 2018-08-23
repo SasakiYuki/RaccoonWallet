@@ -60,7 +60,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.google.android.gms:play-services-oss-licenses:11.8.0'
-
     implementation 'com.android.support:design:28.0.0-alpha1'
     kapt 'com.android.databinding:compiler:3.1.1'
 
@@ -121,6 +120,12 @@ dependencies {
 
 
     implementation 'com.android.support:customtabs:23.1.1'
+
+    implementation 'org.mindrot:jbcrypt:0.4'
+
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+
+    implementation 'com.isseiaoki:simplecropview:1.1.7'
 
     implementation 'org.mindrot:jbcrypt:0.4'
 
