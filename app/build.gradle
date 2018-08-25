@@ -19,8 +19,8 @@ android {
     defaultConfig {
         applicationId "wacode.yamada.yuki.nempaymentapp"
         minSdkVersion 22
-        versionCode 20
-        versionName "2.0.7.0"
+        versionCode 21
+        versionName "2.0.8.0"
         targetSdkVersion 28
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
