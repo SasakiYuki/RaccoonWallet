@@ -2,9 +2,12 @@ package wacode.yamada.yuki.nempaymentapp.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import wacode.yamada.yuki.nempaymentapp.di.activity.MainActivityModule
 import wacode.yamada.yuki.nempaymentapp.di.activity.SendActivityModule
+import wacode.yamada.yuki.nempaymentapp.di.fragment.HomeBuildersModule
 import wacode.yamada.yuki.nempaymentapp.di.fragment.SendBuildersModule
 import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.MainActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.CropImageActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
 
@@ -20,6 +23,10 @@ internal abstract class ActivityBuildersModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [(SendActivityModule::class), (SendBuildersModule::class)])
     abstract fun bindSendActivity(): SendActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [(MainActivityModule::class), (HomeBuildersModule::class)])
+    abstract fun bindMain0Activity(): MainActivity
 
     @ActivityScope
     @ContributesAndroidInjector
