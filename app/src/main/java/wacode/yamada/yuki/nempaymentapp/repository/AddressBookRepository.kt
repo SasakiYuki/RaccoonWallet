@@ -16,20 +16,20 @@ class AddressBookRepository @Inject constructor() {
     }
 
     fun insertFriendInfo(entity: FriendInfo): Completable {
-        return Completable.create {
+        return Completable.fromAction {
             addressBookDao.insert(entity)
-            it.onComplete()
         }
     }
 
     fun insertFriendIcon(entity: FriendIcon): Completable {
-        return Completable.create {
+        return Completable.fromAction {
             addressBookDao.insert(entity)
-            it.onComplete()
         }
     }
 
     fun getLatestFriendInfo() = addressBookDao.getLatestFriendInfo()
 
-    fun getAll() = addressBookDao.findAllFriendInfo()
+    fun getFriendInfoById(friendId: Long) = addressBookDao.getSingleFriendInfo(friendId)
+
+    fun getFriendIconById(friendId: Long) = addressBookDao.getSingleFriendIcon(friendId)
 }

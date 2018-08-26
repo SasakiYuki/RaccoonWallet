@@ -9,5 +9,5 @@ import java.io.Serializable
 data class FriendIcon constructor(
         @PrimaryKey(autoGenerate = false)
         val friendId: Long,
-        val image: ByteArray
+        val iconPath: String
 ) : Serializable
