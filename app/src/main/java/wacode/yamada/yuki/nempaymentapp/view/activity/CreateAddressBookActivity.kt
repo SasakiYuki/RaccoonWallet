@@ -14,6 +14,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_create_address_book.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendInfoFragment
@@ -71,13 +72,16 @@ class CreateAddressBookActivity : BaseActivity() {
 
     private fun setupButtons() {
         addressRootButton.setOnClickListener {
-            //todo tap
-            supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.createAddressBookViewPager + ":" + 0)
+            insertFriendData()
         }
 
         twitterCooperationButton.setOnClickListener {
-            //todo delete
-            insertFriendData()
+            //todo twitterAuthの追加
+            showToast(R.string.com_coming_soon)
+        }
+
+        walletRootButton.setOnClickListener {
+            //todo  doubleButtonの追加
         }
 
         backImageView.setOnClickListener { finish() }
