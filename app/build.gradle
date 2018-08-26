@@ -1,6 +1,7 @@
 def androidSupportVersion = '24.2.0'
 def lifecycle_version = "1.1.1"
 def dagger_version = "2.13"
+def deep_link_dispatch_version = "3.1.1"
 
 apply plugin: 'com.android.application'
 
@@ -18,8 +19,8 @@ android {
     defaultConfig {
         applicationId "wacode.yamada.yuki.nempaymentapp"
         minSdkVersion 22
-        versionCode 20
-        versionName "2.0.7.0"
+        versionCode 22
+        versionName "2.0.9.0"
         targetSdkVersion 28
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -54,7 +55,7 @@ dependencies {
     implementation 'com.android.support:design:28.0.0-alpha1'
     implementation 'com.android.support:support-v4:28.0.0-alpha1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.firebase:firebase-invites:11.8.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -113,6 +114,11 @@ dependencies {
     implementation 'com.airbnb.android:epoxy-databinding:2.9.0'
     kapt 'com.airbnb.android:epoxy-processor:2.9.0'
     annotationProcessor 'com.airbnb.android:epoxy-processor:2.9.0'
+
+    implementation "com.airbnb:deeplinkdispatch:$deep_link_dispatch_version"
+    annotationProcessor "com.airbnb:deeplinkdispatch-processor:$deep_link_dispatch_version"
+    kapt "com.airbnb:deeplinkdispatch-processor:$deep_link_dispatch_version"
+
 
     implementation 'com.android.support:customtabs:23.1.1'
 

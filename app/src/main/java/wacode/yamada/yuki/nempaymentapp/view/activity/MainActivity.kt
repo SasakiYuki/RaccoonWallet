@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -13,8 +14,15 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.airbnb.deeplinkdispatch.DeepLink
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.gson.Gson
 import com.journeyapps.barcodescanner.BarcodeResult
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,21 +48,35 @@ import wacode.yamada.yuki.nempaymentapp.view.controller.DrawerListController
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
 import wacode.yamada.yuki.nempaymentapp.view.fragment.SplashFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.top.SendTopFragment
+import javax.inject.Inject
 
 
-class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener {
+@DeepLink("https://raccoonwallet.com/payment?amount={amount}&addr={addr}&msg={msg}&name={name}")
+class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener , HasSupportFragmentInjector {
+    @Inject
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     private val compositeDisposable = CompositeDisposable()
     private lateinit var controller: DrawerListController
     private val shouldShowSplash by lazy {
         intent.getBooleanExtra(ARG_SHOULD_SHOW_SPLASH, true)
     }
 
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
+
     override fun setLayout() = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         showSplash()
         setupRxBus()
+    }
+
+    private fun parseIntent() {
+        val paymentQrEntity = PaymentQREntity.convert(intent)
+        paymentQrEntity?.let {
+            changeSendTopFragment(it)
+        }
     }
 
     private fun setupNemIcon() {
@@ -92,7 +114,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             controller.setData(list)
         }
     }
-
 
     override fun onRowClick(drawerEntity: DrawerEntity) {
         when (drawerEntity.title) {
@@ -224,6 +245,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
                 ReviewAppealUtils.createReviewDialog(this, supportFragmentManager, viewModel)
             }
         }
+        parseIntent()
     }
 
     private fun showHelpWeb() {
@@ -282,13 +304,17 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         return id
     }
 
+    private fun changeSendTopFragment(paymentQREntity: PaymentQREntity) {
+        viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
+        val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
+        (fragment as SendTopFragment).putQRScanItems(paymentQREntity)
+    }
+
     override fun onQrScanResult(result: BarcodeResult?) {
         result?.let {
             if (it.text.contains("addr")) {
                 val entity: PaymentQREntity = Gson().fromJson(it.text, PaymentQREntity::class.java)
-                viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
-                val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
-                (fragment as SendTopFragment).putQRScanItems(entity)
+                changeSendTopFragment(entity)
             }
         }
     }

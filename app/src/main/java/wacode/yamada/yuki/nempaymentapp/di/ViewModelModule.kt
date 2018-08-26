@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import wacode.yamada.yuki.nempaymentapp.viewmodel.*
 
+
 @Suppress("unused")
 @Module
 internal abstract class ViewModelModule {
@@ -22,6 +23,11 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EnterMosaicListViewModel::class)
     abstract fun bindEnterMosaicListViewModel(viewModel: EnterMosaicListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
 
     @Binds
     @IntoMap
