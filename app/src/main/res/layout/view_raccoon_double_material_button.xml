@@ -7,103 +7,72 @@
     android:paddingBottom="8dp"
     android:paddingTop="8dp">
 
-    <android.support.design.button.MaterialButton
-        android:id="@+id/materialButton"
-        style="@style/Widget.MaterialComponents.Button"
+    <android.support.v7.widget.CardView
         android:layout_width="192dp"
         android:layout_height="45dp"
-        android:backgroundTint="@android:color/white"
-        android:clickable="false"
+        android:layout_margin="@dimen/space_small"
         android:contentDescription="@null"
-        app:cornerRadius="24sp"
+        app:cardCornerRadius="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <View
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:elevation="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/materialButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintLeft_toLeftOf="@id/materialButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/materialButton" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/leftImageView"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="6dp"
-        android:contentDescription="@null"
-        android:elevation="8dp"
-        android:padding="2dp"
-        android:tint="@color/colorDarkWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintLeft_toLeftOf="@id/materialButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/materialButton"
-        tools:src="@drawable/ic_check_black_24dp" />
+            <LinearLayout
+                android:id="@+id/leftRootView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/leftTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:elevation="8dp"
-        android:textColor="@color/colorDarkWhite"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/materialButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintLeft_toLeftOf="@id/materialButton"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="もしもし" />
+                <ImageView
+                    android:id="@+id/leftImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/colorDarkWhite"
+                    tools:src="@drawable/ic_check_black_24dp" />
 
-    <ImageView
-        android:id="@+id/rightImageView"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="6dp"
-        android:contentDescription="@null"
-        android:elevation="8dp"
-        android:padding="2dp"
-        android:tint="@color/colorDarkWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/materialButton"
-        tools:src="@drawable/ic_check_black_24dp" />
+                <TextView
+                    android:id="@+id/leftTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textGrayDark"
+                    android:textSize="12sp"
+                    tools:text="もしもし" />
+            </LinearLayout>
 
-    <View
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:elevation="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/materialButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintLeft_toLeftOf="@id/materialButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/materialButton" />
+            <LinearLayout
+                android:id="@+id/rightRootView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/rightTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:elevation="8dp"
-        android:textColor="@color/colorDarkWhite"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/materialButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="アルギニン" />
+                <ImageView
+                    android:id="@+id/rightImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/colorDarkWhite"
+                    tools:src="@drawable/ic_check_black_24dp" />
+
+                <TextView
+                    android:id="@+id/rightTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textGrayDark"
+                    android:textSize="12sp"
+                    tools:text="アルギニン" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

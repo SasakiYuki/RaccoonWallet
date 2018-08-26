@@ -7,14 +7,14 @@
     android:paddingBottom="8dp"
     android:paddingTop="8dp">
 
-    <android.support.design.button.MaterialButton
+    <android.support.v7.widget.CardView
         android:id="@+id/materialButton"
-        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="192dp"
         android:layout_height="45dp"
-        android:backgroundTint="@android:color/white"
+        android:layout_margin="@dimen/space_small"
         android:contentDescription="@null"
-        app:cornerRadius="24sp"
+        android:foreground="?selectableItemBackground"
+        app:cardCornerRadius="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:elevation="8dp"
-        android:textColor="@color/colorDarkWhite"
+        android:textColor="@color/textGrayDark"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/materialButton"
         app:layout_constraintLeft_toLeftOf="@id/materialButton"
