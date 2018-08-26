@@ -32,6 +32,8 @@
     <string name="com_add">追加</string>
     <string name="com_save">保存</string>
     <string name="com_currency">通貨</string>
+    <string name="com_edit">編集</string>
+    <string name="com_select">選択</string>
 
     <!-- Menu -->
     <string name="menu_search">検索</string>

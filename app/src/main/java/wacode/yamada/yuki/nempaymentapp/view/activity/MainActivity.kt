@@ -15,8 +15,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.airbnb.deeplinkdispatch.DeepLink
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.gson.Gson
 import com.journeyapps.barcodescanner.BarcodeResult
 import dagger.android.AndroidInjection
@@ -31,7 +29,6 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import org.jsoup.Jsoup
 import wacode.yamada.yuki.nempaymentapp.R
-import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
 import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
@@ -52,7 +49,7 @@ import javax.inject.Inject
 
 
 @DeepLink("https://raccoonwallet.com/payment?amount={amount}&addr={addr}&msg={msg}&name={name}")
-class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener , HasSupportFragmentInjector {
+class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener, HasSupportFragmentInjector {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     private val compositeDisposable = CompositeDisposable()
@@ -123,7 +120,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             getString(R.string.main_navigation_donate) -> startActivity(RaccoonDonateActivity.createIntent(this))
             getString(R.string.main_navigation_help) -> showHelpWeb()
             getString(R.string.main_navigation_setting) -> startActivity(SettingActivity.getCallingIntent(this))
-            getString(R.string.main_navigation_address_book) -> startActivity(AddressBookActivity.createIntent(this))
+            getString(R.string.main_navigation_address_book) -> startActivity(AddressBookActivity.createIntent(this, 1))
         }
     }
 

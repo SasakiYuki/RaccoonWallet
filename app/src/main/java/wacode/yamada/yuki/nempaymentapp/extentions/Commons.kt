@@ -71,5 +71,5 @@ fun setImage(imageView: ImageView, url: String) {
             .load(url)
             .placeholder(R.drawable.ic_refresh_black_24dp)
             .error(R.drawable.ic_broken_image_black_24dp)
-            .into(imageView);
+            .into(imageView)
 }

@@ -43,4 +43,9 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AddressBookViewModel::class)
     abstract fun bindAddressBookViewModel(viewModel: AddressBookViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FriendInfoViewModel::class)
+    abstract fun bindFriendInfoViewModel(viewModel: FriendInfoViewModel): ViewModel
 }

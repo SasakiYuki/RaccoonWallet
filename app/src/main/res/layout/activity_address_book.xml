@@ -41,12 +41,13 @@
                         android:id="@+id/backImageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="@dimen/space_normal_half"
+                        android:layout_marginRight="@dimen/space_normal_half"
                         android:layout_marginTop="@dimen/space_normal"
                         android:foreground="?selectableItemBackground"
-                        android:src="@mipmap/icon_back" />
+                        android:padding="@dimen/space_small"
+                        android:src="@mipmap/icon_close" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/circleImageView"
@@ -64,9 +65,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_normal_half"
-            android:layout_marginLeft="@dimen/space_normal"
-            android:layout_marginRight="@dimen/space_normal">
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="30dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -166,12 +166,22 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
-        android:id="@+id/addressRootButton"
+        android:id="@+id/friendInfoRootButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:visibility="gone"
+        app:src="@mipmap/icon_pencil"
+        app:text="@string/com_edit" />
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
+        android:id="@+id/walletRootButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:visibility="visible"
-        app:src="@mipmap/icon_transaction_check"
-        app:text="@string/com_enter" />
-
+        app:leftSrc="@mipmap/icon_check_gray2"
+        app:leftText="@string/com_select"
+        app:rightSrc="@mipmap/icon_plus2"
+        app:rightText="@string/com_add" />
 </android.support.design.widget.CoordinatorLayout>
