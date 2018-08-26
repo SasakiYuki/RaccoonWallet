@@ -11,7 +11,6 @@ import com.ryuta46.nemkotlin.model.HarvestInfo
 import com.ryuta46.nemkotlin.model.TransactionMetaDataPair
 import dagger.android.support.AndroidSupportInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -40,7 +39,6 @@ class HomeFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private var shouldDoRefreshView = false
     private var wallet: Wallet? = null
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     private lateinit var homeViewModel: HomeViewModel
 
     override fun layoutRes() = R.layout.fragment_home
@@ -223,13 +221,7 @@ class HomeFragment : BaseFragment() {
             }
         })
     }
-
-    override fun onPause() {
-        super.onPause()
-        compositeDisposable.clear()
-        hideProgressView()
-    }
-
+    
     companion object {
         fun newInstance(): HomeFragment {
             val fragment = HomeFragment()
