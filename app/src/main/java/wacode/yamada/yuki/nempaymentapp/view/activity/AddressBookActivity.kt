@@ -96,11 +96,11 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> {
+                    FriendWalletFragment.PAGE_POSITION -> {
                         walletRootButton.visibility = View.VISIBLE
                         friendInfoRootButton.visibility = View.GONE
                     }
-                    1 -> {
+                    FriendInfoFragment.PAGE_POSITION -> {
                         walletRootButton.visibility = View.GONE
                         friendInfoRootButton.visibility = View.VISIBLE
                     }

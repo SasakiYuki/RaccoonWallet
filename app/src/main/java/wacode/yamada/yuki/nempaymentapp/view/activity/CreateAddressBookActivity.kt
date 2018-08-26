@@ -109,11 +109,11 @@ class CreateAddressBookActivity : BaseActivity() {
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> {
+                    CreateFriendWalletFragment.PAGE_POSITION -> {
                         walletRootButton.visibility = View.VISIBLE
                         addressRootButton.visibility = View.GONE
                     }
-                    1 -> {
+                    CreateFriendInfoFragment.PAGE_POSITION -> {
                         walletRootButton.visibility = View.GONE
                         addressRootButton.visibility = View.VISIBLE
                     }
@@ -123,8 +123,8 @@ class CreateAddressBookActivity : BaseActivity() {
     }
 
     private fun insertFriendData() {
-        val fragment1 = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.createAddressBookViewPager + ":" + 0)
-        val fragment2 = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.createAddressBookViewPager + ":" + 1)
+        val fragment1 = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.createAddressBookViewPager + ":" + CreateFriendWalletFragment.PAGE_POSITION)
+        val fragment2 = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.createAddressBookViewPager + ":" + CreateFriendInfoFragment.PAGE_POSITION)
 
         if (fragment1 != null && fragment2 != null) {
             val createFriendWalletFragment = fragment1 as CreateFriendWalletFragment

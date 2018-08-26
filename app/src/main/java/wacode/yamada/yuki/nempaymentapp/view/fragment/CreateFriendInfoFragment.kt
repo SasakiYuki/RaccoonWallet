@@ -1,12 +1,12 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.fragment_create_friend_address.*
+import kotlinx.android.synthetic.main.fragment_friend_info.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
 
 class CreateFriendInfoFragment : BaseFragment() {
-    override fun layoutRes() = R.layout.fragment_create_friend_address
+    override fun layoutRes() = R.layout.fragment_friend_info
 
     fun getAndCheckFriendInfo(): FriendInfo? {
         return if (checkAllValidation()) {
@@ -43,6 +43,8 @@ class CreateFriendInfoFragment : BaseFragment() {
     }
 
     companion object {
+        const val PAGE_POSITION = 1
+
         fun newInstance(): CreateFriendInfoFragment {
             val fragment = CreateFriendInfoFragment()
             val args = Bundle()

@@ -6,7 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.fragment_create_friend_address.*
+import kotlinx.android.synthetic.main.fragment_friend_info.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.getColor
@@ -25,7 +25,7 @@ class FriendInfoFragment : BaseFragment() {
         arguments?.getLong(PARAMS_FRIEND_ID)
     }
 
-    override fun layoutRes() = R.layout.fragment_create_friend_address
+    override fun layoutRes() = R.layout.fragment_friend_info
 
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
@@ -82,6 +82,7 @@ class FriendInfoFragment : BaseFragment() {
     }
 
     companion object {
+        const val PAGE_POSITION = 1
         private const val PARAMS_FRIEND_ID = "params_friend_id"
 
         fun newInstance(friendId: Long): FriendInfoFragment {
