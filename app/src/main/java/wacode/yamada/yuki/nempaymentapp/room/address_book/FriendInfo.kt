@@ -11,8 +11,8 @@ data class FriendInfo constructor(
         val id: Long,
         val lastName: String = "",
         val firstName: String = "",
-        val lastNameKana: String = "",
-        val firstNameKana: String = "",
+        val lastNameRuby: String = "",
+        val firstNameRuby: String = "",
         val phoneNumber: String = "",
         val mailAddress: String = "",
         val isTwitterAuth: Boolean = false

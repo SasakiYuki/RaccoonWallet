@@ -60,17 +60,17 @@ class FriendInfoFragment : BaseFragment() {
         lastNameEditText.isEnabled = false
         lastNameEditText.setTextColor(getColor(context!!, R.color.textBlack))
 
-        lastNameKanaEditText.setText(friendInfo.lastNameKana)
-        lastNameKanaEditText.isEnabled = false
-        lastNameKanaEditText.setTextColor(getColor(context!!, R.color.textBlack))
+        lastNameRubyEditText.setText(friendInfo.lastNameRuby)
+        lastNameRubyEditText.isEnabled = false
+        lastNameRubyEditText.setTextColor(getColor(context!!, R.color.textBlack))
 
         firstNameEditText.setText(friendInfo.firstName)
         firstNameEditText.isEnabled = false
         firstNameEditText.setTextColor(getColor(context!!, R.color.textBlack))
 
-        firstNameKanaEditText.setText(friendInfo.firstNameKana)
-        firstNameKanaEditText.isEnabled = false
-        firstNameKanaEditText.setTextColor(getColor(context!!, R.color.textBlack))
+        firstNameRubyEditText.setText(friendInfo.firstNameRuby)
+        firstNameRubyEditText.isEnabled = false
+        firstNameRubyEditText.setTextColor(getColor(context!!, R.color.textBlack))
 
         phoneNumberEditText.setText(friendInfo.phoneNumber)
         phoneNumberEditText.isEnabled = false

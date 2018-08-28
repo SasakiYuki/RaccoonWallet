@@ -34,9 +34,9 @@ class CreateFriendInfoFragment : BaseFragment() {
         return FriendInfo(
                 id = Math.random().toLong(),
                 lastName = lastNameEditText.text.toString(),
-                lastNameKana = lastNameKanaEditText.text.toString(),
+                lastNameRuby = lastNameRubyEditText.text.toString(),
                 firstName = firstNameEditText.text.toString(),
-                firstNameKana = firstNameKanaEditText.text.toString(),
+                firstNameRuby = firstNameRubyEditText.text.toString(),
                 phoneNumber = phoneNumberEditText.text.toString(),
                 mailAddress = mailAddressEditText.text.toString()
         )

@@ -34,10 +34,10 @@
             android:layout_marginTop="@dimen/space_normal_half">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/lastNameKanaEditText"
+                android:id="@+id/lastNameRubyEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/com_last_name_kana"
+                android:hint="@string/com_last_name_ruby"
                 android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -67,10 +67,10 @@
             android:layout_marginTop="@dimen/space_normal_half">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/firstNameKanaEditText"
+                android:id="@+id/firstNameRubyEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/com_fist_name_kana"
+                android:hint="@string/com_fist_name_ruby"
                 android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
