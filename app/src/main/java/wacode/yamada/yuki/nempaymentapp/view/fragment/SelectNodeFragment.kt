@@ -18,7 +18,7 @@ class SelectNodeFragment : BaseFragment(), SelectNodeListController.OnSelectNode
 
     override fun layoutRes() = R.layout.fragmnet_select_node
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         controller = SelectNodeListController(this)
@@ -27,7 +27,9 @@ class SelectNodeFragment : BaseFragment(), SelectNodeListController.OnSelectNode
 
     override fun onPause() {
         super.onPause()
-        ActiveNodeHelper.saveNodeType(context, selectNodeType)
+        context?.let {
+            ActiveNodeHelper.saveNodeType(it, selectNodeType)
+        }
     }
 
     private fun setupViews() {

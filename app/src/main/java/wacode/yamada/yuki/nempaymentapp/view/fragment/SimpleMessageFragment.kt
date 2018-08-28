@@ -9,11 +9,11 @@ import android.widget.TextView
 import wacode.yamada.yuki.nempaymentapp.R
 
 class SimpleMessageFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_simple_message, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_simple_message, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
     }
@@ -22,7 +22,7 @@ class SimpleMessageFragment : Fragment() {
         view?.findViewById<TextView>(R.id.messageTextView)?.text = getMessage()
     }
 
-    private fun getMessage() = arguments.getString(ARG_MESSAGE, "")
+    private fun getMessage() = arguments?.getString(ARG_MESSAGE, "")
 
     companion object {
         private const val ARG_MESSAGE = "message"

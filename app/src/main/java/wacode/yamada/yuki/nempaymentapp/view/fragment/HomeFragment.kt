@@ -1,10 +1,14 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.ryuta46.nemkotlin.model.AccountMetaDataPair
 import com.ryuta46.nemkotlin.model.HarvestInfo
 import com.ryuta46.nemkotlin.model.TransactionMetaDataPair
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -12,28 +16,46 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
-import wacode.yamada.yuki.nempaymentapp.utils.*
+import wacode.yamada.yuki.nempaymentapp.utils.NemPricePreference
+import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
+import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
+import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.TransactionActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleCallbackDoubleInterface
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleNoInterface
+import wacode.yamada.yuki.nempaymentapp.viewmodel.HomeViewModel
 import java.text.NumberFormat
+import javax.inject.Inject
+
 
 class HomeFragment : BaseFragment() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private var shouldDoRefreshView = false
     private var wallet: Wallet? = null
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun layoutRes() = R.layout.fragment_home
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+
+        homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRxBus()
         setupWallet()
         setupSwipeRefresh()
+        setupViewModelObserve()
     }
 
     override fun onResume() {
@@ -44,10 +66,36 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    private fun setupViewModelObserve() {
+        homeViewModel.run {
+            accountLiveData.observe(this@HomeFragment, Observer {
+                it ?: return@Observer
+                setupAccountViews(it)
+            })
+
+            transactionLiveData.observe(this@HomeFragment, Observer {
+                it ?: return@Observer
+                setupTransactionItems(it)
+            })
+
+            harvestLiveData.observe(this@HomeFragment, Observer {
+                it ?: return@Observer
+                setupHarvestItem(it)
+            })
+
+            loadingStatus.observe(this@HomeFragment, Observer {
+                it ?: return@Observer
+                if (it) showProgressView() else hideProgressView()
+            })
+        }
+    }
+
     private fun setupWallet() {
-        async(UI) {
-            wallet = bg { WalletManager.getSelectedWallet(getContext()) }.await()
-            setupViews()
+        context?.let {
+            async(UI) {
+                wallet = bg { WalletManager.getSelectedWallet(it) }.await()
+                setupViews()
+            }
         }
     }
 
@@ -74,73 +122,41 @@ class HomeFragment : BaseFragment() {
     private fun setupViews() {
         showTransactionButton.setOnClickListener {
             async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(this@HomeFragment.context) }.await()
+                val wallet = bg { WalletManager.getSelectedWallet(showTransactionButton.context) }.await()
                 when {
-                    wallet == null -> this@HomeFragment.context.showToast(R.string.home_fragment_not_select_wallet)
-                    else -> startActivity(TransactionActivity.getCallingIntent(this@HomeFragment.context, wallet!!))
+                    wallet == null -> showTransactionButton.context.showToast(R.string.home_fragment_not_select_wallet)
+                    else -> startActivity(TransactionActivity.getCallingIntent(showTransactionButton.context, wallet!!))
                 }
             }
         }
         setupBalanceItem()
 
         balanceRootView.setOnClickListener {
-            startActivity(BalanceActivity.createIntent(context))
+            startActivity(BalanceActivity.createIntent(balanceRootView.context))
         }
     }
 
     private fun setupBalanceItem() {
-        showProgress()
-
         wallet?.let {
-            compositeDisposable.add(
-                    NemCommons.getAccountInfo(it.address)
-                            .subscribe({ response ->
-                                setupAccountViews(accountMetaDataPair = response)
-                                hideProgress()
-                                hideSwipeRefreshIcon()
-                            }, { e ->
-                                e.printStackTrace()
-                                hideProgress()
-                                hideSwipeRefreshIcon()
-                                context.showToast(R.string.home_fragment_error_account)
-                            })
-            )
-            compositeDisposable.add(
-                    NemCommons.getAccountTransfersAll(it.address)
-                            .subscribe({ response ->
-                                setupTransactionItems(response)
-                                hideProgress()
-                                hideSwipeRefreshIcon()
-                            }, { e ->
-                                e.printStackTrace()
-                                hideSwipeRefreshIcon()
-                                hideProgress()
-                                context.showToast(R.string.home_fragment_error_transaction)
-                            })
-            )
-            compositeDisposable.add(
-                    NemCommons.getHarvestInfo(it.address)
-                            .subscribe({ response ->
-                                setupHarvestItem(response)
-                                hideSwipeRefreshIcon()
-                                hideProgress()
-                            }, { e ->
-                                e.printStackTrace()
-                                hideSwipeRefreshIcon()
-                                hideProgress()
-                                context.showToast(R.string.home_fragment_error_transaction)
-                            })
-            )
+            homeViewModel.getAllData(it.address)
         }
 
         if (wallet == null) {
-            hideProgress()
+            hideProgressView()
             harvestEmptyView.visibility = View.VISIBLE
             transactionEmptyView.visibility = View.VISIBLE
         }
     }
 
-    private fun hideSwipeRefreshIcon() {
+    private fun showProgressView() {
+        if (!swipeRefreshLayout.isRefreshing) {
+            showProgress()
+        }
+    }
+
+    private fun hideProgressView() {
+        hideProgress()
+
         if (swipeRefreshLayout.isRefreshing) {
             swipeRefreshLayout.isRefreshing = false
         }
@@ -153,7 +169,7 @@ class HomeFragment : BaseFragment() {
             harvestEmptyView.visibility = View.VISIBLE
         }
 
-        showHarvestButton.setOnClickListener { context.showToast(R.string.com_coming_soon) }
+        showHarvestButton.setOnClickListener { context?.showToast(R.string.com_coming_soon) }
     }
 
     private fun setupTransactionItems(list: List<TransactionMetaDataPair>) {
@@ -198,7 +214,7 @@ class HomeFragment : BaseFragment() {
             }
         }, object : SimpleNoInterface {
             override fun onClickNo() {
-                context.showToast(R.string.nem_converter_error_price)
+                context?.showToast(R.string.nem_converter_error_price)
             }
         })
     }
@@ -206,10 +222,11 @@ class HomeFragment : BaseFragment() {
     override fun onPause() {
         super.onPause()
         compositeDisposable.clear()
+        hideProgressView()
     }
 
     companion object {
-        public fun newInstance(): HomeFragment {
+        fun newInstance(): HomeFragment {
             val fragment = HomeFragment()
             return fragment
         }

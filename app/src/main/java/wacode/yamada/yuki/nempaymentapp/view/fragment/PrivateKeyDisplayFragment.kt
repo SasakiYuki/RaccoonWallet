@@ -19,7 +19,7 @@ class PrivateKeyDisplayFragment : BaseFragment() {
     private var listenerPrivateKeyStore: OnPrivateKeyStorePageChangeListener? = null
     override fun layoutRes() = R.layout.fragment_private_key_display
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupTextView()
         setupButton()
@@ -27,24 +27,25 @@ class PrivateKeyDisplayFragment : BaseFragment() {
 
     private fun setupButton() {
         button.setOnClickListener {
-            startActivity(TutorialPinCodeActivity.createIntent(context))
+            startActivity(TutorialPinCodeActivity.createIntent(button.context))
             finish()
         }
     }
 
     private fun setupTextView() {
         WalletProvider.wallet?.let {
-            textView.text = WalletManager.getPrivateKey(context, it)
+            textView.text = WalletManager.getPrivateKey(textView.context, it)
         }
 
         textView.setOnClickListener {
             val text = textView.text.toString()
             copyToClip(text)
-            context.showToast(R.string.private_key_display_fragment_copied_click)
+            textView.context.showToast(R.string.private_key_display_fragment_copied_click)
         }
     }
 
     private fun copyToClip(text: String) {
+        // TODO extentionsにある
         val item = ClipData.Item(text)
 
         val mimeType = arrayOfNulls<String>(1)
@@ -52,7 +53,7 @@ class PrivateKeyDisplayFragment : BaseFragment() {
 
         val cd = ClipData(ClipDescription("text_data", mimeType), item)
 
-        val cm = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val cm = context?.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         cm.primaryClip = cd
     }
 

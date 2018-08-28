@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C1C1C"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginLeft="@dimen/space_normal"
+        android:layout_marginRight="@dimen/space_normal">
+
+        <ImageView
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:foreground="?selectableItemBackground"
+            android:padding="@dimen/space_small"
+            android:src="@drawable/ic_close_white_24dp" />
+
+        <TextView
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:foreground="?selectableItemBackground"
+            android:padding="@dimen/space_small"
+            android:text="@string/com_save"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <com.isseiaoki.simplecropview.CropImageView
+        android:id="@+id/cropImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/space_large_half"
+        custom:scv_crop_mode="fit_image"
+        custom:scv_frame_color="@color/colorAccent"
+        custom:scv_frame_stroke_weight="1dp"
+        custom:scv_guide_color="@color/colorAccent"
+        custom:scv_guide_show_mode="show_always"
+        custom:scv_guide_stroke_weight="1dp"
+        custom:scv_handle_color="@color/colorAccent"
+        custom:scv_handle_show_mode="show_always"
+        custom:scv_handle_size="14dp"
+        custom:scv_min_frame_size="50dp"
+        custom:scv_overlay_color="#AA1C1C1C"
+        custom:scv_touch_padding="@dimen/space_normal_half" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/space_normal_half"
+        android:layout_marginRight="@dimen/space_normal_half"
+        android:layout_marginTop="@dimen/space_normal_half"
+        android:background="@color/colorDivider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_normal_half"
+        android:layout_marginTop="@dimen/space_normal_half"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/rotateLeftButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_normal"
+            android:foreground="?selectableItemBackground"
+            android:padding="@dimen/space_small"
+            android:src="@drawable/ic_rotate_left_black" />
+
+        <ImageView
+            android:id="@+id/rotateRightButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_normal"
+            android:foreground="?selectableItemBackground"
+            android:padding="@dimen/space_small"
+            android:src="@drawable/ic_rotate_right_black" />
+    </LinearLayout>
+</LinearLayout>

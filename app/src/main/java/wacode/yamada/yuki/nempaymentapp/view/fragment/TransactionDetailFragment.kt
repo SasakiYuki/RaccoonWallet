@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -32,7 +33,7 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.NewCheckPinCodeActivity
 class TransactionDetailFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_transaction_detail
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews(transactionAppEntity)
     }
@@ -57,7 +58,7 @@ class TransactionDetailFragment : BaseFragment() {
             R.drawable.icon_transaction_receive_green
         }
 
-        transactionTypeIcon.setImageDrawable(activity.getDrawable(transactionTypeRes))
+        transactionTypeIcon.setImageDrawable(activity?.getDrawable(transactionTypeRes))
 
         if (entity.isMultisig) {
             val multisigIconRes = if (entity.transactionType == TransactionType.OUTGOING) {
@@ -65,7 +66,7 @@ class TransactionDetailFragment : BaseFragment() {
             } else {
                 R.drawable.icon_multisignature_green
             }
-            multisgIcon.setImageDrawable(activity.getDrawable(multisigIconRes))
+            multisgIcon.setImageDrawable(activity?.getDrawable(multisigIconRes))
         }
 
         unconfirmedView.visibility = if (entity.transactionType == TransactionType.UNCONFIRMED) {
@@ -91,12 +92,12 @@ class TransactionDetailFragment : BaseFragment() {
         }
 
         recipientAddressText.setOnClickListener {
-            entity.recipientAddress!!.copyClipBoard(context)
-            context.showToast(R.string.com_copied)
+            entity.recipientAddress!!.copyClipBoard(recipientAddressText.context)
+            recipientAddressText.context.showToast(R.string.com_copied)
         }
         secondSenderAddressText.setOnClickListener {
-            entity.senderAddress!!.copyClipBoard(context)
-            context.showToast(R.string.com_copied)
+            entity.senderAddress!!.copyClipBoard(secondSenderAddressText.context)
+            secondSenderAddressText.context.showToast(R.string.com_copied)
         }
     }
 
@@ -110,7 +111,9 @@ class TransactionDetailFragment : BaseFragment() {
             firstAmountText.text = getString(R.string.transaction_detail_first_amount, entity.amount)
             secondAmountText.text = getString(R.string.transaction_detail_second_amount, entity.amount)
             prefixText.text = prefix
-            prefixText.setTextColor(getColor(context, prefixColor))
+            context?.let {
+                prefixText.setTextColor(getColor(it, prefixColor))
+            }
         }
     }
 
@@ -165,15 +168,15 @@ class TransactionDetailFragment : BaseFragment() {
         }
 
         decryptButton.setOnClickListener {
-            if (PinCodeHelper.isAvailable(context)) {
+            if (PinCodeHelper.isAvailable(decryptButton.context)) {
                 startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
-                        context = context,
+                        context = decryptButton.context,
                         isDisplayFingerprint = true,
                         messageRes = R.string.transaction_detail_pin_code_title,
                         buttonPosition = NewCheckPinCodeActivity.ButtonPosition.RIGHT
                 ), REQUEST_CODE_PIN_CODE)
             } else {
-                PinCodeProvider.getPinCode(context)?.let {
+                PinCodeProvider.getPinCode(decryptButton.context)?.let {
                     showEncryptMessage(it, entity)
                 }
             }
@@ -182,8 +185,14 @@ class TransactionDetailFragment : BaseFragment() {
 
     private fun showEncryptMessage(pin: ByteArray, entity: TransactionAppEntity) {
         showProgress()
+        context?.let {
+            showEncryptMessage(it, pin, entity)
+        }
+    }
+
+    private fun showEncryptMessage(context: Context, pin: ByteArray, entity: TransactionAppEntity) {
         async(UI) {
-            bg { WalletManager.getSelectedWallet(this@TransactionDetailFragment.context) }
+            bg { WalletManager.getSelectedWallet(context) }
                     .await()
                     ?.let {
                         try {
@@ -194,10 +203,10 @@ class TransactionDetailFragment : BaseFragment() {
                             decryptButton.visibility = View.GONE
                             messageText.visibility = View.VISIBLE
                         } catch (e: Exception) {
-                            this@TransactionDetailFragment.context.showToast(R.string.transaction_detail_decrypt_error_message)
+                            context.showToast(R.string.transaction_detail_decrypt_error_message)
                         }
                     }
-                    ?: run { this@TransactionDetailFragment.context.showToast(R.string.transaction_detail_decrypt_error_message) }
+                    ?: run { context.showToast(R.string.transaction_detail_decrypt_error_message) }
             hideProgress()
         }
     }
@@ -216,7 +225,7 @@ class TransactionDetailFragment : BaseFragment() {
     }
 
     private val transactionAppEntity by lazy {
-        arguments.getSerializable(KEY_TRANSACTION_DETAIL) as TransactionAppEntity
+        arguments?.getSerializable(KEY_TRANSACTION_DETAIL) as TransactionAppEntity
     }
 
     companion object {

@@ -21,15 +21,15 @@ class SplashFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_splash
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ActiveNodeHelper.auto(context)
+        ActiveNodeHelper.auto(view.context)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if (AppLockPreference.isAvailable(context)) {
+                    if (AppLockPreference.isAvailable(view.context)) {
                         startActivityForResult(NewCheckPinCodeActivity.getCallingIntent(
-                                context = context,
+                                context = view.context,
                                 isDisplayFingerprint = true,
                                 buttonPosition = NewCheckPinCodeActivity.ButtonPosition.NON),
                                 REQUEST_CODE_SPLASH_AUTHENTICATE)
@@ -37,7 +37,7 @@ class SplashFragment : BaseFragment() {
                         finishSplash()
                     }
                 }, { e ->
-                    ActiveNodeHelper.saveNodeType(context, NodeType.ALICE2)
+                    ActiveNodeHelper.saveNodeType(view.context, NodeType.ALICE2)
                     Toast.makeText(context, R.string.splash_node_select_error, Toast.LENGTH_LONG).show()
                     finishSplash()
                 }).let { compositeDisposable.add(it) }
@@ -71,8 +71,10 @@ class SplashFragment : BaseFragment() {
     }
 
     private fun finishSplash() {
-        activity.supportFragmentManager.beginTransaction().remove(this).commit()
-        (activity as SplashCallback).hideSplash()
+        activity?.let {
+            it.supportFragmentManager.beginTransaction().remove(this).commit()
+            (activity as SplashCallback).hideSplash()
+        }
     }
 
     companion object {

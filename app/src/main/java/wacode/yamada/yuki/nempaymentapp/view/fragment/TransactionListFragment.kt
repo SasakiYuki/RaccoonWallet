@@ -28,7 +28,7 @@ class TransactionListFragment : BaseFragment() {
 
     override fun layoutRes() = R.layout.fragment_transaction_list
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
@@ -86,8 +86,13 @@ class TransactionListFragment : BaseFragment() {
 
     private fun addAllTransaction() {
         showProgress()
-        val address = wallet.address
+        arguments?.let {
+            val wallet = it.getSerializable(KEY_WALLET_MODEL) as Wallet
+            addAllTransaction(address = wallet.address)
+        }
+    }
 
+    private fun addAllTransaction(address: String) {
         val accountTransfersIncoming = NemCommons.getAccountTransfersIncoming(address)
                 .flatMap { Observable.fromIterable(it) }
                 .map { TransactionAppConverter.convert(TransactionType.INCOMING, it) }
@@ -149,10 +154,6 @@ class TransactionListFragment : BaseFragment() {
         } else {
             return account.account.address.toDisplayAddress()
         }
-    }
-
-    private val wallet by lazy {
-        arguments.getSerializable(KEY_WALLET_MODEL) as Wallet
     }
 
     companion object {

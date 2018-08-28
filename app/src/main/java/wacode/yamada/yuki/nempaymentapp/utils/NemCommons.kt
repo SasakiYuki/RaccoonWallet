@@ -23,13 +23,9 @@ object NemCommons {
 
     fun getClient() = RxNemApiClient(ApiManager.getBaseUrl())
 
+    @Deprecated(message = "AccoutService->getAccountInfo()")
     fun getAccountInfo(address: String) =
             getClient().accountGet(address)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-
-    fun getAccountTransfersAll(address: String) =
-            getClient().accountTransfersAll(address)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
 
@@ -56,11 +52,6 @@ object NemCommons {
 
     fun getNamespaceMosaics(nameSpace: String) =
             getClient().namespaceMosaicDefinitionPage(nameSpace)
-
-    fun getHarvestInfo(address: String) =
-            getClient().accountHarvests(address)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
 
     fun createTransaction(account: Account, receiverAddress: String, mosaics: ArrayList<TransactionMosaicItem>, message: String, messageType: SendMessageType, senderPublicKey: String): Observable<NemAnnounceResult>? {
         val byteArrayMessage = createMessage(account, senderPublicKey, messageType, message)

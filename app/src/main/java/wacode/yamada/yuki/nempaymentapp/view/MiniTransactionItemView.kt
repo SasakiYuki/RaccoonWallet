@@ -36,7 +36,7 @@ class MiniTransactionItemView(context: Context?, attrs: AttributeSet?, defStyleA
         amountTextView.text = (transactionItem.amount + " " + context.getString(R.string.com_xem_uppercase))
     }
 
-    private fun getTransactionTypeDrawable(transactionAppEntity: TransactionAppEntity): Drawable {
+    private fun getTransactionTypeDrawable(transactionAppEntity: TransactionAppEntity): Drawable? {
         return if (transactionAppEntity.transactionType == TransactionType.INCOMING) {
             ContextCompat.getDrawable(context, R.mipmap.icon_transaction_receive_green)
         } else {

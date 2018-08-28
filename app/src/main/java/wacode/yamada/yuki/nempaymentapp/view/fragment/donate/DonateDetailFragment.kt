@@ -18,10 +18,20 @@ class DonateDetailFragment : BaseFragment() {
     private val compositeDisposable = CompositeDisposable()
     override fun layoutRes() = R.layout.fragment_donate_detail
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setupButton()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.clear()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        compositeDisposable.dispose()
     }
 
     private fun setupButton() {
@@ -31,25 +41,28 @@ class DonateDetailFragment : BaseFragment() {
     }
 
     private fun checkEnterAddressAvailable() {
+        showProgress()
+
         val address = when (viewModel.donateType) {
             RaccoonDonateActivity.DonateType.ANDROID -> ADDRESS_ANDROID
             RaccoonDonateActivity.DonateType.IOS -> ADDRESS_IOS
             RaccoonDonateActivity.DonateType.RHIME -> ADDRESS_RHIME
         }
-        showProgress()
-        compositeDisposable.add(
-                NemCommons.getAccountInfo(address)
-                        .subscribe({ item ->
-                            when (SendStatusUtils.isAvailable(context)) {
-                                SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(context, activity.supportFragmentManager)
-                                SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(context, activity.supportFragmentManager)
-                                SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(context, address, item.account.publicKey))
-                            }
-                            hideProgress()
-                        }, { e ->
-                            hideProgress()
-                            context.showToast(R.string.send_top_fragment_address_error)
-                        }))
+
+        context?.let {
+            NemCommons.getAccountInfo(address)
+                    .subscribe({ item ->
+                        hideProgress()
+                        when (SendStatusUtils.isAvailable(it)) {
+                            SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(it, activity!!.supportFragmentManager)
+                            SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(it, activity!!.supportFragmentManager)
+                            SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(it, address, item.account.publicKey))
+                        }
+                    }, { e ->
+                        hideProgress()
+                        it.showToast(R.string.send_top_fragment_address_error)
+                    }).let { compositeDisposable.add(it) }
+        }
     }
 
     private fun setupViews() {
@@ -61,24 +74,30 @@ class DonateDetailFragment : BaseFragment() {
     }
 
     private fun setupAndroidMode() {
-        imageView.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.icon_yuki))
-        nameTextView.text = getString(R.string.raccoon_donate_activity_android)
-        subTitleTextView.text = getString(R.string.raccoon_donate_activity_engineer)
-        donateMainTextView.text = getString(R.string.donate_detail_fragment_android_message)
+        context?.let {
+            imageView.setImageDrawable(ContextCompat.getDrawable(it, R.mipmap.icon_yuki))
+            nameTextView.text = getString(R.string.raccoon_donate_activity_android)
+            subTitleTextView.text = getString(R.string.raccoon_donate_activity_engineer)
+            donateMainTextView.text = getString(R.string.donate_detail_fragment_android_message)
+        }
     }
 
     private fun setupRhimeMode() {
-        imageView.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.icon_rhime))
-        nameTextView.text = getString(R.string.raccoon_donate_activity_rhime)
-        subTitleTextView.text = getString(R.string.raccoon_donate_activity_ui_design)
-        donateMainTextView.text = getString(R.string.donate_detail_fragment_rhime_message)
+        context?.let {
+            imageView.setImageDrawable(ContextCompat.getDrawable(it, R.mipmap.icon_rhime))
+            nameTextView.text = getString(R.string.raccoon_donate_activity_rhime)
+            subTitleTextView.text = getString(R.string.raccoon_donate_activity_ui_design)
+            donateMainTextView.text = getString(R.string.donate_detail_fragment_rhime_message)
+        }
     }
 
     private fun setupRyutaMode() {
-        imageView.setImageDrawable(ContextCompat.getDrawable(context, R.mipmap.icon_ryuta))
-        nameTextView.text = getString(R.string.raccoon_donate_activity_ios)
-        subTitleTextView.text = getString(R.string.raccoon_donate_activity_engineer)
-        donateMainTextView.text = getString(R.string.donate_detail_fragment_ios_message)
+        context?.let {
+            imageView.setImageDrawable(ContextCompat.getDrawable(it, R.mipmap.icon_ryuta))
+            nameTextView.text = getString(R.string.raccoon_donate_activity_ios)
+            subTitleTextView.text = getString(R.string.raccoon_donate_activity_engineer)
+            donateMainTextView.text = getString(R.string.donate_detail_fragment_ios_message)
+        }
     }
 
     companion object {

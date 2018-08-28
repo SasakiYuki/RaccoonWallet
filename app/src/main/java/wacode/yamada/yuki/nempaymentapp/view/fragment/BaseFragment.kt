@@ -15,8 +15,8 @@ abstract class BaseFragment : Fragment() {
 
     abstract fun layoutRes(): Int
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(layoutRes(), container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(layoutRes(), container, false)
     }
 
     protected fun replaceFragment(fragment: BaseFragment, animated: Boolean) {
@@ -30,7 +30,7 @@ abstract class BaseFragment : Fragment() {
 
         if (isHidden) {
             loadingDialog = LoadingDialogFragment()
-            loadingDialog!!.show(activity.supportFragmentManager, LoadingDialogFragment::class.java.simpleName)
+            loadingDialog!!.show(activity?.supportFragmentManager, LoadingDialogFragment::class.java.simpleName)
         }
     }
 
@@ -44,11 +44,11 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun finish() {
-        activity.finish()
+        activity?.finish()
     }
 
     @NonNull
-    fun getTitle() = arguments.getInt(ARG_CONTENTS_NAME_ID, DEFAULT_VALUE_VISIBLE_TOOLBAR)
+    fun getTitle() = arguments?.getInt(ARG_CONTENTS_NAME_ID, DEFAULT_VALUE_VISIBLE_TOOLBAR) ?: 0
 
     companion object {
         const val ARG_CONTENTS_NAME_ID = "contents_name_id"

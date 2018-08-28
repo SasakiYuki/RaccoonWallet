@@ -14,7 +14,6 @@ import wacode.yamada.yuki.nempaymentapp.viewmodel.MosaicRowLongEventHandler
 import wacode.yamada.yuki.nempaymentapp.viewmodel.MosaicRowViewModel
 
 class MosaicImageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MosaicRowEventHandler, MosaicRowLongEventHandler {
-
     private val list: ArrayList<MosaicIdEntity> = ArrayList()
 
     var onClickHandlers: ((MosaicIdEntity) -> Unit)? = null
@@ -24,7 +23,7 @@ class MosaicImageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Mosa
         val binding: ViewDataBinding? = DataBindingUtil.bind<ViewDataBinding>(itemView)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewModel = MosaicRowViewModel(list[position])
 
         val binding = (holder as MosaicRowViewHolder).binding
@@ -36,7 +35,7 @@ class MosaicImageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Mosa
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent!!.context).inflate(R.layout.row_mosaic, parent, false)
         return MosaicRowViewHolder(view)
     }
