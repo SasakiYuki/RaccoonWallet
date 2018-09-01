@@ -460,6 +460,15 @@
     <string name="wallet_setting_type_multisig">WalletType : Multisig</string>
     <string name="wallet_setting_address_title">アドレス</string>
 
+    <!-- ProfileAddressAddActivity -->
+    <string name="profile_address_add_activity_title">ウォレットを設定</string>
+    <string name="profile_address_add_activity_header_title_nem">NEM/XEM</string>
+    <string name="profile_address_add_activity_main_content_title">ウォレット情報の入力</string>
+    <string name="profile_address_add_activity_main_content_name_hint">ウォレット名を入力</string>
+    <string name="profile_address_add_activity_main_content_address_hint">アドレスを入力</string>
+    <string name="profile_address_add_activity_main_content_attribute_title">ウォレット属性の設定</string>
+    <string name="profile_address_add_activity_main_content_attribute_master">Master</string>
+
     <!-- WalletDetailFragment -->
     <string name="wallet_detail_fragment_title">ウォレットの詳細</string>
     <string name="wallet_detail_general">一般情報</string>

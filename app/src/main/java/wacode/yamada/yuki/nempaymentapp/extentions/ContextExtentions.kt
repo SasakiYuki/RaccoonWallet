@@ -24,4 +24,6 @@ fun Context.pasteFromClipBoard(): String {
     }
 }
 
+fun Context.getColorFromResource(colorResourceId: Int) = ContextCompat.getColor(this, colorResourceId)
+
 
