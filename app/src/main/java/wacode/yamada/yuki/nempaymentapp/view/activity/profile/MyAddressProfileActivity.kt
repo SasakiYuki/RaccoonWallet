@@ -9,9 +9,9 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import kotlinx.android.synthetic.main.activity_my_address_profile.*
 import wacode.yamada.yuki.nempaymentapp.R
-import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 import wacode.yamada.yuki.nempaymentapp.extentions.buildSpannableText
 import wacode.yamada.yuki.nempaymentapp.extentions.setSpan
+import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 
 class MyAddressProfileActivity : BaseActivity() {
     override fun setLayout() = R.layout.activity_my_address_profile
@@ -26,9 +26,11 @@ class MyAddressProfileActivity : BaseActivity() {
         tabs.setupWithViewPager(viewpager)
         setOnClickListener()
     }
+
     private fun setOnClickListener() {
-        bottomButton.setClickListener(View.OnClickListener { startActivity(ProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity)) })
+        bottomButton.setClickListener(View.OnClickListener { startActivityForResult(ProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity), ProfileAddressAddActivity.REQUEST_CODE) })
     }
+
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -46,6 +48,19 @@ class MyAddressProfileActivity : BaseActivity() {
             setDisplayHomeAsUpEnabled(true)
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            ProfileAddressAddActivity.REQUEST_CODE ->
+
+        }
+    }
+
+    private fun handleProfileAddressAddActivity (intent: Intent) {
+        val item = intent.getSerializableExtra()
+    }
+
     companion object {
         fun createIntent(context: Context): Intent {
             val intent = Intent(context, MyAddressProfileActivity::class.java)

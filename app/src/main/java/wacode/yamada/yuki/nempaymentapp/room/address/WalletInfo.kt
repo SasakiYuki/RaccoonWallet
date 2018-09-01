@@ -7,7 +7,7 @@ import java.io.Serializable
 @Entity data class WalletInfo
 constructor(
         @PrimaryKey(autoGenerate = true)
-        val id: Long,
+        val id: Long = 0,
         val walletName: String = "",
         val walletAddress: String = "",
         val isMaster: Boolean = false

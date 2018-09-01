@@ -26,4 +26,8 @@ class ProfileAddressAddActionCreator(private val repository: MyProfileRepository
                             .onErrorResumeNext(Observable.empty())
                 }
     }
+
+    fun create(walletInfo: WalletInfo) {
+        createWalletInfo.onNext(walletInfo)
+    }
 }

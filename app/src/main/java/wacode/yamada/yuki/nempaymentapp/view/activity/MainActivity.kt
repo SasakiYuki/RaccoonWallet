@@ -41,6 +41,7 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.AboutActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.MosaicListActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.ExampleFragmentPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.controller.DrawerListController
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
@@ -116,7 +117,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     override fun onRowClick(drawerEntity: DrawerEntity) {
         when (drawerEntity.title) {
             getString(R.string.main_navigation_home) -> closeDrawerAndMoveHome()
-            getString(R.string.main_navigation_about) -> startActivity(AboutActivity.createIntent(this))
+            getString(R.string.main_navigation_about) -> startActivity(MyAddressProfileActivity.createIntent(this))
             getString(R.string.main_navigation_mosaic_gallery) -> startActivityForResult(MosaicListActivity.createIntent(this), MosaicListActivity.RESULT_MOSAIC_LIST)
             getString(R.string.main_navigation_donate) -> startActivity(RaccoonDonateActivity.createIntent(this))
             getString(R.string.main_navigation_help) -> showHelpWeb()
