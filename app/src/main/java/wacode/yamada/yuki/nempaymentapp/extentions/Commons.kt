@@ -6,8 +6,11 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.util.Log
 import android.widget.ImageView
+import android.widget.TextView
 import com.google.gson.Gson
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.google.zxing.qrcode.encoder.Encoder
@@ -72,4 +75,23 @@ fun setImage(imageView: ImageView, url: String) {
             .placeholder(R.drawable.ic_refresh_black_24dp)
             .error(R.drawable.ic_broken_image_black_24dp)
             .into(imageView);
+}
+
+fun TextView.buildSpannableText(spans: (SpannableStringBuilder) -> Unit) =
+        (text as? SpannableStringBuilder)
+                .let { it ?: SpannableStringBuilder(text) }
+                .let { text = it.also(spans) }
+
+fun SpannableStringBuilder.setSpan(what: Any, target: String): SpannableStringBuilder {
+    val startIndex = indexOf(target)
+    val endIndex = startIndex + target.length
+    setSpan(what, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    return this
+}
+
+fun SpannableStringBuilder.setSpan(what: Any, target: Regex): SpannableStringBuilder {
+    target.findAll(this).iterator().forEach {
+        setSpan(what, it.range.start, it.range.last + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+    }
+    return this
 }
