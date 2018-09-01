@@ -35,6 +35,12 @@ android {
     }
     defaultConfig {
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     lintOptions {
         disable "ResourceType"
@@ -133,8 +139,6 @@ dependencies {
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-
-    implementation 'com.facebook.stetho:stetho:1.5.0'
 
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
