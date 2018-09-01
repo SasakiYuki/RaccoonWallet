@@ -3,7 +3,6 @@ package wacode.yamada.yuki.nempaymentapp.view.fragment
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ryuta46.nemkotlin.model.AccountMetaDataPair
@@ -25,7 +24,6 @@ import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
 import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
-import wacode.yamada.yuki.nempaymentapp.view.activity.CreateAddressBookActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.TransactionActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleCallbackDoubleInterface
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleNoInterface
@@ -170,8 +168,7 @@ class HomeFragment : BaseFragment() {
         }
 
         showHarvestButton.setOnClickListener {
-            //            context?.showToast(R.string.com_coming_soon)
-            startActivity(Intent(context, CreateAddressBookActivity::class.java))
+            context?.showToast(R.string.com_coming_soon)
         }
     }
 
@@ -221,7 +218,7 @@ class HomeFragment : BaseFragment() {
             }
         })
     }
-    
+
     companion object {
         fun newInstance(): HomeFragment {
             val fragment = HomeFragment()

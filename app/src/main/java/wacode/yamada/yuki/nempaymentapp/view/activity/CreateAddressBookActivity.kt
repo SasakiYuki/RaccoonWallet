@@ -134,7 +134,7 @@ class CreateAddressBookActivity : BaseActivity() {
 
             friendInfo?.let { friendInfo ->
                 val uri = circleImageView.tag?.let { it as String } ?: run { null }
-                viewModel.insertFriendData(contentResolver, uri, friendInfo)
+                viewModel.insertFriendData(uri, friendInfo)
             }
         }
     }
