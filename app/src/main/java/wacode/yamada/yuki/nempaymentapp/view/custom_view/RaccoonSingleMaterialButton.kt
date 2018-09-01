@@ -26,4 +26,8 @@ class RaccoonSingleMaterialButton(context: Context?, attrs: AttributeSet?, defSt
             }
         }
     }
+
+    fun setClickListener(listener: OnClickListener) {
+        materialButton.setOnClickListener { listener.onClick(this) }
+    }
 }

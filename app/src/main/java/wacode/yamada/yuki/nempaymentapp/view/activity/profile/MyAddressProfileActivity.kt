@@ -27,11 +27,7 @@ class MyAddressProfileActivity : BaseActivity() {
         setOnClickListener()
     }
     private fun setOnClickListener() {
-        bottomButton.setOnClickListener {
-            View.OnClickListener {
-                startActivity(ProfileAddressAddActivity.createIntent(this))
-            }
-        }
+        bottomButton.setClickListener(View.OnClickListener { startActivity(ProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity)) })
     }
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
