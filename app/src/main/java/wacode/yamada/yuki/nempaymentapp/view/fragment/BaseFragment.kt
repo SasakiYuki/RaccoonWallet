@@ -48,7 +48,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     @NonNull
-    fun getTitle() = arguments?.getInt(ARG_CONTENTS_NAME_ID, DEFAULT_VALUE_VISIBLE_TOOLBAR) ?: 0
+    fun getTitleRes() = arguments?.getInt(ARG_CONTENTS_NAME_ID, DEFAULT_VALUE_VISIBLE_TOOLBAR) ?: 0
 
     companion object {
         const val ARG_CONTENTS_NAME_ID = "contents_name_id"

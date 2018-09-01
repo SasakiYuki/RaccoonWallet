@@ -18,6 +18,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
+    fun provideAddressBookRepository() = AddressBookRepository()
+
     fun provideTransactionRepository(transactionService: TransactionService) = TransactionRepository(transactionService)
 
     @Provides

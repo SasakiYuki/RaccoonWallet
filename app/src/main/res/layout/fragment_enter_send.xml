@@ -61,7 +61,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/background_circle"
+                    android:background="@drawable/background_circle_nem_green"
                     android:gravity="center"
                     android:textColor="@android:color/white"
                     android:textSize="11sp"

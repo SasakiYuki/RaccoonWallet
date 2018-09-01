@@ -15,8 +15,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.airbnb.deeplinkdispatch.DeepLink
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.gson.Gson
 import com.journeyapps.barcodescanner.BarcodeResult
 import dagger.android.AndroidInjection
@@ -52,7 +50,7 @@ import javax.inject.Inject
 
 
 @DeepLink("https://raccoonwallet.com/payment?amount={amount}&addr={addr}&msg={msg}&name={name}")
-class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener , HasSupportFragmentInjector {
+class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener, HasSupportFragmentInjector {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     private val compositeDisposable = CompositeDisposable()
