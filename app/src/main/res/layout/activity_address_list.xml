@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.BackLayerSearchView
+        android:id="@+id/backLayerSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/address_list_activity_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/backLayerSearchView"
+        android:background="@color/textGrayDark" />
+</RelativeLayout>

@@ -30,4 +30,8 @@
     <declare-styleable name="SettingSwitchItemView">
         <attr name="text" />
     </declare-styleable>
+
+    <declare-styleable name="BackLayerSearchView">
+        <attr name="title" />
+    </declare-styleable>
 </resources>
