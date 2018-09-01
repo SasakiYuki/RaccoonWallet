@@ -440,6 +440,13 @@
     <!-- InstantPinCodeFragment -->
     <string name="instant_pin_code_message">PINを入力して送金を確定する</string>
 
+    <!-- MyAddressProfileActivity -->
+    <string name="my_address_profile_activity_tab_wallet">ウォレット</string>
+    <string name="my_address_profile_activity_tab_profile">プロフィール</string>
+    <string name="my_address_profile_activity_title_initial">GUEST\nゲスト</string>
+    <string name="my_address_profile_activity_title_initial_guest">GUEST</string>
+    <string name="my_address_profile_activity_title_initial_bottom_guest">ゲスト</string>
+
     <!-- WalletSettingFragment -->
     <string name="wallet_setting_fragment_title">ウォレットの設定</string>
     <string name="wallet_setting_currency_title">NEM/XEM</string>
