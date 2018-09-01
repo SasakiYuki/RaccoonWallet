@@ -9,6 +9,11 @@ import wacode.yamada.yuki.nempaymentapp.di.fragment.FriendInfoModule
 import wacode.yamada.yuki.nempaymentapp.di.fragment.HomeBuildersModule
 import wacode.yamada.yuki.nempaymentapp.di.fragment.SendBuildersModule
 import wacode.yamada.yuki.nempaymentapp.view.activity.*
+import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.MainActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.CropImageActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.ProfileAddressAddActivity
 
 
 @Suppress("unused")
@@ -38,4 +43,8 @@ internal abstract class ActivityBuildersModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [(AddressBookActivityModule::class), (FriendInfoModule::class)])
     abstract fun bindAddressBookActivity(): AddressBookActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun bindProfileAddressAddActivity(): ProfileAddressAddActivity
 }

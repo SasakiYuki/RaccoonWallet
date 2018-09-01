@@ -63,6 +63,12 @@
             android:name=".view.activity.CalculatorActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.profile.ProfileAddressAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.profile.MyAddressProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.DisplayQRActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -29,5 +29,9 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideHarvestRepository(harvestService: HarvestService) = HarvestRepository(harvestService)
+
+    @Provides
+    @Singleton
+    fun provideMyProfileRepository() = MyProfileRepository()
 }
 

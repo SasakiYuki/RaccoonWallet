@@ -14,6 +14,8 @@
         android:layout_height="45dp"
         android:layout_marginLeft="@dimen/space_small"
         android:layout_marginRight="@dimen/space_small"
+        android:layout_marginEnd="@dimen/space_small"
+        android:layout_marginStart="@dimen/space_small"
         android:backgroundTint="@android:color/white"
         android:contentDescription="@null"
         app:cornerRadius="24sp"
