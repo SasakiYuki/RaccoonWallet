@@ -8,6 +8,7 @@ import wacode.yamada.yuki.nempaymentapp.store.getter.ProfileAddressAddGetter
 import wacode.yamada.yuki.nempaymentapp.store.reducer.ProfileAddressAddReducer
 import wacode.yamada.yuki.nempaymentapp.store.type.ProfileAddressAddActionType
 import javax.inject.Inject
+
 class ProfileAddressAddStore @Inject constructor(private val repository: MyProfileRepository) : Store<ProfileAddressAddActionType, ProfileAddressAddActionCreator, ProfileAddressAddReducer, ProfileAddressAddGetter>() {
     override fun createActionCreator(dispatch: (ProfileAddressAddActionType) -> Unit, reducer: ProfileAddressAddReducer): ProfileAddressAddActionCreator
             = ProfileAddressAddActionCreator(repository, dispatch, reducer)

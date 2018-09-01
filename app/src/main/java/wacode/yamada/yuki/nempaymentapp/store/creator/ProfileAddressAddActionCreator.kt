@@ -7,6 +7,7 @@ import wacode.yamada.yuki.nempaymentapp.repository.MyProfileRepository
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.store.reducer.ProfileAddressAddReducer
 import wacode.yamada.yuki.nempaymentapp.store.type.ProfileAddressAddActionType
+
 class ProfileAddressAddActionCreator(private val repository: MyProfileRepository,
                                      private val dispatch: (ProfileAddressAddActionType) -> Unit,
                                      val reducer: ProfileAddressAddReducer) : DisposableMapper() {

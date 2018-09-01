@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import wacode.yamada.yuki.nempaymentapp.flux.DisposableMapper
 import wacode.yamada.yuki.nempaymentapp.store.type.ProfileAddressAddActionType
+
 class ProfileAddressAddReducer(action: Observable<ProfileAddressAddActionType>) : DisposableMapper() {
     private val mCreateSubject: PublishSubject<Unit> = PublishSubject.create()
     val createObservable: Observable<Unit>
