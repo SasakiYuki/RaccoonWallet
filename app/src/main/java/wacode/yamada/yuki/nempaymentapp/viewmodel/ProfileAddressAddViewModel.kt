@@ -1,15 +1,12 @@
 package wacode.yamada.yuki.nempaymentapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.store.ProfileAddressAddStore
 import javax.inject.Inject
 
-class ProfileAddressAddViewModel @Inject constructor(private val store: ProfileAddressAddStore) : ViewModel() {
-    private val disposables: CompositeDisposable = CompositeDisposable()
+class ProfileAddressAddViewModel @Inject constructor(private val store: ProfileAddressAddStore) : BaseViewModel() {
     val createLiveData: MutableLiveData<Unit>
             = MutableLiveData()
     var isMaster = false
@@ -21,11 +18,11 @@ class ProfileAddressAddViewModel @Inject constructor(private val store: ProfileA
                 .subscribe({
                     createLiveData.value = it
                 })
-                .let { disposables.add(it) }
+                .let { addDisposable(it) }
     }
 
     override fun onCleared() {
-        disposables.clear()
+        super.onCleared()
         store.clearDisposables()
     }
 }
