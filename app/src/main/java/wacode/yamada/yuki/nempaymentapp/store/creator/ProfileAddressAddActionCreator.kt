@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.store.creator
 
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import wacode.yamada.yuki.nempaymentapp.flux.DisposableMapper
 import wacode.yamada.yuki.nempaymentapp.repository.MyProfileRepository
@@ -12,6 +13,7 @@ class ProfileAddressAddActionCreator(private val repository: MyProfileRepository
                                      private val dispatch: (ProfileAddressAddActionType) -> Unit,
                                      val reducer: ProfileAddressAddReducer) : DisposableMapper() {
     private val createWalletInfo: PublishSubject<WalletInfo> = PublishSubject.create()
+
     init {
         createWalletInfo
                 .flatMap {
@@ -24,7 +26,10 @@ class ProfileAddressAddActionCreator(private val repository: MyProfileRepository
                                 dispatch(ProfileAddressAddActionType.Error(it))
                             }
                             .onErrorResumeNext(Observable.empty())
+                            .subscribeOn(Schedulers.io())
                 }
+                .subscribe()
+                .let { disposables.add(it) }
     }
 
     fun create(walletInfo: WalletInfo) {

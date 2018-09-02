@@ -39,6 +39,10 @@ class ProfileAddressAddActivity : BaseActivity() {
             it ?: return@Observer
             finishWithWalletInfo(it)
         })
+        viewModel.errorLiveData.observe(this, Observer {
+            it ?: return@Observer
+            it.printStackTrace()
+        })
     }
 
     private fun setupViews() {

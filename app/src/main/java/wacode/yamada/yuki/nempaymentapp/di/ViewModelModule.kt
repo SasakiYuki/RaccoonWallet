@@ -53,4 +53,9 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileAddressAddViewModel::class)
     abstract fun bindProfileAddressAddViewModel(viewModel: ProfileAddressAddViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyAddressProfileViewModel::class)
+    abstract fun bindMyAddressProfileViewModel(viewModel: MyAddressProfileViewModel): ViewModel
 }

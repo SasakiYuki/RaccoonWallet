@@ -13,6 +13,7 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.MainActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.CropImageActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.SendActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.profile.ProfileAddressAddActivity
 
 
@@ -47,4 +48,8 @@ internal abstract class ActivityBuildersModule {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun bindProfileAddressAddActivity(): ProfileAddressAddActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun bindMyAddressProfileActivity() : MyAddressProfileActivity
 }

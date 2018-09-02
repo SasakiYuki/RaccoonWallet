@@ -10,6 +10,8 @@ import javax.inject.Inject
 class ProfileAddressAddViewModel @Inject constructor(private val store: ProfileAddressAddStore) : BaseViewModel() {
     val createLiveData: MutableLiveData<WalletInfo>
             = MutableLiveData()
+    val errorLiveData: MutableLiveData<Throwable>
+            = MutableLiveData()
     var isMaster = false
 
     init {
@@ -20,6 +22,12 @@ class ProfileAddressAddViewModel @Inject constructor(private val store: ProfileA
                     createLiveData.value = it
                 })
                 .let { addDisposable(it) }
+        store.getter.errorObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    errorLiveData.value = it
+                })
     }
 
     fun create(walletInfo: WalletInfo) {
