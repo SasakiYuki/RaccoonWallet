@@ -4,11 +4,12 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
-@Entity data class WalletInfo
+@Entity
+data class WalletInfo
 constructor(
         @PrimaryKey(autoGenerate = true)
-        val id: Long = 0,
-        val walletName: String = "",
-        val walletAddress: String = "",
-        val isMaster: Boolean = false
+        var id: Long = 0,
+        var walletName: String = "",
+        var walletAddress: String = "",
+        var isMaster: Boolean = false
 ) : Serializable

@@ -18,7 +18,7 @@ class ProfileAddressAddActionCreator(private val repository: MyProfileRepository
                     repository.create(it)
                             .toObservable()
                             .doOnNext {
-                                dispatch(ProfileAddressAddActionType.Create())
+                                dispatch(ProfileAddressAddActionType.Create(it))
                             }
                             .doOnError {
                                 dispatch(ProfileAddressAddActionType.Error(it))
