@@ -1,5 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity.profile
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_my_address_profile.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.buildSpannableText
 import wacode.yamada.yuki.nempaymentapp.extentions.setSpan
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 
 class MyAddressProfileActivity : BaseActivity() {
@@ -51,14 +53,16 @@ class MyAddressProfileActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode) {
-            ProfileAddressAddActivity.REQUEST_CODE ->
+        when (requestCode) {
+//            ProfileAddressAddActivity.REQUEST_CODE ->
 
         }
     }
 
-    private fun handleProfileAddressAddActivity (intent: Intent) {
-        val item = intent.getSerializableExtra()
+    private fun handleProfileAddressAddActivity(resultCode: Int, intent: Intent) {
+        if (resultCode == Activity.RESULT_OK) {
+            val item = intent.getSerializableExtra(ProfileAddressAddActivity.INTENT_WALLET_INFO) as WalletInfo
+        }
     }
 
     companion object {
