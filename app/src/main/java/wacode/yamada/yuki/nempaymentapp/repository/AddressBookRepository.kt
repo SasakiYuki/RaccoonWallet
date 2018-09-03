@@ -32,4 +32,6 @@ class AddressBookRepository @Inject constructor() {
     fun getFriendInfoById(friendId: Long) = addressBookDao.getSingleFriendInfo(friendId)
 
     fun getFriendIconById(friendId: Long) = addressBookDao.getSingleFriendIcon(friendId)
+
+    fun getAllFriendInfo() = addressBookDao.findAllFriendInfo()
 }

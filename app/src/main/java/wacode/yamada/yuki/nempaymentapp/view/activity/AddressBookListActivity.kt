@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_address_book_list.*
@@ -33,11 +34,19 @@ class AddressBookListActivity : BaseActivity() {
         setupViewModelObserve()
 
         setupViews()
+        viewModel.getAllFriendInfo()
     }
 
     private fun setupViews() {
+        val dividerItemDecoration = DividerItemDecoration(addressRecyclerView.context, LinearLayoutManager(this).orientation)
+
         addressRecyclerView.layoutManager = LinearLayoutManager(this)
+        addressRecyclerView.addItemDecoration(dividerItemDecoration)
+
+
+
         controller = AddressBookListController()
+
         addressRecyclerView.adapter = controller.adapter
     }
 
@@ -47,6 +56,13 @@ class AddressBookListActivity : BaseActivity() {
                 it ?: return@Observer
 
                 if (it) showProgress() else hideProgress()
+            })
+
+            friendInfoLiveData.observe(this@AddressBookListActivity, Observer {
+                it ?: return@Observer
+
+                friendInfoList.add(it)
+                controller.setData(friendInfoList)
             })
         }
     }
