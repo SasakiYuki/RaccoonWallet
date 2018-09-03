@@ -7,5 +7,5 @@ import wacode.yamada.yuki.nempaymentapp.store.reducer.MyAddressProfileReducer
 
 class MyAddressProfileGetter(reducer: MyAddressProfileReducer) : DisposableMapper() {
     val createObservable: Observable<MyAddress>
-            = reducer.createobservable
+            = reducer.createObservable
 }

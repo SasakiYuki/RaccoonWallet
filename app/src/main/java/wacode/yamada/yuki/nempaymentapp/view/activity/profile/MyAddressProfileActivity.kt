@@ -6,12 +6,14 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_my_address_profile.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
@@ -20,14 +22,22 @@ import wacode.yamada.yuki.nempaymentapp.extentions.setSpan
 import wacode.yamada.yuki.nempaymentapp.room.address.MyAddress
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
+import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
+import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
+import wacode.yamada.yuki.nempaymentapp.view.fragment.profile.MyWalletInfoFragment
 import wacode.yamada.yuki.nempaymentapp.viewmodel.MyAddressProfileViewModel
 import javax.inject.Inject
 
-class MyAddressProfileActivity : BaseActivity() {
+class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: MyAddressProfileViewModel
     override fun setLayout() = R.layout.activity_my_address_profile
+
+    override fun supportFragmentInjector() = fragmentDispatchingAndroidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -40,14 +50,13 @@ class MyAddressProfileActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyAddressProfileViewModel::class.java)
         viewModel.createLiveData.observe(this, Observer {
             it ?: return@Observer
-            Log.d("mori","真一")
         })
     }
 
     private fun setupViews() {
         setupToolbar()
-        tabs.setupWithViewPager(viewpager)
         setOnClickListener()
+        setupViewPager()
     }
 
     private fun setOnClickListener() {
@@ -70,6 +79,17 @@ class MyAddressProfileActivity : BaseActivity() {
             }
             setDisplayHomeAsUpEnabled(true)
         }
+    }
+
+    private fun setupViewPager() {
+        ArrayList<BaseFragment>().let {
+            it.add(MyWalletInfoFragment.newInstance())
+            it.add(MyWalletInfoFragment.newInstance())
+            SimpleViewPagerAdapter(this, it, supportFragmentManager).let {
+                viewpager.adapter = it
+            }
+        }
+//        tabs.setupWithViewPager(viewpager)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

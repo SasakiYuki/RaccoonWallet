@@ -8,7 +8,7 @@ import wacode.yamada.yuki.nempaymentapp.store.type.MyAddressProfileActionType
 
 class MyAddressProfileReducer(action: Observable<MyAddressProfileActionType>) : DisposableMapper() {
     private val mCreateSubject: PublishSubject<MyAddress> = PublishSubject.create()
-    val createobservable: Observable<MyAddress>
+    val createObservable: Observable<MyAddress>
         get() = mCreateSubject
 
     init {
