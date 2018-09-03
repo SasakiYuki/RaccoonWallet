@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="friendInfoItem"
+            type="wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/iconRootView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space_normal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                tools:src="@mipmap/icon_default_profile" />
+
+            <ImageView
+            android:id="@+id/twitterAuthIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="-10dp"
+            android:layout_toRightOf="@id/circleImageView"
+            android:src="@mipmap/icon_twitter_authmark"
+            android:visibility="@{friendInfoItem.isTwitterAuth ? android.view.View.VISIBLE : android.view.View.GONE}" />
+
+            <!--<ImageView-->
+                <!--android:id="@+id/twitterAuthIcon"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_marginLeft="-10dp"-->
+                <!--android:layout_toRightOf="@id/circleImageView"-->
+                <!--android:src="@mipmap/icon_twitter_authmark"-->
+                <!--android:visibility="visible" />-->
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/friendNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space_large_half"
+            android:layout_toRightOf="@id/iconRootView"
+            android:text="@{friendInfoItem.getFullName}"
+            android:textColor="@color/textGray"
+            android:textSize="15sp"
+            tools:text="Hoge hoge" />
+
+    </RelativeLayout>
+</layout>
