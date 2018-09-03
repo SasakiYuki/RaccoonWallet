@@ -116,7 +116,7 @@
                     android:layout_below="@id/friendNameTextView"
                     android:textColor="@color/textGray"
                     android:textSize="12sp"
-                    tools:text="みよじ なまえ" />
+                    tools:text="みょうじ なまえ" />
             </RelativeLayout>
 
             <ImageView
