@@ -32,7 +32,6 @@ class CreateFriendInfoFragment : BaseFragment() {
 
     private fun createPrams(): FriendInfo {
         return FriendInfo(
-                id = Math.random().toLong(),
                 lastName = lastNameEditText.text.toString(),
                 lastNameRuby = lastNameRubyEditText.text.toString(),
                 firstName = firstNameEditText.text.toString(),

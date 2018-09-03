@@ -8,7 +8,7 @@ import java.io.Serializable
 @Entity
 data class FriendInfo constructor(
         @PrimaryKey(autoGenerate = true)
-        val id: Long,
+        val id: Long = 0,
         val lastName: String = "",
         val firstName: String = "",
         val lastNameRuby: String = "",
