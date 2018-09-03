@@ -10,7 +10,7 @@ import wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem
 
 
 @EpoxyModelClass(layout = R.layout.row_address_book)
-abstract class AddressBookRowModel : DataBindingEpoxyModel() {
+abstract class AddressBookListModel : DataBindingEpoxyModel() {
     @EpoxyAttribute
     var friendInfoItem: FriendInfoItem? = null
 

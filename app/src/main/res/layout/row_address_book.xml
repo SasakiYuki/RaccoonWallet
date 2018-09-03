@@ -29,26 +29,14 @@
                 tools:src="@mipmap/icon_default_profile" />
 
             <ImageView
-            android:id="@+id/twitterAuthIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="-10dp"
-            android:layout_toRightOf="@id/circleImageView"
-            android:src="@mipmap/icon_twitter_authmark"
-            android:visibility="@{friendInfoItem.isTwitterAuth ? android.view.View.VISIBLE : android.view.View.GONE}" />
-
-            <!--<ImageView-->
-                <!--android:id="@+id/twitterAuthIcon"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:layout_marginLeft="-10dp"-->
-                <!--android:layout_toRightOf="@id/circleImageView"-->
-                <!--android:src="@mipmap/icon_twitter_authmark"-->
-                <!--android:visibility="visible" />-->
-
-
+                android:id="@+id/twitterAuthIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="-10dp"
+                android:layout_toRightOf="@id/circleImageView"
+                android:src="@mipmap/icon_twitter_authmark"
+                android:visibility="@{friendInfoItem.isTwitterAuth ? android.view.View.VISIBLE : android.view.View.GONE}" />
         </RelativeLayout>
 
         <TextView

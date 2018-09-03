@@ -150,7 +150,7 @@
             android:name=".view.activity.CropImageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.AddressListActivity"
+            android:name=".view.activity.AddressBookListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AddressBookActivity"
