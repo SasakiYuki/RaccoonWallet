@@ -7,12 +7,18 @@
         <variable
             name="friendInfoItem"
             type="wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem" />
+
+        <variable
+            name="itemClickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@android:color/white"
+        android:foreground="?selectableItemBackground"
+        android:onClick="@{itemClickListener}"
         android:orientation="horizontal">
 
         <RelativeLayout

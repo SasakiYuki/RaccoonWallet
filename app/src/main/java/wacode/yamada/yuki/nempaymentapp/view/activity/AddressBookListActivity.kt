@@ -39,15 +39,17 @@ class AddressBookListActivity : BaseActivity() {
 
     private fun setupViews() {
         val dividerItemDecoration = DividerItemDecoration(addressRecyclerView.context, LinearLayoutManager(this).orientation)
+        controller = AddressBookListController(object : AddressBookListController.OnAddressBookClickListener {
+            override fun onClickItem(friendId: Long) {
+                startActivity(AddressBookActivity.createIntent(this@AddressBookListActivity, friendId))
+            }
+        })
 
-        addressRecyclerView.layoutManager = LinearLayoutManager(this)
-        addressRecyclerView.addItemDecoration(dividerItemDecoration)
-
-
-
-        controller = AddressBookListController()
-
-        addressRecyclerView.adapter = controller.adapter
+        addressRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@AddressBookListActivity)
+            addItemDecoration(dividerItemDecoration)
+            adapter = controller.adapter
+        }
     }
 
     private fun setupViewModelObserve() {

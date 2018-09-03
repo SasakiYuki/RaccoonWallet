@@ -77,6 +77,7 @@ class CreateAddressBookActivity : BaseActivity() {
 
         twitterCooperationButton.setOnClickListener {
             //todo twitterAuthの追加
+            insertFriendData()
             showToast(R.string.com_coming_soon)
         }
 

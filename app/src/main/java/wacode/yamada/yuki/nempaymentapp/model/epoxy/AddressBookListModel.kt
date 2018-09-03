@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.model.epoxy
 
 import android.databinding.ViewDataBinding
+import android.view.View
 import com.airbnb.epoxy.DataBindingEpoxyModel
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -16,10 +17,14 @@ abstract class AddressBookListModel : DataBindingEpoxyModel() {
     @EpoxyAttribute
     var friendInfoItem: FriendInfoItem? = null
 
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var itemClickListener: View.OnClickListener = View.OnClickListener { }
+
     override fun setDataBindingVariables(binding: ViewDataBinding?) {
         binding?.let { binding ->
             friendInfoItem?.let { item ->
                 binding.setVariable(BR.friendInfoItem, item)
+                binding.setVariable(BR.itemClickListener, itemClickListener)
 
                 if (binding is RowAddressBookBinding) {
                     if (item.iconPath.isNotEmpty()) {
