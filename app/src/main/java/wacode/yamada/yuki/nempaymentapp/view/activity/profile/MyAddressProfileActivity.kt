@@ -89,7 +89,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
                 viewpager.adapter = it
             }
         }
-//        tabs.setupWithViewPager(viewpager)
+        tabs.setupWithViewPager(viewpager)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

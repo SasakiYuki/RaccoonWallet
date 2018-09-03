@@ -9,9 +9,15 @@ class MyProfileRepository {
     private val walletInfoDao: WalletInfoDao = NemPaymentApplication.database.walletInfoDao()
 
     fun create(entity: WalletInfo): Single<WalletInfo> {
-        return Single.create {
-            walletInfoDao.create(entity)
-            it.onSuccess(entity)
+        return Single.create { emitter ->
+            entity.let {
+                WalletInfo(walletInfoDao.create(it),
+                        it.walletName,
+                        it.walletAddress,
+                        it.isMaster).let {
+                    emitter.onSuccess(it)
+                }
+            }
         }
     }
 }

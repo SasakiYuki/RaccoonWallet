@@ -489,6 +489,10 @@
 
     <!-- WalletBackupActivity -->
     <string name="wallet_backup_activity_title">バックアップ</string>
+    
+    <!-- MyAddressProfileActivity -->
+    <string name="my_address_profile_activity_empty_title">リストは、まだ空っぽです</string>
+    <string name="my_address_profile_activity_empty_description">ここは、自分のウォレットを整理する場所です。 ボタンからウォレットを追加したり、プロフィールタブから 自分のデータを入力できるよ。</string>
 
     <!-- WalletRemoveActivity -->
     <string name="wallet_remove_activity_title">削除</string>

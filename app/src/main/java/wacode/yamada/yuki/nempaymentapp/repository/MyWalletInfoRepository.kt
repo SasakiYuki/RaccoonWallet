@@ -1,5 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.repository
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.room.address.MyAddress
@@ -11,11 +12,11 @@ class MyWalletInfoRepository {
     private val myAddressDao: MyAddressDao = NemPaymentApplication.database.myAddressDao()
     private val walletInfoDao: WalletInfoDao = NemPaymentApplication.database.walletInfoDao()
 
-    fun findAllMyAddress(): Single<MyAddress> {
-        return Single.create {
+    fun findAllMyAddress(): Observable<MyAddress> {
+        return Observable.create {
             val myAddress = myAddressDao.findAll()
             for (item in myAddress) {
-                it.onSuccess(item)
+                it.onNext(item)
             }
         }
     }

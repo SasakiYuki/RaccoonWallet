@@ -17,7 +17,6 @@ class MyWalletInfoActionCreator(private val repository: MyWalletInfoRepository,
         myAddressSubject
                 .flatMap {
                     repository.findAllMyAddress()
-                            .toObservable()
                             .doOnNext {
                                 dispatch(MyWalletInfoActionType.ReceiveMyAddress(it))
                             }

@@ -6,7 +6,7 @@ import io.reactivex.Single
 @Dao
 interface WalletInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun create(walletInfo: WalletInfo)
+    fun create(walletInfo: WalletInfo):Long
 
     @Query("SELECT * FROM WalletInfo")
     fun findAll(): List<WalletInfo>

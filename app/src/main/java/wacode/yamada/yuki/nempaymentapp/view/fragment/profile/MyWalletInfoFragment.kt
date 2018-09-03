@@ -59,7 +59,7 @@ class MyWalletInfoFragment : BaseFragment() {
         fun newInstance(): MyWalletInfoFragment {
             return MyWalletInfoFragment().apply {
                 val args = Bundle()
-                args.putInt(ARG_CONTENTS_NAME_ID, R.string.address_book_friend_info_title)
+                args.putInt(ARG_CONTENTS_NAME_ID, R.string.my_address_profile_activity_tab_profile)
                 arguments = args
             }
         }
