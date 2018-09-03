@@ -50,7 +50,9 @@ class FriendInfoFragment : BaseFragment() {
             friendInfoLiveData.observe(this@FriendInfoFragment, Observer {
                 it ?: return@Observer
                 setupViews(it)
-                (activity as OnFriendDataChangeCallback).onFriendInfoChanged(it)
+                if (activity is OnFriendDataChangeCallback) {
+                    (activity as OnFriendDataChangeCallback).onFriendInfoChanged(it)
+                }
             })
         }
     }
