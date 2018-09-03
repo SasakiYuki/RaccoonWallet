@@ -9,7 +9,7 @@
         android:id="@+id/backLayerSearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/address_list_activity_title" />
+        app:title="@string/address_book_list_activity_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
