@@ -9,14 +9,14 @@ class CreateFriendInfoFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_friend_info
 
     fun getAndCheckFriendInfo(): FriendInfo? {
-        return if (checkAllValidation()) {
+        return if (validateAllInfo()) {
             createPrams()
         } else {
             null
         }
     }
 
-    private fun checkAllValidation(): Boolean {
+    private fun validateAllInfo(): Boolean {
         return when {
             lastNameEditText.text.isNullOrEmpty() -> {
                 lastNameInputLayout.error = getString(R.string.create_friend_address_input_error)
