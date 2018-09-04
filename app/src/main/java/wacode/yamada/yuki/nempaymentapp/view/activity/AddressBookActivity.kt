@@ -81,7 +81,7 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
     private fun setupViewPager() {
         val list = ArrayList<BaseFragment>()
         list.add(FriendWalletFragment.newInstance())
-        list.add(FriendInfoFragment.newInstance(1))
+        list.add(FriendInfoFragment.newInstance(friendId))
 
         val adapter = SimpleViewPagerAdapter(this, list, supportFragmentManager)
         addressBookViewPager.adapter = adapter
