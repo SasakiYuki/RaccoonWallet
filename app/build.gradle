@@ -35,6 +35,12 @@ android {
     }
     defaultConfig {
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     lintOptions {
         disable "ResourceType"
@@ -66,6 +72,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.0.0"
+    implementation "android.arch.persistence.room:rxjava2:1.0.0"
     implementation "android.arch.lifecycle:livedata:$lifecycle_version"
     implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
@@ -130,6 +137,8 @@ dependencies {
     implementation 'org.mindrot:jbcrypt:0.4'
 
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true

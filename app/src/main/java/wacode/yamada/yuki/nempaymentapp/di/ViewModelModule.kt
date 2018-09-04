@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import wacode.yamada.yuki.nempaymentapp.viewmodel.*
 
+
 @Suppress("unused")
 @Module
 internal abstract class ViewModelModule {
@@ -32,6 +33,21 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CropImageViewModel::class)
     abstract fun bindCropImageViewModel(viewModel: CropImageViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateAddressBookViewModel::class)
+    abstract fun bindCreateAddressBookViewModel(viewModel: CreateAddressBookViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddressBookViewModel::class)
+    abstract fun bindAddressBookViewModel(viewModel: AddressBookViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FriendInfoViewModel::class)
+    abstract fun bindFriendInfoViewModel(viewModel: FriendInfoViewModel): ViewModel
 
     @Binds
     @IntoMap

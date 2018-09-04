@@ -28,14 +28,14 @@ abstract class BaseFragmentActivity : BaseActivity(), FragmentManager.OnBackStac
 
         fragmentTransaction.commit()
 
-        setToolbarTitle(fragment.getTitle())
+        setToolbarTitle(fragment.getTitleRes())
     }
 
     override fun onBackStackChanged() {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as BaseFragment
 
         if (fragment != null) {
-            setToolbarTitle(fragment.getTitle())
+            setToolbarTitle(fragment.getTitleRes())
         }
     }
 
