@@ -31,4 +31,24 @@ class AddressBookListViewModel @Inject constructor(private val useCase: AddressB
                 })
                 .let { addDisposable(it) }
     }
+
+    fun findPatterMatchFriendInfoByName(word: String) {
+        useCase.findPatterMatchFriendInfoByName(word)
+                .flatMapObservable {
+                    Observable.fromIterable(it)
+                }
+                .flatMapSingle { friendInfo ->
+                    useCase.getFriendIconPath(friendInfo.id)
+                            .map { FriendInfoItem(friendInfo = friendInfo, iconPath = it) }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .attachLoading()
+                .subscribe({
+                    friendInfoLiveData.value = it
+                }, {
+                    it.printStackTrace()
+                })
+                .let { addDisposable(it) }
+    }
 }

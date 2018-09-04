@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.repository
 
 import io.reactivex.Completable
+import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.room.address_book.AddressBookDao
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendIcon
@@ -34,4 +35,9 @@ class AddressBookRepository @Inject constructor() {
     fun getFriendIconById(friendId: Long) = addressBookDao.getSingleFriendIcon(friendId)
 
     fun getAllFriendInfo() = addressBookDao.findAllFriendInfo()
+
+    fun findPatterMatchFriendInfoByName(word: String): Single<List<FriendInfo>> {
+        val patternMathText = "%$word%"
+        return addressBookDao.findPatterMatchFriendInfoByName(patternMathText)
+    }
 }

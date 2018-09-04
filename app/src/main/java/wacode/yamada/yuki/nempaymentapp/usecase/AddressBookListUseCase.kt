@@ -11,4 +11,6 @@ class AddressBookListUseCase @Inject constructor(private val addressBookReposito
             .getFriendIconById(friendId)
             .map { it.iconPath }
             .onErrorReturnItem("")
+
+    fun findPatterMatchFriendInfoByName(word: String) = addressBookRepository.findPatterMatchFriendInfoByName(word)
 }

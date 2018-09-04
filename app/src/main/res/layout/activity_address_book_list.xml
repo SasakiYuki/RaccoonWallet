@@ -38,5 +38,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/searchEmptyMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="@string/address_book_list_search_empty_message"
+            android:textColor="@color/textGray"
+            android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>

@@ -36,4 +36,15 @@ class BackLayerSearchView(context: Context?, attrs: AttributeSet?, defStyleAttr:
             }
         }
     }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        searchButton.setOnClickListener { listener.onSearchClick(searchEditText.text.toString()) }
+        backButton.setOnClickListener { listener.onFinishClick() }
+    }
+
+    interface OnItemClickListener {
+        fun onSearchClick(word: String)
+
+        fun onFinishClick()
+    }
 }

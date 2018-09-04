@@ -7,12 +7,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_address_book_list.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem
 import wacode.yamada.yuki.nempaymentapp.view.controller.AddressBookListController
+import wacode.yamada.yuki.nempaymentapp.view.custom_view.BackLayerSearchView
 import wacode.yamada.yuki.nempaymentapp.viewmodel.AddressBookListViewModel
 import javax.inject.Inject
 
@@ -50,6 +52,21 @@ class AddressBookListActivity : BaseActivity() {
             addItemDecoration(dividerItemDecoration)
             adapter = controller.adapter
         }
+
+        backLayerSearchView.setOnItemClickListener(object : BackLayerSearchView.OnItemClickListener {
+            override fun onSearchClick(word: String) {
+                friendInfoList.clear()
+
+                addressRecyclerView.visibility = View.GONE
+                searchEmptyMessage.visibility = View.VISIBLE
+
+                viewModel.findPatterMatchFriendInfoByName(word)
+            }
+
+            override fun onFinishClick() {
+                finish()
+            }
+        })
     }
 
     private fun setupViewModelObserve() {
@@ -62,6 +79,9 @@ class AddressBookListActivity : BaseActivity() {
 
             friendInfoLiveData.observe(this@AddressBookListActivity, Observer {
                 it ?: return@Observer
+
+                addressRecyclerView.visibility = View.VISIBLE
+                searchEmptyMessage.visibility = View.GONE
 
                 friendInfoList.add(it)
                 controller.setData(friendInfoList)
