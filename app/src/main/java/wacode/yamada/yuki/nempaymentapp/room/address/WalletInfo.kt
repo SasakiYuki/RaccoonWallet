@@ -2,6 +2,7 @@ package wacode.yamada.yuki.nempaymentapp.room.address
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
 import java.io.Serializable
 
 @Entity
@@ -12,4 +13,6 @@ constructor(
         var walletName: String = "",
         var walletAddress: String = "",
         var isMaster: Boolean = false
-) : Serializable
+) : Serializable {
+        fun displayWalletAddress() = walletAddress.toDisplayAddress()
+}

@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_profile_address_add.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
+import wacode.yamada.yuki.nempaymentapp.extentions.remove
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 import wacode.yamada.yuki.nempaymentapp.viewmodel.ProfileAddressAddViewModel
@@ -76,7 +77,7 @@ class ProfileAddressAddActivity : BaseActivity() {
     private fun getOrange() = getColorFromResource(R.color.nemOrange)
 
     private fun createWalletInfoFromEditText() {
-        val walletName = nameEditText.text.toString()
+        val walletName = nameEditText.text.toString().remove("-")
         val address = addressEditText.text.toString()
         val isMaster = viewModel.isMaster
         WalletInfo(
