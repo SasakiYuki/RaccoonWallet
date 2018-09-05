@@ -33,6 +33,8 @@
             android:text="@{walletInfo.walletName}"
             android:textColor="@color/textBlack"
             android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@id/subTextView"
             app:layout_constraintLeft_toLeftOf="@id/container"
             app:layout_constraintTop_toTopOf="@id/container"
             tools:text="パブリックウォレット" />
@@ -41,17 +43,51 @@
             android:id="@+id/subTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
             android:layout_marginTop="8dp"
             android:text="@{walletInfo.walletAddress}"
             android:textColor="@color/textBlack"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/container"
-            app:layout_constraintTop_toBottomOf="@id/mainTextView"
+            app:layout_constraintBottom_toTopOf="@id/divider"
+            android:layout_marginBottom="39dp"
             tools:text="NCTYCQ-E6AI8D-IRHPHE-PBSVDB-OQFSHX-\nGBVF4N-IJYH" />
 
+        <ImageView
+            android:id="@+id/masterContainer"
+            android:layout_width="64dp"
+            android:layout_height="16dp"
+            android:contentDescription="@null"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/border_around_gray"
+            android:visibility="@{walletInfo.master ? android.view.View.VISIBLE : android.view.View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/subTextView"
+            app:layout_constraintLeft_toLeftOf="@id/container"/>
+
+        <ImageView
+            android:id="@+id/masterIcon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_masterwallet"
+            android:visibility="@{walletInfo.master ? android.view.View.VISIBLE : android.view.View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/masterContainer"
+            app:layout_constraintLeft_toLeftOf="@id/masterContainer"
+            app:layout_constraintTop_toTopOf="@id/masterContainer" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@string/profile_address_add_activity_main_content_attribute_master"
+            android:textSize="12sp"
+            android:visibility="@{walletInfo.master ? android.view.View.VISIBLE : android.view.View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/masterContainer"
+            app:layout_constraintLeft_toRightOf="@id/masterIcon"
+            app:layout_constraintTop_toTopOf="@id/masterContainer" />
+
         <View
+            android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/gray_medium"
