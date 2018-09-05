@@ -38,7 +38,6 @@ import wacode.yamada.yuki.nempaymentapp.types.MainBottomNavigationType
 import wacode.yamada.yuki.nempaymentapp.utils.*
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.QrScanCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
-import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.AboutActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.MosaicListActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
@@ -86,7 +85,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     }
 
     private fun setupRxBus() {
-        RxBusProvider.rxBus
+        RxBus
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { it ->

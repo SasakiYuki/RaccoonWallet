@@ -2,7 +2,6 @@ package wacode.yamada.yuki.nempaymentapp.utils
 
 import android.content.Context
 import com.ryuta46.nemkotlin.account.Account
-import com.ryuta46.nemkotlin.model.NemAnnounceResult
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -33,7 +32,7 @@ object WalletManager {
                 for (item in wallets) {
                     if (item.address == account.address) {
                         saveSelectWallet(context, item.id)
-                        RxBusProvider.rxBus.send(RxBusEvent.SELECT)
+                        RxBus.send(RxBusEvent.SELECT)
                     }
                 }
             }.await()

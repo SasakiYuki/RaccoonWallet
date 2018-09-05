@@ -10,10 +10,10 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
 import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
+import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
 
 class WalletRenameActivity : BaseActivity() {
     override fun setLayout() = R.layout.activity_wallet_rename
@@ -49,7 +49,7 @@ class WalletRenameActivity : BaseActivity() {
                     NemPaymentApplication.database.walletDao().update(newWallet)
                 }.await()
 
-                RxBusProvider.rxBus.send(RxBusEvent.RENAME)
+                RxBus.send(RxBusEvent.RENAME)
 
                 hideProgress()
                 finish()

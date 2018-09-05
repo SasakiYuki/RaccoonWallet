@@ -14,5 +14,5 @@ constructor(
         var walletAddress: String = "",
         var isMaster: Boolean = false
 ) : Serializable {
-        fun displayWalletAddress() = walletAddress.toDisplayAddress()
+    fun displayWalletAddress() = walletAddress.toDisplayAddress()
 }
