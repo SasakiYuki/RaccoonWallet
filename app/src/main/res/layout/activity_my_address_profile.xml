@@ -19,6 +19,7 @@
             android:background="@android:color/white"
             android:elevation="4dp"
             app:contentInsetEnd="8dp"
+            app:layout_scrollFlags="enterAlways|scroll"
             tools:targetApi="lollipop">
 
             <TextView
@@ -53,6 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        app:layout_behavior="wacode.yamada.yuki.nempaymentapp.view.ConstraintLayoutBehavior"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:src="@mipmap/icon_plus"
         app:text="追加" />
 </android.support.design.widget.CoordinatorLayout>
