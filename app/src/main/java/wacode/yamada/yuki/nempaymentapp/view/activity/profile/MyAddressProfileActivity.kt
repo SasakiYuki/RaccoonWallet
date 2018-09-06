@@ -50,6 +50,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyAddressProfileViewModel::class.java)
         viewModel.createLiveData.observe(this, Observer {
             it ?: return@Observer
+            // do nothing
         })
     }
 
