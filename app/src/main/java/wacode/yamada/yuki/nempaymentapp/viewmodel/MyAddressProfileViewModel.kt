@@ -8,7 +8,7 @@ import wacode.yamada.yuki.nempaymentapp.store.MyAddressProfileStore
 import javax.inject.Inject
 
 class MyAddressProfileViewModel @Inject constructor(private val store: MyAddressProfileStore) : BaseViewModel() {
-    val createLiveData: MutableLiveData<MyAddress>
+    val createLiveData: MutableLiveData<Unit>
             = MutableLiveData()
 
     init {
@@ -16,7 +16,7 @@ class MyAddressProfileViewModel @Inject constructor(private val store: MyAddress
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    createLiveData.value = it
+                    createLiveData.value = Unit
                 })
                 .let {
                     addDisposable(it)

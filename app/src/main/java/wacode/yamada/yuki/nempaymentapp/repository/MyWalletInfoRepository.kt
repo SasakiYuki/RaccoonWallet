@@ -23,7 +23,6 @@ class MyWalletInfoRepository {
 
     fun select(id: Long): Single<WalletInfo> {
         return Single.create {
-            val aa = walletInfoDao.findAll()
             it.onSuccess(walletInfoDao.select(id))
         }
     }

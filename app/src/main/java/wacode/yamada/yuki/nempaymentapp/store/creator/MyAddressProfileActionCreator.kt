@@ -16,9 +16,9 @@ class MyAddressProfileActionCreator(private val repository: MyAddressProfileRepo
         createSubject
                 .flatMap {
                     repository.create(it)
-                            .toObservable()
-                            .doOnNext {
-                                dispatch(MyAddressProfileActionType.Create(it))
+                            .toObservable<Unit>()
+                            .doOnComplete {
+                                dispatch(MyAddressProfileActionType.Create())
                             }
                             .doOnError {
                                 // do nothing
