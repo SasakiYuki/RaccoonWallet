@@ -4,8 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.annotation.ColorRes
+import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.view_back_layer_search.view.*
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
+import wacode.yamada.yuki.nempaymentapp.extentions.getColorStateListFromResource
 
 
 class BackLayerSearchView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attrs, defStyleAttr) {
@@ -29,12 +33,37 @@ class BackLayerSearchView(context: Context?, attrs: AttributeSet?, defStyleAttr:
                     view.closeButton.visibility = View.GONE
                     view.searchRootView.visibility = View.GONE
                 }
+
+                chipGroup.setOnCheckedChangeListener { _, id ->
+                    when (id) {
+                        R.id.allChip -> {
+                            setChipColors(allChip, R.color.nemGreen)
+                            setChipColors(localChip, R.color.textGray)
+                            setChipColors(twitterChip, R.color.textGray)
+                        }
+                        R.id.localChip -> {
+                            setChipColors(allChip, R.color.textGray)
+                            setChipColors(localChip, R.color.nemGreen)
+                            setChipColors(twitterChip, R.color.textGray)
+                        }
+                        R.id.twitterChip -> {
+                            setChipColors(allChip, R.color.textGray)
+                            setChipColors(localChip, R.color.textGray)
+                            setChipColors(twitterChip, R.color.nemGreen)
+                        }
+                    }
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
                 it.recycle()
             }
         }
+    }
+
+    private fun setChipColors(chip: Chip, @ColorRes colorRes: Int) {
+        chip.chipStrokeColor = context.getColorStateListFromResource(colorRes)
+        chip.setTextColor(context.getColorFromResource(colorRes))
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

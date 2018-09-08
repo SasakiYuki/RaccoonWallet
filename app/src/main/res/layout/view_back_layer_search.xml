@@ -62,45 +62,61 @@
         android:id="@+id/searchRootView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_normal"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginBottom="@dimen/space_large"
             android:layout_marginTop="@dimen/space_normal"
             app:singleLine="true"
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/allChip"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/address_book_list_search_chip_all" />
+                android:layout_marginRight="20dp"
+                android:text="@string/address_book_list_search_chip_all"
+                android:textColor="@color/nemGreen"
+                app:chipBackgroundColor="@color/simpleBackground"
+                app:chipStrokeColor="@color/nemGreen"
+                app:chipStrokeWidth="1dp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/localChip"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/address_book_list_search_chip_local" />
+                android:layout_marginRight="20dp"
+                android:text="@string/address_book_list_search_chip_local"
+                android:textColor="@color/textGray"
+                app:chipBackgroundColor="@color/simpleBackground"
+                app:chipStrokeColor="@color/textGray"
+                app:chipStrokeWidth="1dp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/twitterChip"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/address_book_list_search_chip_twitter" />
+                android:text="@string/address_book_list_search_chip_twitter"
+                android:textColor="@color/textGray"
+                app:chipBackgroundColor="@color/simpleBackground"
+                app:chipStrokeColor="@color/textGray"
+                app:chipStrokeWidth="1dp" />
         </com.google.android.material.chip.ChipGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_normal"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
             android:orientation="vertical">
 
             <RelativeLayout
