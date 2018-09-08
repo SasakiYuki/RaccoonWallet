@@ -24,6 +24,7 @@ import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
+import wacode.yamada.yuki.nempaymentapp.view.fragment.profile.MyProfileInfoFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.profile.MyWalletInfoFragment
 import wacode.yamada.yuki.nempaymentapp.viewmodel.MyAddressProfileViewModel
 import javax.inject.Inject
@@ -85,7 +86,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
     private fun setupViewPager() {
         ArrayList<BaseFragment>().let {
             it.add(MyWalletInfoFragment.newInstance())
-            it.add(MyWalletInfoFragment.newInstance())
+            it.add(MyProfileInfoFragment.newInstance())
             SimpleViewPagerAdapter(this, it, supportFragmentManager).let {
                 viewpager.adapter = it
             }
