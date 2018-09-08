@@ -40,6 +40,11 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideMyWalletInfoRepository() = MyWalletInfoRepository()
+    fun provideMyAddressRepository() = MyAddressRepository()
+
+
+    @Provides
+    @Singleton
+    fun provideWalletInfoRepository() = WalletInfoRepository()
 }
 
