@@ -7,7 +7,7 @@ import wacode.yamada.yuki.nempaymentapp.flux.DisposableMapper
 import wacode.yamada.yuki.nempaymentapp.store.type.MyWalletInfoActionType
 import wacode.yamada.yuki.nempaymentapp.usecase.MyWalletInfoUseCase
 
-class MyWalletInfoActionCreator(private val usecase: MyWalletInfoUseCase,
+class MyWalletInfoActionCreator(private val useCase: MyWalletInfoUseCase,
                                 private val dispatch: (MyWalletInfoActionType) -> Unit) : DisposableMapper() {
 
     private val myAddressSubject: PublishSubject<Unit> = PublishSubject.create()
@@ -16,7 +16,7 @@ class MyWalletInfoActionCreator(private val usecase: MyWalletInfoUseCase,
     init {
         myAddressSubject
                 .flatMap {
-                    usecase.findAllMyAddress()
+                    useCase.findAllMyAddress()
                             .doOnNext {
                                 dispatch(MyWalletInfoActionType.ReceiveMyAddress(it))
                             }
@@ -31,7 +31,7 @@ class MyWalletInfoActionCreator(private val usecase: MyWalletInfoUseCase,
 
         selectWalletInfoSubject
                 .flatMap {
-                    usecase.select(it)
+                    useCase.select(it)
                             .toObservable()
                             .doOnNext {
                                 dispatch(MyWalletInfoActionType.SelectWalletInfo(it))

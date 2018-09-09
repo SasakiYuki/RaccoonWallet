@@ -63,4 +63,9 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MyWalletInfoViewModel::class)
     abstract fun bindMyWalletInfoViewModel(viewModel: MyWalletInfoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyProfileInfoViewModel::class)
+    abstract fun bindMyProfileInfoViewModel(viewModel: MyProfileInfoViewModel): ViewModel
 }

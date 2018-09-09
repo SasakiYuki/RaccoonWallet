@@ -59,29 +59,29 @@
             app:layout_constraintTop_toBottomOf="@id/headerContainer" />
 
         <TextView
-            android:id="@+id/friendTitleTextView"
+            android:id="@+id/walletTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:text="@string/my_profile_info_fragment_wallet"
             android:textColor="@color/textGrayDark"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@id/friendCountTextView"
+            app:layout_constraintBottom_toTopOf="@id/walletCountTextView"
             app:layout_constraintLeft_toRightOf="@id/circleImageView"
             app:layout_constraintTop_toTopOf="@id/headerContainer"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/friendCountTextView"
+            android:id="@+id/walletCountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textGrayDark"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/headerContainer"
-            app:layout_constraintLeft_toLeftOf="@id/friendTitleTextView"
+            app:layout_constraintLeft_toLeftOf="@id/walletTitleTextView"
             app:layout_constraintLeft_toRightOf="@id/circleImageView"
-            app:layout_constraintRight_toRightOf="@id/friendTitleTextView"
-            app:layout_constraintTop_toBottomOf="@id/friendTitleTextView"
+            app:layout_constraintRight_toRightOf="@id/walletTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/walletTitleTextView"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="0" />
 
