@@ -83,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
+                android:checked="true"
                 android:text="@string/address_book_list_search_chip_all"
                 android:textColor="@color/nemGreen"
                 app:chipBackgroundColor="@color/simpleBackground"

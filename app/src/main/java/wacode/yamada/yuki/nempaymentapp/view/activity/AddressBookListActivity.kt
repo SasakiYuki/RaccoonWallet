@@ -54,13 +54,13 @@ class AddressBookListActivity : BaseActivity() {
         }
 
         backLayerSearchView.setOnItemClickListener(object : BackLayerSearchView.OnItemClickListener {
-            override fun onSearchClick(word: String) {
+            override fun onItemClicked(word: String, type: BackLayerSearchView.SearchType) {
                 friendInfoList.clear()
 
                 addressRecyclerView.visibility = View.GONE
                 searchEmptyMessage.visibility = View.VISIBLE
 
-                viewModel.findPatterMatchFriendInfoByName(word)
+                viewModel.findPatterMatchFriendInfoByNameAndType(word, type)
             }
 
             override fun onFinishClick() {

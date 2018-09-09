@@ -33,26 +33,6 @@ class BackLayerSearchView(context: Context?, attrs: AttributeSet?, defStyleAttr:
                     view.closeButton.visibility = View.GONE
                     view.searchRootView.visibility = View.GONE
                 }
-
-                chipGroup.setOnCheckedChangeListener { _, id ->
-                    when (id) {
-                        R.id.allChip -> {
-                            setChipColors(allChip, R.color.nemGreen)
-                            setChipColors(localChip, R.color.textGray)
-                            setChipColors(twitterChip, R.color.textGray)
-                        }
-                        R.id.localChip -> {
-                            setChipColors(allChip, R.color.textGray)
-                            setChipColors(localChip, R.color.nemGreen)
-                            setChipColors(twitterChip, R.color.textGray)
-                        }
-                        R.id.twitterChip -> {
-                            setChipColors(allChip, R.color.textGray)
-                            setChipColors(localChip, R.color.textGray)
-                            setChipColors(twitterChip, R.color.nemGreen)
-                        }
-                    }
-                }
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
@@ -67,13 +47,53 @@ class BackLayerSearchView(context: Context?, attrs: AttributeSet?, defStyleAttr:
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
-        searchButton.setOnClickListener { listener.onSearchClick(searchEditText.text.toString()) }
+        searchButton.setOnClickListener { listener.onItemClicked(searchEditText.text.toString(), getSearchType()) }
+
+        chipGroup.setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.allChip -> {
+                    setChipColors(allChip, R.color.nemGreen)
+                    setChipColors(localChip, R.color.textGray)
+                    setChipColors(twitterChip, R.color.textGray)
+                    listener.onItemClicked(searchEditText.text.toString(), getSearchType())
+                }
+                R.id.localChip -> {
+                    setChipColors(allChip, R.color.textGray)
+                    setChipColors(localChip, R.color.nemGreen)
+                    setChipColors(twitterChip, R.color.textGray)
+                    listener.onItemClicked(searchEditText.text.toString(), getSearchType())
+                }
+                R.id.twitterChip -> {
+                    setChipColors(allChip, R.color.textGray)
+                    setChipColors(localChip, R.color.textGray)
+                    setChipColors(twitterChip, R.color.nemGreen)
+                    listener.onItemClicked(searchEditText.text.toString(), getSearchType())
+                }
+            }
+        }
+
+
+
         backButton.setOnClickListener { listener.onFinishClick() }
     }
 
+    private fun getSearchType(): SearchType {
+        return when {
+            allChip.isChecked -> SearchType.ALL
+            localChip.isChecked -> SearchType.LOCAL
+            else -> SearchType.TWITTER
+        }
+    }
+
     interface OnItemClickListener {
-        fun onSearchClick(word: String)
+        fun onItemClicked(word: String, type: SearchType)
 
         fun onFinishClick()
+    }
+
+    enum class SearchType {
+        ALL,
+        LOCAL,
+        TWITTER
     }
 }

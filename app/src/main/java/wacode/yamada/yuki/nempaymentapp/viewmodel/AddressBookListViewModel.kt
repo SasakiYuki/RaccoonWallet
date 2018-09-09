@@ -8,6 +8,7 @@ import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatus
 import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatusImpl
 import wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem
 import wacode.yamada.yuki.nempaymentapp.usecase.AddressBookListUseCase
+import wacode.yamada.yuki.nempaymentapp.view.custom_view.BackLayerSearchView
 import javax.inject.Inject
 
 
@@ -15,25 +16,11 @@ class AddressBookListViewModel @Inject constructor(private val useCase: AddressB
     val friendInfoLiveData: MutableLiveData<FriendInfoItem> = MutableLiveData()
 
     fun getAllFriendInfo() {
-        useCase.getAllFriendInfo()
-                .flatMapObservable { Observable.fromIterable(it) }
-                .flatMapSingle { friendInfo ->
-                    useCase.getFriendIconPath(friendInfo.id)
-                            .map { FriendInfoItem(friendInfo = friendInfo, iconPath = it) }
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .attachLoading()
-                .subscribe({
-                    friendInfoLiveData.value = it
-                }, {
-                    it.printStackTrace()
-                })
-                .let { addDisposable(it) }
+        findPatterMatchFriendInfoByNameAndType("", BackLayerSearchView.SearchType.ALL)
     }
 
-    fun findPatterMatchFriendInfoByName(word: String) {
-        useCase.findPatterMatchFriendInfoByName(word)
+    fun findPatterMatchFriendInfoByNameAndType(word: String, type: BackLayerSearchView.SearchType) {
+        useCase.findFriendInfoByNameAndSearchType(word, type)
                 .flatMapObservable {
                     Observable.fromIterable(it)
                 }

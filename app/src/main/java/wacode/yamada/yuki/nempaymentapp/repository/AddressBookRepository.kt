@@ -40,4 +40,9 @@ class AddressBookRepository @Inject constructor() {
         val patternMathText = "%$word%"
         return addressBookDao.findPatterMatchFriendInfoByName(patternMathText)
     }
+
+    fun findFriendInfoByNameAndTwitterAuth(word: String, isTwitterAuth: Boolean): Single<List<FriendInfo>> {
+        val patternMathText = "%$word%"
+        return addressBookDao.findFriendInfoByNameAndTwitterAuth(patternMathText, isTwitterAuth)
+    }
 }
