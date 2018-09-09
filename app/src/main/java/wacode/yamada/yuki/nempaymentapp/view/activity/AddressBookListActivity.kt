@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.ArrayAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_address_book_list.*
 import wacode.yamada.yuki.nempaymentapp.R
@@ -67,6 +68,10 @@ class AddressBookListActivity : BaseActivity() {
                 finish()
             }
         })
+
+        val adapter = ArrayAdapter.createFromResource(this, R.array.address_book_sort_array, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sortSpinner.adapter = adapter
     }
 
     private fun setupViewModelObserve() {
@@ -77,7 +82,7 @@ class AddressBookListActivity : BaseActivity() {
                 if (it) showProgress() else hideProgress()
             })
 
-            friendInfoLiveData.observe(this@AddressBookListActivity, Observer {
+                friendInfoLiveData.observe(this@AddressBookListActivity, Observer {
                 it ?: return@Observer
 
                 addressRecyclerView.visibility = View.VISIBLE

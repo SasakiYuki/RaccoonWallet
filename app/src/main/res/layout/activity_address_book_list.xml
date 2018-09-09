@@ -23,14 +23,14 @@
             android:background="@drawable/background_top_round_white"
             android:elevation="2dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/sortSpinner"
+                android:layout_width="28dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18dp"
-                android:foreground="?selectableItemBackground"
-                android:src="@mipmap/icon_sort" />
+                android:background="@mipmap/icon_sort" />
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
