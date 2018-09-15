@@ -458,6 +458,7 @@
     <string name="my_address_profile_activity_title_initial_bottom_guest">ゲスト</string>
     <string name="my_address_profile_activity_bottom_button_add">追加</string>
     <string name="my_address_profile_activity_bottom_button_edit">編集</string>
+    <string name="my_address_profile_activity_bottom_button_complete">完了</string>
 
     <!-- WalletSettingFragment -->
     <string name="wallet_setting_fragment_title">ウォレットの設定</string>

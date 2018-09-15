@@ -18,10 +18,13 @@ import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_my_address_profile.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.event.BottomCompleteButtonEvent
+import wacode.yamada.yuki.nempaymentapp.event.BottomEditButtonEvent
 import wacode.yamada.yuki.nempaymentapp.extentions.buildSpannableText
 import wacode.yamada.yuki.nempaymentapp.extentions.setSpan
 import wacode.yamada.yuki.nempaymentapp.room.address.MyAddress
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
@@ -116,6 +119,18 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
     private fun changeEditBottomButton() {
         bottomButton.setText(R.string.my_address_profile_activity_bottom_button_edit)
         bottomButton.setImage(R.mipmap.icon_pencil)
+        bottomButton.setClickListener(View.OnClickListener {
+            RxBus.send(BottomEditButtonEvent())
+            changeCompleteBottomButton()
+        })
+    }
+
+    private fun changeCompleteBottomButton() {
+        bottomButton.setText(R.string.my_address_profile_activity_bottom_button_complete)
+        bottomButton.setImage(R.mipmap.icon_check_gray2)
+        bottomButton.setClickListener(View.OnClickListener {
+            RxBus.send(BottomCompleteButtonEvent())
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

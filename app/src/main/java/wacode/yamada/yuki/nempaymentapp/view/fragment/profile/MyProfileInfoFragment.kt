@@ -6,11 +6,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_my_profile_info.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.viewmodel.MyProfileInfoViewModel
-import kotlinx.android.synthetic.main.fragment_my_profile_info.*
 import javax.inject.Inject
 
 class MyProfileInfoFragment : BaseFragment() {
@@ -45,11 +45,21 @@ class MyProfileInfoFragment : BaseFragment() {
     }
 
     private fun setupViewModel() {
-        myProfileInfoViewModel.myAddressCountLiveData
-                .observe(this, Observer {
-                    it ?: return@Observer
-                    walletCountTextView.text = it.toString()
-                })
+        myProfileInfoViewModel.apply {
+            myAddressCountLiveData
+                    .observe(this@MyProfileInfoFragment, Observer {
+                        it ?: return@Observer
+                        walletCountTextView.text = it.toString()
+                    })
+            bottomEditButtonEventLiveData
+                    .observe(this@MyProfileInfoFragment, Observer {
+                        it ?: return@Observer
+                    })
+            bottomCompleteButtonEventLiveData
+                    .observe(this@MyProfileInfoFragment, Observer {
+                        it ?: return@Observer
+                    })
+        }
     }
 
     companion object {
