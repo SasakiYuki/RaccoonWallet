@@ -5,6 +5,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.event.BottomCompleteButtonEvent
 import wacode.yamada.yuki.nempaymentapp.event.BottomEditButtonEvent
+import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
 import wacode.yamada.yuki.nempaymentapp.store.MyProfileInfoStore
 import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import javax.inject.Inject
@@ -12,6 +13,8 @@ import javax.inject.Inject
 class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInfoStore)
     : BaseViewModel() {
     val myAddressCountLiveData: MutableLiveData<Int>
+            = MutableLiveData()
+    val myProfileLiveData: MutableLiveData<MyProfile>
             = MutableLiveData()
     val bottomEditButtonEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
@@ -25,6 +28,14 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     myAddressCountLiveData.value = it
+                }.let {
+            addDisposable(it)
+        }
+        store.getter.myProfileObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    myProfileLiveData.value = it
                 }.let {
             addDisposable(it)
         }
@@ -44,8 +55,17 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
         store.actionCreator.countUpMyAddress()
     }
 
+    private fun loadMyProfile() {
+        store.actionCreator.loadMyProfile()
+    }
+
     fun onInit() {
         countUpMyAddress()
+        loadMyProfile()
+    }
+
+    fun create(myProfile: MyProfile) {
+
     }
 
     fun isEditMode() = isEditMode

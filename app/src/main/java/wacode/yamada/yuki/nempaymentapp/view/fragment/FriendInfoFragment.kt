@@ -64,13 +64,13 @@ class FriendInfoFragment : BaseFragment() {
         lastNameRubyEditText.isEnabled = false
         lastNameRubyEditText.setTextColor(getColor(context!!, R.color.textBlack))
 
-        firstNameEditText.setText(friendInfo.firstName)
-        firstNameEditText.isEnabled = false
-        firstNameEditText.setTextColor(getColor(context!!, R.color.textBlack))
+        nameEditText.setText(friendInfo.firstName)
+        nameEditText.isEnabled = false
+        nameEditText.setTextColor(getColor(context!!, R.color.textBlack))
 
-        firstNameRubyEditText.setText(friendInfo.firstNameRuby)
-        firstNameRubyEditText.isEnabled = false
-        firstNameRubyEditText.setTextColor(getColor(context!!, R.color.textBlack))
+        rubyEdiText.setText(friendInfo.firstNameRuby)
+        rubyEdiText.isEnabled = false
+        rubyEdiText.setTextColor(getColor(context!!, R.color.textBlack))
 
         phoneNumberEditText.setText(friendInfo.phoneNumber)
         phoneNumberEditText.isEnabled = false

@@ -9,6 +9,7 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_my_profile_info.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.viewmodel.MyProfileInfoViewModel
 import javax.inject.Inject
@@ -37,9 +38,16 @@ class MyProfileInfoFragment : BaseFragment() {
         disableEditTexts()
     }
 
+    private fun enableEditTexts() {
+        nameEditText.isEnabled = true
+        rubyEdiText.isEnabled = true
+        phoneNumberEditText.isEnabled = true
+        mailAddressEditText.isEnabled = true
+    }
+
     private fun disableEditTexts() {
-        firstNameEditText.isEnabled = false
-        firstNameRubyEditText.isEnabled = false
+        nameEditText.isEnabled = false
+        rubyEdiText.isEnabled = false
         phoneNumberEditText.isEnabled = false
         mailAddressEditText.isEnabled = false
     }
@@ -54,12 +62,25 @@ class MyProfileInfoFragment : BaseFragment() {
             bottomEditButtonEventLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
+                        enableEditTexts()
                     })
             bottomCompleteButtonEventLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
+
                     })
         }
+    }
+
+    private fun createMyProfile() {
+        MyProfile(
+                0,
+                nameEditText.text.toString(),
+                rubyEdiText.text.toString(),
+                phoneNumberEditText.text.toString(),
+                mailAddressEditText.text.toString(),
+                false
+        )
     }
 
     companion object {

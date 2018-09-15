@@ -10,6 +10,7 @@ import wacode.yamada.yuki.nempaymentapp.usecase.MyProfileInfoUseCase
 class MyProfileInfoActionCreator(private val useCase: MyProfileInfoUseCase,
                                  private val dispatch: (MyProfileInfoActionType) -> Unit) : DisposableMapper() {
     private val myAddressCountSubject: PublishSubject<Unit> = PublishSubject.create()
+    private val myProfileSubject: PublishSubject<Unit> = PublishSubject.create()
 
     init {
         myAddressCountSubject
@@ -19,7 +20,22 @@ class MyProfileInfoActionCreator(private val useCase: MyProfileInfoUseCase,
                             .doOnNext {
                                 dispatch(MyProfileInfoActionType.WalletInfoCount(it))
                             }
+                            .doOnError {
+                                // do nothing
+                            }
+                            .onErrorResumeNext(empty())
+                            .subscribeOn(Schedulers.io())
+                }
+                .subscribe()
+                .let { disposables.add(it) }
+        myProfileSubject
+                .flatMap {
+                    useCase.loadMyProfile()
+                            .toObservable()
                             .doOnNext {
+                                dispatch(MyProfileInfoActionType.ReceiveMyProfile(it))
+                            }
+                            .doOnError {
                                 // do nothing
                             }
                             .onErrorResumeNext(empty())
@@ -31,5 +47,9 @@ class MyProfileInfoActionCreator(private val useCase: MyProfileInfoUseCase,
 
     fun countUpMyAddress() {
         myAddressCountSubject.onNext(Unit)
+    }
+
+    fun loadMyProfile() {
+        myProfileSubject.onNext(Unit)
     }
 }

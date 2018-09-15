@@ -10,6 +10,8 @@ import wacode.yamada.yuki.nempaymentapp.room.address_book.AddressBookDao
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendIcon
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendWallet
+import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
+import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfileDao
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
 import wacode.yamada.yuki.nempaymentapp.room.wallet.WalletDao
 
@@ -18,11 +20,13 @@ import wacode.yamada.yuki.nempaymentapp.room.wallet.WalletDao
         FriendIcon::class,
         FriendWallet::class,
         WalletInfo::class,
-        MyAddress::class), version = 4)
+        MyAddress::class,
+        MyProfile::class), version = 5)
 abstract class DataBase : RoomDatabase() {
     abstract fun walletDao(): WalletDao
     abstract fun addressBookDao(): AddressBookDao
     abstract fun walletInfoDao(): WalletInfoDao
     abstract fun myAddressDao(): MyAddressDao
+    abstract fun myProfileDao():MyProfileDao
 }
 
