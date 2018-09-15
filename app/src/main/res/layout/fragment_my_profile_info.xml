@@ -15,8 +15,12 @@
             android:layout_height="202dp"
             android:contentDescription="@null"
             android:src="@color/textGrayDark"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent">
+            <requestFocus />
+        </ImageView>
 
         <ImageView
             android:layout_width="50dp"

@@ -7,9 +7,10 @@ import wacode.yamada.yuki.nempaymentapp.store.MyProfileInfoStore
 import javax.inject.Inject
 
 class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInfoStore)
-    : BaseViewModel(){
+    : BaseViewModel() {
     val myAddressCountLiveData: MutableLiveData<Int>
-        = MutableLiveData()
+            = MutableLiveData()
+    private var isEditMode = false
 
     init {
         store.getter.myAddressObservable
@@ -18,8 +19,8 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
                 .subscribe {
                     myAddressCountLiveData.value = it
                 }.let {
-                    addDisposable(it)
-                }
+            addDisposable(it)
+        }
     }
 
     private fun countUpMyAddress() {
@@ -27,6 +28,16 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
     }
 
     fun onInit() {
-        store.actionCreator.countUpMyAddress()
+        countUpMyAddress()
+    }
+
+    fun isEditMode() = isEditMode
+
+    fun onEditStarted() {
+        isEditMode = true
+    }
+
+    fun onEditEnded() {
+        isEditMode = false
     }
 }

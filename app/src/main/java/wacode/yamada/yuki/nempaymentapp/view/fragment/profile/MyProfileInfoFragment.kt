@@ -34,6 +34,14 @@ class MyProfileInfoFragment : BaseFragment() {
 
     private fun setupViews() {
         myProfileInfoViewModel.onInit()
+        disableEditTexts()
+    }
+
+    private fun disableEditTexts() {
+        firstNameEditText.isEnabled = false
+        firstNameRubyEditText.isEnabled = false
+        phoneNumberEditText.isEnabled = false
+        mailAddressEditText.isEnabled = false
     }
 
     private fun setupViewModel() {
