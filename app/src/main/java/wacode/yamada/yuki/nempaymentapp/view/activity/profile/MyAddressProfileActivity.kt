@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewPager
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
@@ -57,12 +58,8 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
 
     private fun setupViews() {
         setupToolbar()
-        setOnClickListener()
         setupViewPager()
-    }
-
-    private fun setOnClickListener() {
-        bottomButton.setClickListener(View.OnClickListener { startActivityForResult(ProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity), ProfileAddressAddActivity.REQUEST_CODE) })
+        changeAddBottomButton()
     }
 
     private fun setupToolbar() {
@@ -92,6 +89,33 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
             }
         }
         tabs.setupWithViewPager(viewpager)
+        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+                // do nothing
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                // do nothing
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> changeAddBottomButton()
+                    1 -> changeEditBottomButton()
+                }
+            }
+        })
+    }
+
+    private fun changeAddBottomButton() {
+        bottomButton.setText(R.string.my_address_profile_activity_bottom_button_add)
+        bottomButton.setImage(R.mipmap.icon_plus)
+        bottomButton.setClickListener(View.OnClickListener { startActivityForResult(ProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity), ProfileAddressAddActivity.REQUEST_CODE) })
+    }
+
+    private fun changeEditBottomButton() {
+        bottomButton.setText(R.string.my_address_profile_activity_bottom_button_edit)
+        bottomButton.setImage(R.mipmap.icon_pencil)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
