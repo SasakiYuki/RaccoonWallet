@@ -5,10 +5,12 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_my_profile_info.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
 import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.viewmodel.MyProfileInfoViewModel
@@ -46,10 +48,17 @@ class MyProfileInfoFragment : BaseFragment() {
     }
 
     private fun disableEditTexts() {
-        nameEditText.isEnabled = false
-        rubyEdiText.isEnabled = false
-        phoneNumberEditText.isEnabled = false
-        mailAddressEditText.isEnabled = false
+        disableEditText(nameEditText)
+        disableEditText(rubyEdiText)
+        disableEditText(phoneNumberEditText)
+        disableEditText(mailAddressEditText)
+    }
+
+    private fun disableEditText(editText: EditText) {
+        editText.apply {
+            isEnabled = false
+            setTextColor(context.getColorFromResource(R.color.textBlack))
+        }
     }
 
     private fun setupViewModel() {
@@ -68,11 +77,17 @@ class MyProfileInfoFragment : BaseFragment() {
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
                         createMyProfile()
+                        disableEditTexts()
                     })
             myProfileLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
                         setMyProfileInformation(it)
+                    })
+            updateEventLiveData
+                    .observe(this@MyProfileInfoFragment, Observer {
+                        it ?: return@Observer
+                        // do nothing
                     })
         }
     }

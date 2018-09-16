@@ -77,14 +77,4 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
     fun create(myProfile: MyProfile) {
         store.actionCreator.createMyProfile(myProfile)
     }
-
-    fun isEditMode() = isEditMode
-
-    fun onEditStarted() {
-        isEditMode = true
-    }
-
-    fun onEditEnded() {
-        isEditMode = false
-    }
 }
