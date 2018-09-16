@@ -60,6 +60,8 @@ internal fun getNemStartDateTimeLong(): Long {
 
 internal fun scaleDouble(double: Double, newScale: Int) = BigDecimal(double).setScale(newScale, BigDecimal.ROUND_HALF_UP).toDouble()
 
+internal fun getColor(context: Context, resourceId: Int) = ContextCompat.getColor(context, resourceId)
+
 internal fun log(text: String) = Log.d("Log.d:", text)
 
 @BindingAdapter("loadImg")

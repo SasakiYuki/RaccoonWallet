@@ -496,6 +496,8 @@
     <string name="my_profile_info_fragment_guest">GUEST</string>
     <string name="my_profile_info_fragment_guest_sub">ゲスト</string>
     <string name="my_profile_info_fragment_setting_wallet">マスターウォレットが設定されていません。</string>
+    <string name="my_profile_info_fragment_change_user_screen">背景を変更</string>
+    <string name="my_profile_info_fragment_change_user_icon">アイコンを変更</string>
 
     <!-- WalletBackupActivity -->
     <string name="wallet_backup_activity_title">バックアップ</string>
