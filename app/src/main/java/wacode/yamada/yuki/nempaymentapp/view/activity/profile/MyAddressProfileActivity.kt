@@ -57,6 +57,10 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
             it ?: return@Observer
             // do nothing
         })
+        viewModel.createdMyProfileLiveData.observe(this, Observer {
+            it ?: return@Observer
+            changeEditBottomButton()
+        })
     }
 
     private fun setupViews() {
@@ -130,6 +134,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         bottomButton.setImage(R.mipmap.icon_check_gray2)
         bottomButton.setClickListener(View.OnClickListener {
             RxBus.send(BottomCompleteButtonEvent())
+            changeEditBottomButton()
         })
     }
 

@@ -16,6 +16,8 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
             = MutableLiveData()
     val myProfileLiveData: MutableLiveData<MyProfile>
             = MutableLiveData()
+    val updateEventLiveData: MutableLiveData<Unit>
+            = MutableLiveData()
     val bottomEditButtonEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
     val bottomCompleteButtonEventLiveData: MutableLiveData<Unit>
@@ -36,6 +38,14 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     myProfileLiveData.value = it
+                }.let {
+            addDisposable(it)
+        }
+        store.getter.updateObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    updateEventLiveData.value = Unit
                 }.let {
             addDisposable(it)
         }
@@ -65,7 +75,7 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
     }
 
     fun create(myProfile: MyProfile) {
-
+        store.actionCreator.createMyProfile(myProfile)
     }
 
     fun isEditMode() = isEditMode

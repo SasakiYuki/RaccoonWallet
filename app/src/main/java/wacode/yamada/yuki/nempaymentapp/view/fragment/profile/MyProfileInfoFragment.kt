@@ -67,20 +67,34 @@ class MyProfileInfoFragment : BaseFragment() {
             bottomCompleteButtonEventLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
-
+                        createMyProfile()
+                    })
+            myProfileLiveData
+                    .observe(this@MyProfileInfoFragment, Observer {
+                        it ?: return@Observer
+                        setMyProfileInformation(it)
                     })
         }
     }
 
+    private fun setMyProfileInformation(myProfile: MyProfile?) {
+        myProfile?.let {
+            nameEditText.setText(it.name)
+            rubyEdiText.setText(it.nameRuby)
+            phoneNumberEditText.setText(it.phoneNumber)
+            mailAddressEditText.setText(it.mailAddress)
+        }
+    }
+
     private fun createMyProfile() {
-        MyProfile(
+        myProfileInfoViewModel.create(MyProfile(
                 0,
                 nameEditText.text.toString(),
                 rubyEdiText.text.toString(),
                 phoneNumberEditText.text.toString(),
                 mailAddressEditText.text.toString(),
                 false
-        )
+        ))
     }
 
     companion object {

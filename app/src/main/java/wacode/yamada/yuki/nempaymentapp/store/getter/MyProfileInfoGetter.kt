@@ -8,5 +8,6 @@ import wacode.yamada.yuki.nempaymentapp.store.reducer.MyProfileInfoReducer
 class MyProfileInfoGetter(reducer: MyProfileInfoReducer) : DisposableMapper() {
     val myAddressObservable: Observable<Int> = reducer.myAddressObservable
     val myProfileObservable: Observable<MyProfile> = reducer.myProfileObservable
+    val updateObservable:Observable<Unit> = reducer.updateObservable
     val errorObservable: Observable<Throwable> = reducer.errorObservable
 }

@@ -7,7 +7,7 @@ import java.io.Serializable
 @Entity
 data class MyProfile constructor(
         @PrimaryKey(autoGenerate = true)
-        val id: Long = 0,
+        val id: Long,
         val name: String = "",
         val nameRuby: String = "",
         val phoneNumber: String = "",

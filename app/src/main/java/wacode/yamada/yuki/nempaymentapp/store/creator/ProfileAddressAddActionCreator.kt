@@ -17,7 +17,7 @@ class ProfileAddressAddActionCreator(private val repository: MyProfileRepository
     init {
         createWalletInfo
                 .flatMap {
-                    repository.create(it)
+                    repository.createWalletInfo(it)
                             .toObservable()
                             .doOnNext {
                                 dispatch(ProfileAddressAddActionType.Create(it))

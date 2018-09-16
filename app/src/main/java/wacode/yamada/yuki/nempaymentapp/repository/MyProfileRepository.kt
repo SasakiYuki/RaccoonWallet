@@ -11,7 +11,7 @@ class MyProfileRepository {
     private val walletInfoDao: WalletInfoDao = NemPaymentApplication.database.walletInfoDao()
     private val myProfileDao: MyProfileDao = NemPaymentApplication.database.myProfileDao()
 
-    fun create(entity: WalletInfo): Single<WalletInfo> {
+    fun createWalletInfo(entity: WalletInfo): Single<WalletInfo> {
         return Single.create { emitter ->
             entity.let {
                 WalletInfo(walletInfoDao.create(it),
@@ -29,6 +29,13 @@ class MyProfileRepository {
             myProfileDao.findAll().getOrNull(0)?.let {
                 emitter.onSuccess(it)
             }
+        }
+    }
+
+    fun createMyProfile(entity: MyProfile): Single<Unit> {
+        return Single.create { emitter ->
+            myProfileDao.create(entity)
+            emitter.onSuccess(Unit)
         }
     }
 }
