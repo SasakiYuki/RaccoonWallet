@@ -40,6 +40,6 @@ val migration3To4 = object : Migration(3, 4) {
 
 val migration4to5 = object : Migration(4, 5) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("CREATE TABLE IF NOT EXISTS `$MY_PROFILE_NAME` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `nameRuby` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `mailAddress` TEXT NOT NULL, `isTwitterAuth` INTEGER NOT NULL) ")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `$MY_PROFILE_NAME` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `nameRuby` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `mailAddress` TEXT NOT NULL, `iconPath` TEXT NOT NULL, `screenPath` TEXT NOT NULL, `isTwitterAuth` INTEGER NOT NULL) ")
     }
 }

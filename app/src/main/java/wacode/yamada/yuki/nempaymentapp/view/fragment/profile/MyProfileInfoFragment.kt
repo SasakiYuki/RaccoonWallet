@@ -151,6 +151,8 @@ class MyProfileInfoFragment : BaseFragment() {
                 rubyEdiText.text.toString(),
                 phoneNumberEditText.text.toString(),
                 mailAddressEditText.text.toString(),
+                "",
+                "",
                 false
         ))
     }

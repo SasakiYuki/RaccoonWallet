@@ -42,6 +42,7 @@ class NemPaymentApplication : Application(), HasActivityInjector {
         database = Room.databaseBuilder(this, objectOf<DataBase>(), "room_nem_payment_app.db").
                 addMigrations(migration1To2, migration2To3, migration3To4, migration4to5)
                 .build()
+
         FirebaseAnalytics.getInstance(this)
 
         Fabric.with(this, Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build())

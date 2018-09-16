@@ -12,5 +12,7 @@ data class MyProfile constructor(
         val nameRuby: String = "",
         val phoneNumber: String = "",
         val mailAddress: String = "",
+        val iconPath: String = "",
+        val screenPath: String = "",
         val isTwitterAuth: Boolean = false
 ) : Serializable

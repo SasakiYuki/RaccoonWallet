@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "ad567110cf82856364366db9bcf99c3a",
+    "identityHash": "d4945e243415b820d358328476734599",
     "entities": [
       {
         "tableName": "Wallet",
@@ -258,7 +258,7 @@
       },
       {
         "tableName": "MyProfile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `nameRuby` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `mailAddress` TEXT NOT NULL, `isTwitterAuth` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `nameRuby` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `mailAddress` TEXT NOT NULL, `iconPath` TEXT NOT NULL, `screenPath` TEXT NOT NULL, `isTwitterAuth` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -291,6 +291,18 @@
             "notNull": true
           },
           {
+            "fieldPath": "iconPath",
+            "columnName": "iconPath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "screenPath",
+            "columnName": "screenPath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "isTwitterAuth",
             "columnName": "isTwitterAuth",
             "affinity": "INTEGER",
@@ -309,7 +321,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ad567110cf82856364366db9bcf99c3a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d4945e243415b820d358328476734599\")"
     ]
   }
 }
