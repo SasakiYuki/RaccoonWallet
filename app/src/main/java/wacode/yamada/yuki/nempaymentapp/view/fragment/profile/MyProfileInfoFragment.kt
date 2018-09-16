@@ -63,6 +63,7 @@ class MyProfileInfoFragment : BaseFragment() {
         changeUserIconTextView.visibility = View.VISIBLE
         setupImageViewsClickListener()
         circleImageView.background = getDrawable(circleImageView.context, R.drawable.foreground_circle_icon_gray_scale)
+        userScreenImageView.alpha = 0.5f
     }
 
     private fun disableEditImageViews() {
@@ -72,6 +73,7 @@ class MyProfileInfoFragment : BaseFragment() {
         changeUserIconTextView.visibility = View.GONE
         resetImageViewsClickListener()
         circleImageView.setBackgroundColor(circleImageView.context.getColorFromResource(android.R.color.transparent))
+        userScreenImageView.alpha = 1.0f
     }
 
     private fun resetImageViewsClickListener() {
