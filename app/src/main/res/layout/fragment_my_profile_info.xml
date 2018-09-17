@@ -13,11 +13,12 @@
             android:id="@+id/userScreenImageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:alpha="0.5"
             android:contentDescription="@null"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:src="@color/textGrayDark"
-            android:alpha="0.5"
+            android:tag=""
             app:layout_constraintDimensionRatio="h,16:9"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
@@ -66,11 +67,12 @@
             android:layout_height="72dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="185dp"
+            android:background="@drawable/foreground_circle_icon_gray_scale"
             android:contentDescription="@null"
             android:src="@mipmap/icon_default_profile"
+            android:tag=""
             app:civ_border_color="#fff"
             app:civ_border_width="2dp"
-            android:background="@drawable/foreground_circle_icon_gray_scale"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@id/userScreenImageView" />
 

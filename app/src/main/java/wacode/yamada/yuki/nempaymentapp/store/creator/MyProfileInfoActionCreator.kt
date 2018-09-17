@@ -12,7 +12,7 @@ class MyProfileInfoActionCreator(private val useCase: MyProfileInfoUseCase,
                                  private val dispatch: (MyProfileInfoActionType) -> Unit) : DisposableMapper() {
     private val myAddressCountSubject: PublishSubject<Unit> = PublishSubject.create()
     private val myProfileSubject: PublishSubject<Unit> = PublishSubject.create()
-    private val createSubject: PublishSubject<MyProfile> = PublishSubject.create()
+    private val updateSubject: PublishSubject<MyProfile> = PublishSubject.create()
 
     init {
         myAddressCountSubject
@@ -45,7 +45,7 @@ class MyProfileInfoActionCreator(private val useCase: MyProfileInfoUseCase,
                 }
                 .subscribe()
                 .let { disposables.add(it) }
-        createSubject
+        updateSubject
                 .flatMap {
                     useCase.updateMyProfile(it)
                             .toObservable()
@@ -70,7 +70,7 @@ class MyProfileInfoActionCreator(private val useCase: MyProfileInfoUseCase,
         myProfileSubject.onNext(Unit)
     }
 
-    fun createMyProfile(entity: MyProfile) {
-        createSubject.onNext(entity)
+    fun updateMyProfile(entity: MyProfile) {
+        updateSubject.onNext(entity)
     }
 }

@@ -16,13 +16,14 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
             = MutableLiveData()
     val myProfileLiveData: MutableLiveData<MyProfile>
             = MutableLiveData()
+    val createEventLiveData: MutableLiveData<Unit>
+            = MutableLiveData()
     val updateEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
     val bottomEditButtonEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
     val bottomCompleteButtonEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
-    private var isEditMode = false
 
     init {
         store.getter.myAddressObservable
@@ -74,7 +75,7 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
         loadMyProfile()
     }
 
-    fun create(myProfile: MyProfile) {
-        store.actionCreator.createMyProfile(myProfile)
+    fun update(myProfile: MyProfile) {
+        store.actionCreator.updateMyProfile(myProfile)
     }
 }

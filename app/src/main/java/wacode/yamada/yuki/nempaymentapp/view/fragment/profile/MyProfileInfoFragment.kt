@@ -118,7 +118,7 @@ class MyProfileInfoFragment : BaseFragment() {
             bottomCompleteButtonEventLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
-                        createMyProfile()
+                        updateMyProfile()
                         disableEditTexts()
                         disableEditImageViews()
                     })
@@ -126,6 +126,11 @@ class MyProfileInfoFragment : BaseFragment() {
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
                         setMyProfileInformation(it)
+                    })
+            createEventLiveData
+                    .observe(this@MyProfileInfoFragment, Observer {
+                        it ?: return@Observer
+                        // do nothing
                     })
             updateEventLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
@@ -141,21 +146,28 @@ class MyProfileInfoFragment : BaseFragment() {
             rubyEdiText.setText(it.nameRuby)
             phoneNumberEditText.setText(it.phoneNumber)
             mailAddressEditText.setText(it.mailAddress)
+            if (!it.iconPath.isEmpty()) {
+                setCircleImage(it.iconPath)
+            }
+            if (!it.screenPath.isEmpty()) {
+                setUserScreenImageView(it.screenPath)
+            }
         }
     }
 
-    private fun createMyProfile() {
-        myProfileInfoViewModel.create(MyProfile(
-                0,
-                nameEditText.text.toString(),
-                rubyEdiText.text.toString(),
-                phoneNumberEditText.text.toString(),
-                mailAddressEditText.text.toString(),
-                "",
-                "",
-                false
-        ))
+    private fun updateMyProfile() {
+        myProfileInfoViewModel.update(generateMyProfile())
     }
+
+    private fun generateMyProfile() = MyProfile(
+            nameEditText.text.toString(),
+            rubyEdiText.text.toString(),
+            phoneNumberEditText.text.toString(),
+            mailAddressEditText.text.toString(),
+            circleImageView.tag.toString(),
+            userScreenImageView.tag.toString(),
+            false
+    )
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -174,17 +186,25 @@ class MyProfileInfoFragment : BaseFragment() {
     private fun setCircleImage(intent: Intent?) {
         intent?.let {
             val uriString = it.getStringExtra(CropImageActivity.PARAM_INTENT_RESULT_URI)
-            Picasso.with(circleImageView.context).load(uriString).into(circleImageView)
-            circleImageView.tag = uriString
+            setCircleImage(uriString)
         }
+    }
+
+    private fun setCircleImage(uriString: String) {
+        Picasso.with(circleImageView.context).load(uriString).into(circleImageView)
+        circleImageView.tag = uriString
     }
 
     private fun setUserScreenImageView(intent: Intent?) {
         intent?.let {
             val uriString = it.getStringExtra(CropImageActivity.PARAM_INTENT_RESULT_URI)
-            Picasso.with(userScreenImageView.context).load(uriString).into(userScreenImageView)
-            userScreenImageView.tag = uriString
+            setUserScreenImageView(uriString)
         }
+    }
+
+    private fun setUserScreenImageView(uriString: String) {
+        Picasso.with(userScreenImageView.context).load(uriString).into(userScreenImageView)
+        userScreenImageView.tag = uriString
     }
 
     companion object {

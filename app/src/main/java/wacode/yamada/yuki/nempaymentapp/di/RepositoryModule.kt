@@ -1,5 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import wacode.yamada.yuki.nempaymentapp.repository.*
@@ -32,7 +33,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideMyProfileRepository() = MyProfileRepository()
+    fun provideMyProfileRepository(context: Context) = MyProfileRepository(context)
 
     @Provides
     @Singleton

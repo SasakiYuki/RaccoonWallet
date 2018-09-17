@@ -12,5 +12,5 @@ class MyProfileInfoUseCase @Inject constructor(private val myAddressRepository: 
 
     fun loadMyProfile() = myProfileRepository.loadMyProfile()
 
-    fun updateMyProfile(entity: MyProfile) = myProfileRepository.createMyProfile(entity)
+    fun updateMyProfile(entity: MyProfile) = myProfileRepository.updateMyProfile(entity)
 }

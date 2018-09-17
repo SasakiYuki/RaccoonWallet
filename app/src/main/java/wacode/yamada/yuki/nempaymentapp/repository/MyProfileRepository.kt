@@ -1,15 +1,16 @@
 package wacode.yamada.yuki.nempaymentapp.repository
 
+import android.content.Context
+import com.google.gson.Gson
 import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfoDao
 import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
-import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfileDao
+import wacode.yamada.yuki.nempaymentapp.utils.SharedPreferenceUtils
 
-class MyProfileRepository {
+class MyProfileRepository(val context: Context) {
     private val walletInfoDao: WalletInfoDao = NemPaymentApplication.database.walletInfoDao()
-    private val myProfileDao: MyProfileDao = NemPaymentApplication.database.myProfileDao()
 
     fun createWalletInfo(entity: WalletInfo): Single<WalletInfo> {
         return Single.create { emitter ->
@@ -26,16 +27,20 @@ class MyProfileRepository {
 
     fun loadMyProfile(): Single<MyProfile> {
         return Single.create { emitter ->
-            myProfileDao.findAll().getOrNull(0)?.let {
-                emitter.onSuccess(it)
-            }
+            val myProfileString = SharedPreferenceUtils[context, KEY_PREF_MY_PROFILE, Gson().toJson(MyProfile())]
+            emitter.onSuccess(Gson().fromJson(myProfileString, MyProfile::class.java))
         }
     }
 
-    fun createMyProfile(entity: MyProfile): Single<Unit> {
+    fun updateMyProfile(entity: MyProfile): Single<Unit> {
         return Single.create { emitter ->
-            myProfileDao.create(entity)
+            val myProfileString = Gson().toJson(entity)
+            SharedPreferenceUtils.put(context, KEY_PREF_MY_PROFILE, myProfileString)
             emitter.onSuccess(Unit)
         }
+    }
+
+    companion object {
+        private const val KEY_PREF_MY_PROFILE = "key_pref_my_profile"
     }
 }
