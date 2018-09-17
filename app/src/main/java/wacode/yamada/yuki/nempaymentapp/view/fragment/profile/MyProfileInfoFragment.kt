@@ -127,6 +127,11 @@ class MyProfileInfoFragment : BaseFragment() {
                         it ?: return@Observer
                         setMyProfileInformation(it)
                     })
+            addressLiveData
+                    .observe(this@MyProfileInfoFragment, Observer {
+                        it ?: return@Observer
+                        notSettingWalletTextView.text = it
+                    })
             createEventLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
@@ -142,8 +147,22 @@ class MyProfileInfoFragment : BaseFragment() {
 
     private fun setMyProfileInformation(myProfile: MyProfile?) {
         myProfile?.let {
-            nameEditText.setText(it.name)
-            rubyEdiText.setText(it.nameRuby)
+            it.name.let {
+                if (it.isEmpty()) {
+                    mainNameTextView.text = getString(R.string.my_profile_info_fragment_guest)
+                } else {
+                    nameEditText.setText(it)
+                    mainNameTextView.text = it
+                }
+            }
+            it.nameRuby.let {
+                if (it.isEmpty()) {
+                    subNameTextView.text = getString(R.string.my_profile_info_fragment_guest_sub)
+                } else {
+                    rubyEdiText.setText(it)
+                    subNameTextView.text = it
+                }
+            }
             phoneNumberEditText.setText(it.phoneNumber)
             mailAddressEditText.setText(it.mailAddress)
             if (!it.iconPath.isEmpty()) {

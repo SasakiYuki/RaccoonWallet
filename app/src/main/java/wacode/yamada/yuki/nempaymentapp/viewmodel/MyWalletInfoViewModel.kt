@@ -3,6 +3,7 @@ package wacode.yamada.yuki.nempaymentapp.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import wacode.yamada.yuki.nempaymentapp.event.MasterWalletInfoEvent
 import wacode.yamada.yuki.nempaymentapp.event.WalletInfoEvent
 import wacode.yamada.yuki.nempaymentapp.room.address.MyAddress
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
@@ -51,5 +52,9 @@ class MyWalletInfoViewModel @Inject constructor(private val store: MyWalletInfoS
 
     fun selectWalletInfo(id: Long) {
         store.actionCreator.selectWalletInfo(id)
+    }
+
+    fun sendBusMasterWallet(walletInfo: WalletInfo) {
+        RxBus.send(MasterWalletInfoEvent(walletInfo))
     }
 }

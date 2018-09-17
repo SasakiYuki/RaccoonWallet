@@ -45,6 +45,11 @@ class MyWalletInfoFragment : BaseFragment() {
             walletInfoLiveData.observe(this@MyWalletInfoFragment, Observer {
                 it ?: return@Observer
                 controller.setData(myWalletInfoViewModel.walletInfoItems)
+                myWalletInfoViewModel.walletInfoItems
+                        .firstOrNull { it.isMaster }
+                        ?.let {
+                            myWalletInfoViewModel.sendBusMasterWallet(it)
+                        }
             })
         }
     }

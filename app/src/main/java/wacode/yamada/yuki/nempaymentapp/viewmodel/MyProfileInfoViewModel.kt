@@ -5,6 +5,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.event.BottomCompleteButtonEvent
 import wacode.yamada.yuki.nempaymentapp.event.BottomEditButtonEvent
+import wacode.yamada.yuki.nempaymentapp.event.MasterWalletInfoEvent
 import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
 import wacode.yamada.yuki.nempaymentapp.store.MyProfileInfoStore
 import wacode.yamada.yuki.nempaymentapp.utils.RxBus
@@ -15,6 +16,8 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
     val myAddressCountLiveData: MutableLiveData<Int>
             = MutableLiveData()
     val myProfileLiveData: MutableLiveData<MyProfile>
+            = MutableLiveData()
+    val addressLiveData :MutableLiveData<String>
             = MutableLiveData()
     val createEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
@@ -60,6 +63,11 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
                 .subscribe {
                     bottomCompleteButtonEventLiveData.value = Unit
                 }.let { addDisposable(it) }
+        RxBus.receive(MasterWalletInfoEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    addressLiveData.value = it.walletInfo.walletAddress
+                }
     }
 
     private fun countUpMyAddress() {
