@@ -18,6 +18,8 @@ import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
 import wacode.yamada.yuki.nempaymentapp.extentions.getDrawable
 import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
 import wacode.yamada.yuki.nempaymentapp.view.activity.CropImageActivity
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertDialog
+import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertViewModel
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.viewmodel.MyProfileInfoViewModel
 import javax.inject.Inject
@@ -45,6 +47,13 @@ class MyProfileInfoFragment : BaseFragment() {
         myProfileInfoViewModel.onInit()
         disableEditTexts()
         disableEditImageViews()
+        setupInfoButton()
+    }
+
+    private fun setupInfoButton() {
+        infoButton.setOnClickListener {
+            RaccoonAlertDialog.createDialog(RaccoonAlertViewModel(), getString(R.string.my_profile_info_fragment_alert_dialog_title), getString(R.string.my_profile_info_fragment_alert_dialog_message), getString(R.string.com_ok)).show(activity?.supportFragmentManager,RaccoonAlertDialog::class.java.name)
+        }
     }
 
     private fun setupImageViewsClickListener() {

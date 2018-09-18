@@ -498,6 +498,8 @@
     <string name="my_profile_info_fragment_setting_wallet">マスターウォレットが設定されていません。</string>
     <string name="my_profile_info_fragment_change_user_screen">背景を変更</string>
     <string name="my_profile_info_fragment_change_user_icon">アイコンを変更</string>
+    <string name="my_profile_info_fragment_alert_dialog_title">マークについて</string>
+    <string name="my_profile_info_fragment_alert_dialog_message">王冠マーク(master)は、すべての通貨・ウォレットの中でも個人の代表的なアドレスを示しています。</string>
 
     <!-- WalletBackupActivity -->
     <string name="wallet_backup_activity_title">バックアップ</string>
