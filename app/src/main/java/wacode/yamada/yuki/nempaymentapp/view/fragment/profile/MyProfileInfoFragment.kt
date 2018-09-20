@@ -14,9 +14,11 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_my_profile_info.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.event.MyProfileEvent
 import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
 import wacode.yamada.yuki.nempaymentapp.extentions.getDrawable
 import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.view.activity.CropImageActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertDialog
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertViewModel
@@ -52,7 +54,7 @@ class MyProfileInfoFragment : BaseFragment() {
 
     private fun setupInfoButton() {
         infoButton.setOnClickListener {
-            RaccoonAlertDialog.createDialog(RaccoonAlertViewModel(), getString(R.string.my_profile_info_fragment_alert_dialog_title), getString(R.string.my_profile_info_fragment_alert_dialog_message), getString(R.string.com_ok)).show(activity?.supportFragmentManager,RaccoonAlertDialog::class.java.name)
+            RaccoonAlertDialog.createDialog(RaccoonAlertViewModel(), getString(R.string.my_profile_info_fragment_alert_dialog_title), getString(R.string.my_profile_info_fragment_alert_dialog_message), getString(R.string.com_ok)).show(activity?.supportFragmentManager, RaccoonAlertDialog::class.java.name)
         }
     }
 
@@ -135,6 +137,7 @@ class MyProfileInfoFragment : BaseFragment() {
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
                         setMyProfileInformation(it)
+                        RxBus.send(MyProfileEvent(it))
                     })
             addressLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
@@ -149,7 +152,7 @@ class MyProfileInfoFragment : BaseFragment() {
             updateEventLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
-                        // do nothing
+                        RxBus.send(MyProfileEvent(it))
                     })
         }
     }

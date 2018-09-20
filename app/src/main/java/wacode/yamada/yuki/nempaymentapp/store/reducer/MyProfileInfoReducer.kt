@@ -9,14 +9,14 @@ import wacode.yamada.yuki.nempaymentapp.store.type.MyProfileInfoActionType
 class MyProfileInfoReducer(actionType: Observable<MyProfileInfoActionType>) : DisposableMapper() {
     private val mMyAddressCountSubject: PublishSubject<Int> = PublishSubject.create()
     private val mMyProfileSubject: PublishSubject<MyProfile> = PublishSubject.create()
-    private val mUpdateSubject: PublishSubject<Unit> = PublishSubject.create()
+    private val mUpdateSubject: PublishSubject<MyProfile> = PublishSubject.create()
     private val mErrorSubject: PublishSubject<Throwable> = PublishSubject.create()
 
     val myAddressObservable: Observable<Int>
         get() = mMyAddressCountSubject
     val myProfileObservable: Observable<MyProfile>
         get() = mMyProfileSubject
-    val updateObservable: Observable<Unit>
+    val updateObservable: Observable<MyProfile>
         get() = mUpdateSubject
     val errorObservable: Observable<Throwable>
         get() = mErrorSubject
@@ -38,7 +38,7 @@ class MyProfileInfoReducer(actionType: Observable<MyProfileInfoActionType>) : Di
 
         actionType.ofType(MyProfileInfoActionType.UpdateMyProfile::class.java)
                 .subscribe({
-                    mUpdateSubject.onNext(Unit)
+                    mUpdateSubject.onNext(it.myProfile)
                 }, {
                     it.printStackTrace()
                 }).let { disposables.add(it) }

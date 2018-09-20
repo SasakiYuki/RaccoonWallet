@@ -17,11 +17,11 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
             = MutableLiveData()
     val myProfileLiveData: MutableLiveData<MyProfile>
             = MutableLiveData()
-    val addressLiveData :MutableLiveData<String>
+    val addressLiveData: MutableLiveData<String>
             = MutableLiveData()
     val createEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
-    val updateEventLiveData: MutableLiveData<Unit>
+    val updateEventLiveData: MutableLiveData<MyProfile>
             = MutableLiveData()
     val bottomEditButtonEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
@@ -49,7 +49,7 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    updateEventLiveData.value = Unit
+                    updateEventLiveData.value = it
                 }.let {
             addDisposable(it)
         }

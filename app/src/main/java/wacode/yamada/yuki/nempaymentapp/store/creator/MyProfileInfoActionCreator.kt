@@ -50,7 +50,7 @@ class MyProfileInfoActionCreator(private val useCase: MyProfileInfoUseCase,
                     useCase.updateMyProfile(it)
                             .toObservable()
                             .doOnNext {
-                                dispatch(MyProfileInfoActionType.UpdateMyProfile())
+                                dispatch(MyProfileInfoActionType.UpdateMyProfile(it))
                             }
                             .doOnError {
                                 // do nothing

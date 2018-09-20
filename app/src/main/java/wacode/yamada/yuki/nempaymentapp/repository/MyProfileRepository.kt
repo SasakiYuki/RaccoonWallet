@@ -32,11 +32,11 @@ class MyProfileRepository(val context: Context) {
         }
     }
 
-    fun updateMyProfile(entity: MyProfile): Single<Unit> {
+    fun updateMyProfile(entity: MyProfile): Single<MyProfile> {
         return Single.create { emitter ->
             val myProfileString = Gson().toJson(entity)
             SharedPreferenceUtils.put(context, KEY_PREF_MY_PROFILE, myProfileString)
-            emitter.onSuccess(Unit)
+            emitter.onSuccess(entity)
         }
     }
 

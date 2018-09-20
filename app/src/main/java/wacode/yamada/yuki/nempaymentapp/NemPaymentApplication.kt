@@ -11,6 +11,8 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import io.fabric.sdk.android.Fabric
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.di.DaggerAppComponent
 import wacode.yamada.yuki.nempaymentapp.extentions.objectOf
 import wacode.yamada.yuki.nempaymentapp.room.DataBase
@@ -43,6 +45,9 @@ class NemPaymentApplication : Application(), HasActivityInjector {
                 .build()
 
         FirebaseAnalytics.getInstance(this)
+        Observable.just(database)
+                .subscribeOn(Schedulers.io())
+                .subscribe { db -> db.clearAllTables() }
 
         Fabric.with(this, Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build())
         registerActivityLifecycleCallbacks(AppLockLifecycleHandler())
