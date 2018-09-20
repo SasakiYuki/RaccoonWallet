@@ -67,7 +67,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.profile.MyAddressProfileActivity"
-            android:windowSoftInputMode="adjustResize|adjustPan"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.DisplayQRActivity"
