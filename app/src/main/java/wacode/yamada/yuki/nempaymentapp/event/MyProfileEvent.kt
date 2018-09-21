@@ -1,5 +1,5 @@
 package wacode.yamada.yuki.nempaymentapp.event
 
-import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 
-data class MyProfileEvent(val myProfile: MyProfile)
+data class MyProfileEvent(val myProfileEntity: MyProfileEntity)

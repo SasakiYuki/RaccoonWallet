@@ -24,7 +24,7 @@ import wacode.yamada.yuki.nempaymentapp.extentions.buildSpannableText
 import wacode.yamada.yuki.nempaymentapp.extentions.setSpan
 import wacode.yamada.yuki.nempaymentapp.room.address.MyAddress
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
-import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
@@ -63,19 +63,19 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
                 it ?: return@Observer
                 changeEditBottomButton()
             })
-            myProfileEvent.observe(this@MyAddressProfileActivity, Observer {
+            myProfileEntityEvent.observe(this@MyAddressProfileActivity, Observer {
                 it ?: return@Observer
                 setupToolbarTitle(it)
             })
         }
     }
 
-    private fun setupToolbarTitle(myProfile: MyProfile) {
+    private fun setupToolbarTitle(myProfileEntity: MyProfileEntity) {
         toolbarTitle.apply {
-            text = (myProfile.name + "\n" + myProfile.nameRuby)
+            text = (myProfileEntity.name + "\n" + myProfileEntity.nameRuby)
         }.buildSpannableText {
-            val targetTop = myProfile.name
-            val targetBottom = myProfile.nameRuby
+            val targetTop = myProfileEntity.name
+            val targetBottom = myProfileEntity.nameRuby
             it.setSpan(ForegroundColorSpan(ContextCompat.getColor(this@MyAddressProfileActivity, R.color.textBlack)), targetTop)
                     .setSpan(ForegroundColorSpan(ContextCompat.getColor(this@MyAddressProfileActivity, R.color.textGrayDark)), targetBottom)
                     .setSpan(AbsoluteSizeSpan(20, true), targetTop)

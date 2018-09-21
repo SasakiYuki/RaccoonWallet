@@ -17,7 +17,7 @@ import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.event.MyProfileEvent
 import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
 import wacode.yamada.yuki.nempaymentapp.extentions.getDrawable
-import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.view.activity.CropImageActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonAlertDialog
@@ -133,7 +133,7 @@ class MyProfileInfoFragment : BaseFragment() {
                         disableEditTexts()
                         disableEditImageViews()
                     })
-            myProfileLiveData
+            myProfileEntityLiveData
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
                         setMyProfileInformation(it)
@@ -157,8 +157,8 @@ class MyProfileInfoFragment : BaseFragment() {
         }
     }
 
-    private fun setMyProfileInformation(myProfile: MyProfile?) {
-        myProfile?.let {
+    private fun setMyProfileInformation(myProfileEntity: MyProfileEntity?) {
+        myProfileEntity?.let {
             it.name.let {
                 if (it.isEmpty()) {
                     mainNameTextView.text = getString(R.string.my_profile_info_fragment_guest)
@@ -190,7 +190,7 @@ class MyProfileInfoFragment : BaseFragment() {
         myProfileInfoViewModel.update(generateMyProfile())
     }
 
-    private fun generateMyProfile() = MyProfile(
+    private fun generateMyProfile() = MyProfileEntity(
             nameEditText.text.toString(),
             rubyEdiText.text.toString(),
             phoneNumberEditText.text.toString(),

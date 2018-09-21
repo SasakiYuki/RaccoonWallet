@@ -6,7 +6,7 @@ import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfoDao
-import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.utils.SharedPreferenceUtils
 
 class MyProfileRepository(val context: Context) {
@@ -25,14 +25,14 @@ class MyProfileRepository(val context: Context) {
         }
     }
 
-    fun loadMyProfile(): Single<MyProfile> {
+    fun loadMyProfile(): Single<MyProfileEntity> {
         return Single.create { emitter ->
-            val myProfileString = SharedPreferenceUtils[context, KEY_PREF_MY_PROFILE, Gson().toJson(MyProfile())]
-            emitter.onSuccess(Gson().fromJson(myProfileString, MyProfile::class.java))
+            val myProfileString = SharedPreferenceUtils[context, KEY_PREF_MY_PROFILE, Gson().toJson(MyProfileEntity())]
+            emitter.onSuccess(Gson().fromJson(myProfileString, MyProfileEntity::class.java))
         }
     }
 
-    fun updateMyProfile(entity: MyProfile): Single<MyProfile> {
+    fun updateMyProfile(entity: MyProfileEntity): Single<MyProfileEntity> {
         return Single.create { emitter ->
             val myProfileString = Gson().toJson(entity)
             SharedPreferenceUtils.put(context, KEY_PREF_MY_PROFILE, myProfileString)

@@ -1,8 +1,8 @@
-package wacode.yamada.yuki.nempaymentapp.room.profile
+package wacode.yamada.yuki.nempaymentapp.model
 
 import java.io.Serializable
 
-data class MyProfile constructor(
+data class MyProfileEntity constructor(
         val name: String = "",
         val nameRuby: String = "",
         val phoneNumber: String = "",

@@ -6,7 +6,7 @@ import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.event.BottomCompleteButtonEvent
 import wacode.yamada.yuki.nempaymentapp.event.BottomEditButtonEvent
 import wacode.yamada.yuki.nempaymentapp.event.MasterWalletInfoEvent
-import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.store.MyProfileInfoStore
 import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import javax.inject.Inject
@@ -15,13 +15,13 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
     : BaseViewModel() {
     val myAddressCountLiveData: MutableLiveData<Int>
             = MutableLiveData()
-    val myProfileLiveData: MutableLiveData<MyProfile>
+    val myProfileEntityLiveData: MutableLiveData<MyProfileEntity>
             = MutableLiveData()
     val addressLiveData: MutableLiveData<String>
             = MutableLiveData()
     val createEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
-    val updateEventLiveData: MutableLiveData<MyProfile>
+    val updateEventLiveData: MutableLiveData<MyProfileEntity>
             = MutableLiveData()
     val bottomEditButtonEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
@@ -37,11 +37,11 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
                 }.let {
             addDisposable(it)
         }
-        store.getter.myProfileObservable
+        store.getter.myProfileEntityObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    myProfileLiveData.value = it
+                    myProfileEntityLiveData.value = it
                 }.let {
             addDisposable(it)
         }
@@ -83,7 +83,7 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
         loadMyProfile()
     }
 
-    fun update(myProfile: MyProfile) {
-        store.actionCreator.updateMyProfile(myProfile)
+    fun update(myProfileEntity: MyProfileEntity) {
+        store.actionCreator.updateMyProfile(myProfileEntity)
     }
 }

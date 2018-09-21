@@ -2,7 +2,7 @@ package wacode.yamada.yuki.nempaymentapp.usecase
 
 import wacode.yamada.yuki.nempaymentapp.repository.MyAddressRepository
 import wacode.yamada.yuki.nempaymentapp.repository.MyProfileRepository
-import wacode.yamada.yuki.nempaymentapp.room.profile.MyProfile
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import javax.inject.Inject
 
 class MyProfileInfoUseCase @Inject constructor(private val myAddressRepository: MyAddressRepository,
@@ -12,5 +12,5 @@ class MyProfileInfoUseCase @Inject constructor(private val myAddressRepository: 
 
     fun loadMyProfile() = myProfileRepository.loadMyProfile()
 
-    fun updateMyProfile(entity: MyProfile) = myProfileRepository.updateMyProfile(entity)
+    fun updateMyProfile(entity: MyProfileEntity) = myProfileRepository.updateMyProfile(entity)
 }
