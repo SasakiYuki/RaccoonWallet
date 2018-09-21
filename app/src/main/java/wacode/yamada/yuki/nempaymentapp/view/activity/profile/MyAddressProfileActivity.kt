@@ -22,9 +22,9 @@ import wacode.yamada.yuki.nempaymentapp.event.BottomCompleteButtonEvent
 import wacode.yamada.yuki.nempaymentapp.event.BottomEditButtonEvent
 import wacode.yamada.yuki.nempaymentapp.extentions.buildSpannableText
 import wacode.yamada.yuki.nempaymentapp.extentions.setSpan
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.room.address.MyAddress
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
-import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
@@ -58,10 +58,6 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
             createLiveData.observe(this@MyAddressProfileActivity, Observer {
                 it ?: return@Observer
                 // do nothing
-            })
-            createdMyProfileLiveData.observe(this@MyAddressProfileActivity, Observer {
-                it ?: return@Observer
-                changeEditBottomButton()
             })
             myProfileEntityEvent.observe(this@MyAddressProfileActivity, Observer {
                 it ?: return@Observer
