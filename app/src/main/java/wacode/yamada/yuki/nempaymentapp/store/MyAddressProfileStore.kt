@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MyAddressProfileStore @Inject constructor(private val repository: MyAddressProfileRepository) : Store<
         MyAddressProfileActionType, MyAddressProfileActionCreator, MyAddressProfileReducer, MyAddressProfileGetter>() {
     override fun createActionCreator(dispatch: (MyAddressProfileActionType) -> Unit, reducer: MyAddressProfileReducer)
-            = MyAddressProfileActionCreator(repository,     dispatch)
+            = MyAddressProfileActionCreator(repository,dispatch)
 
     override fun createReducer(action: Observable<MyAddressProfileActionType>)
             = MyAddressProfileReducer(action)
