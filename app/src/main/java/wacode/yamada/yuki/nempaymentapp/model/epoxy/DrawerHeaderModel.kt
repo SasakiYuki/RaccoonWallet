@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.model.epoxy
 
 import android.databinding.ViewDataBinding
+import android.view.View
 import android.widget.ImageView
 import com.airbnb.epoxy.DataBindingEpoxyModel
 import com.airbnb.epoxy.EpoxyAttribute
@@ -24,10 +25,14 @@ abstract class DrawerHeaderModel : DataBindingEpoxyModel() {
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var iconPath: String = ""
 
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var onClickHeaderListener: View.OnClickListener = View.OnClickListener { }
+
     override fun setDataBindingVariables(binding: ViewDataBinding?) {
         binding?.let {
             it.setVariable(BR.name, name)
             it.setVariable(BR.address, address)
+            it.setVariable(BR.clickListener, onClickHeaderListener)
 
             it.root.apply {
                 findViewById<ImageView>(R.id.userScreenImageView)?.let {

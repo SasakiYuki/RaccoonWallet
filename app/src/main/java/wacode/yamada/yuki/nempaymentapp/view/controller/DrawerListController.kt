@@ -27,6 +27,9 @@ class DrawerListController(private val listener: OnDrawerClickListener, val addr
                 .name(name)
                 .screenPath(screenPath)
                 .iconPath(iconPath)
+                .onClickHeaderListener(View.OnClickListener {
+                    listener.onHeaderClick()
+                })
                 .addTo(this)
 
         val mainList = ArrayList<DrawerEntity>()
@@ -59,6 +62,7 @@ class DrawerListController(private val listener: OnDrawerClickListener, val addr
     }
 
     interface OnDrawerClickListener {
+        fun onHeaderClick()
         fun onRowClick(drawerEntity: DrawerEntity)
     }
 }

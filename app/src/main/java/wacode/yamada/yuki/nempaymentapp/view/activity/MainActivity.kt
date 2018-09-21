@@ -43,6 +43,7 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.AboutActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.MosaicListActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.ExampleFragmentPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.controller.DrawerListController
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
@@ -118,9 +119,8 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             controller.setData(list)
         }
     }
-
-    private fun setupDrawerImages() {
-
+    override fun onHeaderClick() {
+        startActivity(MyAddressProfileActivity.createIntent(this))
     }
 
     override fun onRowClick(drawerEntity: DrawerEntity) {
