@@ -5,7 +5,7 @@ import android.arch.persistence.room.*
 @Dao
 interface MyAddressDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun create(myAddress: MyAddress)
+    fun insert(myAddress: MyAddress)
 
     @Query("SELECT * FROM MyAddress")
     fun findAll(): List<MyAddress>

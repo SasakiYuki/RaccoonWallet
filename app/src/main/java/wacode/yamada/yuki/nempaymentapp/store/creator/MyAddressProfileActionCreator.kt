@@ -10,12 +10,12 @@ import wacode.yamada.yuki.nempaymentapp.store.type.MyAddressProfileActionType
 
 class MyAddressProfileActionCreator(private val repository: MyAddressProfileRepository,
                                     private val dispatch: (MyAddressProfileActionType) -> Unit) : DisposableMapper() {
-    private val createSubject: PublishSubject<MyAddress> = PublishSubject.create()
+    private val insertSubject: PublishSubject<MyAddress> = PublishSubject.create()
 
     init {
-        createSubject
+        insertSubject
                 .flatMap {
-                    repository.create(it)
+                    repository.insert(it)
                             .toObservable<Unit>()
                             .doOnComplete {
                                 dispatch(MyAddressProfileActionType.Create())
@@ -30,7 +30,7 @@ class MyAddressProfileActionCreator(private val repository: MyAddressProfileRepo
                 .let { disposables.add(it) }
     }
 
-    fun create(myAddress: MyAddress) {
-        createSubject.onNext(myAddress)
+    fun insert(myAddress: MyAddress) {
+        insertSubject.onNext(myAddress)
     }
 }

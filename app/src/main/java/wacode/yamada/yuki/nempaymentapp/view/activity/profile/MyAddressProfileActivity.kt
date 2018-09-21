@@ -106,7 +106,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         if (resultCode == Activity.RESULT_OK) {
             val item = intent.getSerializableExtra(ProfileAddressAddActivity.INTENT_WALLET_INFO) as WalletInfo
             MyAddress(walletInfoId = item.id).let {
-                viewModel.create(it)
+                viewModel.insert(it)
             }
         }
     }

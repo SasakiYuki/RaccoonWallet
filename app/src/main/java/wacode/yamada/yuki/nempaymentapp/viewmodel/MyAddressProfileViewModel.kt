@@ -23,7 +23,7 @@ class MyAddressProfileViewModel @Inject constructor(private val store: MyAddress
                 }
     }
 
-    fun create(myAddress: MyAddress) {
-        store.actionCreator.create(myAddress)
+    fun insert(myAddress: MyAddress) {
+        store.actionCreator.insert(myAddress)
     }
 }

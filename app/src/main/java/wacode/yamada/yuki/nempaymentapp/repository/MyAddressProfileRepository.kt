@@ -8,9 +8,9 @@ import wacode.yamada.yuki.nempaymentapp.room.address.MyAddressDao
 class MyAddressProfileRepository {
     private val myAddressDao: MyAddressDao = NemPaymentApplication.database.myAddressDao()
 
-    fun create(myAddress: MyAddress): Completable {
+    fun insert(myAddress: MyAddress): Completable {
         return Completable.fromAction {
-            myAddressDao.create(myAddress)
+            myAddressDao.insert(myAddress)
         }
     }
 }
