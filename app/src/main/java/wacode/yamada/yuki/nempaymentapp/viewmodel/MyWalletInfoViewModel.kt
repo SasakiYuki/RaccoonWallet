@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.event.MasterWalletInfoEvent
@@ -41,9 +42,25 @@ class MyWalletInfoViewModel @Inject constructor(private val store: MyWalletInfoS
         RxBus.receive(WalletInfoEvent::class.java)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    walletInfoItems.add(it.walletInfo)
+                    if (it is WalletInfoEvent.InsertWalletInfo) {
+                        walletInfoItems.add(it.walletInfo)
+                    } else if (it is WalletInfoEvent.UpdateWalletInfo) {
+                        mergeWalletInfo(it.walletInfo)
+                    }
                     walletInfoLiveData.value = Unit
                 }.let { addDisposable(it) }
+    }
+
+    private fun mergeWalletInfo(walletInfo: WalletInfo) {
+        val list = Observable.fromIterable(walletInfoItems)
+                .filter({
+                    walletInfo.id != it.id
+                })
+                .toList()
+                .blockingGet() as ArrayList<WalletInfo>
+        list.add(walletInfo)
+        walletInfoItems.clear()
+        walletInfoItems.addAll(list)
     }
 
     fun findAllMyAddress() {

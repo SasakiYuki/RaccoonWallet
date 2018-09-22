@@ -40,14 +40,20 @@ class ProfileAddressAddActivity : BaseActivity() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProfileAddressAddViewModel::class.java)
-        viewModel.createLiveData.observe(this, Observer {
-            it ?: return@Observer
-            finishWithWalletInfo(it)
-        })
-        viewModel.errorLiveData.observe(this, Observer {
-            it ?: return@Observer
-            it.printStackTrace()
-        })
+        viewModel.apply {
+            insertLiveData.observe(this@ProfileAddressAddActivity, Observer {
+                it ?: return@Observer
+                finishWithWalletInfo(it)
+            })
+            updateLiveData.observe(this@ProfileAddressAddActivity, Observer {
+                it ?: return@Observer
+                finishWithWalletInfo(it)
+            })
+            errorLiveData.observe(this@ProfileAddressAddActivity, Observer {
+                it ?: return@Observer
+                it.printStackTrace()
+            })
+        }
     }
 
     private fun setupViews() {
@@ -91,17 +97,22 @@ class ProfileAddressAddActivity : BaseActivity() {
     }
 
     private fun createWalletInfoFromEditText() {
+        val id = walletInfo?.let { it.id } ?: 0
         val walletName = nameEditText.text.toString().remove("-")
         val address = addressEditText.text.toString()
         val isMaster = viewModel.isMaster
         WalletInfo(
+                id = id,
                 walletName = walletName,
                 walletAddress = address,
                 isMaster = isMaster
         ).let {
             when (type) {
                 ProfileAddressAddType.MyProfile -> {
-                    viewModel.create(it)
+                    viewModel.insert(it)
+                }
+                ProfileAddressAddType.Edit -> {
+                    viewModel.update(it)
                 }
                 else -> finishWithWalletInfo(it)
             }
