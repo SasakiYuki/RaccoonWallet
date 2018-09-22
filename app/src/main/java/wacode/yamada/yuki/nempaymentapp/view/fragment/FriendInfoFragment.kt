@@ -64,6 +64,7 @@ class FriendInfoFragment : BaseFragment() {
             setTextColor(getColor(context!!, R.color.textBlack))
         }
 
+
         lastNameRubyEditText.apply {
             setText(friendInfo.lastNameRuby)
             isEnabled = false

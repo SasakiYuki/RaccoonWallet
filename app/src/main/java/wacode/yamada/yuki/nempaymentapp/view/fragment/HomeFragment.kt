@@ -20,8 +20,8 @@ import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
 import wacode.yamada.yuki.nempaymentapp.utils.NemPricePreference
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.TransactionActivity
@@ -98,7 +98,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupRxBus() {
-        RxBusProvider.rxBus
+        RxBus
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { it ->

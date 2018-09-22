@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/userScreenImageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:alpha="0.5"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:src="@color/textGrayDark"
+            android:tag=""
+            app:layout_constraintDimensionRatio="h,16:9"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <requestFocus />
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/changeImageIconImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_change_image"
+            app:layout_constraintBottom_toTopOf="@id/changeImageIconTextView"
+            app:layout_constraintLeft_toLeftOf="@id/userScreenImageView"
+            app:layout_constraintRight_toRightOf="@id/userScreenImageView"
+            app:layout_constraintTop_toTopOf="@id/userScreenImageView"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/changeImageIconTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_profile_info_fragment_change_user_screen"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/userScreenImageView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/changeImageIconImageView"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@null"
+            android:src="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@id/circleImageView"
+            app:layout_constraintLeft_toLeftOf="@id/circleImageView"
+            app:layout_constraintRight_toRightOf="@id/circleImageView"
+            app:layout_constraintTop_toTopOf="@id/circleImageView" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="185dp"
+            android:background="@drawable/foreground_circle_icon_gray_scale"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_default_profile"
+            android:tag=""
+            app:civ_border_color="#fff"
+            app:civ_border_width="2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/userScreenImageView" />
+
+        <ImageView
+            android:id="@+id/changeUserIconImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_change_image"
+            app:layout_constraintBottom_toTopOf="@id/changeUserIconTextView"
+            app:layout_constraintLeft_toLeftOf="@id/circleImageView"
+            app:layout_constraintRight_toRightOf="@id/circleImageView"
+            app:layout_constraintTop_toTopOf="@id/circleImageView"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/changeUserIconTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_profile_info_fragment_change_user_icon"
+            android:textColor="@android:color/white"
+            android:textSize="9sp"
+            app:layout_constraintBottom_toBottomOf="@id/circleImageView"
+            app:layout_constraintLeft_toLeftOf="@id/circleImageView"
+            app:layout_constraintRight_toRightOf="@id/circleImageView"
+            app:layout_constraintTop_toBottomOf="@id/changeUserIconImageView"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:ignore="SmallSp" />
+
+        <View
+            android:id="@+id/headerContainer"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userScreenImageView" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:contentDescription="@null"
+            android:src="@color/gray_medium"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headerContainer" />
+
+        <TextView
+            android:id="@+id/walletTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:text="@string/my_profile_info_fragment_wallet"
+            android:textColor="@color/textGrayDark"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/walletCountTextView"
+            app:layout_constraintLeft_toRightOf="@id/circleImageView"
+            app:layout_constraintTop_toTopOf="@id/headerContainer"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/walletCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textGrayDark"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/headerContainer"
+            app:layout_constraintLeft_toLeftOf="@id/walletTitleTextView"
+            app:layout_constraintLeft_toRightOf="@id/circleImageView"
+            app:layout_constraintRight_toRightOf="@id/walletTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/walletTitleTextView"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/mainNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="13dp"
+            android:textColor="@color/textBlack"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/circleImageView"
+            tools:text="GUEST" />
+
+        <TextView
+            android:id="@+id/subNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/hintGray"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mainNameTextView"
+            tools:text="ゲスト" />
+
+        <TextView
+            android:id="@+id/notSettingWalletTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/my_profile_info_fragment_setting_wallet"
+            android:textColor="@color/textGrayDark"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subNameTextView" />
+        
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/infoButton"
+            app:layout_constraintLeft_toRightOf="@id/notSettingWalletTextView"
+            app:layout_constraintTop_toTopOf="@id/notSettingWalletTextView"
+            app:layout_constraintBottom_toBottomOf="@id/notSettingWalletTextView"
+            android:src="@mipmap/icon_info"
+            android:contentDescription="@null" />
+
+        <View
+            android:id="@+id/labelView"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="65dp"
+            android:background="@color/simpleBackground"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notSettingWalletTextView" />
+
+        <LinearLayout
+            android:id="@+id/editTextsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/labelView">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/firstNameInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_normal"
+                android:layout_marginRight="@dimen/space_normal"
+                android:layout_marginTop="@dimen/space_normal_half">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/nameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/com_fist_name"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_normal"
+                android:layout_marginRight="@dimen/space_normal"
+                android:layout_marginTop="@dimen/space_normal_half">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/rubyEdiText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/com_fist_name_ruby"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_normal"
+                android:layout_marginRight="@dimen/space_normal"
+                android:layout_marginTop="@dimen/space_normal_half">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/phoneNumberEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/com_phone_number"
+                    android:inputType="number"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_normal"
+                android:layout_marginRight="@dimen/space_normal"
+                android:layout_marginTop="@dimen/space_normal_half">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/mailAddressEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/com_mail_address"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@id/editTextsLayout" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

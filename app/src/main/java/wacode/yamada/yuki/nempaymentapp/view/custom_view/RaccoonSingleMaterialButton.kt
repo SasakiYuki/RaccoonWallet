@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import kotlinx.android.synthetic.main.view_raccoon_single_material_button.view.*
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.extentions.getDrawable
 
 class RaccoonSingleMaterialButton(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : ConstraintLayout(context, attrs, defStyleAttr) {
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -29,5 +30,13 @@ class RaccoonSingleMaterialButton(context: Context?, attrs: AttributeSet?, defSt
 
     fun setClickListener(listener: OnClickListener) {
         materialButton.setOnClickListener { listener.onClick(this) }
+    }
+
+    fun setText(textResourceId: Int) {
+        textView.text = context.getString(textResourceId)
+    }
+
+    fun setImage(imageResourceId: Int) {
+        imageView.setImageDrawable(getDrawable(context, imageResourceId))
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,6 +19,7 @@
             android:background="@android:color/white"
             android:elevation="4dp"
             app:contentInsetEnd="8dp"
+            app:layout_scrollFlags="enterAlways|scroll"
             tools:targetApi="lollipop">
 
             <TextView
@@ -34,35 +35,27 @@
                 tools:text="mori\nwarai" />
         </android.support.v7.widget.Toolbar>
 
-        <com.google.android.material.tabs.TabLayout
+        <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="20dp"
-            app:tabBackground="@android:color/white">
+            app:tabBackground="@android:color/white" />
+    </android.support.design.widget.AppBarLayout>
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/my_address_profile_activity_tab_wallet" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/my_address_profile_activity_tab_profile" />
-        </com.google.android.material.tabs.TabLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
         android:id="@+id/bottomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        app:layout_behavior="wacode.yamada.yuki.nempaymentapp.view.ConstraintLayoutBehavior"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:src="@mipmap/icon_plus"
-        app:text="追加" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        app:text="string/R.string.my_address_profile_activity_bottom_button_add" />
+</android.support.design.widget.CoordinatorLayout>

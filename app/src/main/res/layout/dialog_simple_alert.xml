@@ -8,7 +8,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="96dp"
-        android:background="@color/nemGreen">
+        android:background="@color/gray_medium">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -63,7 +63,8 @@
             android:id="@+id/button"
             android:layout_width="96dp"
             android:layout_height="36dp"
-            android:background="@drawable/frame_nem_green"
+            android:background="@color/gray_medium"
+            android:foreground="?selectableItemBackground"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </LinearLayout>

@@ -33,7 +33,9 @@ import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
 import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
+import wacode.yamada.yuki.nempaymentapp.repository.MyProfileRepository.Companion.KEY_PREF_MY_PROFILE
 import wacode.yamada.yuki.nempaymentapp.types.MainBottomNavigationType
 import wacode.yamada.yuki.nempaymentapp.utils.*
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.QrScanCallback
@@ -41,6 +43,7 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.AboutActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.MosaicListActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.ExampleFragmentPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.controller.DrawerListController
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
@@ -85,7 +88,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     }
 
     private fun setupRxBus() {
-        RxBusProvider.rxBus
+        RxBus
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { it ->
@@ -101,9 +104,13 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         async(UI) {
             val wallet = bg { WalletManager.getSelectedWallet(this@MainActivity) }
                     .await()
+            val myProfileString = SharedPreferenceUtils[this@MainActivity, KEY_PREF_MY_PROFILE, Gson().toJson(MyProfileEntity())]
+            val myProfile = Gson().fromJson(myProfileString, MyProfileEntity::class.java)
             controller = DrawerListController(this@MainActivity,
                     wallet?.address?.toDisplayAddress() ?: getString(R.string.main_navigation_null),
-                    wallet?.name ?: "")
+                    wallet?.name ?: "",
+                    myProfile.screenPath,
+                    myProfile.iconPath)
             navigationRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
             navigationRecyclerView.adapter = controller.adapter
             val drawerIconTypes = DrawerItemType.values()
@@ -111,6 +118,9 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             drawerIconTypes.mapTo(list) { DrawerEntity(ContextCompat.getDrawable(this@MainActivity, it.imageResource)!!, getString(it.titleResource), it.drawerType) }
             controller.setData(list)
         }
+    }
+    override fun onHeaderClick() {
+        startActivity(MyAddressProfileActivity.createIntent(this))
     }
 
     override fun onRowClick(drawerEntity: DrawerEntity) {

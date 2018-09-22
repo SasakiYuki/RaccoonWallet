@@ -22,7 +22,7 @@ class CreateFriendInfoFragment : BaseFragment() {
                 lastNameInputLayout.error = getString(R.string.create_friend_address_input_error)
                 false
             }
-            firstNameEditText.text.isNullOrEmpty() -> {
+            nameEditText.text.isNullOrEmpty() -> {
                 firstNameInputLayout.error = getString(R.string.create_friend_address_input_error)
                 false
             }
@@ -34,8 +34,8 @@ class CreateFriendInfoFragment : BaseFragment() {
         return FriendInfo(
                 lastName = lastNameEditText.text.toString(),
                 lastNameRuby = lastNameRubyEditText.text.toString(),
-                firstName = firstNameEditText.text.toString(),
-                firstNameRuby = firstNameRubyEditText.text.toString(),
+                firstName = nameEditText.text.toString(),
+                firstNameRuby = rubyEdiText.text.toString(),
                 phoneNumber = phoneNumberEditText.text.toString(),
                 mailAddress = mailAddressEditText.text.toString()
         )
