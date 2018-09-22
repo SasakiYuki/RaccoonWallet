@@ -18,8 +18,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_my_address_profile.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
-import wacode.yamada.yuki.nempaymentapp.event.BottomCompleteButtonEvent
-import wacode.yamada.yuki.nempaymentapp.event.BottomEditButtonEvent
+import wacode.yamada.yuki.nempaymentapp.event.MyAddressProfileBottomButtonEvent
 import wacode.yamada.yuki.nempaymentapp.extentions.buildSpannableText
 import wacode.yamada.yuki.nempaymentapp.extentions.setSpan
 import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
@@ -134,13 +133,14 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         bottomButton.setText(R.string.my_address_profile_activity_bottom_button_add)
         bottomButton.setImage(R.mipmap.icon_plus)
         bottomButton.setClickListener(View.OnClickListener { startActivityForResult(ProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity), ProfileAddressAddActivity.REQUEST_CODE) })
+        RxBus.send(MyAddressProfileBottomButtonEvent.OnChangeEditBottomButton())
     }
 
     private fun changeEditBottomButton() {
         bottomButton.setText(R.string.my_address_profile_activity_bottom_button_edit)
         bottomButton.setImage(R.mipmap.icon_pencil)
         bottomButton.setClickListener(View.OnClickListener {
-            RxBus.send(BottomEditButtonEvent())
+            RxBus.send(MyAddressProfileBottomButtonEvent.OnClickEditBottomButton())
             changeCompleteBottomButton()
         })
     }
@@ -149,7 +149,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         bottomButton.setText(R.string.my_address_profile_activity_bottom_button_complete)
         bottomButton.setImage(R.mipmap.icon_check_gray2)
         bottomButton.setClickListener(View.OnClickListener {
-            RxBus.send(BottomCompleteButtonEvent())
+            RxBus.send(MyAddressProfileBottomButtonEvent.OnClickCompleteBottomButton())
             changeEditBottomButton()
         })
     }
