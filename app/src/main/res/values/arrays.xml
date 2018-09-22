@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="address_book_sort_array">
-        <item>A-Z</item>
-        <item>よく送る順</item>
-    </string-array>
-</resources>

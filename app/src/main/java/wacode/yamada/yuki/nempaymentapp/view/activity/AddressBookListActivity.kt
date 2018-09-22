@@ -7,12 +7,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.PopupMenu
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.widget.ArrayAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_address_book_list.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
 import wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem
 import wacode.yamada.yuki.nempaymentapp.view.controller.AddressBookListController
 import wacode.yamada.yuki.nempaymentapp.view.custom_view.BackLayerSearchView
@@ -26,6 +29,7 @@ class AddressBookListActivity : BaseActivity() {
     private lateinit var viewModel: AddressBookListViewModel
     private lateinit var controller: AddressBookListController
     private val friendInfoList = ArrayList<FriendInfoItem>()
+    private var sortType: SortType = SortType.A_Z
 
     override fun setLayout() = R.layout.activity_address_book_list
 
@@ -36,11 +40,14 @@ class AddressBookListActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddressBookListViewModel::class.java)
         setupViewModelObserve()
 
-        setupViews()
+        setupAddressBookList()
+        setupBackLayerSerchView()
+        setupSortMenu()
+
         viewModel.getAllFriendInfo()
     }
 
-    private fun setupViews() {
+    private fun setupAddressBookList() {
         val dividerItemDecoration = DividerItemDecoration(addressRecyclerView.context, LinearLayoutManager(this).orientation)
         controller = AddressBookListController(object : AddressBookListController.OnAddressBookClickListener {
             override fun onClickItem(friendId: Long) {
@@ -53,7 +60,9 @@ class AddressBookListActivity : BaseActivity() {
             addItemDecoration(dividerItemDecoration)
             adapter = controller.adapter
         }
+    }
 
+    private fun setupBackLayerSerchView() {
         backLayerSearchView.setOnItemClickListener(object : BackLayerSearchView.OnItemClickListener {
             override fun onItemClicked(word: String, type: BackLayerSearchView.SearchType) {
                 friendInfoList.clear()
@@ -68,10 +77,33 @@ class AddressBookListActivity : BaseActivity() {
                 finish()
             }
         })
+    }
 
-        val adapter = ArrayAdapter.createFromResource(this, R.array.address_book_sort_array, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        sortSpinner.adapter = adapter
+    private fun setupSortMenu() {
+        sortIcon.setOnClickListener {
+            val popupMenu = PopupMenu(this, sortIcon)
+            popupMenu.menuInflater.inflate(R.menu.menue_address_book_sort, popupMenu.menu)
+
+            val menu = when (sortType) {
+                SortType.WELL_SEND -> popupMenu.menu.getItem(1)
+                else -> popupMenu.menu.getItem(0)
+            }
+
+            val spannableString = SpannableString(menu.title)
+            spannableString.setSpan(ForegroundColorSpan(getColorFromResource(R.color.nemGreen)), 0, spannableString.length, 0)
+            menu.title = spannableString
+
+            popupMenu.show()
+
+            popupMenu.setOnMenuItemClickListener {
+                sortType = when (it.itemId) {
+                    R.id.wll_send -> SortType.WELL_SEND
+                    else -> SortType.A_Z
+                }
+                true
+            }
+        }
+
     }
 
     private fun setupViewModelObserve() {
@@ -82,7 +114,7 @@ class AddressBookListActivity : BaseActivity() {
                 if (it) showProgress() else hideProgress()
             })
 
-                friendInfoLiveData.observe(this@AddressBookListActivity, Observer {
+            friendInfoLiveData.observe(this@AddressBookListActivity, Observer {
                 it ?: return@Observer
 
                 addressRecyclerView.visibility = View.VISIBLE
@@ -92,6 +124,11 @@ class AddressBookListActivity : BaseActivity() {
                 controller.setData(friendInfoList)
             })
         }
+    }
+
+    enum class SortType {
+        A_Z,
+        WELL_SEND
     }
 
     companion object {

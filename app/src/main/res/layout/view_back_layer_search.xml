@@ -88,8 +88,7 @@
                 android:textColor="@color/nemGreen"
                 app:chipBackgroundColor="@color/simpleBackground"
                 app:chipStrokeColor="@color/nemGreen"
-                app:chipStrokeWidth="1dp"
-                app:rippleColor="@color/nemGreen" />
+                app:chipStrokeWidth="1dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/localChip"
@@ -101,8 +100,7 @@
                 android:textColor="@color/textGray"
                 app:chipBackgroundColor="@color/simpleBackground"
                 app:chipStrokeColor="@color/textGray"
-                app:chipStrokeWidth="1dp"
-                app:rippleColor="@color/nemGreen" />
+                app:chipStrokeWidth="1dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/twitterChip"
@@ -113,8 +111,8 @@
                 android:textColor="@color/textGray"
                 app:chipBackgroundColor="@color/simpleBackground"
                 app:chipStrokeColor="@color/textGray"
-                app:chipStrokeWidth="1dp"
-                app:rippleColor="@color/nemGreen" />
+                app:chipStrokeWidth="1dp" />
+
         </com.google.android.material.chip.ChipGroup>
 
         <LinearLayout

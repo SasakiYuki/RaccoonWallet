@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/a_z"
+        android:title="@string/address_book_list_sort_first" />
+    <item
+        android:id="@+id/wll_send"
+        android:title="@string/address_book_list_sort_second" />
+</menu>

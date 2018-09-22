@@ -540,6 +540,8 @@
     <string name="address_book_list_search_chip_all">すべて</string>
     <string name="address_book_list_search_chip_local">ローカル</string>
     <string name="address_book_list_search_chip_twitter">Twitter</string>
+    <string name="address_book_list_sort_first">A-Z</string>
+    <string name="address_book_list_sort_second">よく送る順</string>
 
     <!-- CreateFriend -->
     <string name="create_friend_address_title">連絡先</string>
