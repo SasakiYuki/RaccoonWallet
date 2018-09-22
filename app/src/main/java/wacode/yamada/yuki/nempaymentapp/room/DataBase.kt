@@ -18,7 +18,7 @@ import wacode.yamada.yuki.nempaymentapp.room.wallet.WalletDao
         FriendIcon::class,
         FriendWallet::class,
         WalletInfo::class,
-        MyAddress::class), version = 4)
+        MyAddress::class), version = 5)
 abstract class DataBase : RoomDatabase() {
     abstract fun walletDao(): WalletDao
     abstract fun addressBookDao(): AddressBookDao

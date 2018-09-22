@@ -31,9 +31,9 @@ interface AddressBookDao {
     @Query("SELECT * FROM FriendIcon WHERE friendId = :friendId")
     fun getSingleFriendIcon(friendId: Long): Single<FriendIcon>
 
-    @Query("SELECT * FROM FriendInfo WHERE firstName LIKE :word OR firstNameRuby LIKE :word OR lastName LIKE :word OR lastNameRuby LIKE :word")
+    @Query("SELECT * FROM FriendInfo WHERE name LIKE :word OR nameRuby LIKE :word")
     fun findPatterMatchFriendInfoByName(word: String): Single<List<FriendInfo>>
 
-    @Query("SELECT * FROM FriendInfo WHERE( firstName LIKE :word OR firstNameRuby LIKE :word OR lastName LIKE :word OR lastNameRuby LIKE :word) AND isTwitterAuth = :isTwitterAuth")
+    @Query("SELECT * FROM FriendInfo WHERE(name LIKE :word OR nameRuby LIKE :word) AND isTwitterAuth = :isTwitterAuth")
     fun findFriendInfoByNameAndTwitterAuth(word: String, isTwitterAuth: Boolean): Single<List<FriendInfo>>
 }

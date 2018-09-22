@@ -9,10 +9,8 @@ import java.io.Serializable
 data class FriendInfo constructor(
         @PrimaryKey(autoGenerate = true)
         var id: Long = 0L,
-        var lastName: String = "",
-        var firstName: String = "",
-        var lastNameRuby: String = "",
-        var firstNameRuby: String = "",
+        var name: String = "",
+        var nameRuby: String = "",
         var phoneNumber: String = "",
         var mailAddress: String = "",
         var isTwitterAuth: Boolean = false

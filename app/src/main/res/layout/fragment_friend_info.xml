@@ -10,40 +10,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lastNameInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_normal"
-            android:layout_marginRight="@dimen/space_normal"
-            android:layout_marginTop="@dimen/space_normal">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/lastNameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/com_last_name"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_normal"
-            android:layout_marginRight="@dimen/space_normal"
-            android:layout_marginTop="@dimen/space_normal_half">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/lastNameRubyEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/com_last_name_ruby"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/firstNameInputLayout"
+            android:id="@+id/nameInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_normal"
@@ -54,12 +21,13 @@
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/com_fist_name"
+                android:hint="@string/com_name"
                 android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameRubyInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_normal"
@@ -67,10 +35,10 @@
             android:layout_marginTop="@dimen/space_normal_half">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/rubyEdiText"
+                android:id="@+id/nameRubyEdiText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/com_fist_name_ruby"
+                android:hint="@string/com_name_ruby"
                 android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>

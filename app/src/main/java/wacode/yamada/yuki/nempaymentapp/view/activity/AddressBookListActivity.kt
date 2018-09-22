@@ -41,7 +41,7 @@ class AddressBookListActivity : BaseActivity() {
         setupViewModelObserve()
 
         setupAddressBookList()
-        setupBackLayerSerchView()
+        setupBackLayerSearchView()
         setupSortMenu()
 
         viewModel.getAllFriendInfo()
@@ -62,7 +62,7 @@ class AddressBookListActivity : BaseActivity() {
         }
     }
 
-    private fun setupBackLayerSerchView() {
+    private fun setupBackLayerSearchView() {
         backLayerSearchView.setOnItemClickListener(object : BackLayerSearchView.OnItemClickListener {
             override fun onItemClicked(word: String, type: BackLayerSearchView.SearchType) {
                 friendInfoList.clear()

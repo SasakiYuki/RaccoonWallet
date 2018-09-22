@@ -221,7 +221,7 @@
                     android:id="@+id/nameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/com_fist_name"
+                    android:hint="@string/com_name"
                     android:inputType="text"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -237,7 +237,7 @@
                     android:id="@+id/rubyEdiText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/com_fist_name_ruby"
+                    android:hint="@string/com_name_ruby"
                     android:inputType="text"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>

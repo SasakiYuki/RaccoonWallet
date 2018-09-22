@@ -45,7 +45,7 @@
                 android:layout_marginLeft="-10dp"
                 android:layout_toRightOf="@id/circleImageView"
                 android:src="@mipmap/icon_twitter_authmark"
-                android:visibility="@{friendInfoItem.isTwitterAuth ? android.view.View.VISIBLE : android.view.View.GONE}" />
+                android:visibility="@{friendInfoItem.friendInfo.twitterAuth ? android.view.View.VISIBLE : android.view.View.GONE}" />
         </RelativeLayout>
 
         <TextView
@@ -55,7 +55,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/space_normal"
             android:layout_toRightOf="@id/iconRootView"
-            android:text="@{friendInfoItem.getFullName}"
+            android:text="@{friendInfoItem.friendInfo.name}"
             android:textColor="@color/textGray"
             android:textSize="15sp"
             tools:text="Hoge hoge" />

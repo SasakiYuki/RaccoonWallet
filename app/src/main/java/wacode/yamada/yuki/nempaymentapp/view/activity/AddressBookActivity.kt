@@ -54,8 +54,8 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
     }
 
     override fun onFriendInfoChanged(friendInfo: FriendInfo) {
-        friendNameTextView.text = friendInfo.lastName + " " + friendInfo.firstName
-        friendNameRubyTextView.text = friendInfo.lastNameRuby + " " + friendInfo.firstNameRuby
+        friendNameTextView.text = friendInfo.name
+        friendNameRubyTextView.text = friendInfo.nameRuby
         twitterAuthIcon.visibility = if (friendInfo.isTwitterAuth) View.VISIBLE else View.GONE
     }
 

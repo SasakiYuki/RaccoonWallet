@@ -23,10 +23,8 @@
     <string name="com_success">成功</string>
     <string name="com_failed">失敗</string>
     <string name="com_coming_soon">Coming Soon!</string>
-    <string name="com_last_name">名字</string>
-    <string name="com_last_name_ruby">みょうじ</string>
-    <string name="com_fist_name">名前</string>
-    <string name="com_fist_name_ruby">なまえ</string>
+    <string name="com_name">名前</string>
+    <string name="com_name_ruby">なまえ</string>
     <string name="com_phone_number">電話番号</string>
     <string name="com_mail_address">メールアドレス</string>
     <string name="com_add">追加</string>
