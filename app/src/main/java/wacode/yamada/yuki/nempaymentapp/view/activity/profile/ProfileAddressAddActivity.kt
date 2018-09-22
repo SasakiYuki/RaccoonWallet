@@ -25,6 +25,9 @@ class ProfileAddressAddActivity : BaseActivity() {
     private val type by lazy {
         intent.getSerializableExtra(INTENT_TYPE) as ProfileAddressAddType
     }
+    private val walletInfo by lazy {
+        intent.getSerializableExtra(ARGS_WALLET_INFO) as WalletInfo?
+    }
 
     override fun setLayout() = R.layout.activity_profile_address_add
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +35,7 @@ class ProfileAddressAddActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setupViewModel()
         setupViews()
+        setupWalletInfoForViews()
     }
 
     private fun setupViewModel() {
@@ -76,6 +80,16 @@ class ProfileAddressAddActivity : BaseActivity() {
 
     private fun getOrange() = getColorFromResource(R.color.nemOrange)
 
+    private fun setupWalletInfoForViews() {
+        walletInfo?.let {
+            nameEditText.setText(it.walletName)
+            addressEditText.setText(it.walletAddress)
+            if (it.isMaster) {
+                materialButton.performClick()
+            }
+        }
+    }
+
     private fun createWalletInfoFromEditText() {
         val walletName = nameEditText.text.toString().remove("-")
         val address = addressEditText.text.toString()
@@ -105,17 +119,20 @@ class ProfileAddressAddActivity : BaseActivity() {
     companion object {
         private const val INTENT_TYPE = "intent_type"
         const val INTENT_WALLET_INFO = "intent_wallet_info"
+        private const val ARGS_WALLET_INFO = "args_wallet_info"
         const val REQUEST_CODE = 1010
-        fun createIntent(context: Context, type: ProfileAddressAddType = ProfileAddressAddType.MyProfile): Intent {
+        fun createIntent(context: Context, type: ProfileAddressAddType = ProfileAddressAddType.MyProfile, walletInfo: WalletInfo? = null): Intent {
             return Intent(context, ProfileAddressAddActivity::class.java).apply {
                 putExtra(INTENT_TYPE, type)
+                putExtra(ARGS_WALLET_INFO, walletInfo)
             }
         }
     }
 
     enum class ProfileAddressAddType {
         MyProfile,
-        Other
+        Other,
+        Edit
     }
 }
 

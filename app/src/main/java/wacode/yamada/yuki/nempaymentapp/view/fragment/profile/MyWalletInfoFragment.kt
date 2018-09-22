@@ -16,6 +16,7 @@ import wacode.yamada.yuki.nempaymentapp.extentions.copyClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.ProfileAddressAddActivity
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoClickListener
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoListController
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
@@ -70,7 +71,7 @@ class MyWalletInfoFragment : BaseFragment() {
                     when (itemId) {
                         R.id.copy -> onClickCopyRow(walletInfo)
                         R.id.send -> onClickSendRow(walletInfo)
-                        R.id.edit -> Unit
+                        R.id.edit -> onClickEditRow(walletInfo)
                         R.id.delete -> Unit
                     }
                     fragment.dismiss()
@@ -94,6 +95,14 @@ class MyWalletInfoFragment : BaseFragment() {
                     MyAddressProfileActivity.RESULT_PAYMENT_ADDRESS,
                     walletInfo.walletAddress))
             finish()
+        }
+    }
+
+    private fun onClickEditRow(walletInfo: WalletInfo) {
+        activity?.let {
+            startActivity(ProfileAddressAddActivity.createIntent(it,
+                    ProfileAddressAddActivity.ProfileAddressAddType.Edit,
+                    walletInfo))
         }
     }
 
