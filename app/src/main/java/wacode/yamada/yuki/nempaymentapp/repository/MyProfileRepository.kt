@@ -41,6 +41,6 @@ class MyProfileRepository(val context: Context) {
     }
 
     companion object {
-        private const val KEY_PREF_MY_PROFILE = "key_pref_my_profile"
+        const val KEY_PREF_MY_PROFILE = "key_pref_my_profile"
     }
 }
