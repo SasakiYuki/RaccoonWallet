@@ -23,4 +23,11 @@ class MyAddressRepository {
             it.onSuccess(myAddressDao.findAll().size)
         }
     }
+
+    fun delete(myAddress: MyAddress): Single<MyAddress> {
+        return Single.create {
+            myAddressDao.delete(myAddress)
+            it.onSuccess(myAddress)
+        }
+    }
 }

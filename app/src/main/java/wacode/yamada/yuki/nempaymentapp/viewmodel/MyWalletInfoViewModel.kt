@@ -15,15 +15,17 @@ import javax.inject.Inject
 class MyWalletInfoViewModel @Inject constructor(private val store: MyWalletInfoStore) : BaseViewModel() {
     val myAddressLiveData: MutableLiveData<MyAddress>
             = MutableLiveData()
-    val walletInfoLiveData: MutableLiveData<Unit>
+    val walletInfoUpdatedLiveData: MutableLiveData<Unit>
             = MutableLiveData()
     val walletInfoItems: ArrayList<WalletInfo> = ArrayList()
+    private val myAddresses: ArrayList<MyAddress> = ArrayList()
 
     init {
         store.getter.myAddressObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    myAddresses.add(it)
                     myAddressLiveData.value = it
                 })
                 .let {
@@ -34,7 +36,16 @@ class MyWalletInfoViewModel @Inject constructor(private val store: MyWalletInfoS
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     walletInfoItems.add(it)
-                    walletInfoLiveData.value = Unit
+                    walletInfoUpdatedLiveData.value = Unit
+                })
+                .let {
+                    addDisposable(it)
+                }
+        store.getter.deleteMyAddressObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    findAllMyAddress()
                 })
                 .let {
                     addDisposable(it)
@@ -47,7 +58,7 @@ class MyWalletInfoViewModel @Inject constructor(private val store: MyWalletInfoS
                     } else if (it is WalletInfoEvent.UpdateWalletInfo) {
                         mergeWalletInfo(it.walletInfo)
                     }
-                    walletInfoLiveData.value = Unit
+                    walletInfoUpdatedLiveData.value = Unit
                 }.let { addDisposable(it) }
     }
 
@@ -64,11 +75,21 @@ class MyWalletInfoViewModel @Inject constructor(private val store: MyWalletInfoS
     }
 
     fun findAllMyAddress() {
+        myAddresses.clear()
+        walletInfoItems.clear()
         store.actionCreator.findAllMyAddress()
     }
 
     fun selectWalletInfo(id: Long) {
         store.actionCreator.selectWalletInfo(id)
+    }
+
+    fun deleteMyAddress(walletInfo: WalletInfo) {
+        myAddresses.firstOrNull({
+            walletInfo.id == it.walletInfoId
+        })?.let {
+            store.actionCreator.deleteMyAddress(it)
+        }
     }
 
     fun sendBusMasterWallet(walletInfo: WalletInfo) {

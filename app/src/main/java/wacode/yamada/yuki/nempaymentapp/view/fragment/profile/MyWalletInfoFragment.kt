@@ -51,7 +51,7 @@ class MyWalletInfoFragment : BaseFragment() {
                 it ?: return@Observer
                 myWalletInfoViewModel.selectWalletInfo(it.walletInfoId)
             })
-            walletInfoLiveData.observe(this@MyWalletInfoFragment, Observer {
+            walletInfoUpdatedLiveData.observe(this@MyWalletInfoFragment, Observer {
                 it ?: return@Observer
                 controller.setData(myWalletInfoViewModel.walletInfoItems)
                 myWalletInfoViewModel.walletInfoItems
@@ -72,7 +72,7 @@ class MyWalletInfoFragment : BaseFragment() {
                         R.id.copy -> onClickCopyRow(walletInfo)
                         R.id.send -> onClickSendRow(walletInfo)
                         R.id.edit -> onClickEditRow(walletInfo)
-                        R.id.delete -> Unit
+                        R.id.delete -> onClickDeleteRow(walletInfo)
                     }
                     fragment.dismiss()
                 }
@@ -104,6 +104,10 @@ class MyWalletInfoFragment : BaseFragment() {
                     ProfileAddressAddActivity.ProfileAddressAddType.Edit,
                     walletInfo))
         }
+    }
+
+    private fun onClickDeleteRow(walletInfo: WalletInfo) {
+        myWalletInfoViewModel.deleteMyAddress(walletInfo)
     }
 
     companion object {
