@@ -10,8 +10,11 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_my_wallet_info.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
+import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoClickListener
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoListController
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
+import wacode.yamada.yuki.nempaymentapp.view.fragment.BottomSheetListDialogFragment
 import wacode.yamada.yuki.nempaymentapp.viewmodel.MyWalletInfoViewModel
 import javax.inject.Inject
 
@@ -56,7 +59,20 @@ class MyWalletInfoFragment : BaseFragment() {
 
     private fun setupViews() {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        controller = WalletInfoListController()
+        controller = WalletInfoListController(object : WalletInfoClickListener {
+            override fun onRowClick(walletInfo: WalletInfo) {
+                val fragment = BottomSheetListDialogFragment.newInstance(getString(R.string.bottom_my_wallet_info_copy), R.menu.bottom_my_wallet_info) { fragment, itemId ->
+                    when (itemId) {
+                        R.id.copy -> Unit
+                        R.id.send -> Unit
+                        R.id.edit -> Unit
+                        R.id.delete -> Unit
+                    }
+                    fragment.dismiss()
+                }
+                fragment.show(activity?.supportFragmentManager, fragment.tag)
+            }
+        })
         recyclerView.adapter = controller.adapter
     }
 

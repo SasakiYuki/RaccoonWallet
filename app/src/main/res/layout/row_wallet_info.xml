@@ -7,11 +7,16 @@
         <variable
             name="walletInfo"
             type="wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{clickListener}">
 
 
         <View
@@ -30,10 +35,10 @@
             android:id="@+id/mainTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="@{walletInfo.walletName}"
             android:textColor="@color/textBlack"
             android:textSize="16sp"
-            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@id/subTextView"
             app:layout_constraintLeft_toLeftOf="@id/container"
             app:layout_constraintTop_toTopOf="@id/container"
@@ -43,25 +48,25 @@
             android:id="@+id/subTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="39dp"
             android:layout_marginTop="8dp"
             android:text="@{walletInfo.displayWalletAddress()}"
             android:textColor="@color/textBlack"
             android:textSize="14sp"
-            app:layout_constraintLeft_toLeftOf="@id/container"
             app:layout_constraintBottom_toTopOf="@id/divider"
-            android:layout_marginBottom="39dp"
+            app:layout_constraintLeft_toLeftOf="@id/container"
             tools:text="NCTYCQ-E6AI8D-IRHPHE-PBSVDB-OQFSHX-\nGBVF4N-IJYH" />
 
         <ImageView
             android:id="@+id/masterContainer"
             android:layout_width="64dp"
             android:layout_height="16dp"
-            android:contentDescription="@null"
             android:layout_marginTop="8dp"
+            android:contentDescription="@null"
             android:src="@drawable/border_around_gray"
             android:visibility="@{walletInfo.master ? android.view.View.VISIBLE : android.view.View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/subTextView"
-            app:layout_constraintLeft_toLeftOf="@id/container"/>
+            app:layout_constraintLeft_toLeftOf="@id/container"
+            app:layout_constraintTop_toBottomOf="@id/subTextView" />
 
         <ImageView
             android:id="@+id/masterIcon"
