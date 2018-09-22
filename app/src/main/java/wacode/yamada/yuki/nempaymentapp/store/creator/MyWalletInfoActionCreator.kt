@@ -4,10 +4,10 @@ import io.reactivex.Observable.empty
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import wacode.yamada.yuki.nempaymentapp.flux.DisposableMapper
-import wacode.yamada.yuki.nempaymentapp.repository.MyWalletInfoRepository
 import wacode.yamada.yuki.nempaymentapp.store.type.MyWalletInfoActionType
+import wacode.yamada.yuki.nempaymentapp.usecase.MyWalletInfoUseCase
 
-class MyWalletInfoActionCreator(private val repository: MyWalletInfoRepository,
+class MyWalletInfoActionCreator(private val useCase: MyWalletInfoUseCase,
                                 private val dispatch: (MyWalletInfoActionType) -> Unit) : DisposableMapper() {
 
     private val myAddressSubject: PublishSubject<Unit> = PublishSubject.create()
@@ -16,7 +16,7 @@ class MyWalletInfoActionCreator(private val repository: MyWalletInfoRepository,
     init {
         myAddressSubject
                 .flatMap {
-                    repository.findAllMyAddress()
+                    useCase.findAllMyAddress()
                             .doOnNext {
                                 dispatch(MyWalletInfoActionType.ReceiveMyAddress(it))
                             }
@@ -31,7 +31,7 @@ class MyWalletInfoActionCreator(private val repository: MyWalletInfoRepository,
 
         selectWalletInfoSubject
                 .flatMap {
-                    repository.select(it)
+                    useCase.select(it)
                             .toObservable()
                             .doOnNext {
                                 dispatch(MyWalletInfoActionType.SelectWalletInfo(it))

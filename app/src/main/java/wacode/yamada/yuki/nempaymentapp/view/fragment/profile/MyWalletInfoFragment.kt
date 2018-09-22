@@ -45,6 +45,11 @@ class MyWalletInfoFragment : BaseFragment() {
             walletInfoLiveData.observe(this@MyWalletInfoFragment, Observer {
                 it ?: return@Observer
                 controller.setData(myWalletInfoViewModel.walletInfoItems)
+                myWalletInfoViewModel.walletInfoItems
+                        .firstOrNull { it.isMaster }
+                        ?.let {
+                            myWalletInfoViewModel.sendBusMasterWallet(it)
+                        }
             })
         }
     }
@@ -59,7 +64,7 @@ class MyWalletInfoFragment : BaseFragment() {
         fun newInstance(): MyWalletInfoFragment {
             return MyWalletInfoFragment().apply {
                 val args = Bundle()
-                args.putInt(ARG_CONTENTS_NAME_ID, R.string.my_address_profile_activity_tab_profile)
+                args.putInt(ARG_CONTENTS_NAME_ID, R.string.my_address_profile_activity_tab_wallet)
                 arguments = args
             }
         }

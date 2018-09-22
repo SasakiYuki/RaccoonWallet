@@ -6,10 +6,7 @@ import wacode.yamada.yuki.nempaymentapp.di.activity.AddressBookActivityModule
 import wacode.yamada.yuki.nempaymentapp.di.activity.MainActivityModule
 import wacode.yamada.yuki.nempaymentapp.di.activity.MyAddressProfileActivityModule
 import wacode.yamada.yuki.nempaymentapp.di.activity.SendActivityModule
-import wacode.yamada.yuki.nempaymentapp.di.fragment.FriendInfoModule
-import wacode.yamada.yuki.nempaymentapp.di.fragment.HomeBuildersModule
-import wacode.yamada.yuki.nempaymentapp.di.fragment.MyWalletInfoModule
-import wacode.yamada.yuki.nempaymentapp.di.fragment.SendBuildersModule
+import wacode.yamada.yuki.nempaymentapp.di.fragment.*
 import wacode.yamada.yuki.nempaymentapp.view.activity.*
 import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.profile.ProfileAddressAddActivity
@@ -48,6 +45,6 @@ internal abstract class ActivityBuildersModule {
     abstract fun bindProfileAddressAddActivity(): ProfileAddressAddActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [(MyAddressProfileActivityModule::class), (MyWalletInfoModule::class)])
+    @ContributesAndroidInjector(modules = [(MyAddressProfileActivityModule::class), (MyWalletInfoModule::class), MyProfileInfoModule::class])
     abstract fun bindMyAddressProfileActivity(): MyAddressProfileActivity
 }
