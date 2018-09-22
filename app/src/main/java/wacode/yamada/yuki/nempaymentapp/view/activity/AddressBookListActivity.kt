@@ -17,6 +17,7 @@ import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
 import wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem
+import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfoSortType
 import wacode.yamada.yuki.nempaymentapp.view.controller.AddressBookListController
 import wacode.yamada.yuki.nempaymentapp.view.custom_view.BackLayerSearchView
 import wacode.yamada.yuki.nempaymentapp.viewmodel.AddressBookListViewModel
@@ -29,7 +30,7 @@ class AddressBookListActivity : BaseActivity() {
     private lateinit var viewModel: AddressBookListViewModel
     private lateinit var controller: AddressBookListController
     private val friendInfoList = ArrayList<FriendInfoItem>()
-    private var sortType: SortType = SortType.A_Z
+    private var sortType: FriendInfoSortType = FriendInfoSortType.NAME
 
     override fun setLayout() = R.layout.activity_address_book_list
 
@@ -44,7 +45,7 @@ class AddressBookListActivity : BaseActivity() {
         setupBackLayerSearchView()
         setupSortMenu()
 
-        viewModel.getAllFriendInfo()
+        viewModel.findFriendInfo()
     }
 
     private fun setupAddressBookList() {
@@ -70,7 +71,7 @@ class AddressBookListActivity : BaseActivity() {
                 addressRecyclerView.visibility = View.GONE
                 searchEmptyMessage.visibility = View.VISIBLE
 
-                viewModel.findPatterMatchFriendInfoByNameAndType(word, type)
+                viewModel.findFriendInfo(word, type, sortType)
             }
 
             override fun onFinishClick() {
@@ -85,7 +86,7 @@ class AddressBookListActivity : BaseActivity() {
             popupMenu.menuInflater.inflate(R.menu.menue_address_book_sort, popupMenu.menu)
 
             val menu = when (sortType) {
-                SortType.WELL_SEND -> popupMenu.menu.getItem(1)
+                FriendInfoSortType.WELL_SEND -> popupMenu.menu.getItem(1)
                 else -> popupMenu.menu.getItem(0)
             }
 
@@ -97,8 +98,8 @@ class AddressBookListActivity : BaseActivity() {
 
             popupMenu.setOnMenuItemClickListener {
                 sortType = when (it.itemId) {
-                    R.id.wll_send -> SortType.WELL_SEND
-                    else -> SortType.A_Z
+                    R.id.wll_send -> FriendInfoSortType.WELL_SEND
+                    else -> FriendInfoSortType.NAME
                 }
                 true
             }
@@ -108,12 +109,6 @@ class AddressBookListActivity : BaseActivity() {
 
     private fun setupViewModelObserve() {
         viewModel.run {
-            loadingStatus.observe(this@AddressBookListActivity, Observer {
-                it ?: return@Observer
-
-                if (it) showProgress() else hideProgress()
-            })
-
             friendInfoLiveData.observe(this@AddressBookListActivity, Observer {
                 it ?: return@Observer
 
@@ -124,11 +119,6 @@ class AddressBookListActivity : BaseActivity() {
                 controller.setData(friendInfoList)
             })
         }
-    }
-
-    enum class SortType {
-        A_Z,
-        WELL_SEND
     }
 
     companion object {

@@ -12,5 +12,5 @@ class CreateAddressBookUseCase @Inject constructor(private val addressBookReposi
 
     fun insertFriendIcon(entity: FriendIcon) = addressBookRepository.insertFriendIcon(entity)
 
-    fun getLatestFriendInfo() = addressBookRepository.getLatestFriendInfo()
+    fun getLatestFriendInfo() = addressBookRepository.queryLatestFriendInfo()
 }

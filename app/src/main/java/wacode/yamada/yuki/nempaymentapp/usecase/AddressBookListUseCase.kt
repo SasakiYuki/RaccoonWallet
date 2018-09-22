@@ -3,21 +3,22 @@ package wacode.yamada.yuki.nempaymentapp.usecase
 import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.repository.AddressBookRepository
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
+import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfoSortType
 import wacode.yamada.yuki.nempaymentapp.view.custom_view.BackLayerSearchView
 import javax.inject.Inject
 
 
 class AddressBookListUseCase @Inject constructor(private val addressBookRepository: AddressBookRepository) {
     fun getFriendIconPath(friendId: Long) = addressBookRepository
-            .getFriendIconById(friendId)
+            .queryFriendIconById(friendId)
             .map { it.iconPath }
-            .onErrorReturnItem("")
+            .onErrorReturnItem("")!!
 
-    fun findFriendInfoByNameAndSearchType(word: String, type: BackLayerSearchView.SearchType): Single<List<FriendInfo>> {
-        return when (type) {
-            BackLayerSearchView.SearchType.TWITTER -> addressBookRepository.findFriendInfoByNameAndTwitterAuth(word, true)
-            BackLayerSearchView.SearchType.LOCAL -> addressBookRepository.findFriendInfoByNameAndTwitterAuth(word, false)
-            else -> addressBookRepository.findPatterMatchFriendInfoByName(word)
+    fun findFriendInfo(queryName: String, searchType: BackLayerSearchView.SearchType, sortType: FriendInfoSortType): Single<List<FriendInfo>> {
+        return when (searchType) {
+            BackLayerSearchView.SearchType.TWITTER -> addressBookRepository.queryFriendInfo(queryName, true, sortType)
+            BackLayerSearchView.SearchType.LOCAL -> addressBookRepository.queryFriendInfo(queryName, false, sortType)
+            else -> addressBookRepository.queryFriendInfo(queryName, sortType)
         }
     }
 }

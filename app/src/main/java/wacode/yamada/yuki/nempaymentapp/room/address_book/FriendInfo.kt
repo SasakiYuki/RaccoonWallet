@@ -15,3 +15,8 @@ data class FriendInfo constructor(
         var mailAddress: String = "",
         var isTwitterAuth: Boolean = false
 ) : Serializable
+
+enum class FriendInfoSortType {
+        NAME,
+        WELL_SEND
+}
