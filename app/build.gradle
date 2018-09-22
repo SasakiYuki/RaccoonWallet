@@ -1,6 +1,7 @@
 def androidSupportVersion = '24.2.0'
 def lifecycle_version = "1.1.1"
 def dagger_version = "2.13"
+def room_version = "1.1.1"
 def deep_link_dispatch_version = "3.1.1"
 
 apply plugin: 'com.android.application'
@@ -69,10 +70,10 @@ dependencies {
     implementation 'com.android.support:design:28.0.0-alpha1'
     kapt 'com.android.databinding:compiler:3.1.1'
 
-    implementation "android.arch.persistence.room:runtime:1.0.0"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-    kapt "android.arch.persistence.room:compiler:1.0.0"
-    implementation "android.arch.persistence.room:rxjava2:1.0.0"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
     implementation "android.arch.lifecycle:livedata:$lifecycle_version"
     implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
@@ -156,6 +157,10 @@ kotlin {
     experimental {
         coroutines "enable"
     }
+}
+
+androidExtensions {
+    experimental = true
 }
 
 apply plugin: 'com.google.gms.google-services'

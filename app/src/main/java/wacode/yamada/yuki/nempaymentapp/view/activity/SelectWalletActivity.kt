@@ -12,11 +12,11 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
 import wacode.yamada.yuki.nempaymentapp.model.SimpleWalletEntity
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
+import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletListController
 
@@ -138,7 +138,7 @@ class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListCl
     override fun onClickRow(id: Long) {
         WalletManager.saveSelectWallet(applicationContext, id)
         renderList()
-        RxBusProvider.rxBus.send(RxBusEvent.SELECT)
+        RxBus.send(RxBusEvent.SELECT)
     }
 
     companion object {

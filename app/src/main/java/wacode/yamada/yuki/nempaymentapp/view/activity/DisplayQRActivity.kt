@@ -15,8 +15,8 @@ import wacode.yamada.yuki.nempaymentapp.extentions.generateQRCode
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQRInnerEntity
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import java.text.NumberFormat
 
@@ -53,7 +53,7 @@ class DisplayQRActivity : BaseActivity() {
     }
 
     private fun setupRxBus() {
-        RxBusProvider.rxBus
+        RxBus
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { it ->

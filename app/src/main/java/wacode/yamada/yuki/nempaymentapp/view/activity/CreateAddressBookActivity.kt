@@ -51,7 +51,7 @@ class CreateAddressBookActivity : BaseActivity() {
                         Picasso.with(this).load(uriString).into(circleImageView)
                         circleImageView.tag = uriString
 
-                        selectIconRootView.visibility = View.GONE
+                        selectIconRootView.visibility = View.VISIBLE
                     }
                 }
             }

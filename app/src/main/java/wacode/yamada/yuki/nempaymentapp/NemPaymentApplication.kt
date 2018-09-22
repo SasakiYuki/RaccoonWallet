@@ -14,7 +14,9 @@ import io.fabric.sdk.android.Fabric
 import wacode.yamada.yuki.nempaymentapp.di.DaggerAppComponent
 import wacode.yamada.yuki.nempaymentapp.extentions.objectOf
 import wacode.yamada.yuki.nempaymentapp.room.DataBase
-import wacode.yamada.yuki.nempaymentapp.room.migrations.Migration1To2
+import wacode.yamada.yuki.nempaymentapp.room.migrations.migration1To2
+import wacode.yamada.yuki.nempaymentapp.room.migrations.migration2To3
+import wacode.yamada.yuki.nempaymentapp.room.migrations.migration3To4
 import javax.inject.Inject
 
 
@@ -36,7 +38,10 @@ class NemPaymentApplication : Application(), HasActivityInjector {
 
         AndroidThreeTen.init(this)
 
-        database = Room.databaseBuilder(this, objectOf<DataBase>(), "room_nem_payment_app.db").addMigrations(Migration1To2()).build()
+        database = Room.databaseBuilder(this, objectOf<DataBase>(), "room_nem_payment_app.db").
+                addMigrations(migration1To2, migration2To3, migration3To4)
+                .build()
+
         FirebaseAnalytics.getInstance(this)
 
         Fabric.with(this, Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build())

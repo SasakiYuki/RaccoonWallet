@@ -51,16 +51,5 @@
             android:textColor="@color/hintGray"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="@dimen/space_normal_half"
-            android:gravity="center"
-            android:text="@string/create_friend_wallet_empty_message"
-            android:textColor="@color/hintGray"
-            android:textSize="14sp" />
     </LinearLayout>
 </RelativeLayout>

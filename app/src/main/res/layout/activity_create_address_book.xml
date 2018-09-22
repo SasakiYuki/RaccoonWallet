@@ -64,9 +64,10 @@
 
                         <LinearLayout
                             android:id="@+id/selectIconRootView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
                             android:layout_gravity="center"
+                            android:background="@drawable/foreground_circle_icon_gray_scale"
                             android:gravity="center"
                             android:orientation="vertical">
 

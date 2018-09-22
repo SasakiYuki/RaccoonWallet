@@ -9,20 +9,20 @@ class CreateFriendInfoFragment : BaseFragment() {
     override fun layoutRes() = R.layout.fragment_friend_info
 
     fun getAndCheckFriendInfo(): FriendInfo? {
-        return if (checkAllValidation()) {
+        return if (validateAllInfo()) {
             createPrams()
         } else {
             null
         }
     }
 
-    private fun checkAllValidation(): Boolean {
+    private fun validateAllInfo(): Boolean {
         return when {
             lastNameEditText.text.isNullOrEmpty() -> {
                 lastNameInputLayout.error = getString(R.string.create_friend_address_input_error)
                 false
             }
-            firstNameEditText.text.isNullOrEmpty() -> {
+            nameEditText.text.isNullOrEmpty() -> {
                 firstNameInputLayout.error = getString(R.string.create_friend_address_input_error)
                 false
             }
@@ -32,11 +32,10 @@ class CreateFriendInfoFragment : BaseFragment() {
 
     private fun createPrams(): FriendInfo {
         return FriendInfo(
-                id = Math.random().toLong(),
                 lastName = lastNameEditText.text.toString(),
                 lastNameRuby = lastNameRubyEditText.text.toString(),
-                firstName = firstNameEditText.text.toString(),
-                firstNameRuby = firstNameRubyEditText.text.toString(),
+                firstName = nameEditText.text.toString(),
+                firstNameRuby = rubyEdiText.text.toString(),
                 phoneNumber = phoneNumberEditText.text.toString(),
                 mailAddress = mailAddressEditText.text.toString()
         )

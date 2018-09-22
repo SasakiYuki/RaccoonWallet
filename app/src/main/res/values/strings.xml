@@ -456,6 +456,9 @@
     <string name="my_address_profile_activity_title_initial">GUEST\nゲスト</string>
     <string name="my_address_profile_activity_title_initial_guest">GUEST</string>
     <string name="my_address_profile_activity_title_initial_bottom_guest">ゲスト</string>
+    <string name="my_address_profile_activity_bottom_button_add">追加</string>
+    <string name="my_address_profile_activity_bottom_button_edit">編集</string>
+    <string name="my_address_profile_activity_bottom_button_complete">完了</string>
 
     <!-- WalletSettingFragment -->
     <string name="wallet_setting_fragment_title">ウォレットの設定</string>
@@ -487,8 +490,23 @@
     <string name="wallet_detail_public_key">公開鍵</string>
     <string name="wallet_detail_public_key_empty">未取得</string>
 
+    <!-- MyProfileInfoFragment -->
+    <string name="my_profile_info_fragment_friend">フレンド</string>
+    <string name="my_profile_info_fragment_wallet">ウォレット</string>
+    <string name="my_profile_info_fragment_guest">GUEST</string>
+    <string name="my_profile_info_fragment_guest_sub">ゲスト</string>
+    <string name="my_profile_info_fragment_setting_wallet">マスターウォレットが設定されていません。</string>
+    <string name="my_profile_info_fragment_change_user_screen">背景を変更</string>
+    <string name="my_profile_info_fragment_change_user_icon">アイコンを変更</string>
+    <string name="my_profile_info_fragment_alert_dialog_title">マークについて</string>
+    <string name="my_profile_info_fragment_alert_dialog_message">王冠マーク(master)は、すべての通貨・ウォレットの中でも個人の代表的なアドレスを示しています。</string>
+
     <!-- WalletBackupActivity -->
     <string name="wallet_backup_activity_title">バックアップ</string>
+    
+    <!-- MyAddressProfileActivity -->
+    <string name="my_address_profile_activity_empty_title">リストは、まだ空っぽです</string>
+    <string name="my_address_profile_activity_empty_description">ここは、自分のウォレットを整理する場所です。 ボタンからウォレットを追加したり、プロフィールタブから 自分のデータを入力できるよ。</string>
 
     <!-- WalletRemoveActivity -->
     <string name="wallet_remove_activity_title">削除</string>
@@ -551,7 +569,6 @@
     <string name="create_friend_wallet_count_title">ウォレット</string>
     <string name="create_friend_address_input_title">プロフィールを入力しましょう！</string>
     <string name="create_friend_wallet_empty_title">リストは、まだ空っぽです</string>
-    <string name="create_friend_wallet_empty_message">ここは、自分のウォレットを整理する場所です。ボタンからウォレットを追加したり、プロフィールタブから自分のデータを入力できるよ。</string>
     <string name="create_friend_address_input_error">入力してください</string>
 
     <!-- AddressBook -->
