@@ -22,9 +22,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
+        android:id="@+id/leftRootView"
         android:layout_width="60dp"
         android:layout_height="30dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="?selectableItemBackground"
         android:clickable="true"
         android:elevation="20dp"
         app:layout_constraintBottom_toBottomOf="@id/materialButton"
@@ -81,9 +82,10 @@
         tools:src="@drawable/ic_check_black_24dp" />
 
     <View
+        android:id="@+id/rightRootView"
         android:layout_width="60dp"
         android:layout_height="30dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="?selectableItemBackground"
         android:clickable="true"
         android:elevation="20dp"
         app:layout_constraintBottom_toBottomOf="@id/materialButton"

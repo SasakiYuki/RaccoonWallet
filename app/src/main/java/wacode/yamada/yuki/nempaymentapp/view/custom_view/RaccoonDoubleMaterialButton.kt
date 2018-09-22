@@ -9,6 +9,8 @@ import kotlinx.android.synthetic.main.view_raccoon_double_material_button.view.*
 import wacode.yamada.yuki.nempaymentapp.R
 
 class RaccoonDoubleMaterialButton(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : ConstraintLayout(context, attrs, defStyleAttr) {
+    private var listener: OnDoubleButtonClickListener? = null
+
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context?) : this(context, null, 0)
 
@@ -17,16 +19,36 @@ class RaccoonDoubleMaterialButton(context: Context?, attrs: AttributeSet?, defSt
         context?.obtainStyledAttributes(attrs, R.styleable.RaccoonDoubleMaterialButton, defStyleAttr, 0)?.let {
             try {
                 view.leftTextView.text = it.getString(R.styleable.RaccoonDoubleMaterialButton_leftText)
+
                 val leftResourceId = it.getResourceId(R.styleable.RaccoonDoubleMaterialButton_leftSrc, R.mipmap.icon_harvest_small)
                 view.leftImageView.setImageDrawable(ContextCompat.getDrawable(context, leftResourceId))
+
                 view.rightTextView.text = it.getString(R.styleable.RaccoonDoubleMaterialButton_rightText)
+
                 val rightResourceId = it.getResourceId(R.styleable.RaccoonDoubleMaterialButton_rightSrc, R.mipmap.icon_harvest_small)
                 view.rightImageView.setImageDrawable(ContextCompat.getDrawable(context, rightResourceId))
+
+                view.leftRootView.setOnClickListener {
+                    listener?.onLeftClick()
+                }
+
+                view.rightRootView.setOnClickListener {
+                    listener?.onRightClick()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
                 it.recycle()
             }
         }
+    }
+
+    fun setOnClickListener(listener: OnDoubleButtonClickListener) {
+        this.listener = listener
+    }
+
+    interface OnDoubleButtonClickListener {
+        fun onLeftClick()
+        fun onRightClick()
     }
 }

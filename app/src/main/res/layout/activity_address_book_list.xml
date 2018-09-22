@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,15 +9,23 @@
         android:id="@+id/backLayerSearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:title="@string/address_book_list_activity_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_below="@id/backLayerSearchView"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backLayerSearchView">
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/addressListTopView"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="@drawable/background_top_round_white"
@@ -27,13 +35,14 @@
                 android:id="@+id/sortIcon"
                 android:layout_width="28dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:layout_marginRight="18dp"
                 android:foreground="?selectableItemBackground"
-                android:src="@mipmap/icon_sort" />
+                android:src="@mipmap/icon_sort"
+                app:layout_constraintBottom_toBottomOf="@id/addressListTopView"
+                app:layout_constraintRight_toRightOf="@id/addressListTopView"
+                app:layout_constraintTop_toTopOf="@id/addressListTopView" />
 
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/addressRecyclerView"
@@ -51,4 +60,16 @@
             android:textColor="@color/textGray"
             android:visibility="gone" />
     </LinearLayout>
-</RelativeLayout>
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
+        android:id="@+id/materialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:leftSrc="@drawable/icon_transaction_check"
+        app:leftText="@string/com_select"
+        app:rightSrc="@mipmap/icon_plus"
+        app:rightText="@string/com_add" />
+</android.support.constraint.ConstraintLayout>

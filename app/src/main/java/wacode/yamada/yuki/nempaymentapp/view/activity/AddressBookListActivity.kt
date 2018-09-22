@@ -1,5 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -16,10 +17,12 @@ import kotlinx.android.synthetic.main.activity_address_book_list.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
+import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfoSortType
 import wacode.yamada.yuki.nempaymentapp.view.controller.AddressBookListController
 import wacode.yamada.yuki.nempaymentapp.view.custom_view.BackLayerSearchView
+import wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
 import wacode.yamada.yuki.nempaymentapp.viewmodel.AddressBookListViewModel
 import javax.inject.Inject
 
@@ -44,8 +47,21 @@ class AddressBookListActivity : BaseActivity() {
         setupAddressBookList()
         setupBackLayerSearchView()
         setupSortMenu()
+        setupMaterialButton()
 
         viewModel.findFriendInfo()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CODE_ADD_FRIEND -> {
+                    friendInfoList.clear()
+                    viewModel.findFriendInfo()
+                }
+            }
+        }
     }
 
     private fun setupAddressBookList() {
@@ -121,7 +137,21 @@ class AddressBookListActivity : BaseActivity() {
         }
     }
 
+    private fun setupMaterialButton() {
+        materialButton.setOnClickListener(object : RaccoonDoubleMaterialButton.OnDoubleButtonClickListener {
+            override fun onLeftClick() {
+                showToast("Coming Soon")
+            }
+
+            override fun onRightClick() {
+                startActivityForResult(CreateAddressBookActivity.createIntent(this@AddressBookListActivity), REQUEST_CODE_ADD_FRIEND)
+            }
+        })
+    }
+
     companion object {
+        private const val REQUEST_CODE_ADD_FRIEND = 1001
+
         fun createIntent(context: Context): Intent {
             val intent = Intent(context, AddressBookListActivity::class.java)
             return intent
