@@ -64,8 +64,8 @@ class AddressBookListActivity : BaseActivity() {
     }
 
     private fun setupBackLayerSearchView() {
-        backLayerSearchView.setOnItemClickListener(object : BackLayerSearchView.OnItemClickListener {
-            override fun onItemClicked(word: String, type: BackLayerSearchView.SearchType) {
+        backLayerSearchView.setOnItemClickListener(object : BackLayerSearchView.OnItemStateChangeListener {
+            override fun onItemChanged(word: String, type: BackLayerSearchView.SearchType) {
                 friendInfoList.clear()
 
                 addressRecyclerView.visibility = View.GONE

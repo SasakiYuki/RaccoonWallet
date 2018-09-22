@@ -1,6 +1,8 @@
 package wacode.yamada.yuki.nempaymentapp.view.custom_view
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -46,8 +48,20 @@ class BackLayerSearchView(context: Context?, attrs: AttributeSet?, defStyleAttr:
         chip.setTextColor(context.getColorFromResource(colorRes))
     }
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        searchButton.setOnClickListener { listener.onItemClicked(searchEditText.text.toString(), getSearchType()) }
+    fun setOnItemClickListener(listener: OnItemStateChangeListener) {
+        searchButton.setOnClickListener { listener.onItemChanged(searchEditText.text.toString(), getSearchType()) }
+
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                listener.onItemChanged(text.toString(), getSearchType())
+            }
+        })
 
         chipGroup.setOnCheckedChangeListener { _, id ->
             when (id) {
@@ -55,23 +69,22 @@ class BackLayerSearchView(context: Context?, attrs: AttributeSet?, defStyleAttr:
                     setChipColors(allChip, R.color.nemGreen)
                     setChipColors(localChip, R.color.textGray)
                     setChipColors(twitterChip, R.color.textGray)
-                    listener.onItemClicked(searchEditText.text.toString(), getSearchType())
+                    listener.onItemChanged(searchEditText.text.toString(), getSearchType())
                 }
                 R.id.localChip -> {
                     setChipColors(allChip, R.color.textGray)
                     setChipColors(localChip, R.color.nemGreen)
                     setChipColors(twitterChip, R.color.textGray)
-                    listener.onItemClicked(searchEditText.text.toString(), getSearchType())
+                    listener.onItemChanged(searchEditText.text.toString(), getSearchType())
                 }
                 R.id.twitterChip -> {
                     setChipColors(allChip, R.color.textGray)
                     setChipColors(localChip, R.color.textGray)
                     setChipColors(twitterChip, R.color.nemGreen)
-                    listener.onItemClicked(searchEditText.text.toString(), getSearchType())
+                    listener.onItemChanged(searchEditText.text.toString(), getSearchType())
                 }
             }
         }
-
 
 
         backButton.setOnClickListener { listener.onFinishClick() }
@@ -85,8 +98,8 @@ class BackLayerSearchView(context: Context?, attrs: AttributeSet?, defStyleAttr:
         }
     }
 
-    interface OnItemClickListener {
-        fun onItemClicked(word: String, type: SearchType)
+    interface OnItemStateChangeListener {
+        fun onItemChanged(word: String, type: SearchType)
 
         fun onFinishClick()
     }
