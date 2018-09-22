@@ -1,5 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -118,8 +119,9 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             controller.setData(list)
         }
     }
+
     override fun onHeaderClick() {
-        startActivity(MyAddressProfileActivity.createIntent(this))
+        startActivityForResult(MyAddressProfileActivity.createIntent(this), MyAddressProfileActivity.REQUEST_CODE_MY_ADDRESS_PROFILE_ACTIVITY)
     }
 
     override fun onRowClick(drawerEntity: DrawerEntity) {
@@ -317,6 +319,12 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         (fragment as SendTopFragment).putQRScanItems(paymentQREntity)
     }
 
+    private fun changeSendTopFragment(address: String) {
+        viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
+        val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
+        (fragment as SendTopFragment).putAddressEditText(address)
+    }
+
     override fun onQrScanResult(result: BarcodeResult?) {
         result?.let {
             if (it.text.contains("addr")) {
@@ -332,7 +340,19 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             if (resultCode == RESULT_OK) {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
+        } else if (requestCode == MyAddressProfileActivity.REQUEST_CODE_MY_ADDRESS_PROFILE_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                data?.let {
+                    onMyAddressProfileResult(it)
+                }
+            }
         }
+    }
+
+    private fun onMyAddressProfileResult(intent: Intent) {
+        closeDrawerAndMoveHome()
+        val address = intent.getStringExtra(MyAddressProfileActivity.RESULT_PAYMENT_ADDRESS)
+        changeSendTopFragment(address)
     }
 
     override fun onPause() {

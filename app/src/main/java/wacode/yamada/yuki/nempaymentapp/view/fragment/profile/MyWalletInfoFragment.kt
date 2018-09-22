@@ -1,8 +1,10 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment.profile
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -10,7 +12,10 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_my_wallet_info.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.extentions.copyClipBoard
+import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoClickListener
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoListController
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
@@ -63,8 +68,8 @@ class MyWalletInfoFragment : BaseFragment() {
             override fun onRowClick(walletInfo: WalletInfo) {
                 val fragment = BottomSheetListDialogFragment.newInstance(getString(R.string.bottom_my_wallet_info_copy), R.menu.bottom_my_wallet_info) { fragment, itemId ->
                     when (itemId) {
-                        R.id.copy -> Unit
-                        R.id.send -> Unit
+                        R.id.copy -> onClickCopyRow(walletInfo)
+                        R.id.send -> onClickSendRow(walletInfo)
                         R.id.edit -> Unit
                         R.id.delete -> Unit
                     }
@@ -74,6 +79,22 @@ class MyWalletInfoFragment : BaseFragment() {
             }
         })
         recyclerView.adapter = controller.adapter
+    }
+
+    private fun onClickCopyRow(walletInfo: WalletInfo) {
+        context?.let {
+            it.showToast(R.string.my_wallet_info_fragment_address_copied_toast)
+            walletInfo.walletAddress.copyClipBoard(it)
+        }
+    }
+
+    private fun onClickSendRow(walletInfo: WalletInfo) {
+        activity?.let {
+            it.setResult(Activity.RESULT_OK, Intent().putExtra(
+                    MyAddressProfileActivity.RESULT_PAYMENT_ADDRESS,
+                    walletInfo.walletAddress))
+            finish()
+        }
     }
 
     companion object {
