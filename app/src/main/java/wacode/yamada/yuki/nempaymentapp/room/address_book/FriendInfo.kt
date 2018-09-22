@@ -8,12 +8,12 @@ import java.io.Serializable
 @Entity
 data class FriendInfo constructor(
         @PrimaryKey(autoGenerate = true)
-        val id: Long,
-        val lastName: String = "",
-        val firstName: String = "",
-        val lastNameRuby: String = "",
-        val firstNameRuby: String = "",
-        val phoneNumber: String = "",
-        val mailAddress: String = "",
-        val isTwitterAuth: Boolean = false
+        var id: Long = 0L,
+        var lastName: String = "",
+        var firstName: String = "",
+        var lastNameRuby: String = "",
+        var firstNameRuby: String = "",
+        var phoneNumber: String = "",
+        var mailAddress: String = "",
+        var isTwitterAuth: Boolean = false
 ) : Serializable

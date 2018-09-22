@@ -50,35 +50,49 @@ class FriendInfoFragment : BaseFragment() {
             friendInfoLiveData.observe(this@FriendInfoFragment, Observer {
                 it ?: return@Observer
                 setupViews(it)
-                (activity as OnFriendDataChangeCallback).onFriendInfoChanged(it)
+                if (activity is OnFriendDataChangeCallback) {
+                    (activity as OnFriendDataChangeCallback).onFriendInfoChanged(it)
+                }
             })
         }
     }
 
     private fun setupViews(friendInfo: FriendInfo) {
-        lastNameEditText.setText(friendInfo.lastName)
-        lastNameEditText.isEnabled = false
-        lastNameEditText.setTextColor(getColor(context!!, R.color.textBlack))
+        lastNameEditText.apply {
+            setText(friendInfo.lastName)
+            isEnabled = false
+            setTextColor(getColor(context!!, R.color.textBlack))
+        }
 
-        lastNameRubyEditText.setText(friendInfo.lastNameRuby)
-        lastNameRubyEditText.isEnabled = false
-        lastNameRubyEditText.setTextColor(getColor(context!!, R.color.textBlack))
 
-        nameEditText.setText(friendInfo.firstName)
-        nameEditText.isEnabled = false
-        nameEditText.setTextColor(getColor(context!!, R.color.textBlack))
+        lastNameRubyEditText.apply {
+            setText(friendInfo.lastNameRuby)
+            isEnabled = false
+            setTextColor(getColor(context!!, R.color.textBlack))
+        }
+        firstNameEditText.apply {
+            setText(friendInfo.firstName)
+            isEnabled = false
+            setTextColor(getColor(context!!, R.color.textBlack))
+        }
 
-        rubyEdiText.setText(friendInfo.firstNameRuby)
-        rubyEdiText.isEnabled = false
-        rubyEdiText.setTextColor(getColor(context!!, R.color.textBlack))
+        firstNameRubyEditText.apply {
+            setText(friendInfo.firstNameRuby)
+            isEnabled = false
+            setTextColor(getColor(context!!, R.color.textBlack))
+        }
 
-        phoneNumberEditText.setText(friendInfo.phoneNumber)
-        phoneNumberEditText.isEnabled = false
-        phoneNumberEditText.setTextColor(getColor(context!!, R.color.textBlack))
+        phoneNumberEditText.apply {
+            setText(friendInfo.phoneNumber)
+            isEnabled = false
+            setTextColor(getColor(context!!, R.color.textBlack))
+        }
 
-        mailAddressEditText.setText(friendInfo.mailAddress)
-        mailAddressEditText.isEnabled = false
-        mailAddressEditText.setTextColor(getColor(context!!, R.color.textBlack))
+        mailAddressEditText.apply {
+            setText(friendInfo.mailAddress)
+            isEnabled = false
+            setTextColor(getColor(context!!, R.color.textBlack))
+        }
     }
 
     companion object {
