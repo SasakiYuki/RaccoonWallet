@@ -14,9 +14,6 @@ interface AddressBookDao {
     fun insertOrReplace(friendInfo: FriendInfo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOrReplace(friendWallet: FriendWallet)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrReplace(friendAddress: FriendAddress)
 
     @Query("SELECT * FROM FriendInfo")
