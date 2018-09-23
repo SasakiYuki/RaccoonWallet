@@ -18,12 +18,8 @@ class CreateFriendInfoFragment : BaseFragment() {
 
     private fun validateAllInfo(): Boolean {
         return when {
-            lastNameEditText.text.isNullOrEmpty() -> {
-                lastNameInputLayout.error = getString(R.string.create_friend_address_input_error)
-                false
-            }
             nameEditText.text.isNullOrEmpty() -> {
-                firstNameInputLayout.error = getString(R.string.create_friend_address_input_error)
+                nameInputLayout.error = getString(R.string.create_friend_address_input_error)
                 false
             }
             else -> true
@@ -32,10 +28,8 @@ class CreateFriendInfoFragment : BaseFragment() {
 
     private fun createPrams(): FriendInfo {
         return FriendInfo(
-                lastName = lastNameEditText.text.toString(),
-                lastNameRuby = lastNameRubyEditText.text.toString(),
-                firstName = nameEditText.text.toString(),
-                firstNameRuby = rubyEdiText.text.toString(),
+                name = nameEditText.text.toString(),
+                nameRuby = nameRubyEdiText.text.toString(),
                 phoneNumber = phoneNumberEditText.text.toString(),
                 mailAddress = mailAddressEditText.text.toString()
         )

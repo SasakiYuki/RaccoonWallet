@@ -24,6 +24,7 @@ import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.CreateAddressBookActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.TransactionActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleCallbackDoubleInterface
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleNoInterface
@@ -168,7 +169,8 @@ class HomeFragment : BaseFragment() {
         }
 
         showHarvestButton.setOnClickListener {
-            context?.showToast(R.string.com_coming_soon)
+            startActivity(CreateAddressBookActivity.createIntent(context!!))
+//            context?.showToast(R.string.com_coming_soon)
         }
     }
 

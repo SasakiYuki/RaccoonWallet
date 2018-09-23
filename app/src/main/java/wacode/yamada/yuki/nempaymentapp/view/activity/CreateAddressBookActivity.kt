@@ -16,6 +16,7 @@ import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
+import wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendInfoFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.CreateFriendWalletFragment
@@ -64,6 +65,7 @@ class CreateAddressBookActivity : BaseActivity() {
                 it ?: return@Observer
                 if (it) showProgress() else {
                     hideProgress()
+                    setResult(Activity.RESULT_OK)
                     finish()
                 }
             })
@@ -75,14 +77,24 @@ class CreateAddressBookActivity : BaseActivity() {
             insertFriendData()
         }
 
+        addressRootButton.setClickListener(View.OnClickListener {
+            insertFriendData()
+        })
+
         twitterCooperationButton.setOnClickListener {
             //todo twitterAuthの追加
             showToast(R.string.com_coming_soon)
         }
 
-        walletRootButton.setOnClickListener {
-            //todo  doubleButtonの追加
-        }
+        walletRootButton.setOnClickListener(object : RaccoonDoubleMaterialButton.OnDoubleButtonClickListener {
+            override fun onLeftClick() {
+                showToast("Coming Soon")
+            }
+
+            override fun onRightClick() {
+                insertFriendData()
+            }
+        })
 
         backImageView.setOnClickListener { finish() }
 

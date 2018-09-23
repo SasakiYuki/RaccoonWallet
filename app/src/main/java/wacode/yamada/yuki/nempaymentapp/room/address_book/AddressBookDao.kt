@@ -11,24 +11,29 @@ import io.reactivex.Single
 interface AddressBookDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(friendInfo: FriendInfo)
+    fun insertOrReplace(friendInfo: FriendInfo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(friendWallet: FriendWallet)
+    fun insertOrReplace(friendWallet: FriendWallet)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(friendIcon: FriendIcon)
+    fun insertOrReplace(friendIcon: FriendIcon)
 
     @Query("SELECT * FROM FriendInfo")
-    fun findAllFriendInfo(): Single<List<FriendInfo>>
+    fun queryAllFriendInfo(): Single<List<FriendInfo>>
 
     @Query("SELECT * FROM FriendInfo ORDER BY id DESC LIMIT 1")
-    fun getLatestFriendInfo(): Single<FriendInfo>
+    fun queryLatestFriendInfo(): Single<FriendInfo>
 
     @Query("SELECT * FROM FriendInfo WHERE id = :friendId")
-    fun getSingleFriendInfo(friendId: Long): Single<FriendInfo>
+    fun queryFriendInfo(friendId: Long): Single<FriendInfo>
 
     @Query("SELECT * FROM FriendIcon WHERE friendId = :friendId")
-    fun getSingleFriendIcon(friendId: Long): Single<FriendIcon>
+    fun queryFriendIcon(friendId: Long): Single<FriendIcon>
 
+    @Query("SELECT * FROM FriendInfo WHERE name LIKE :queryName ORDER BY name")
+    fun queryFriendInfoOrderByName(queryName: String): Single<List<FriendInfo>>
+
+    @Query("SELECT * FROM FriendInfo WHERE(name LIKE :queryName) AND isTwitterAuth = :isTwitterAuth ORDER BY name")
+    fun queryFriendInfoOrderByName(queryName: String, isTwitterAuth: Boolean): Single<List<FriendInfo>>
 }

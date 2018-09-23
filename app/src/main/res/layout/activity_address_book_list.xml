@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/simpleBackground">
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.BackLayerSearchView
+        android:id="@+id/backLayerSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/address_book_list_activity_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/backLayerSearchView"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backLayerSearchView">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/addressListTopView"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/background_top_round_white"
+            android:elevation="2dp">
+
+            <ImageView
+                android:id="@+id/sortIcon"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="18dp"
+                android:foreground="?selectableItemBackground"
+                android:src="@mipmap/icon_sort"
+                app:layout_constraintBottom_toBottomOf="@id/addressListTopView"
+                app:layout_constraintRight_toRightOf="@id/addressListTopView"
+                app:layout_constraintTop_toTopOf="@id/addressListTopView" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/addressRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/searchEmptyMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="@string/address_book_list_search_empty_message"
+            android:textColor="@color/textGray"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
+        android:id="@+id/materialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:leftSrc="@drawable/icon_transaction_check"
+        app:leftText="@string/com_select"
+        app:rightSrc="@mipmap/icon_plus"
+        app:rightText="@string/com_add" />
+</android.support.constraint.ConstraintLayout>

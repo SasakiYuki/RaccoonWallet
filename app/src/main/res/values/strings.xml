@@ -23,10 +23,8 @@
     <string name="com_success">成功</string>
     <string name="com_failed">失敗</string>
     <string name="com_coming_soon">Coming Soon!</string>
-    <string name="com_last_name">名字</string>
-    <string name="com_last_name_ruby">みょうじ</string>
-    <string name="com_fist_name">名前</string>
-    <string name="com_fist_name_ruby">なまえ</string>
+    <string name="com_name">名前</string>
+    <string name="com_name_ruby">なまえ</string>
     <string name="com_phone_number">電話番号</string>
     <string name="com_mail_address">メールアドレス</string>
     <string name="com_add">追加</string>
@@ -550,6 +548,16 @@
     <string name="donate_detail_fragment_rhime_message">Raccoonの名付け親。デザイナー。\nこのアプリふざけてんなぁと思ったら、この人のせい。\nラクーンにおけるデザインの大体は、この人が作った。\n使いやすいアプリの構造を考えたりする情報アーキテクチャも兼任した。\n\n・総合コンテンツデザイナー\n・Android / iOSアプリのIA/UI/UXデザイン\n・ビジュアルデザイン/ブランディング（ロゴ・サイト）</string>
     <string name="donate_detail_fragment_ios_message">Raccoonの命綱。iOSエンジニア。最強の後衛。\n将棋で例えるなら飛車。\nラクーンを林檎の楽園へといざなう。\n\n・Android→iOS版アプリ移植・開発主任\n・nem-kotlinの創造主。</string>
     <string name="donate_detail_fragment_donate">Donate</string>
+
+    <!-- AddressBookListActivity -->
+    <string name="address_book_list_activity_title">フレンドリスト</string>
+    <string name="address_book_list_search_friend_hint">フレンドの検索</string>
+    <string name="address_book_list_search_empty_message">検索結果がありません</string>
+    <string name="address_book_list_search_chip_all">すべて</string>
+    <string name="address_book_list_search_chip_local">ローカル</string>
+    <string name="address_book_list_search_chip_twitter">Twitter</string>
+    <string name="address_book_list_sort_first">A-Z</string>
+    <string name="address_book_list_sort_second">よく送る順</string>
 
     <!-- CreateFriend -->
     <string name="create_friend_address_title">連絡先</string>

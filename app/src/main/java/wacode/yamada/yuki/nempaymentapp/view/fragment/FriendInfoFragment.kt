@@ -58,26 +58,14 @@ class FriendInfoFragment : BaseFragment() {
     }
 
     private fun setupViews(friendInfo: FriendInfo) {
-        lastNameEditText.apply {
-            setText(friendInfo.lastName)
+        nameEditText.apply {
+            setText(friendInfo.name)
             isEnabled = false
             setTextColor(getColor(context!!, R.color.textBlack))
         }
 
-
-        lastNameRubyEditText.apply {
-            setText(friendInfo.lastNameRuby)
-            isEnabled = false
-            setTextColor(getColor(context!!, R.color.textBlack))
-        }
-        firstNameEditText.apply {
-            setText(friendInfo.firstName)
-            isEnabled = false
-            setTextColor(getColor(context!!, R.color.textBlack))
-        }
-
-        firstNameRubyEditText.apply {
-            setText(friendInfo.firstNameRuby)
+        nameRubyEdiText.apply {
+            setText(friendInfo.name)
             isEnabled = false
             setTextColor(getColor(context!!, R.color.textBlack))
         }

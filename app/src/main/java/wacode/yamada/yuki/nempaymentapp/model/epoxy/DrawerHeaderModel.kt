@@ -36,10 +36,14 @@ abstract class DrawerHeaderModel : DataBindingEpoxyModel() {
 
             it.root.apply {
                 findViewById<ImageView>(R.id.userScreenImageView)?.let {
-                    Picasso.with(context).load(screenPath).into(it)
+                    if (screenPath.isNotEmpty()) {
+                        Picasso.with(context).load(screenPath).into(it)
+                    }
                 }
                 findViewById<CircleImageView>(R.id.iconImageView)?.let {
-                    Picasso.with(context).load(iconPath).into(it)
+                    if (iconPath.isNotEmpty()) {
+                        Picasso.with(context).load(iconPath).into(it)
+                    }
                 }
             }
         }

@@ -45,6 +45,10 @@ internal abstract class ActivityBuildersModule {
     abstract fun bindProfileAddressAddActivity(): ProfileAddressAddActivity
 
     @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun bindAddressBookListActivity(): AddressBookListActivity
+
+    @ActivityScope
     @ContributesAndroidInjector(modules = [(MyAddressProfileActivityModule::class), (MyWalletInfoModule::class), MyProfileInfoModule::class])
     abstract fun bindMyAddressProfileActivity(): MyAddressProfileActivity
 }

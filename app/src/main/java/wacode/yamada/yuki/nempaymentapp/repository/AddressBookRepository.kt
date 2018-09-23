@@ -1,10 +1,12 @@
 package wacode.yamada.yuki.nempaymentapp.repository
 
 import io.reactivex.Completable
+import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.room.address_book.AddressBookDao
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendIcon
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
+import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfoSortType
 import javax.inject.Inject
 
 
@@ -17,19 +19,39 @@ class AddressBookRepository @Inject constructor() {
 
     fun insertFriendInfo(entity: FriendInfo): Completable {
         return Completable.fromAction {
-            addressBookDao.insert(entity)
+            addressBookDao.insertOrReplace(entity)
         }
     }
 
     fun insertFriendIcon(entity: FriendIcon): Completable {
         return Completable.fromAction {
-            addressBookDao.insert(entity)
+            addressBookDao.insertOrReplace(entity)
         }
     }
 
-    fun getLatestFriendInfo() = addressBookDao.getLatestFriendInfo()
+    fun queryLatestFriendInfo() = addressBookDao.queryLatestFriendInfo()
 
-    fun getFriendInfoById(friendId: Long) = addressBookDao.getSingleFriendInfo(friendId)
+    fun queryFriendInfoById(friendId: Long) = addressBookDao.queryFriendInfo(friendId)
 
-    fun getFriendIconById(friendId: Long) = addressBookDao.getSingleFriendIcon(friendId)
+    fun queryFriendIconById(friendId: Long) = addressBookDao.queryFriendIcon(friendId)
+
+    fun queryFriendInfo(queryName: String, sortType: FriendInfoSortType): Single<List<FriendInfo>> {
+        val patternMathText = "%$queryName%"
+
+        //todo sortTypeの追加
+        return when (sortType) {
+            FriendInfoSortType.WELL_SEND -> addressBookDao.queryFriendInfoOrderByName(patternMathText)
+            else -> addressBookDao.queryFriendInfoOrderByName(patternMathText)
+        }
+    }
+
+    fun queryFriendInfo(queryName: String, isTwitterAuth: Boolean, sortType: FriendInfoSortType): Single<List<FriendInfo>> {
+        val patternMathText = "%$queryName%"
+
+        //todo sortTypeの追加
+        return when (sortType) {
+            FriendInfoSortType.WELL_SEND -> addressBookDao.queryFriendInfoOrderByName(patternMathText, isTwitterAuth)
+            else -> addressBookDao.queryFriendInfoOrderByName(patternMathText, isTwitterAuth)
+        }
+    }
 }

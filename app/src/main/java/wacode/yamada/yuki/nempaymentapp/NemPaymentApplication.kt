@@ -17,6 +17,7 @@ import wacode.yamada.yuki.nempaymentapp.room.DataBase
 import wacode.yamada.yuki.nempaymentapp.room.migrations.migration1To2
 import wacode.yamada.yuki.nempaymentapp.room.migrations.migration2To3
 import wacode.yamada.yuki.nempaymentapp.room.migrations.migration3To4
+import wacode.yamada.yuki.nempaymentapp.room.migrations.migration4To5
 import javax.inject.Inject
 
 
@@ -38,8 +39,8 @@ class NemPaymentApplication : Application(), HasActivityInjector {
 
         AndroidThreeTen.init(this)
 
-        database = Room.databaseBuilder(this, objectOf<DataBase>(), "room_nem_payment_app.db").
-                addMigrations(migration1To2, migration2To3, migration3To4)
+        database = Room.databaseBuilder(this, objectOf<DataBase>(), "room_nem_payment_app.db")
+                .addMigrations(migration1To2, migration2To3, migration3To4, migration4To5)
                 .build()
 
         FirebaseAnalytics.getInstance(this)
