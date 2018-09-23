@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_create_address_book.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.ProfileAddressAddActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
@@ -55,6 +57,14 @@ class CreateAddressBookActivity : BaseActivity() {
                         selectIconRootView.visibility = View.VISIBLE
                     }
                 }
+                ProfileAddressAddActivity.REQUEST_CODE -> {
+                    val item = data?.getSerializableExtra(ProfileAddressAddActivity.INTENT_WALLET_INFO) as WalletInfo
+                    val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.createAddressBookViewPager + ":" + CreateFriendWalletFragment.PAGE_POSITION)
+
+                    if (fragment != null) {
+                        (fragment as CreateFriendWalletFragment).onListItemChanged(item)
+                    }
+                }
             }
         }
     }
@@ -88,7 +98,7 @@ class CreateAddressBookActivity : BaseActivity() {
 
         walletRootButton.setOnClickListener(object : RaccoonDoubleMaterialButton.OnDoubleButtonClickListener {
             override fun onLeftClick() {
-                showToast("Coming Soon")
+                startActivityForResult(ProfileAddressAddActivity.createIntent(this@CreateAddressBookActivity), ProfileAddressAddActivity.REQUEST_CODE)
             }
 
             override fun onRightClick() {
@@ -142,12 +152,17 @@ class CreateAddressBookActivity : BaseActivity() {
             val createFriendWalletFragment = fragment1 as CreateFriendWalletFragment
             val createFriendInfoFragment = fragment2 as CreateFriendInfoFragment
 
+            val walletList = createFriendWalletFragment.walletList
             val friendInfo = createFriendInfoFragment.getAndCheckFriendInfo()
 
-            friendInfo?.let { friendInfo ->
+            if (friendInfo != null && walletList.isNotEmpty()) {
                 val uri = circleImageView.tag?.let { it as String } ?: run { "" }
                 friendInfo.iconPath = uri
-                viewModel.insertFriendData(friendInfo)
+
+
+                viewModel.insertFriendData(friendInfo, walletList)
+            } else {
+                showToast(R.string.create_friend_input_error_message)
             }
         }
     }

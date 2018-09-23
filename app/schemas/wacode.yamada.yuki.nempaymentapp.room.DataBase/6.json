@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "5d53a4b2b02971d9238e3f3fd4da3c82",
+    "identityHash": "aa3b6f72d95dc0182c4ae78019d6ee10",
     "entities": [
       {
         "tableName": "Wallet",
@@ -229,11 +229,37 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "FriendAddress",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`walletInfoId` INTEGER NOT NULL, `friendId` INTEGER NOT NULL, PRIMARY KEY(`walletInfoId`))",
+        "fields": [
+          {
+            "fieldPath": "walletInfoId",
+            "columnName": "walletInfoId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "friendId",
+            "columnName": "friendId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "walletInfoId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5d53a4b2b02971d9238e3f3fd4da3c82\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"aa3b6f72d95dc0182c4ae78019d6ee10\")"
     ]
   }
 }
