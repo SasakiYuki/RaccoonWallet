@@ -47,3 +47,11 @@ val migration4To5 = object : Migration(4, 5) {
         database.execSQL("DROP TABLE IF EXISTS `$tempFriendInfoName`")
     }
 }
+
+val migration5To6 = object : Migration(5, 6) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("DROP TABLE IF EXISTS $FRIEND_INFO_NAME")
+        database.execSQL("DROP TABLE IF EXISTS $FRIEND_ICON_NAME")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `$FRIEND_INFO_NAME` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `nameRuby` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `mailAddress` TEXT NOT NULL, `isTwitterAuth` INTEGER NOT NULL, `iconPath` TEXT NOT NULL, `sendCount` INTEGER NOT NULL)")
+    }
+}

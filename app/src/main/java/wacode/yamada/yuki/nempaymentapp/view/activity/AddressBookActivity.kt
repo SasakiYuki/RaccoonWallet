@@ -49,14 +49,20 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
 
         setupViewPager()
         setupButtons()
-
-        viewModel.getFriendData(friendId)
     }
 
     override fun onFriendInfoChanged(friendInfo: FriendInfo) {
         friendNameTextView.text = friendInfo.name
         friendNameRubyTextView.text = friendInfo.nameRuby
         twitterAuthIcon.visibility = if (friendInfo.isTwitterAuth) View.VISIBLE else View.GONE
+
+        if (friendInfo.iconPath.isNotEmpty()) {
+            Picasso.with(this@AddressBookActivity)
+                    .load(friendInfo.iconPath)
+                    .placeholder(R.mipmap.icon_default_profile)
+                    .error(R.mipmap.icon_default_profile)
+                    .into(circleImageView)
+        }
     }
 
     private fun setupViewModelObserve() {
@@ -64,16 +70,6 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
             loadingStatus.observe(this@AddressBookActivity, Observer {
                 it ?: return@Observer
                 if (it) showProgress() else hideProgress()
-            })
-
-            friendIconLiveData.observe(this@AddressBookActivity, Observer {
-                it ?: return@Observer
-
-                Picasso.with(this@AddressBookActivity)
-                        .load(it.iconPath)
-                        .placeholder(R.mipmap.icon_default_profile)
-                        .error(R.mipmap.icon_default_profile)
-                        .into(circleImageView)
             })
         }
     }

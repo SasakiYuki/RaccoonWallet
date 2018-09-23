@@ -4,7 +4,6 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.room.address_book.AddressBookDao
-import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendIcon
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfoSortType
 import javax.inject.Inject
@@ -23,17 +22,7 @@ class AddressBookRepository @Inject constructor() {
         }
     }
 
-    fun insertFriendIcon(entity: FriendIcon): Completable {
-        return Completable.fromAction {
-            addressBookDao.insertOrReplace(entity)
-        }
-    }
-
-    fun queryLatestFriendInfo() = addressBookDao.queryLatestFriendInfo()
-
     fun queryFriendInfoById(friendId: Long) = addressBookDao.queryFriendInfo(friendId)
-
-    fun queryFriendIconById(friendId: Long) = addressBookDao.queryFriendIcon(friendId)
 
     fun queryFriendInfo(queryName: String, sortType: FriendInfoSortType): Single<List<FriendInfo>> {
         val patternMathText = "%$queryName%"

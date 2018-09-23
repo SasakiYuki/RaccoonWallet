@@ -16,20 +16,11 @@ interface AddressBookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrReplace(friendWallet: FriendWallet)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOrReplace(friendIcon: FriendIcon)
-
     @Query("SELECT * FROM FriendInfo")
     fun queryAllFriendInfo(): Single<List<FriendInfo>>
 
-    @Query("SELECT * FROM FriendInfo ORDER BY id DESC LIMIT 1")
-    fun queryLatestFriendInfo(): Single<FriendInfo>
-
     @Query("SELECT * FROM FriendInfo WHERE id = :friendId")
     fun queryFriendInfo(friendId: Long): Single<FriendInfo>
-
-    @Query("SELECT * FROM FriendIcon WHERE friendId = :friendId")
-    fun queryFriendIcon(friendId: Long): Single<FriendIcon>
 
     @Query("SELECT * FROM FriendInfo WHERE name LIKE :queryName ORDER BY name")
     fun queryFriendInfoOrderByName(queryName: String): Single<List<FriendInfo>>

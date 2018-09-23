@@ -21,10 +21,7 @@ class AddressBookListViewModel @Inject constructor(private val useCase: AddressB
                 .flatMapObservable {
                     Observable.fromIterable(it)
                 }
-                .flatMapSingle { friendInfo ->
-                    useCase.getFriendIconPath(friendInfo.id)
-                            .map { FriendInfoItem(friendInfo = friendInfo, iconPath = it) }
-                }
+                .map { FriendInfoItem(friendInfo = it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

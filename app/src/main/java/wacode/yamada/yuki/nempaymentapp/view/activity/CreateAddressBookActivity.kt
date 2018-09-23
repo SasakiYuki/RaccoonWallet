@@ -145,8 +145,9 @@ class CreateAddressBookActivity : BaseActivity() {
             val friendInfo = createFriendInfoFragment.getAndCheckFriendInfo()
 
             friendInfo?.let { friendInfo ->
-                val uri = circleImageView.tag?.let { it as String } ?: run { null }
-                viewModel.insertFriendData(uri, friendInfo)
+                val uri = circleImageView.tag?.let { it as String } ?: run { "" }
+                friendInfo.iconPath = uri
+                viewModel.insertFriendData(friendInfo)
             }
         }
     }
