@@ -33,4 +33,7 @@ interface AddressBookDao {
 
     @Query("SELECT * FROM FriendAddress WHERE friendId = :friendId")
     fun queryFriendAddress(friendId: Long): Single<List<FriendAddress>>
+
+    @Query("DELETE FROM FriendAddress WHERE walletInfoId = :walletInfoId")
+    fun removeFriendAddress(walletInfoId: Long)
 }

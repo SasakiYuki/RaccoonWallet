@@ -66,4 +66,10 @@ class AddressBookRepository @Inject constructor() {
     }
 
     fun queryFriendAddress(friendId: Long) = addressBookDao.queryFriendAddress(friendId)
+
+    fun removeFriendAddress(walletInfoId: Long): Completable {
+        return Completable.fromAction {
+            addressBookDao.removeFriendAddress(walletInfoId)
+        }
+    }
 }

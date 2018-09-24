@@ -17,12 +17,9 @@ class FriendWalletViewModel @Inject constructor(private val useCase: AddressBook
     val walletInfoLiveData: MutableLiveData<WalletInfo> = MutableLiveData()
 
     fun queryWalletInfo(friendId: Long) {
-        useCase.queryFriendAddress(friendId)
-                .flatMapObservable { Observable.fromIterable(it) }
-                .flatMapSingle { useCase.queryWalletInfo(it.walletInfoId) }
+        queryWalletInfoByFriendId(friendId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .attachLoading()
                 .subscribe({
                     walletInfoLiveData.value = it
                 }, {
@@ -39,4 +36,21 @@ class FriendWalletViewModel @Inject constructor(private val useCase: AddressBook
                 .subscribe()
                 .let { addDisposable(it) }
     }
+
+    fun removeFriendAddressAndGetAll(friendId: Long, walletInfo: WalletInfo) {
+        useCase.removeFriendAddress(walletInfo.id)
+                .andThen(useCase.removeWalletInfo(walletInfo))
+                .andThen(queryWalletInfoByFriendId(friendId))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    walletInfoLiveData.value = it
+                }, {
+                    it.printStackTrace()
+                }).let { addDisposable(it) }
+    }
+
+    private fun queryWalletInfoByFriendId(friendId: Long) = useCase.queryFriendAddress(friendId)
+            .flatMapObservable { Observable.fromIterable(it) }
+            .flatMapSingle { useCase.queryWalletInfo(it.walletInfoId) }
 }

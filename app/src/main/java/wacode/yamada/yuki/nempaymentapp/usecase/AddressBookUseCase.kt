@@ -2,6 +2,7 @@ package wacode.yamada.yuki.nempaymentapp.usecase
 
 import wacode.yamada.yuki.nempaymentapp.repository.AddressBookRepository
 import wacode.yamada.yuki.nempaymentapp.repository.WalletInfoRepository
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendAddress
 import javax.inject.Inject
 
@@ -15,4 +16,8 @@ class AddressBookUseCase @Inject constructor(private val addressBookRepository: 
     fun queryWalletInfo(walletInfoId: Long) = walletInfoRepository.select(walletInfoId)
 
     fun insertFriendAddress(friendAddress: FriendAddress) = addressBookRepository.insertOrReplaceFriendAddress(friendAddress)
+
+    fun removeWalletInfo(walletInfo: WalletInfo) = walletInfoRepository.remove(walletInfo)
+
+    fun removeFriendAddress(walletInfoId: Long) = addressBookRepository.removeFriendAddress(walletInfoId)
 }
