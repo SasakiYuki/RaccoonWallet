@@ -5,7 +5,6 @@ import android.app.Application
 import android.arch.persistence.room.Room
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
-import com.facebook.stetho.Stetho
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.AndroidInjector
@@ -28,8 +27,6 @@ class NemPaymentApplication : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-
-        Stetho.initializeWithDefaults(this)
 
         DaggerAppComponent
                 .builder()
