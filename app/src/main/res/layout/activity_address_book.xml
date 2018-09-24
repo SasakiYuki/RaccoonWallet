@@ -49,14 +49,45 @@
                         android:padding="@dimen/space_small"
                         android:src="@mipmap/icon_close" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/circleImageView"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/space_normal"
-                        android:src="@mipmap/icon_default_profile" />
+                        android:layout_marginTop="@dimen/space_normal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/circleImageView"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:foreground="?selectableItemBackground"
+                            android:src="@mipmap/icon_default_profile" />
+
+                        <LinearLayout
+                            android:id="@+id/selectIconRootView"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/foreground_circle_icon_gray_scale"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@mipmap/icon_change_image" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/create_friend_address_change_icon_title"
+                                android:textColor="@android:color/white"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </FrameLayout>
+
                 </RelativeLayout>
             </LinearLayout>
 
@@ -83,6 +114,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/walletSizeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -145,7 +177,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="0"
+                    android:text="1"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -174,14 +206,21 @@
         app:src="@mipmap/icon_pencil"
         app:text="@string/com_edit" />
 
-    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
         android:id="@+id/walletRootButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:visibility="visible"
-        app:leftSrc="@mipmap/icon_check_gray2"
-        app:leftText="@string/com_select"
-        app:rightSrc="@mipmap/icon_plus2"
-        app:rightText="@string/com_add" />
+        app:src="@mipmap/icon_plus2"
+        app:text="@string/com_add" />
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
+        android:id="@+id/walletEditCompleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:visibility="gone"
+        app:src="@mipmap/icon_check_gray2"
+        app:text="@string/com_complete" />
 </android.support.design.widget.CoordinatorLayout>

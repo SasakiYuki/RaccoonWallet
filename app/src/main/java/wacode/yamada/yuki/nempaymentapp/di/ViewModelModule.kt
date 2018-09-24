@@ -51,6 +51,11 @@ internal abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(FriendWalletViewModel::class)
+    abstract fun bindFriendWalletViewModel(viewModel: FriendWalletViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(ProfileAddressAddViewModel::class)
     abstract fun bindProfileAddressAddViewModel(viewModel: ProfileAddressAddViewModel): ViewModel
 

@@ -114,6 +114,9 @@ class ProfileAddressAddActivity : BaseActivity() {
                 ProfileAddressAddType.Edit -> {
                     viewModel.update(it)
                 }
+                ProfileAddressAddType.FriendWallet -> {
+                    viewModel.insert(it)
+                }
                 else -> finishWithWalletInfo(it)
             }
         }
@@ -142,6 +145,7 @@ class ProfileAddressAddActivity : BaseActivity() {
 
     enum class ProfileAddressAddType {
         MyProfile,
+        FriendWallet,
         Other,
         Edit
     }

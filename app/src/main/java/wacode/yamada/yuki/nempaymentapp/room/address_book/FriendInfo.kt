@@ -13,7 +13,9 @@ data class FriendInfo constructor(
         var nameRuby: String = "",
         var phoneNumber: String = "",
         var mailAddress: String = "",
-        var isTwitterAuth: Boolean = false
+        var isTwitterAuth: Boolean = false,
+        var iconPath: String = "",
+        var sendCount : Int = 0
 ) : Serializable
 
 enum class FriendInfoSortType {

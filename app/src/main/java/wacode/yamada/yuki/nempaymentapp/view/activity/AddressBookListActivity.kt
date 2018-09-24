@@ -1,6 +1,5 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -48,20 +47,13 @@ class AddressBookListActivity : BaseActivity() {
         setupBackLayerSearchView()
         setupSortMenu()
         setupMaterialButton()
-
-        viewModel.findFriendInfo()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                REQUEST_CODE_ADD_FRIEND -> {
-                    friendInfoList.clear()
-                    viewModel.findFriendInfo()
-                }
-            }
-        }
+
+    override fun onResume() {
+        super.onResume()
+        friendInfoList.clear()
+        viewModel.findFriendInfo()
     }
 
     private fun setupAddressBookList() {
@@ -144,14 +136,12 @@ class AddressBookListActivity : BaseActivity() {
             }
 
             override fun onRightClick() {
-                startActivityForResult(CreateAddressBookActivity.createIntent(this@AddressBookListActivity), REQUEST_CODE_ADD_FRIEND)
+                startActivity(CreateAddressBookActivity.createIntent(this@AddressBookListActivity))
             }
         })
     }
 
     companion object {
-        private const val REQUEST_CODE_ADD_FRIEND = 1001
-
         fun createIntent(context: Context): Intent {
             val intent = Intent(context, AddressBookListActivity::class.java)
             return intent

@@ -10,6 +10,7 @@ private const val WALLET_INFO_NAME = "WalletInfo"
 private const val MY_ADDRESS_NAME = "MyAddress"
 private const val ADDRESS_NAME = "Address"
 private const val GOODS_NAME = "Goods"
+private const val FRIEND_ADDRESS_NAME = "FriendAddress"
 
 fun dropUnnecessaryTables(database: SupportSQLiteDatabase) {
     database.execSQL("DROP TABLE IF EXISTS $ADDRESS_NAME;")
@@ -45,5 +46,16 @@ val migration4To5 = object : Migration(4, 5) {
         database.execSQL("CREATE TABLE IF NOT EXISTS `$FRIEND_INFO_NAME` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `nameRuby` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `mailAddress` TEXT NOT NULL, `isTwitterAuth` INTEGER NOT NULL)")
         database.execSQL("INSERT INTO FriendInfo(`id`, `name`, `nameRuby`, `phoneNumber`, `mailAddress`, `isTwitterAuth`) SELECT `id`, `lastName`||`firstName`, `lastNameRuby`||`firstNameRuby`, `phoneNumber`, `mailAddress`, `isTwitterAuth` FROM `$tempFriendInfoName`")
         database.execSQL("DROP TABLE IF EXISTS `$tempFriendInfoName`")
+    }
+}
+
+val migration5To6 = object : Migration(5, 6) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("DROP TABLE IF EXISTS $FRIEND_INFO_NAME")
+        database.execSQL("DROP TABLE IF EXISTS $FRIEND_ICON_NAME")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `$FRIEND_INFO_NAME` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `nameRuby` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `mailAddress` TEXT NOT NULL, `isTwitterAuth` INTEGER NOT NULL, `iconPath` TEXT NOT NULL, `sendCount` INTEGER NOT NULL)")
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS `$FRIEND_ADDRESS_NAME` (`walletInfoId` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`walletInfoId`))")
+        database.execSQL("DROP TABLE IF EXISTS $FRIEND_WALLET_NAME")
     }
 }

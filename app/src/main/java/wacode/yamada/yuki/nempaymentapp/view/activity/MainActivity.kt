@@ -58,6 +58,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     private val compositeDisposable = CompositeDisposable()
     private lateinit var controller: DrawerListController
+
     private val shouldShowSplash by lazy {
         intent.getBooleanExtra(ARG_SHOULD_SHOW_SPLASH, true)
     }
@@ -69,8 +70,21 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
         showSplash()
         setupRxBus()
+    }
+
+    private fun showRequestOpenScreen() {
+        if (!intent.hasExtra(INTENT_PARAMS_OPEN_TYPE)) return
+
+        when (intent.getSerializableExtra(INTENT_PARAMS_OPEN_TYPE) as OpenScreenType) {
+            OpenScreenType.SEND -> {
+                closeDrawerAndMoveHome()
+                val address = intent.getStringExtra(INTENT_SEND_ADDRESS)
+                changeSendTopFragment(address)
+            }
+        }
     }
 
     private fun parseIntent() {
@@ -216,7 +230,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             setDrawableTint(imageView, color)
         }
         imageView.setImageDrawable(ContextCompat.getDrawable(this, items[position].drawableResource))
-        tab!!.setCustomView(tab1View)
+        tab!!.customView = tab1View
     }
 
     private fun setDrawableTint(imageView: ImageView, color: Int) {
@@ -253,6 +267,8 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
                 ReviewAppealUtils.saveAlreadyShownReviewDialog(this)
                 ReviewAppealUtils.createReviewDialog(this, supportFragmentManager, viewModel)
             }
+
+            showRequestOpenScreen()
         }
         parseIntent()
     }
@@ -368,6 +384,9 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         const val SP_IS_FIRST_RACCOON = "sp_is_first_raccoon"
         private const val HOME_POSITION = 2
         private const val ARG_SHOULD_SHOW_SPLASH = "args_show_splash"
+        private const val INTENT_PARAMS_OPEN_TYPE = "intent_params_open_type"
+        private const val INTENT_SEND_ADDRESS = "intent_send_address"
+
         fun createIntent(context: Context) = Intent(context, MainActivity::class.java)
 
         fun createIntent(context: Context, showSplash: Boolean): Intent {
@@ -375,5 +394,20 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             intent.putExtra(ARG_SHOULD_SHOW_SPLASH, showSplash)
             return intent
         }
+
+        fun createIntentAtSendFragment(context: Context, address: String): Intent {
+            val intent = createIntent(context)
+            intent.apply {
+                putExtra(ARG_SHOULD_SHOW_SPLASH, false)
+                putExtra(INTENT_SEND_ADDRESS, address)
+                putExtra(INTENT_PARAMS_OPEN_TYPE, OpenScreenType.SEND)
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            return intent
+        }
+    }
+
+    private enum class OpenScreenType {
+        SEND
     }
 }

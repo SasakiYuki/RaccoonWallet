@@ -2,12 +2,11 @@ package wacode.yamada.yuki.nempaymentapp.room.address_book
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import java.io.Serializable
 
 
 @Entity
-data class FriendIcon constructor(
+data class FriendAddress constructor(
         @PrimaryKey(autoGenerate = false)
-        val friendId: Long,
-        val iconPath: String
-) : Serializable
+        val walletInfoId: Long,
+        val friendId: Long
+)

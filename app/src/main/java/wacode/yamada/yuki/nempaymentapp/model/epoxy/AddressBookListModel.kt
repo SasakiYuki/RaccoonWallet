@@ -27,9 +27,9 @@ abstract class AddressBookListModel : DataBindingEpoxyModel() {
                 binding.setVariable(BR.itemClickListener, itemClickListener)
 
                 if (binding is RowAddressBookBinding) {
-                    if (item.iconPath.isNotEmpty()) {
+                    if (item.friendInfo.iconPath.isNotEmpty()) {
                         Picasso.with(binding.root.context)
-                                .load(item.iconPath)
+                                .load(item.friendInfo.iconPath)
                                 .placeholder(R.mipmap.icon_default_profile)
                                 .error(R.mipmap.icon_default_profile)
                                 .into(binding.circleImageView)

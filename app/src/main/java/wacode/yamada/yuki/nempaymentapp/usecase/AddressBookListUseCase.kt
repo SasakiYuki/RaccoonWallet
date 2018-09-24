@@ -9,10 +9,6 @@ import javax.inject.Inject
 
 
 class AddressBookListUseCase @Inject constructor(private val addressBookRepository: AddressBookRepository) {
-    fun getFriendIconPath(friendId: Long) = addressBookRepository
-            .queryFriendIconById(friendId)
-            .map { it.iconPath }
-            .onErrorReturnItem("")!!
 
     fun findFriendInfo(queryName: String, searchType: BackLayerSearchView.SearchType, sortType: FriendInfoSortType): Single<List<FriendInfo>> {
         return when (searchType) {

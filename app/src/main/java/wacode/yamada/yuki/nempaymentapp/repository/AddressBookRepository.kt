@@ -3,37 +3,47 @@ package wacode.yamada.yuki.nempaymentapp.repository
 import io.reactivex.Completable
 import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfoDao
 import wacode.yamada.yuki.nempaymentapp.room.address_book.AddressBookDao
-import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendIcon
+import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendAddress
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfoSortType
 import javax.inject.Inject
 
 
 class AddressBookRepository @Inject constructor() {
-    private val addressBookDao: AddressBookDao
+    private val addressBookDao: AddressBookDao = NemPaymentApplication.database.addressBookDao()
+    private val walletInfoDao: WalletInfoDao = NemPaymentApplication.database.walletInfoDao()
 
-    init {
-        addressBookDao = NemPaymentApplication.database.addressBookDao()
-    }
-
-    fun insertFriendInfo(entity: FriendInfo): Completable {
+    fun insertOrReplaceFriendInfo(entity: FriendInfo): Completable {
         return Completable.fromAction {
             addressBookDao.insertOrReplace(entity)
         }
     }
 
-    fun insertFriendIcon(entity: FriendIcon): Completable {
+    fun insertOrReplaceFriendAddress(entity: FriendAddress): Completable {
         return Completable.fromAction {
             addressBookDao.insertOrReplace(entity)
         }
     }
 
-    fun queryLatestFriendInfo() = addressBookDao.queryLatestFriendInfo()
+    fun insertOrReplaceWalletInfo(entity: WalletInfo): Single<WalletInfo> {
+        return Single.create { emitter ->
+            entity.let {
+                WalletInfo(walletInfoDao.insert(it),
+                        it.walletName,
+                        it.walletAddress,
+                        it.isMaster).let {
+                    emitter.onSuccess(it)
+                }
+            }
+        }
+    }
 
     fun queryFriendInfoById(friendId: Long) = addressBookDao.queryFriendInfo(friendId)
 
-    fun queryFriendIconById(friendId: Long) = addressBookDao.queryFriendIcon(friendId)
+    fun queryLatestFriendInfo() = addressBookDao.queryLatestFriendInfo()
 
     fun queryFriendInfo(queryName: String, sortType: FriendInfoSortType): Single<List<FriendInfo>> {
         val patternMathText = "%$queryName%"
@@ -52,6 +62,14 @@ class AddressBookRepository @Inject constructor() {
         return when (sortType) {
             FriendInfoSortType.WELL_SEND -> addressBookDao.queryFriendInfoOrderByName(patternMathText, isTwitterAuth)
             else -> addressBookDao.queryFriendInfoOrderByName(patternMathText, isTwitterAuth)
+        }
+    }
+
+    fun queryFriendAddress(friendId: Long) = addressBookDao.queryFriendAddress(friendId)
+
+    fun removeFriendAddress(walletInfoId: Long): Completable {
+        return Completable.fromAction {
+            addressBookDao.removeFriendAddress(walletInfoId)
         }
     }
 }

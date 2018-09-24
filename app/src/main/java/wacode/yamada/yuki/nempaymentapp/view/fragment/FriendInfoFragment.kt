@@ -65,7 +65,7 @@ class FriendInfoFragment : BaseFragment() {
         }
 
         nameRubyEdiText.apply {
-            setText(friendInfo.name)
+            setText(friendInfo.nameRuby)
             isEnabled = false
             setTextColor(getColor(context!!, R.color.textBlack))
         }
@@ -81,6 +81,48 @@ class FriendInfoFragment : BaseFragment() {
             isEnabled = false
             setTextColor(getColor(context!!, R.color.textBlack))
         }
+    }
+
+    fun changeEditFriendInfo() {
+        nameEditText.isEnabled = true
+        nameRubyEdiText.isEnabled = true
+        phoneNumberEditText.isEnabled = true
+        mailAddressEditText.isEnabled = true
+    }
+
+    fun changeDisplayFriendInfo() {
+        nameEditText.isEnabled = false
+        nameRubyEdiText.isEnabled = false
+        phoneNumberEditText.isEnabled = false
+        mailAddressEditText.isEnabled = false
+    }
+
+    fun getAndCheckFriendInfo(): FriendInfo? {
+        return if (validateAllInfo()) {
+            createPrams()
+        } else {
+            null
+        }
+    }
+
+    private fun validateAllInfo(): Boolean {
+        return when {
+            nameEditText.text.isNullOrEmpty() -> {
+                nameInputLayout.error = getString(R.string.create_friend_address_input_error)
+                false
+            }
+            else -> true
+        }
+    }
+
+    private fun createPrams(): FriendInfo {
+        return FriendInfo(
+                id = friendId!!,
+                name = nameEditText.text.toString(),
+                nameRuby = nameRubyEdiText.text.toString(),
+                phoneNumber = phoneNumberEditText.text.toString(),
+                mailAddress = mailAddressEditText.text.toString()
+        )
     }
 
     companion object {

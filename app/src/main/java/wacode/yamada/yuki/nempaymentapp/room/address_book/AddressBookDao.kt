@@ -14,10 +14,7 @@ interface AddressBookDao {
     fun insertOrReplace(friendInfo: FriendInfo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOrReplace(friendWallet: FriendWallet)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOrReplace(friendIcon: FriendIcon)
+    fun insertOrReplace(friendAddress: FriendAddress)
 
     @Query("SELECT * FROM FriendInfo")
     fun queryAllFriendInfo(): Single<List<FriendInfo>>
@@ -28,12 +25,15 @@ interface AddressBookDao {
     @Query("SELECT * FROM FriendInfo WHERE id = :friendId")
     fun queryFriendInfo(friendId: Long): Single<FriendInfo>
 
-    @Query("SELECT * FROM FriendIcon WHERE friendId = :friendId")
-    fun queryFriendIcon(friendId: Long): Single<FriendIcon>
-
     @Query("SELECT * FROM FriendInfo WHERE name LIKE :queryName ORDER BY name")
     fun queryFriendInfoOrderByName(queryName: String): Single<List<FriendInfo>>
 
     @Query("SELECT * FROM FriendInfo WHERE(name LIKE :queryName) AND isTwitterAuth = :isTwitterAuth ORDER BY name")
     fun queryFriendInfoOrderByName(queryName: String, isTwitterAuth: Boolean): Single<List<FriendInfo>>
+
+    @Query("SELECT * FROM FriendAddress WHERE friendId = :friendId")
+    fun queryFriendAddress(friendId: Long): Single<List<FriendAddress>>
+
+    @Query("DELETE FROM FriendAddress WHERE walletInfoId = :walletInfoId")
+    fun removeFriendAddress(walletInfoId: Long)
 }
