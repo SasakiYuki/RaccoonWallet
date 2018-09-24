@@ -458,6 +458,15 @@
     <string name="my_address_profile_activity_bottom_button_edit">編集</string>
     <string name="my_address_profile_activity_bottom_button_complete">完了</string>
 
+    <!-- MyWalletInfoFragment -->
+    <string name="my_wallet_info_fragment_address_copied_toast">Address Copied</string>
+
+    <!-- MyWalletInfoFragmentBottomSheet -->
+    <string name="bottom_my_wallet_info_copy">コピー</string>
+    <string name="bottom_my_wallet_info_send">送金</string>
+    <string name="bottom_my_wallet_info_edit">編集</string>
+    <string name="bottom_my_wallet_info_delete">削除</string>
+
     <!-- WalletSettingFragment -->
     <string name="wallet_setting_fragment_title">ウォレットの設定</string>
     <string name="wallet_setting_currency_title">NEM/XEM</string>

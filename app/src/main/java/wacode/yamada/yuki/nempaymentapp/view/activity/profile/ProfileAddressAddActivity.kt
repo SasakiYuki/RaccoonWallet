@@ -25,6 +25,9 @@ class ProfileAddressAddActivity : BaseActivity() {
     private val type by lazy {
         intent.getSerializableExtra(INTENT_TYPE) as ProfileAddressAddType
     }
+    private val walletInfo by lazy {
+        intent.getSerializableExtra(ARGS_WALLET_INFO) as WalletInfo?
+    }
 
     override fun setLayout() = R.layout.activity_profile_address_add
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,18 +35,25 @@ class ProfileAddressAddActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setupViewModel()
         setupViews()
+        setupWalletInfoForViews()
     }
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProfileAddressAddViewModel::class.java)
-        viewModel.createLiveData.observe(this, Observer {
-            it ?: return@Observer
-            finishWithWalletInfo(it)
-        })
-        viewModel.errorLiveData.observe(this, Observer {
-            it ?: return@Observer
-            it.printStackTrace()
-        })
+        viewModel.apply {
+            insertLiveData.observe(this@ProfileAddressAddActivity, Observer {
+                it ?: return@Observer
+                finishWithWalletInfo(it)
+            })
+            updateLiveData.observe(this@ProfileAddressAddActivity, Observer {
+                it ?: return@Observer
+                finishWithWalletInfo(it)
+            })
+            errorLiveData.observe(this@ProfileAddressAddActivity, Observer {
+                it ?: return@Observer
+                it.printStackTrace()
+            })
+        }
     }
 
     private fun setupViews() {
@@ -76,18 +86,33 @@ class ProfileAddressAddActivity : BaseActivity() {
 
     private fun getOrange() = getColorFromResource(R.color.nemOrange)
 
+    private fun setupWalletInfoForViews() {
+        walletInfo?.let {
+            nameEditText.setText(it.walletName)
+            addressEditText.setText(it.walletAddress)
+            if (it.isMaster) {
+                materialButton.performClick()
+            }
+        }
+    }
+
     private fun createWalletInfoFromEditText() {
+        val id = walletInfo?.let { it.id } ?: 0
         val walletName = nameEditText.text.toString().remove("-")
         val address = addressEditText.text.toString()
         val isMaster = viewModel.isMaster
         WalletInfo(
+                id = id,
                 walletName = walletName,
                 walletAddress = address,
                 isMaster = isMaster
         ).let {
             when (type) {
                 ProfileAddressAddType.MyProfile -> {
-                    viewModel.create(it)
+                    viewModel.insert(it)
+                }
+                ProfileAddressAddType.Edit -> {
+                    viewModel.update(it)
                 }
                 else -> finishWithWalletInfo(it)
             }
@@ -105,17 +130,20 @@ class ProfileAddressAddActivity : BaseActivity() {
     companion object {
         private const val INTENT_TYPE = "intent_type"
         const val INTENT_WALLET_INFO = "intent_wallet_info"
+        private const val ARGS_WALLET_INFO = "args_wallet_info"
         const val REQUEST_CODE = 1010
-        fun createIntent(context: Context, type: ProfileAddressAddType = ProfileAddressAddType.MyProfile): Intent {
+        fun createIntent(context: Context, type: ProfileAddressAddType = ProfileAddressAddType.MyProfile, walletInfo: WalletInfo? = null): Intent {
             return Intent(context, ProfileAddressAddActivity::class.java).apply {
                 putExtra(INTENT_TYPE, type)
+                putExtra(ARGS_WALLET_INFO, walletInfo)
             }
         }
     }
 
     enum class ProfileAddressAddType {
         MyProfile,
-        Other
+        Other,
+        Edit
     }
 }
 

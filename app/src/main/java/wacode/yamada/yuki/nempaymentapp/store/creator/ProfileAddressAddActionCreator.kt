@@ -12,15 +12,31 @@ import wacode.yamada.yuki.nempaymentapp.store.type.ProfileAddressAddActionType
 class ProfileAddressAddActionCreator(private val repository: MyProfileRepository,
                                      private val dispatch: (ProfileAddressAddActionType) -> Unit,
                                      val reducer: ProfileAddressAddReducer) : DisposableMapper() {
-    private val createWalletInfo: PublishSubject<WalletInfo> = PublishSubject.create()
+    private val insertWalletInfo: PublishSubject<WalletInfo> = PublishSubject.create()
+    private val updateWalletInfo: PublishSubject<WalletInfo> = PublishSubject.create()
 
     init {
-        createWalletInfo
+        insertWalletInfo
                 .flatMap {
-                    repository.createWalletInfo(it)
+                    repository.insertWalletInfo(it)
                             .toObservable()
                             .doOnNext {
-                                dispatch(ProfileAddressAddActionType.Create(it))
+                                dispatch(ProfileAddressAddActionType.Insert(it))
+                            }
+                            .doOnError {
+                                dispatch(ProfileAddressAddActionType.Error(it))
+                            }
+                            .onErrorResumeNext(Observable.empty())
+                            .subscribeOn(Schedulers.io())
+                }
+                .subscribe()
+                .let { disposables.add(it) }
+        updateWalletInfo
+                .flatMap {
+                    repository.updateWalletInfo(it)
+                            .toObservable()
+                            .doOnNext {
+                                dispatch(ProfileAddressAddActionType.Update(it))
                             }
                             .doOnError {
                                 dispatch(ProfileAddressAddActionType.Error(it))
@@ -32,7 +48,11 @@ class ProfileAddressAddActionCreator(private val repository: MyProfileRepository
                 .let { disposables.add(it) }
     }
 
-    fun create(walletInfo: WalletInfo) {
-        createWalletInfo.onNext(walletInfo)
+    fun insert(walletInfo: WalletInfo) {
+        insertWalletInfo.onNext(walletInfo)
+    }
+
+    fun update(walletInfo: WalletInfo) {
+        updateWalletInfo.onNext(walletInfo)
     }
 }

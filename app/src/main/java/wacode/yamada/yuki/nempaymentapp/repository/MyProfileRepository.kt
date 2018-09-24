@@ -4,23 +4,32 @@ import android.content.Context
 import com.google.gson.Gson
 import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfoDao
-import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.utils.SharedPreferenceUtils
 
 class MyProfileRepository(val context: Context) {
     private val walletInfoDao: WalletInfoDao = NemPaymentApplication.database.walletInfoDao()
 
-    fun createWalletInfo(entity: WalletInfo): Single<WalletInfo> {
+    fun insertWalletInfo(entity: WalletInfo): Single<WalletInfo> {
         return Single.create { emitter ->
             entity.let {
-                WalletInfo(walletInfoDao.create(it),
+                WalletInfo(walletInfoDao.insert(it),
                         it.walletName,
                         it.walletAddress,
                         it.isMaster).let {
                     emitter.onSuccess(it)
                 }
+            }
+        }
+    }
+
+    fun updateWalletInfo(walletInfo: WalletInfo): Single<WalletInfo> {
+        return Single.create { emitter ->
+            walletInfo.let {
+                walletInfoDao.update(it)
+                emitter.onSuccess(it)
             }
         }
     }

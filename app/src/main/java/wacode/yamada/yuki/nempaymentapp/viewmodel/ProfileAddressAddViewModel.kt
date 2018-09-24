@@ -10,21 +10,30 @@ import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import javax.inject.Inject
 
 class ProfileAddressAddViewModel @Inject constructor(private val store: ProfileAddressAddStore) : BaseViewModel() {
-    val createLiveData: MutableLiveData<WalletInfo>
+    val insertLiveData: MutableLiveData<WalletInfo>
+            = MutableLiveData()
+    val updateLiveData: MutableLiveData<WalletInfo>
             = MutableLiveData()
     val errorLiveData: MutableLiveData<Throwable>
             = MutableLiveData()
     var isMaster = false
 
     init {
-        store.getter.createObservable
+        store.getter.insertObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    createLiveData.value = it
-                    RxBus.send(WalletInfoEvent(it))
+                    insertLiveData.value = it
+                    RxBus.send(WalletInfoEvent.InsertWalletInfo(it))
                 })
                 .let { addDisposable(it) }
+        store.getter.updateObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    updateLiveData.value = it
+                    RxBus.send(WalletInfoEvent.UpdateWalletInfo(it))
+                })
         store.getter.errorObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -33,8 +42,12 @@ class ProfileAddressAddViewModel @Inject constructor(private val store: ProfileA
                 })
     }
 
-    fun create(walletInfo: WalletInfo) {
-        store.actionCreator.create(walletInfo)
+    fun insert(walletInfo: WalletInfo) {
+        store.actionCreator.insert(walletInfo)
+    }
+
+    fun update(walletInfo: WalletInfo) {
+        store.actionCreator.update(walletInfo)
     }
 
     override fun onCleared() {

@@ -173,6 +173,8 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
     }
 
     companion object {
+        const val REQUEST_CODE_MY_ADDRESS_PROFILE_ACTIVITY = 3104
+        const val RESULT_PAYMENT_ADDRESS = "result_payment_address"
         fun createIntent(context: Context): Intent {
             val intent = Intent(context, MyAddressProfileActivity::class.java)
             return intent

@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.model.epoxy
 
 import android.databinding.ViewDataBinding
+import android.view.View
 import com.airbnb.epoxy.DataBindingEpoxyModel
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -13,9 +14,13 @@ abstract class WalletInfoListModel : DataBindingEpoxyModel() {
     @EpoxyAttribute
     var walletInfo: WalletInfo? = null
 
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var onClickRowListener: View.OnClickListener = View.OnClickListener { }
+
     override fun setDataBindingVariables(binding: ViewDataBinding?) {
-        binding?.let {
-            it.setVariable(BR.walletInfo, walletInfo)
+        binding?.apply {
+            setVariable(BR.walletInfo, walletInfo)
+            setVariable(BR.clickListener, onClickRowListener)
         }
     }
 }
