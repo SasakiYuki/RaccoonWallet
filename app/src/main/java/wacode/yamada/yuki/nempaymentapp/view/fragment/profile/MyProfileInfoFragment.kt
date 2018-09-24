@@ -154,6 +154,13 @@ class MyProfileInfoFragment : BaseFragment() {
                         it ?: return@Observer
                         RxBus.send(MyProfileEvent(it))
                     })
+            screenChangeEventLiveData
+                    .observe(this@MyProfileInfoFragment, Observer {
+                        it ?: return@Observer
+                        updateMyProfile()
+                        disableEditTexts()
+                        disableEditImageViews()
+                    })
         }
     }
 

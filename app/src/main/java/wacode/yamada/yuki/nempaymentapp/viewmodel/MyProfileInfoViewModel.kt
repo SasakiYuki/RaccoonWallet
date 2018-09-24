@@ -3,9 +3,8 @@ package wacode.yamada.yuki.nempaymentapp.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import wacode.yamada.yuki.nempaymentapp.event.BottomCompleteButtonEvent
-import wacode.yamada.yuki.nempaymentapp.event.BottomEditButtonEvent
 import wacode.yamada.yuki.nempaymentapp.event.MasterWalletInfoEvent
+import wacode.yamada.yuki.nempaymentapp.event.MyAddressProfileBottomButtonEvent
 import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.store.MyProfileInfoStore
 import wacode.yamada.yuki.nempaymentapp.utils.RxBus
@@ -26,6 +25,8 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
     val bottomEditButtonEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
     val bottomCompleteButtonEventLiveData: MutableLiveData<Unit>
+            = MutableLiveData()
+    val screenChangeEventLiveData: MutableLiveData<Unit>
             = MutableLiveData()
 
     init {
@@ -53,15 +54,16 @@ class MyProfileInfoViewModel @Inject constructor(private val store: MyProfileInf
                 }.let {
             addDisposable(it)
         }
-        RxBus.receive(BottomEditButtonEvent::class.java)
+        RxBus.receive(MyAddressProfileBottomButtonEvent::class.java)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    bottomEditButtonEventLiveData.value = Unit
-                }.let { addDisposable(it) }
-        RxBus.receive(BottomCompleteButtonEvent::class.java)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    bottomCompleteButtonEventLiveData.value = Unit
+                    if (it is MyAddressProfileBottomButtonEvent.OnClickCompleteBottomButton) {
+                        bottomCompleteButtonEventLiveData.value = Unit
+                    } else if (it is MyAddressProfileBottomButtonEvent.OnClickEditBottomButton) {
+                        bottomEditButtonEventLiveData.value = Unit
+                    } else if (it is MyAddressProfileBottomButtonEvent.OnChangeEditBottomButton) {
+                        screenChangeEventLiveData.value = Unit
+                    }
                 }.let { addDisposable(it) }
         RxBus.receive(MasterWalletInfoEvent::class.java)
                 .observeOn(AndroidSchedulers.mainThread())
