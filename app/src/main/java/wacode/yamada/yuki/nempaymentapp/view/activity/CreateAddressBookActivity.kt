@@ -98,7 +98,7 @@ class CreateAddressBookActivity : BaseActivity() {
 
         walletRootButton.setOnClickListener(object : RaccoonDoubleMaterialButton.OnDoubleButtonClickListener {
             override fun onLeftClick() {
-                startActivityForResult(ProfileAddressAddActivity.createIntent(this@CreateAddressBookActivity), ProfileAddressAddActivity.REQUEST_CODE)
+                startActivityForResult(ProfileAddressAddActivity.createIntent(this@CreateAddressBookActivity, ProfileAddressAddActivity.ProfileAddressAddType.Other), ProfileAddressAddActivity.REQUEST_CODE)
             }
 
             override fun onRightClick() {
@@ -158,7 +158,6 @@ class CreateAddressBookActivity : BaseActivity() {
             if (friendInfo != null && walletList.isNotEmpty()) {
                 val uri = circleImageView.tag?.let { it as String } ?: run { "" }
                 friendInfo.iconPath = uri
-
 
                 viewModel.insertFriendData(friendInfo, walletList)
             } else {

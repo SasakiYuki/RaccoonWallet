@@ -17,10 +17,11 @@ class CreateAddressBookViewModel @Inject constructor(private val useCase: Create
     fun insertFriendData(friendInfo: FriendInfo, walletList: List<WalletInfo>) {
         useCase.insertFriendInfo(friendInfo)
                 .andThen(useCase.queryLatestFriendInfo())
-                .flatMapCompletable { info ->
+                .flatMapCompletable { friendInfo ->
                     Observable.fromIterable(walletList)
-                            .map { FriendAddress(walletInfoId = it.id, friendId = info.id) }
-                            .flatMapCompletable { useCase.insertFriendWallet(it) }
+                            .flatMapSingle { useCase.insertWalletInfo(it) }
+                            .map { FriendAddress(walletInfoId = it.id, friendId = friendInfo.id) }
+                            .flatMapCompletable { useCase.insertFriendAddress(it) }
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

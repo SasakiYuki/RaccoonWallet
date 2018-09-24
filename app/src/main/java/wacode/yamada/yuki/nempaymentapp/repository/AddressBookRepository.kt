@@ -3,6 +3,8 @@ package wacode.yamada.yuki.nempaymentapp.repository
 import io.reactivex.Completable
 import io.reactivex.Single
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfoDao
 import wacode.yamada.yuki.nempaymentapp.room.address_book.AddressBookDao
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendAddress
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
@@ -11,11 +13,8 @@ import javax.inject.Inject
 
 
 class AddressBookRepository @Inject constructor() {
-    private val addressBookDao: AddressBookDao
-
-    init {
-        addressBookDao = NemPaymentApplication.database.addressBookDao()
-    }
+    private val addressBookDao: AddressBookDao = NemPaymentApplication.database.addressBookDao()
+    private val walletInfoDao: WalletInfoDao = NemPaymentApplication.database.walletInfoDao()
 
     fun insertOrReplaceFriendInfo(entity: FriendInfo): Completable {
         return Completable.fromAction {
@@ -26,6 +25,19 @@ class AddressBookRepository @Inject constructor() {
     fun insertOrReplaceFriendAddress(entity: FriendAddress): Completable {
         return Completable.fromAction {
             addressBookDao.insertOrReplace(entity)
+        }
+    }
+
+    fun insertOrReplaceWalletInfo(entity: WalletInfo): Single<WalletInfo> {
+        return Single.create { emitter ->
+            entity.let {
+                WalletInfo(walletInfoDao.create(it),
+                        it.walletName,
+                        it.walletAddress,
+                        it.isMaster).let {
+                    emitter.onSuccess(it)
+                }
+            }
         }
     }
 
