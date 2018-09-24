@@ -83,6 +83,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/walletSizeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -145,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="0"
+                    android:text="1"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -174,14 +175,12 @@
         app:src="@mipmap/icon_pencil"
         app:text="@string/com_edit" />
 
-    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
         android:id="@+id/walletRootButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:visibility="visible"
-        app:leftSrc="@mipmap/icon_check_gray2"
-        app:leftText="@string/com_select"
-        app:rightSrc="@mipmap/icon_plus2"
-        app:rightText="@string/com_add" />
+        app:src="@mipmap/icon_plus2"
+        app:text="@string/com_add" />
 </android.support.design.widget.CoordinatorLayout>

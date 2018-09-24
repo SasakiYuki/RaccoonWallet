@@ -1,5 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -16,7 +17,9 @@ import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_address_book.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfo
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.ProfileAddressAddActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.FriendInfoFragment
@@ -65,6 +68,26 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
         }
     }
 
+    override fun onFriendWalletChanged(walletSize: Int) {
+        walletSizeText.text = walletSize.toString()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ProfileAddressAddActivity.REQUEST_CODE -> {
+                    val item = data?.getSerializableExtra(ProfileAddressAddActivity.INTENT_WALLET_INFO) as WalletInfo
+                    val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.addressBookViewPager + ":" + FriendWalletFragment.PAGE_POSITION)
+
+                    if (fragment != null) {
+                        (fragment as FriendWalletFragment).onListItemChanged(item)
+                    }
+                }
+            }
+        }
+    }
+
     private fun setupViewModelObserve() {
         viewModel.run {
             loadingStatus.observe(this@AddressBookActivity, Observer {
@@ -76,7 +99,7 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
 
     private fun setupViewPager() {
         val list = ArrayList<BaseFragment>()
-        list.add(FriendWalletFragment.newInstance())
+        list.add(FriendWalletFragment.newInstance(friendId))
         list.add(FriendInfoFragment.newInstance(friendId))
 
         val adapter = SimpleViewPagerAdapter(this, list, supportFragmentManager)
@@ -107,6 +130,10 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
 
     private fun setupButtons() {
         backImageView.setOnClickListener { finish() }
+
+        walletRootButton.setClickListener(View.OnClickListener {
+            startActivityForResult(ProfileAddressAddActivity.createIntent(this, ProfileAddressAddActivity.ProfileAddressAddType.FriendWallet), ProfileAddressAddActivity.REQUEST_CODE)
+        })
     }
 
     companion object {
@@ -122,4 +149,6 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
 
 interface OnFriendDataChangeCallback {
     fun onFriendInfoChanged(friendInfo: FriendInfo)
+
+    fun onFriendWalletChanged(walletSize: Int)
 }

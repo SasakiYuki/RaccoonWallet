@@ -30,4 +30,7 @@ interface AddressBookDao {
 
     @Query("SELECT * FROM FriendInfo WHERE(name LIKE :queryName) AND isTwitterAuth = :isTwitterAuth ORDER BY name")
     fun queryFriendInfoOrderByName(queryName: String, isTwitterAuth: Boolean): Single<List<FriendInfo>>
+
+    @Query("SELECT * FROM FriendAddress WHERE friendId = :friendId")
+    fun queryFriendAddress(friendId: Long): Single<List<FriendAddress>>
 }

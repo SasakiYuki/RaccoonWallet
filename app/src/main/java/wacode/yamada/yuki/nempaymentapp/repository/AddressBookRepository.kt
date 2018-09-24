@@ -52,4 +52,6 @@ class AddressBookRepository @Inject constructor() {
             else -> addressBookDao.queryFriendInfoOrderByName(patternMathText, isTwitterAuth)
         }
     }
+
+    fun queryFriendAddress(friendId: Long) = addressBookDao.queryFriendAddress(friendId)
 }

@@ -89,6 +89,9 @@ class ProfileAddressAddActivity : BaseActivity() {
                 ProfileAddressAddType.MyProfile -> {
                     viewModel.create(it)
                 }
+                ProfileAddressAddType.FriendWallet -> {
+                    viewModel.create(it)
+                }
                 else -> finishWithWalletInfo(it)
             }
         }
@@ -115,6 +118,7 @@ class ProfileAddressAddActivity : BaseActivity() {
 
     enum class ProfileAddressAddType {
         MyProfile,
+        FriendWallet,
         Other
     }
 }

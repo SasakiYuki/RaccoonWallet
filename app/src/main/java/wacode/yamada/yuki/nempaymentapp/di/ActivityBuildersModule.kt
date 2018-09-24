@@ -37,7 +37,7 @@ internal abstract class ActivityBuildersModule {
     abstract fun bindCreateAddressBookActivity(): CreateAddressBookActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [(AddressBookActivityModule::class), (FriendInfoModule::class)])
+    @ContributesAndroidInjector(modules = [(AddressBookActivityModule::class), (FriendInfoModule::class), (FriendWalletModule::class)])
     abstract fun bindAddressBookActivity(): AddressBookActivity
 
     @ActivityScope
