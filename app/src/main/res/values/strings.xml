@@ -572,6 +572,11 @@
     <!-- AddressBook -->
     <string name="address_book_friend_wallet_title">ウォレット</string>
     <string name="address_book_friend_info_title">連絡先</string>
+    
+    <!-- TwitterAuthBottomSheetDialogFragment -->
+    <string name="twitter_auth_bottom_sheet_dialog_fragment_twitter">Twitter連携</string>
+    <string name="twitter_auth_bottom_sheet_dialog_fragment_description">Twitterのユーザーネームを入力していただくと、\n名前とプロフイメージを取得できます。</string>
+    <string name="twitter_auth_bottom_sheet_dialog_fragment_button">接続する</string>
 
     <!--Dialog-->
     <string name="dialog_update_forward_title">アプリのアップデートがあります</string>
