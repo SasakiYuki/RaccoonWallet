@@ -83,6 +83,48 @@ class FriendInfoFragment : BaseFragment() {
         }
     }
 
+    fun changeEditFriendInfo() {
+        nameEditText.isEnabled = true
+        nameRubyEdiText.isEnabled = true
+        phoneNumberEditText.isEnabled = true
+        mailAddressEditText.isEnabled = true
+    }
+
+    fun changeDisplayFriendInfo() {
+        nameEditText.isEnabled = false
+        nameRubyEdiText.isEnabled = false
+        phoneNumberEditText.isEnabled = false
+        mailAddressEditText.isEnabled = false
+    }
+
+    fun getAndCheckFriendInfo(): FriendInfo? {
+        return if (validateAllInfo()) {
+            createPrams()
+        } else {
+            null
+        }
+    }
+
+    private fun validateAllInfo(): Boolean {
+        return when {
+            nameEditText.text.isNullOrEmpty() -> {
+                nameInputLayout.error = getString(R.string.create_friend_address_input_error)
+                false
+            }
+            else -> true
+        }
+    }
+
+    private fun createPrams(): FriendInfo {
+        return FriendInfo(
+                id = friendId!!,
+                name = nameEditText.text.toString(),
+                nameRuby = nameRubyEdiText.text.toString(),
+                phoneNumber = phoneNumberEditText.text.toString(),
+                mailAddress = mailAddressEditText.text.toString()
+        )
+    }
+
     companion object {
         const val PAGE_POSITION = 1
         private const val PARAMS_FRIEND_ID = "params_friend_id"

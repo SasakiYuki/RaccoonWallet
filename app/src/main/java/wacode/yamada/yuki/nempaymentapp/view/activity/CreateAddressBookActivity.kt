@@ -75,7 +75,6 @@ class CreateAddressBookActivity : BaseActivity() {
                 it ?: return@Observer
                 if (it) showProgress() else {
                     hideProgress()
-                    setResult(Activity.RESULT_OK)
                     finish()
                 }
             })

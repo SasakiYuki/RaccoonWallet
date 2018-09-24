@@ -32,6 +32,7 @@
     <string name="com_currency">通貨</string>
     <string name="com_edit">編集</string>
     <string name="com_select">選択</string>
+    <string name="com_complete">完了</string>
 
     <!-- Menu -->
     <string name="menu_search">検索</string>

@@ -1,7 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -9,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.view.View
+import com.isseiaoki.simplecropview.CropImageView
 import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -48,7 +48,6 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddressBookViewModel::class.java)
-        setupViewModelObserve()
 
         setupViewPager()
         setupButtons()
@@ -84,16 +83,16 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
                         (fragment as FriendWalletFragment).onListItemChanged(item)
                     }
                 }
-            }
-        }
-    }
+                REQUEST_CODE_DROP_IMAGE -> {
+                    data?.let {
+                        val uriString = it.getStringExtra(CropImageActivity.PARAM_INTENT_RESULT_URI)
+                        Picasso.with(this).load(uriString).into(circleImageView)
+                        circleImageView.tag = uriString
 
-    private fun setupViewModelObserve() {
-        viewModel.run {
-            loadingStatus.observe(this@AddressBookActivity, Observer {
-                it ?: return@Observer
-                if (it) showProgress() else hideProgress()
-            })
+                        selectIconRootView.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
     }
 
@@ -118,6 +117,13 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
                     FriendWalletFragment.PAGE_POSITION -> {
                         walletRootButton.visibility = View.VISIBLE
                         friendInfoRootButton.visibility = View.GONE
+                        walletEditCompleteButton.visibility = View.GONE
+                        selectIconRootView.visibility = View.GONE
+
+                        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.addressBookViewPager + ":" + FriendInfoFragment.PAGE_POSITION)
+                        if (fragment != null) {
+                            (fragment as FriendInfoFragment).changeDisplayFriendInfo()
+                        }
                     }
                     FriendInfoFragment.PAGE_POSITION -> {
                         walletRootButton.visibility = View.GONE
@@ -134,9 +140,47 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
         walletRootButton.setClickListener(View.OnClickListener {
             startActivityForResult(ProfileAddressAddActivity.createIntent(this, ProfileAddressAddActivity.ProfileAddressAddType.FriendWallet), ProfileAddressAddActivity.REQUEST_CODE)
         })
+
+        friendInfoRootButton.setClickListener(View.OnClickListener {
+            selectIconRootView.visibility = View.VISIBLE
+            friendInfoRootButton.visibility = View.GONE
+            walletEditCompleteButton.visibility = View.VISIBLE
+
+            val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.addressBookViewPager + ":" + FriendInfoFragment.PAGE_POSITION)
+            if (fragment != null) {
+                (fragment as FriendInfoFragment).changeEditFriendInfo()
+            }
+        })
+
+        walletEditCompleteButton.setClickListener(View.OnClickListener {
+            updateFriendInfo()
+        })
+
+        selectIconRootView.setOnClickListener {
+            startActivityForResult(CropImageActivity.createIntent(this, CropImageView.CropMode.CIRCLE_SQUARE), REQUEST_CODE_DROP_IMAGE)
+        }
+    }
+
+    private fun updateFriendInfo() {
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.addressBookViewPager + ":" + FriendInfoFragment.PAGE_POSITION)
+        if (fragment != null) {
+            val friendInfoFragment = fragment as FriendInfoFragment
+            friendInfoFragment.getAndCheckFriendInfo()?.let {
+                val url = circleImageView.tag?.let { it as String } ?: run { "" }
+                it.iconPath = url
+
+                viewModel.updateFriendInfo(it)
+            }
+
+            selectIconRootView.visibility = View.GONE
+            friendInfoRootButton.visibility = View.VISIBLE
+            walletEditCompleteButton.visibility = View.GONE
+            friendInfoFragment.changeDisplayFriendInfo()
+        }
     }
 
     companion object {
+        private const val REQUEST_CODE_DROP_IMAGE = 1000
         private const val INTENT_FRIEND_ID = "intent_friend_id"
 
         fun createIntent(context: Context, friendId: Long): Intent {
