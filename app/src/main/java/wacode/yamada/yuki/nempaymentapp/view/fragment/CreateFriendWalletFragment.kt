@@ -6,6 +6,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.fragment_friend_wallet.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
+import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoClickListener
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoListController
 
 class CreateFriendWalletFragment : BaseFragment() {
@@ -18,7 +19,12 @@ class CreateFriendWalletFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
-        controller = WalletInfoListController()
+        controller = WalletInfoListController(object : WalletInfoClickListener {
+            override fun onRowClick(walletInfo: WalletInfo) {
+
+            }
+        })
+
         recyclerView.adapter = controller.adapter
     }
 

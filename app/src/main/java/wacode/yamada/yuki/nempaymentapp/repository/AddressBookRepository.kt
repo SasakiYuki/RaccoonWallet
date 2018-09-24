@@ -31,7 +31,7 @@ class AddressBookRepository @Inject constructor() {
     fun insertOrReplaceWalletInfo(entity: WalletInfo): Single<WalletInfo> {
         return Single.create { emitter ->
             entity.let {
-                WalletInfo(walletInfoDao.create(it),
+                WalletInfo(walletInfoDao.insert(it),
                         it.walletName,
                         it.walletAddress,
                         it.isMaster).let {

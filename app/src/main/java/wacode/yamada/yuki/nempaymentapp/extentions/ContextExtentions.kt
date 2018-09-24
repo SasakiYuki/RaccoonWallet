@@ -27,4 +27,6 @@ fun Context.getColorFromResource(colorResourceId: Int) = ContextCompat.getColor(
 
 fun Context.getColorStateListFromResource(@ColorRes colorResourceId: Int) = ContextCompat.getColorStateList(this,colorResourceId)
 
+fun Context.getDensity(): Float = this.resources.displayMetrics.density
+
 

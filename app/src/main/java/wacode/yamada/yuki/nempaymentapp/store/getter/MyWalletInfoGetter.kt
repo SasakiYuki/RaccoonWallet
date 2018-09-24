@@ -11,6 +11,8 @@ class MyWalletInfoGetter(reducer: MyWalletInfoReducer) :DisposableMapper(){
             = reducer.walletInfoObservable
     val myAddressObservable: Observable<MyAddress>
             = reducer.myAddressObservable
+    val deleteMyAddressObservable:Observable<Unit>
+            = reducer.deleteMyAddressObservable
     val errorObservable: Observable<Throwable>
             = reducer.errorObservable
 }

@@ -52,6 +52,10 @@ class SendTopFragment : BaseFragment() {
                 }
     }
 
+    fun putAddressEditText(address: String) {
+        addressEditText.setText(address)
+    }
+
     fun putQRScanItems(paymentQREntity: PaymentQREntity) {
         addressEditText.setText(paymentQREntity.data.addr)
         checkEnterAddressAvailable(paymentQREntity)

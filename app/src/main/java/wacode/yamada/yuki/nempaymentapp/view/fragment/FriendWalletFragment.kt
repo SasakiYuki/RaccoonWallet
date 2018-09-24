@@ -13,6 +13,7 @@ import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.view.activity.OnFriendDataChangeCallback
+import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoClickListener
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoListController
 import wacode.yamada.yuki.nempaymentapp.viewmodel.FriendWalletViewModel
 import javax.inject.Inject
@@ -49,7 +50,12 @@ class FriendWalletFragment : BaseFragment() {
 
     private fun setupViews() {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        controller = WalletInfoListController()
+        controller = WalletInfoListController(object : WalletInfoClickListener {
+            override fun onRowClick(walletInfo: WalletInfo) {
+
+            }
+        })
+
         recyclerView.adapter = controller.adapter
     }
 
