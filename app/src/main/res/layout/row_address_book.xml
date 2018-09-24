@@ -11,6 +11,10 @@
         <variable
             name="itemClickListener"
             type="android.view.View.OnClickListener" />
+
+        <variable
+            name="checkBoxChangeListener"
+            type="android.widget.CompoundButton.OnCheckedChangeListener" />
     </data>
 
     <RelativeLayout
@@ -60,5 +64,15 @@
             android:textSize="15sp"
             tools:text="Hoge hoge" />
 
+        <CheckBox
+            android:id="@+id/deleteCheckBox"
+            android:layout_width="wrap_content"
+            android:onCheckedChanged="@{checkBoxChangeListener}"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:checked="@{friendInfoItem.checked}"
+            android:layout_marginRight="@dimen/space_normal"
+            android:visibility="@{friendInfoItem.deleteMode ? android.view.View.VISIBLE : android.view.View.GONE}" />
     </RelativeLayout>
 </layout>

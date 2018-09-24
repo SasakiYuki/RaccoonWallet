@@ -18,4 +18,7 @@ interface WalletInfoDao {
 
     @Delete
     fun delete(walletInfo: WalletInfo)
+
+    @Query("DELETE FROM WalletInfo WHERE id = :id")
+    fun delete(id: Long)
 }

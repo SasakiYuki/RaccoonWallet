@@ -1,9 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.room.address_book
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import io.reactivex.Single
 
 
@@ -36,4 +33,13 @@ interface AddressBookDao {
 
     @Query("DELETE FROM FriendAddress WHERE walletInfoId = :walletInfoId")
     fun removeFriendAddress(walletInfoId: Long)
+
+    @Query("DELETE FROM FriendAddress WHERE friendId = :friendId")
+    fun removeFriendAddressByFriendId(friendId: Long)
+
+    @Delete
+    fun remove(friendAddress: FriendAddress)
+
+    @Query("DELETE FROM FriendInfo WHERE id = :friendId")
+    fun removeFriendInfoByFriendId(friendId: Long)
 }

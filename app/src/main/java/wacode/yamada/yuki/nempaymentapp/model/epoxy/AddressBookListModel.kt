@@ -2,6 +2,7 @@ package wacode.yamada.yuki.nempaymentapp.model.epoxy
 
 import android.databinding.ViewDataBinding
 import android.view.View
+import android.widget.CompoundButton
 import com.airbnb.epoxy.DataBindingEpoxyModel
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -20,11 +21,18 @@ abstract class AddressBookListModel : DataBindingEpoxyModel() {
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var itemClickListener: View.OnClickListener = View.OnClickListener { }
 
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var checkBoxChangeListener: CompoundButton.OnCheckedChangeListener? = null
+
     override fun setDataBindingVariables(binding: ViewDataBinding?) {
         binding?.let { binding ->
             friendInfoItem?.let { item ->
                 binding.setVariable(BR.friendInfoItem, item)
                 binding.setVariable(BR.itemClickListener, itemClickListener)
+
+                checkBoxChangeListener?.let {
+                    binding.setVariable(BR.checkBoxChangeListener, checkBoxChangeListener)
+                }
 
                 if (binding is RowAddressBookBinding) {
                     if (item.friendInfo.iconPath.isNotEmpty()) {
