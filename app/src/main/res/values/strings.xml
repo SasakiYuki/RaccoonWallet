@@ -489,6 +489,9 @@
     <string name="profile_address_add_activity_main_content_attribute_title">ウォレット属性の設定</string>
     <string name="profile_address_add_activity_main_content_attribute_master">Master</string>
 
+    <!-- SelectMyProfileAddressAddActivity -->
+    <string name="select_my_profile_address_add_activity_title">登録するウォレットを選択</string>
+
     <!-- WalletDetailFragment -->
     <string name="wallet_detail_fragment_title">ウォレットの詳細</string>
     <string name="wallet_detail_general">一般情報</string>
@@ -510,7 +513,7 @@
 
     <!-- WalletBackupActivity -->
     <string name="wallet_backup_activity_title">バックアップ</string>
-    
+
     <!-- MyAddressProfileActivity -->
     <string name="my_address_profile_activity_empty_title">リストは、まだ空っぽです</string>
     <string name="my_address_profile_activity_empty_description">ここは、自分のウォレットを整理する場所です。 ボタンからウォレットを追加したり、プロフィールタブから 自分のデータを入力できるよ。</string>
