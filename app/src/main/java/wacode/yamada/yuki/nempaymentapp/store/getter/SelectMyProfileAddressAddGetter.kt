@@ -13,5 +13,5 @@ class SelectMyProfileAddressAddGetter(reducer: SelectMyProfileAddressAddReducer)
     val myAddressObservable: Observable<MyAddress>
             = reducer.myAddressObservable
     val walleInfoObservable: Observable<WalletInfo>
-            = reducer.walleInfoObservable
+            = reducer.walletInfoObservable
 }

@@ -4,17 +4,14 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import wacode.yamada.yuki.nempaymentapp.flux.DisposableMapper
-import wacode.yamada.yuki.nempaymentapp.room.address.MyAddress
-import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
-import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
 import wacode.yamada.yuki.nempaymentapp.store.type.SelectMyProfileAddressAddActionType
 import wacode.yamada.yuki.nempaymentapp.usecase.SelectMyProfileAddressAddUseCase
 
 class SelectMyProfileAddressAddCreator(private val useCase: SelectMyProfileAddressAddUseCase,
                                        private val dispatch: (SelectMyProfileAddressAddActionType) -> Unit) : DisposableMapper() {
-    private val findAllWallet: PublishSubject<List<Wallet>> = PublishSubject.create()
-    private val findAllMyAddress: PublishSubject<MyAddress> = PublishSubject.create()
-    private val selectWalletInfo: PublishSubject<WalletInfo> = PublishSubject.create()
+    private val findAllWallet: PublishSubject<Unit> = PublishSubject.create()
+    private val findAllMyAddress: PublishSubject<Unit> = PublishSubject.create()
+    private val selectWalletInfo: PublishSubject<Long> = PublishSubject.create()
 
     init {
         findAllWallet
@@ -42,7 +39,7 @@ class SelectMyProfileAddressAddCreator(private val useCase: SelectMyProfileAddre
                 .let { disposables.add(it) }
         selectWalletInfo
                 .flatMap {
-                    useCase.select(it.id)
+                    useCase.select(it)
                             .toObservable()
                             .doOnNext {
                                 dispatch(SelectMyProfileAddressAddActionType.ReceiveWalletInfo(it))
@@ -52,6 +49,18 @@ class SelectMyProfileAddressAddCreator(private val useCase: SelectMyProfileAddre
                 }
                 .subscribe()
                 .let { disposables.add(it) }
+    }
+
+    fun findAllWallet() {
+        findAllWallet.onNext(Unit)
+    }
+
+    fun findAllMyAddress() {
+        findAllMyAddress.onNext(Unit)
+    }
+
+    fun selectMyWalletInfo(id: Long) {
+        selectWalletInfo.onNext(id)
     }
 
 }

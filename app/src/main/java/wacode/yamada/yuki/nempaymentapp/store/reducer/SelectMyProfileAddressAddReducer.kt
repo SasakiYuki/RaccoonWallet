@@ -17,7 +17,7 @@ class SelectMyProfileAddressAddReducer(action: Observable<SelectMyProfileAddress
         get() = mAllWalletSubject
     val myAddressObservable: Observable<MyAddress>
         get() = mMyAddressSubject
-    val walleInfoObservable: Observable<WalletInfo>
+    val walletInfoObservable: Observable<WalletInfo>
         get() = mWalletInfoSubject
 
     init {
