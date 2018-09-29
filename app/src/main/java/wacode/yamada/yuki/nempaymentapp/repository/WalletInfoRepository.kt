@@ -20,10 +20,4 @@ class WalletInfoRepository {
             walletInfoDao.delete(walletInfo)
         }
     }
-
-    fun remove(walletId: Long): Completable {
-        return Completable.fromAction {
-            walletInfoDao.delete(walletId)
-        }
-    }
 }
