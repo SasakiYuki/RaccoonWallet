@@ -37,9 +37,6 @@ interface AddressBookDao {
     @Query("DELETE FROM FriendAddress WHERE friendId = :friendId")
     fun removeFriendAddressByFriendId(friendId: Long)
 
-    @Delete
-    fun remove(friendAddress: FriendAddress)
-
     @Query("DELETE FROM FriendInfo WHERE id = :friendId")
     fun removeFriendInfoByFriendId(friendId: Long)
 }

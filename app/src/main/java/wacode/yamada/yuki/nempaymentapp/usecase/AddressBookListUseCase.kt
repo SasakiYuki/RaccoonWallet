@@ -23,6 +23,4 @@ class AddressBookListUseCase @Inject constructor(private val addressBookReposito
     fun removeAddressBook(friendId: Long) = addressBookRepository.removeFriendAddressByFriendId(friendId)
 
     fun removeFriendInfo(friendId: Long) = addressBookRepository.removeFriendInfoByFriendId(friendId)
-
-    fun remove(friendAddress: FriendAddress) = addressBookRepository.remove(friendAddress)
 }
