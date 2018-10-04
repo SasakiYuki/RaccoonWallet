@@ -2,6 +2,9 @@
 
 <img src="https://raccoonwallet.com/wp-content/uploads/2018/06/RaccoonWallet_Githubimage.jpg" alt="RaccoonWallet " title="RaccoonWallet ">
 
+- [HomePage](https://raccoonwallet.com/)
+- [Medium](https://medium.com/raccoonwallet)
+
 # RaccoonWalletDeeplink
 
 RaccoonWalletはなんちゃってDeeplinkが扱えます。
