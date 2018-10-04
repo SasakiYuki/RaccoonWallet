@@ -1,7 +1,7 @@
 # RaccoonWallet Android
 
 <img src="https://raccoonwallet.com/wp-content/uploads/2018/06/RaccoonWallet_Githubimage.jpg" alt="RaccoonWallet " title="RaccoonWallet ">
-- [RaccoonWallet PWA](https://ryuta46.github.io/raccoonwallet-web-app/#/top?tab=home)
+- [RaccoonWalletPWA](https://ryuta46.github.io/raccoonwallet-web-app/#/top?tab=home)
 - [HomePage](https://raccoonwallet.com/)
 - [Medium](https://medium.com/raccoonwallet)
 
