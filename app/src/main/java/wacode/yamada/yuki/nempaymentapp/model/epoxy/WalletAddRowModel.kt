@@ -14,7 +14,7 @@ abstract class WalletAddRowModel : DataBindingEpoxyModel() {
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var onClickRowListener: View.OnClickListener = View.OnClickListener { }
 
-    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    @EpoxyAttribute
     var walletAddEntity: WalletAddEntity? = null
 
     override fun setDataBindingVariables(binding: ViewDataBinding?) {

@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import wacode.yamada.yuki.nempaymentapp.extentions.remove
 import wacode.yamada.yuki.nempaymentapp.room.address.MyAddress
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
@@ -19,7 +20,8 @@ class SelectMyProfileAddressAddViewModel @Inject constructor(private val store: 
     val walletInfoLiveData: MutableLiveData<WalletInfo>
             = MutableLiveData()
     private val wallets: ArrayList<Wallet> = ArrayList()
-    private val walletAddList: ArrayList<WalletAddEntity> = ArrayList()
+    val walletAddList: ArrayList<WalletAddEntity> = ArrayList()
+    private val walletInfoList: ArrayList<WalletInfo> = ArrayList()
 
     init {
         store.getter.allWalletObservable
@@ -51,6 +53,13 @@ class SelectMyProfileAddressAddViewModel @Inject constructor(private val store: 
                 .let {
                     addDisposable(it)
                 }
+    }
+
+    fun filterWallet(walletInfo: WalletInfo) {
+        val list = ArrayList<WalletAddEntity>()
+        walletAddList.filterTo(list) { walletInfo.walletAddress.remove("-") != it.walletAddress }
+        walletAddList.clear()
+        walletAddList.addAll(list)
     }
 
     fun findAllWallet() {

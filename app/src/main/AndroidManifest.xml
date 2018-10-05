@@ -154,9 +154,11 @@
             android:name=".view.activity.AddressBookListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.profile.SelectMyProfileAddressAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.AddressBookActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.profile.SelectMyProfileAddressAddActivity"></activity>
     </application>
 
 </manifest>

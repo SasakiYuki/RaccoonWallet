@@ -74,4 +74,9 @@ internal abstract class ViewModelModule {
     @ViewModelKey(MyProfileInfoViewModel::class)
     abstract fun bindMyProfileInfoViewModel(viewModel: MyProfileInfoViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(SelectMyProfileAddressAddViewModel::class)
+    abstract fun bindSelectMyProfileAddressAddViewModel(viewModel:SelectMyProfileAddressAddViewModel): ViewModel
+
 }

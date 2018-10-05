@@ -3,6 +3,8 @@ package wacode.yamada.yuki.nempaymentapp.view.controller
 import android.view.View
 import com.airbnb.epoxy.AutoModel
 import com.airbnb.epoxy.TypedEpoxyController
+import wacode.yamada.yuki.nempaymentapp.model.epoxy.WalletAddHeaderModel_
+import wacode.yamada.yuki.nempaymentapp.model.epoxy.WalletAddRowModel_
 
 class WalletAddListController(private val listener: WalletAddListClickListener) : TypedEpoxyController<ArrayList<WalletAddEntity>>() {
     @AutoModel

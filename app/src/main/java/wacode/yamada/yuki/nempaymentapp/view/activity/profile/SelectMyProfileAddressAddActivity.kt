@@ -2,6 +2,8 @@ package wacode.yamada.yuki.nempaymentapp.view.activity.profile
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -22,12 +24,12 @@ class SelectMyProfileAddressAddActivity : AppCompatActivity() {
     private lateinit var viewModel: SelectMyProfileAddressAddViewModel
     private lateinit var controller: WalletAddListController
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_my_profile_address_add)
-
+        setupViewModel()
+        setupViews()
     }
 
     private fun setupViewModel() {
@@ -44,7 +46,8 @@ class SelectMyProfileAddressAddActivity : AppCompatActivity() {
             })
             walletInfoLiveData.observe(this@SelectMyProfileAddressAddActivity, Observer {
                 it ?: return@Observer
-
+                filterWallet(it)
+                controller.setData(walletAddList)
             })
             findAllWallet()
         }
@@ -69,14 +72,10 @@ class SelectMyProfileAddressAddActivity : AppCompatActivity() {
         recycler.adapter = controller.adapter
     }
 
-    fun a() {
-        Wallet全件取得　ViewModelに格納 AllWalletList　すべてにチェック
-        MyAddress全件取得　取得次第WalletInfoをselect
-        WalletInfoが返ってきたら該当のWalletが AllWalletListにあるかチェック 　 存在する場合そいつはAllWalletListから外す
+    companion object {
+        fun createIntent(context: Context): Intent {
+            val intent = Intent(context, SelectMyProfileAddressAddActivity::class.java)
+            return intent
+        }
     }
-
-    fun findAllWallet() {
-
-    }
-
 }
