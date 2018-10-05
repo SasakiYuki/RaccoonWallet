@@ -9,22 +9,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/ToolBar"
-        app:titleTextColor="@color/toolbarTextColor">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/select_my_profile_address_add_activity_title"
-                android:textColor="@color/toolbarTextColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.Toolbar>
+        app:titleTextColor="@color/toolbarTextColor" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="0dp"

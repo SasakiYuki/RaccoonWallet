@@ -13,12 +13,15 @@ import kotlinx.android.synthetic.main.activity_select_my_profile_address_add.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
+import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletAddEntity
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletAddListController
 import wacode.yamada.yuki.nempaymentapp.viewmodel.SelectMyProfileAddressAddViewModel
 import javax.inject.Inject
 
-class SelectMyProfileAddressAddActivity : AppCompatActivity() {
+class SelectMyProfileAddressAddActivity : BaseActivity() {
+    override fun setLayout() = R.layout.activity_select_my_profile_address_add
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: SelectMyProfileAddressAddViewModel
@@ -27,9 +30,14 @@ class SelectMyProfileAddressAddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select_my_profile_address_add)
+        setupToolbar()
         setupViewModel()
         setupViews()
+    }
+
+    private fun setupToolbar() {
+        setToolbarTitle(R.string.select_my_profile_address_add_activity_title)
+        setToolBarBackButton()
     }
 
     private fun setupViewModel() {

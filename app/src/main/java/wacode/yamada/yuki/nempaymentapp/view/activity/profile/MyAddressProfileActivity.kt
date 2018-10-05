@@ -161,7 +161,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         data?.let {
             when (requestCode) {
                 ProfileAddressAddActivity.REQUEST_CODE -> handleProfileAddressAddActivity(resultCode, it)
-                SelectModeAddWalletActivity.REQUEST_CODE -> handle(resultCode, it)
+                SelectModeAddWalletActivity.REQUEST_CODE -> handleSelectModeAddWalletActivity(resultCode, it)
             }
         }
     }
@@ -175,7 +175,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         }
     }
 
-    private fun handle(resultCode: Int, intent: Intent) {
+    private fun handleSelectModeAddWalletActivity(resultCode: Int, intent: Intent) {
         if (resultCode == Activity.RESULT_OK) {
             val item = intent.getSerializableExtra(SelectModeAddWalletActivity.KEY_MODE) as SelectModeAddWalletActivity.Mode
             if (item == SelectModeAddWalletActivity.Mode.Wallet) {
