@@ -73,6 +73,7 @@ class SelectMyProfileAddressAddActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val REQUEST_CODE = 208
         fun createIntent(context: Context): Intent {
             val intent = Intent(context, SelectMyProfileAddressAddActivity::class.java)
             return intent

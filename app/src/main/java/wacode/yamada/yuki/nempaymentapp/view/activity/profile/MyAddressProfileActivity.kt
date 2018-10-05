@@ -132,7 +132,9 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
     private fun changeAddBottomButton() {
         bottomButton.setText(R.string.my_address_profile_activity_bottom_button_add)
         bottomButton.setImage(R.mipmap.icon_plus)
-        bottomButton.setClickListener(View.OnClickListener { startActivityForResult(ProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity), ProfileAddressAddActivity.REQUEST_CODE) })
+        bottomButton.setClickListener(View.OnClickListener {
+            startActivityForResult(SelectModeAddWalletActivity.createIntent(this), SelectModeAddWalletActivity.REQUEST_CODE)
+        })
         RxBus.send(MyAddressProfileBottomButtonEvent.OnChangeEditBottomButton())
     }
 
@@ -159,6 +161,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         data?.let {
             when (requestCode) {
                 ProfileAddressAddActivity.REQUEST_CODE -> handleProfileAddressAddActivity(resultCode, it)
+                SelectModeAddWalletActivity.REQUEST_CODE -> handle(resultCode, it)
             }
         }
     }
@@ -168,6 +171,17 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
             val item = intent.getSerializableExtra(ProfileAddressAddActivity.INTENT_WALLET_INFO) as WalletInfo
             MyAddress(walletInfoId = item.id).let {
                 viewModel.insert(it)
+            }
+        }
+    }
+
+    private fun handle(resultCode: Int, intent: Intent) {
+        if (resultCode == Activity.RESULT_OK) {
+            val item = intent.getSerializableExtra(SelectModeAddWalletActivity.KEY_MODE) as SelectModeAddWalletActivity.Mode
+            if (item == SelectModeAddWalletActivity.Mode.Wallet) {
+                startActivityForResult(SelectMyProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity), SelectMyProfileAddressAddActivity.REQUEST_CODE)
+            } else if (item == SelectModeAddWalletActivity.Mode.Direct) {
+                startActivityForResult(ProfileAddressAddActivity.createIntent(this@MyAddressProfileActivity), ProfileAddressAddActivity.REQUEST_CODE)
             }
         }
     }

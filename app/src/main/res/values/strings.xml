@@ -430,6 +430,11 @@
     <string name="setting_home_app_lock">起動時にPIN入力を要求する</string>
     <string name="setting_home_security_lesson">セキュリティレッスンを受ける</string>
 
+    <!-- SelectModeAddWalletActivity -->
+    <string name="select_mode_add_wallet_title">どうやって設定する？</string>
+    <string name="select_mode_add_wallet_from_wallet">ウォレットから登録する</string>
+    <string name="select_mode_add_wallet_direct">直接入力する</string>
+
     <!-- SelectNode -->
     <string name="setting_node_title">ノード選択</string>
 

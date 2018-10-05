@@ -159,6 +159,8 @@
         <activity
             android:name=".view.activity.AddressBookActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.profile.SelectModeAddWalletActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
