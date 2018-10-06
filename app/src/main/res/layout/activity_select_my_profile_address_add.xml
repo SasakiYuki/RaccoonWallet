@@ -19,4 +19,16 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:id="@+id/recycler"/>
 
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
+        android:id="@+id/bottomButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        app:layout_behavior="wacode.yamada.yuki.nempaymentapp.view.ConstraintLayoutBehavior"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:src="@mipmap/icon_plus"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:text="@string/select_my_profile_address_add_activity_bottom_button" />
 </android.support.constraint.ConstraintLayout>

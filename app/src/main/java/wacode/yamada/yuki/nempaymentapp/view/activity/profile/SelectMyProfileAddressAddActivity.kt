@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
@@ -58,6 +57,10 @@ class SelectMyProfileAddressAddActivity : BaseActivity() {
                 controller.setData(walletAddList)
             })
             findAllWallet()
+            onChangedAddWalletLiveData.observe(this@SelectMyProfileAddressAddActivity, Observer {
+                it ?: return@Observer
+                controller.setData(walletAddList)
+            })
         }
     }
 
@@ -73,8 +76,8 @@ class SelectMyProfileAddressAddActivity : BaseActivity() {
     private fun setupViews() {
         recycler.layoutManager = LinearLayoutManager(this)
         controller = WalletAddListController(object : WalletAddListController.WalletAddListClickListener {
-            override fun onClickRow() {
-
+            override fun onClickRow(walletAddEntity: WalletAddEntity) {
+                viewModel.onChangedAddWalletEntity(walletAddEntity)
             }
         })
         recycler.adapter = controller.adapter
