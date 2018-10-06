@@ -19,9 +19,10 @@ class SelectMyProfileAddressAddViewModel @Inject constructor(private val store: 
             = MutableLiveData()
     val walletInfoLiveData: MutableLiveData<WalletInfo>
             = MutableLiveData()
+    val onChangedAddWalletLiveData : MutableLiveData<ArrayList<WalletAddEntity>>
+            = MutableLiveData()
     private val wallets: ArrayList<Wallet> = ArrayList()
     val walletAddList: ArrayList<WalletAddEntity> = ArrayList()
-    private val walletInfoList: ArrayList<WalletInfo> = ArrayList()
 
     init {
         store.getter.allWalletObservable
@@ -72,6 +73,20 @@ class SelectMyProfileAddressAddViewModel @Inject constructor(private val store: 
 
     fun select(id: Long) {
         store.actionCreator.selectMyWalletInfo(id)
+    }
+
+    fun onChangedAddWalletEntity(walletAddEntity: WalletAddEntity) {
+        val list = ArrayList<WalletAddEntity>()
+        for(item in walletAddList) {
+            if (item.walletAddress == walletAddEntity.walletAddress) {
+                list.add(walletAddEntity)
+            } else {
+                list.add(item)
+            }
+        }
+        walletAddList.clear()
+        walletAddList.addAll(list)
+        onChangedAddWalletLiveData.value = walletAddList
     }
 
     private fun convertWalletToWalletAddEntity(list: List<Wallet>): ArrayList<WalletAddEntity> {

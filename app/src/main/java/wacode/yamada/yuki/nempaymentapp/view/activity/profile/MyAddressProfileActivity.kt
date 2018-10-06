@@ -161,6 +161,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         data?.let {
             when (requestCode) {
                 ProfileAddressAddActivity.REQUEST_CODE -> handleProfileAddressAddActivity(resultCode, it)
+                SelectMyProfileAddressAddActivity.REQUEST_CODE -> handleSelectMyprofileAddressAddActivity(resultCode, it)
                 SelectModeAddWalletActivity.REQUEST_CODE -> handleSelectModeAddWalletActivity(resultCode, it)
             }
         }
@@ -172,6 +173,11 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
             MyAddress(walletInfoId = item.id).let {
                 viewModel.insert(it)
             }
+        }
+    }
+
+    private fun handleSelectMyprofileAddressAddActivity(resultCode: Int, intent: Intent) {
+        if (resultCode == Activity.RESULT_OK) {
         }
     }
 

@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.model.epoxy
 
 import android.databinding.ViewDataBinding
+import android.support.v7.widget.AppCompatCheckBox
 import android.view.View
 import com.airbnb.epoxy.DataBindingEpoxyModel
 import com.airbnb.epoxy.EpoxyAttribute
@@ -19,8 +20,15 @@ abstract class WalletAddRowModel : DataBindingEpoxyModel() {
 
     override fun setDataBindingVariables(binding: ViewDataBinding?) {
         binding?.let {
-            it.setVariable(BR.clickListener, onClickRowListener)
             it.setVariable(BR.entity, walletAddEntity)
+            val checkBox = it.root.findViewById<AppCompatCheckBox>(R.id.checkbox)
+            it.root.setOnClickListener {
+                checkBox.isChecked = !checkBox.isChecked
+                onClickRowListener.onClick(it)
+            }
+            checkBox.setOnClickListener {
+                onClickRowListener.onClick(checkBox)
+            }
         }
     }
 }
