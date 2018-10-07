@@ -1,11 +1,13 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity.profile
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_select_my_profile_address_add.*
@@ -32,6 +34,7 @@ class SelectMyProfileAddressAddActivity : BaseActivity() {
         setupToolbar()
         setupViewModel()
         setupViews()
+        setupButton()
     }
 
     private fun setupToolbar() {
@@ -73,6 +76,15 @@ class SelectMyProfileAddressAddActivity : BaseActivity() {
                 .blockingGet() as ArrayList<WalletAddEntity>
     }
 
+    private fun setupButton() {
+        bottomButton.setClickListener(View.OnClickListener {
+            val intent = Intent()
+            intent.putExtra(KEY_WALLET_ADD_ENTITIES, viewModel.walletAddList)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        })
+    }
+
     private fun setupViews() {
         recycler.layoutManager = LinearLayoutManager(this)
         controller = WalletAddListController(object : WalletAddListController.WalletAddListClickListener {
@@ -84,6 +96,7 @@ class SelectMyProfileAddressAddActivity : BaseActivity() {
     }
 
     companion object {
+        const val KEY_WALLET_ADD_ENTITIES = "wallet_add_entities"
         const val REQUEST_CODE = 208
         fun createIntent(context: Context): Intent {
             val intent = Intent(context, SelectMyProfileAddressAddActivity::class.java)

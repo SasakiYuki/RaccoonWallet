@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_my_address_profile.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.event.MyAddressProfileBottomButtonEvent
+import wacode.yamada.yuki.nempaymentapp.event.WalletInfoEvent
 import wacode.yamada.yuki.nempaymentapp.extentions.buildSpannableText
 import wacode.yamada.yuki.nempaymentapp.extentions.setSpan
 import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
@@ -27,6 +28,7 @@ import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
 import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.view.activity.BaseActivity
 import wacode.yamada.yuki.nempaymentapp.view.adapter.SimpleViewPagerAdapter
+import wacode.yamada.yuki.nempaymentapp.view.controller.WalletAddEntity
 import wacode.yamada.yuki.nempaymentapp.view.fragment.BaseFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.profile.MyProfileInfoFragment
 import wacode.yamada.yuki.nempaymentapp.view.fragment.profile.MyWalletInfoFragment
@@ -54,9 +56,16 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyAddressProfileViewModel::class.java)
         viewModel.apply {
-            createLiveData.observe(this@MyAddressProfileActivity, Observer {
+            insertMyAddressLiveData.observe(this@MyAddressProfileActivity, Observer {
                 it ?: return@Observer
                 // do nothing
+            })
+            insertWalletInfoLiveData.observe(this@MyAddressProfileActivity, Observer {
+                it ?: return@Observer
+                MyAddress(walletInfoId = it.id).let {
+                    viewModel.insertMyAddress(it)
+                }
+                RxBus.send(WalletInfoEvent.InsertWalletInfo(it))
             })
             myProfileEntityEvent.observe(this@MyAddressProfileActivity, Observer {
                 it ?: return@Observer
@@ -161,7 +170,7 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         data?.let {
             when (requestCode) {
                 ProfileAddressAddActivity.REQUEST_CODE -> handleProfileAddressAddActivity(resultCode, it)
-                SelectMyProfileAddressAddActivity.REQUEST_CODE -> handleSelectMyprofileAddressAddActivity(resultCode, it)
+                SelectMyProfileAddressAddActivity.REQUEST_CODE -> handleSelectMyProfileAddressAddActivity(resultCode, it)
                 SelectModeAddWalletActivity.REQUEST_CODE -> handleSelectModeAddWalletActivity(resultCode, it)
             }
         }
@@ -171,13 +180,20 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
         if (resultCode == Activity.RESULT_OK) {
             val item = intent.getSerializableExtra(ProfileAddressAddActivity.INTENT_WALLET_INFO) as WalletInfo
             MyAddress(walletInfoId = item.id).let {
-                viewModel.insert(it)
+                viewModel.insertMyAddress(it)
             }
         }
     }
 
-    private fun handleSelectMyprofileAddressAddActivity(resultCode: Int, intent: Intent) {
+    private fun handleSelectMyProfileAddressAddActivity(resultCode: Int, intent: Intent) {
         if (resultCode == Activity.RESULT_OK) {
+            val list = intent.getSerializableExtra(SelectMyProfileAddressAddActivity.KEY_WALLET_ADD_ENTITIES) as ArrayList<WalletAddEntity>
+            for (item in list) {
+                if (item.isSelected) {
+                    viewModel.insertWalletInfo(WalletInfo(walletName = item.walletName,
+                            walletAddress = item.walletAddress))
+                }
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import com.airbnb.epoxy.TypedEpoxyController
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.model.epoxy.WalletAddHeaderModel_
 import wacode.yamada.yuki.nempaymentapp.model.epoxy.WalletAddRowModel_
+import java.io.Serializable
 
 class WalletAddListController(private val listener: WalletAddListClickListener) : TypedEpoxyController<ArrayList<WalletAddEntity>>() {
     @AutoModel
@@ -26,7 +27,7 @@ class WalletAddListController(private val listener: WalletAddListClickListener) 
                     .walletAddEntity(item)
                     .onClickRowListener(View.OnClickListener {
                         val checkBox = it.findViewById<AppCompatCheckBox>(R.id.checkbox)
-                        listener.onClickRow(WalletAddEntity(item.walletName,item.walletAddress,checkBox.isSelected))
+                        listener.onClickRow(WalletAddEntity(item.walletName, item.walletAddress, checkBox.isSelected))
                     })
                     .addTo(this)
         }
@@ -39,4 +40,4 @@ class WalletAddListController(private val listener: WalletAddListClickListener) 
 
 data class WalletAddEntity(val walletName: String,
                            val walletAddress: String,
-                           val isSelected: Boolean)
+                           val isSelected: Boolean) : Serializable
