@@ -512,7 +512,7 @@
 
     <!-- WalletBackupActivity -->
     <string name="wallet_backup_activity_title">バックアップ</string>
-    
+
     <!-- MyAddressProfileActivity -->
     <string name="my_address_profile_activity_empty_title">リストは、まだ空っぽです</string>
     <string name="my_address_profile_activity_empty_description">ここは、自分のウォレットを整理する場所です。 ボタンからウォレットを追加したり、プロフィールタブから 自分のデータを入力できるよ。</string>
@@ -571,7 +571,7 @@
     <string name="address_book_list_sort_second">よく送る順</string>
 
     <!-- CreateFriend -->
-    <string name="create_friend_address_title">連絡先</string>
+    <string name="create_friend_address_title">プロフィール</string>
     <string name="create_friend_wallet_title">ウォレット</string>
     <string name="create_friend_input_error_message">名前とウォレットを登録してください</string>
     <string name="create_friend_address_cooperation_title">連携</string>
@@ -583,7 +583,7 @@
 
     <!-- AddressBook -->
     <string name="address_book_friend_wallet_title">ウォレット</string>
-    <string name="address_book_friend_info_title">連絡先</string>
+    <string name="address_book_friend_info_title">プロフィール</string>
 
     <!--Dialog-->
     <string name="dialog_update_forward_title">アプリのアップデートがあります</string>
