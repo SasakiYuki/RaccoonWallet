@@ -5,16 +5,14 @@ import android.view.View
 import com.airbnb.epoxy.AutoModel
 import com.airbnb.epoxy.TypedEpoxyController
 import wacode.yamada.yuki.nempaymentapp.R
-import wacode.yamada.yuki.nempaymentapp.model.epoxy.WalletAddHeaderModel_
-import wacode.yamada.yuki.nempaymentapp.model.epoxy.WalletAddRowModel_
-import wacode.yamada.yuki.nempaymentapp.model.epoxy.WalletInfoEmptyModel_
+import wacode.yamada.yuki.nempaymentapp.model.epoxy.*
 import java.io.Serializable
 
 class WalletAddListController(private val listener: WalletAddListClickListener) : TypedEpoxyController<ArrayList<WalletAddEntity>>() {
     @AutoModel
     lateinit var walletAddHeaderModel: WalletAddHeaderModel_
     @AutoModel
-    lateinit var walletInfoEmptyModel: WalletInfoEmptyModel_
+    lateinit var walletInfoEmptyModel: WalletAddEmptyModel_
 
     override fun buildModels(data: ArrayList<WalletAddEntity>?) {
         data?.let {

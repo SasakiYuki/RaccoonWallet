@@ -498,6 +498,8 @@
     <!-- SelectMyProfileAddressAddActivity -->
     <string name="select_my_profile_address_add_activity_title">登録するウォレットを選択</string>
     <string name="select_my_profile_address_add_activity_bottom_button">完了</string>
+    <string name="select_my_profile_address_add_activity_empty_title">登録できるウォレットはありません</string>
+    <string name="select_my_profile_address_add_activity_empty_description">ウォレットが作成されていないか、すでにすべてのウォレットが登録済みです。</string>
 
     <!-- WalletDetailFragment -->
     <string name="wallet_detail_fragment_title">ウォレットの詳細</string>
