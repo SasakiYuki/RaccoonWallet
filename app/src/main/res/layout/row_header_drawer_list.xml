@@ -10,10 +10,6 @@
             type="String" />
 
         <variable
-            name="address"
-            type="String" />
-
-        <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
     </data>
@@ -65,25 +61,10 @@
             android:text="@{name}"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/addressTextView"
             app:layout_constraintLeft_toRightOf="@id/iconImageView"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iconImageView"
+            app:layout_constraintBottom_toBottomOf="@id/iconImageView"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="GUEST" />
-
-        <TextView
-            android:id="@+id/addressTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@{address}"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/nameTextView"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameTextView"
-            tools:text="NCTYCQ-E6AI8D-IRHPHE-PBSVDB-OQFSHX-GBVF4N-IJYH" />
     </android.support.constraint.ConstraintLayout>
 </layout>

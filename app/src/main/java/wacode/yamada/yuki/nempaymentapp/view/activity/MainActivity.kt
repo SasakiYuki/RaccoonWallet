@@ -30,7 +30,6 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import org.jsoup.Jsoup
 import wacode.yamada.yuki.nempaymentapp.R
-import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
 import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
 import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
@@ -116,13 +115,10 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
 
     private fun setupNavigationRecyclerView() {
         async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(this@MainActivity) }
-                    .await()
             val myProfileString = SharedPreferenceUtils[this@MainActivity, KEY_PREF_MY_PROFILE, Gson().toJson(MyProfileEntity())]
             val myProfile = Gson().fromJson(myProfileString, MyProfileEntity::class.java)
             controller = DrawerListController(this@MainActivity,
-                    wallet?.address?.toDisplayAddress() ?: getString(R.string.main_navigation_null),
-                    wallet?.name ?: "",
+                    if (myProfile.name.isEmpty()) getString(R.string.my_address_profile_activity_title_initial_guest) else myProfile.name,
                     myProfile.screenPath,
                     myProfile.iconPath)
             navigationRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)

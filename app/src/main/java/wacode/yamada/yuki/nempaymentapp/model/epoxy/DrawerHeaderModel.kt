@@ -20,9 +20,6 @@ abstract class DrawerHeaderModel : DataBindingEpoxyModel() {
     var name: String = ""
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
-    var address: String = ""
-
-    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var screenPath: String = ""
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
@@ -34,7 +31,6 @@ abstract class DrawerHeaderModel : DataBindingEpoxyModel() {
     override fun setDataBindingVariables(binding: ViewDataBinding?) {
         binding?.let {
             it.setVariable(BR.name, name)
-            it.setVariable(BR.address, address)
             it.setVariable(BR.clickListener, onClickHeaderListener)
 
             it.root.apply {
