@@ -434,6 +434,7 @@
     <string name="select_mode_add_wallet_title">どうやって設定する？</string>
     <string name="select_mode_add_wallet_from_wallet">ウォレットから登録する</string>
     <string name="select_mode_add_wallet_direct">直接入力する</string>
+    <string name="select_mode_add_wallet_no_wallet">ウォレットを作成してください</string>
 
     <!-- SelectNode -->
     <string name="setting_node_title">ノード選択</string>
