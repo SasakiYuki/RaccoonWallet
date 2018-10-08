@@ -75,15 +75,17 @@ class MyAddressProfileActivity : BaseActivity(), HasSupportFragmentInjector {
     }
 
     private fun setupToolbarTitle(myProfileEntity: MyProfileEntity) {
-        toolbarTitle.apply {
-            text = (myProfileEntity.name + "\n" + myProfileEntity.nameRuby)
-        }.buildSpannableText {
-            val targetTop = myProfileEntity.name
-            val targetBottom = myProfileEntity.nameRuby
-            it.setSpan(ForegroundColorSpan(ContextCompat.getColor(this@MyAddressProfileActivity, R.color.textBlack)), targetTop)
-                    .setSpan(ForegroundColorSpan(ContextCompat.getColor(this@MyAddressProfileActivity, R.color.textGrayDark)), targetBottom)
-                    .setSpan(AbsoluteSizeSpan(20, true), targetTop)
-                    .setSpan(AbsoluteSizeSpan(14, true), targetBottom)
+        if (myProfileEntity.name.isNotEmpty()) {
+            toolbarTitle.apply {
+                text = (myProfileEntity.name + "\n" + myProfileEntity.nameRuby)
+            }.buildSpannableText {
+                val targetTop = myProfileEntity.name
+                val targetBottom = myProfileEntity.nameRuby
+                it.setSpan(ForegroundColorSpan(ContextCompat.getColor(this@MyAddressProfileActivity, R.color.textBlack)), targetTop)
+                        .setSpan(ForegroundColorSpan(ContextCompat.getColor(this@MyAddressProfileActivity, R.color.textGrayDark)), targetBottom)
+                        .setSpan(AbsoluteSizeSpan(20, true), targetTop)
+                        .setSpan(AbsoluteSizeSpan(14, true), targetBottom)
+            }
         }
     }
 
