@@ -3,6 +3,7 @@ package wacode.yamada.yuki.nempaymentapp.model.epoxy
 import android.databinding.ViewDataBinding
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.airbnb.epoxy.DataBindingEpoxyModel
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -20,9 +21,6 @@ abstract class DrawerHeaderModel : DataBindingEpoxyModel() {
     var name: String = ""
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
-    var address: String = ""
-
-    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var screenPath: String = ""
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
@@ -34,7 +32,6 @@ abstract class DrawerHeaderModel : DataBindingEpoxyModel() {
     override fun setDataBindingVariables(binding: ViewDataBinding?) {
         binding?.let {
             it.setVariable(BR.name, name)
-            it.setVariable(BR.address, address)
             it.setVariable(BR.clickListener, onClickHeaderListener)
 
             it.root.apply {
@@ -63,6 +60,8 @@ abstract class DrawerHeaderModel : DataBindingEpoxyModel() {
                             } else {
                                 circleImageView.setImageDrawable(context.getDrawable(R.mipmap.logo_pyoko))
                             }
+                            val nameTextView = findViewById<TextView>(R.id.nameTextView)
+                            nameTextView.text = it.myProfileEntity.name
                         })
             }
         }
