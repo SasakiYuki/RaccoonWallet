@@ -34,11 +34,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideMyProfileRepository(context: Context) = MyProfileRepository(context)
-
-    @Provides
-    @Singleton
-    fun provideMyAddressProfileRepository() = MyAddressProfileRepository()
-
+    
     @Provides
     @Singleton
     fun provideMyAddressRepository() = MyAddressRepository()
