@@ -153,6 +153,7 @@ class MyProfileInfoFragment : BaseFragment() {
                     .observe(this@MyProfileInfoFragment, Observer {
                         it ?: return@Observer
                         RxBus.send(MyProfileEvent(it))
+                        setMyProfileInformation(it)
                     })
             screenChangeEventLiveData
                     .observe(this@MyProfileInfoFragment, Observer {

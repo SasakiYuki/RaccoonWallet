@@ -3,6 +3,7 @@ package wacode.yamada.yuki.nempaymentapp.model.epoxy
 import android.databinding.ViewDataBinding
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.airbnb.epoxy.DataBindingEpoxyModel
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -59,6 +60,8 @@ abstract class DrawerHeaderModel : DataBindingEpoxyModel() {
                             } else {
                                 circleImageView.setImageDrawable(context.getDrawable(R.mipmap.logo_pyoko))
                             }
+                            val nameTextView = findViewById<TextView>(R.id.nameTextView)
+                            nameTextView.text = it.myProfileEntity.name
                         })
             }
         }
