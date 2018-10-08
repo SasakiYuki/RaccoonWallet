@@ -37,7 +37,7 @@ class CreateFriendWalletFragment : BaseFragment() {
     }
 
     companion object {
-        const val PAGE_POSITION = 0
+        const val PAGE_POSITION = 1
 
         fun newInstance(): CreateFriendWalletFragment {
             val fragment = CreateFriendWalletFragment()

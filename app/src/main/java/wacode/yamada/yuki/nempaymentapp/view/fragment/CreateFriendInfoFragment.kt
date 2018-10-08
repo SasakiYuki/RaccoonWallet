@@ -36,7 +36,7 @@ class CreateFriendInfoFragment : BaseFragment() {
     }
 
     companion object {
-        const val PAGE_POSITION = 1
+        const val PAGE_POSITION = 0
 
         fun newInstance(): CreateFriendInfoFragment {
             val fragment = CreateFriendInfoFragment()

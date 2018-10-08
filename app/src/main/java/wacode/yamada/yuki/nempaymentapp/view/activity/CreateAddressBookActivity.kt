@@ -114,8 +114,8 @@ class CreateAddressBookActivity : BaseActivity() {
 
     private fun setupViewPager() {
         val list = ArrayList<BaseFragment>()
-        list.add(CreateFriendWalletFragment.newInstance())
         list.add(CreateFriendInfoFragment.newInstance())
+        list.add(CreateFriendWalletFragment.newInstance())
 
         val adapter = SimpleViewPagerAdapter(this, list, supportFragmentManager)
         createAddressBookViewPager.adapter = adapter
@@ -154,7 +154,7 @@ class CreateAddressBookActivity : BaseActivity() {
             val walletList = createFriendWalletFragment.walletList
             val friendInfo = createFriendInfoFragment.getAndCheckFriendInfo()
 
-            if (friendInfo != null && walletList.isNotEmpty()) {
+            if (friendInfo != null) {
                 val uri = circleImageView.tag?.let { it as String } ?: run { "" }
                 friendInfo.iconPath = uri
 

@@ -583,9 +583,9 @@
     <string name="address_book_list_sort_second">よく送る順</string>
 
     <!-- CreateFriend -->
-    <string name="create_friend_address_title">連絡先</string>
+    <string name="create_friend_address_title">プロフィール</string>
     <string name="create_friend_wallet_title">ウォレット</string>
-    <string name="create_friend_input_error_message">名前とウォレットを登録してください</string>
+    <string name="create_friend_input_error_message">プロフィールを登録してください</string>
     <string name="create_friend_address_cooperation_title">連携</string>
     <string name="create_friend_address_change_icon_title">アイコンを変更</string>
     <string name="create_friend_address_input_title">プロフィールを入力しましょう！</string>
@@ -595,7 +595,7 @@
 
     <!-- AddressBook -->
     <string name="address_book_friend_wallet_title">ウォレット</string>
-    <string name="address_book_friend_info_title">連絡先</string>
+    <string name="address_book_friend_info_title">プロフィール</string>
 
     <!--Dialog-->
     <string name="dialog_update_forward_title">アプリのアップデートがあります</string>
