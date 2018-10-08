@@ -171,7 +171,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:visibility="gone"
+        android:visibility="visible"
         app:src="@mipmap/icon_transaction_check"
         app:text="@string/com_enter" />
 
@@ -180,7 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:visibility="visible"
+        android:visibility="gone"
         app:leftSrc="@drawable/ic_add_black_24dp"
         app:leftText="@string/com_add"
         app:rightSrc="@mipmap/icon_transaction_check"

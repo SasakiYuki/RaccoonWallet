@@ -114,8 +114,8 @@ class CreateAddressBookActivity : BaseActivity() {
 
     private fun setupViewPager() {
         val list = ArrayList<BaseFragment>()
-        list.add(CreateFriendWalletFragment.newInstance())
         list.add(CreateFriendInfoFragment.newInstance())
+        list.add(CreateFriendWalletFragment.newInstance())
 
         val adapter = SimpleViewPagerAdapter(this, list, supportFragmentManager)
         createAddressBookViewPager.adapter = adapter
