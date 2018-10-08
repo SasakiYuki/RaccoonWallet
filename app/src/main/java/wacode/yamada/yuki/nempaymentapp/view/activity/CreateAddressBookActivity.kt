@@ -154,7 +154,7 @@ class CreateAddressBookActivity : BaseActivity() {
             val walletList = createFriendWalletFragment.walletList
             val friendInfo = createFriendInfoFragment.getAndCheckFriendInfo()
 
-            if (friendInfo != null && walletList.isNotEmpty()) {
+            if (friendInfo != null) {
                 val uri = circleImageView.tag?.let { it as String } ?: run { "" }
                 friendInfo.iconPath = uri
 
