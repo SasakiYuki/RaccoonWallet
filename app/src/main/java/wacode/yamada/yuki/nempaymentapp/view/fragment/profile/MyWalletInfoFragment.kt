@@ -79,6 +79,7 @@ class MyWalletInfoFragment : BaseFragment() {
                 fragment.show(activity?.supportFragmentManager, fragment.tag)
             }
         })
+        controller.setData(null)
         recyclerView.adapter = controller.adapter
     }
 

@@ -57,5 +57,5 @@
         app:layout_behavior="wacode.yamada.yuki.nempaymentapp.view.ConstraintLayoutBehavior"
         app:layout_scrollFlags="scroll|enterAlways"
         app:src="@mipmap/icon_plus"
-        app:text="string/R.string.my_address_profile_activity_bottom_button_add" />
+        app:text="@string/my_address_profile_activity_bottom_button_add" />
 </android.support.design.widget.CoordinatorLayout>

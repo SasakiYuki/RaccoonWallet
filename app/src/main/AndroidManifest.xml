@@ -67,8 +67,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.profile.MyAddressProfileActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.DisplayQRActivity"
             android:screenOrientation="portrait" />
@@ -154,7 +154,13 @@
             android:name=".view.activity.AddressBookListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.profile.SelectMyProfileAddressAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.AddressBookActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.profile.SelectModeAddWalletActivity"
+            android:screenOrientation="portrait"/>
     </application>
+
 </manifest>

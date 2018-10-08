@@ -34,18 +34,17 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideMyProfileRepository(context: Context) = MyProfileRepository(context)
-
-    @Provides
-    @Singleton
-    fun provideMyAddressProfileRepository() = MyAddressProfileRepository()
-
+    
     @Provides
     @Singleton
     fun provideMyAddressRepository() = MyAddressRepository()
 
-
     @Provides
     @Singleton
     fun provideWalletInfoRepository() = WalletInfoRepository()
+
+    @Provides
+    @Singleton
+    fun provideWalletRepository() = WalletRepository()
 }
 

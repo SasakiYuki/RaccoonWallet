@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/simpleBackground">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolBar"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:titleTextColor="@color/toolbarTextColor" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/topCardView"
+        style="@style/CardView.Light"
+        android:layout_width="0dp"
+        android:layout_height="222dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/topCardImageView"
+                android:layout_width="0dp"
+                android:layout_height="154dp"
+                android:contentDescription="@null"
+                android:src="@mipmap/heroimage_new_card"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <Button
+                android:id="@+id/topCardButton"
+                android:layout_width="192dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:background="@color/nemGreen"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/select_mode_add_wallet_from_wallet"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/topCardImageView" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/bottomCardView"
+        style="@style/CardView.Light"
+        android:layout_width="0dp"
+        android:layout_height="222dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topCardView">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/bottomCardImageView"
+                android:layout_width="0dp"
+                android:layout_height="154dp"
+                android:contentDescription="@null"
+                android:src="@color/gray_medium"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <Button
+                android:id="@+id/bottomCardButton"
+                android:layout_width="192dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:background="@color/gray_medium"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/select_mode_add_wallet_direct"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bottomCardImageView" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>
