@@ -70,7 +70,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:leftSrc="@drawable/icon_transaction_check"
         app:leftText="@string/com_select"
-        app:rightSrc="@mipmap/icon_plus"
+        app:rightSrc="@mipmap/icon_plus2"
         app:rightText="@string/com_add" />
 
     <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
