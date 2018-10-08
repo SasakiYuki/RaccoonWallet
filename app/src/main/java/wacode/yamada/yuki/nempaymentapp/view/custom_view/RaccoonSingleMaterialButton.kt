@@ -29,7 +29,7 @@ class RaccoonSingleMaterialButton(context: Context?, attrs: AttributeSet?, defSt
     }
 
     fun setClickListener(listener: OnClickListener) {
-        materialButton.setOnClickListener { listener.onClick(this) }
+        defaultMaterialButton.setOnClickListener { listener.onClick(this) }
     }
 
     fun setText(textResourceId: Int) {

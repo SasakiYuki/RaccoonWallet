@@ -59,9 +59,9 @@ class ProfileAddressAddActivity : BaseActivity() {
     private fun setupViews() {
         setToolBarBackButton()
         setTitle(R.string.profile_address_add_activity_title)
-        materialButton.setOnClickListener {
+        defaultMaterialButton.setOnClickListener {
             viewModel.isMaster = !viewModel.isMaster
-            materialButton.apply {
+            defaultMaterialButton.apply {
                 if (viewModel.isMaster) {
                     setTextColor(getWhite())
                     backgroundTintList = ColorStateList.valueOf(getOrange())
@@ -91,7 +91,7 @@ class ProfileAddressAddActivity : BaseActivity() {
             nameEditText.setText(it.walletName)
             addressEditText.setText(it.walletAddress)
             if (it.isMaster) {
-                materialButton.performClick()
+                defaultMaterialButton.performClick()
             }
         }
     }

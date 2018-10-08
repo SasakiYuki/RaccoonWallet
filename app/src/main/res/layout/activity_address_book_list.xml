@@ -62,7 +62,7 @@
     </LinearLayout>
 
     <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonDoubleMaterialButton
-        android:id="@+id/materialButton"
+        android:id="@+id/defaultMaterialButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,4 +72,16 @@
         app:leftText="@string/com_select"
         app:rightSrc="@mipmap/icon_plus"
         app:rightText="@string/com_add" />
+
+    <wacode.yamada.yuki.nempaymentapp.view.custom_view.RaccoonSingleMaterialButton
+        android:id="@+id/deleteMaterialButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:src="@mipmap/icon_delete"
+        app:text="@string/com_delete" />
+
 </android.support.constraint.ConstraintLayout>

@@ -31,4 +31,29 @@ class AddressBookListViewModel @Inject constructor(private val useCase: AddressB
                 })
                 .let { addDisposable(it) }
     }
+
+    fun removeAndGetAllFriendInfo(deleteList: List<FriendInfoItem>) {
+        Observable.fromIterable(deleteList)
+                .filter {
+                    it.isChecked
+                }
+                .observeOn(Schedulers.io())
+                .flatMapCompletable {
+                    useCase.removeFriendInfo(it.friendInfo.id)
+                            .andThen(useCase.removeAddressBook(it.friendInfo.id))
+                            .onErrorComplete()
+                }
+                .andThen(useCase.findFriendInfo("", BackLayerSearchView.SearchType.ALL, FriendInfoSortType.NAME))
+                .flatMapObservable {
+                    Observable.fromIterable(it)
+                }
+                .map { FriendInfoItem(friendInfo = it) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    friendInfoLiveData.value = it
+                }, {
+                    it.printStackTrace()
+                })
+                .let { addDisposable(it) }
+    }
 }

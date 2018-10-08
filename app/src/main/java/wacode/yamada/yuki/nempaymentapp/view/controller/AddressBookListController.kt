@@ -22,11 +22,16 @@ class AddressBookListController(private val listener: OnAddressBookClickListener
                     .itemClickListener(View.OnClickListener {
                         listener.onClickItem(item.friendInfo.id)
                     })
+                    .checkBoxChangeListener({ _, isChecked ->
+                        listener.onItemChecked(item.friendInfo.id, isChecked)
+                    })
                     .addTo(this)
         }
     }
 
     interface OnAddressBookClickListener {
         fun onClickItem(friendId: Long)
+
+        fun onItemChecked(friendId: Long, isChecked: Boolean)
     }
 }

@@ -12,11 +12,11 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import dagger.android.AndroidInjection
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_address_book_list.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.getColorFromResource
-import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem
 import wacode.yamada.yuki.nempaymentapp.room.address_book.FriendInfoSortType
 import wacode.yamada.yuki.nempaymentapp.view.controller.AddressBookListController
@@ -31,7 +31,7 @@ class AddressBookListActivity : BaseActivity() {
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: AddressBookListViewModel
     private lateinit var controller: AddressBookListController
-    private val friendInfoList = ArrayList<FriendInfoItem>()
+    private var friendInfoList = ArrayList<FriendInfoItem>()
     private var sortType: FriendInfoSortType = FriendInfoSortType.NAME
 
     override fun setLayout() = R.layout.activity_address_book_list
@@ -46,7 +46,7 @@ class AddressBookListActivity : BaseActivity() {
         setupAddressBookList()
         setupBackLayerSearchView()
         setupSortMenu()
-        setupMaterialButton()
+        setupButtons()
     }
 
 
@@ -56,11 +56,36 @@ class AddressBookListActivity : BaseActivity() {
         viewModel.findFriendInfo()
     }
 
+    override fun onBackPressed() {
+        if (deleteMaterialButton.visibility == View.VISIBLE) {
+            val list = createDeleteMode(false)
+            controller.setData(list)
+
+            deleteMaterialButton.visibility = View.GONE
+            defaultMaterialButton.visibility = View.VISIBLE
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun setupAddressBookList() {
         val dividerItemDecoration = DividerItemDecoration(addressRecyclerView.context, LinearLayoutManager(this).orientation)
         controller = AddressBookListController(object : AddressBookListController.OnAddressBookClickListener {
             override fun onClickItem(friendId: Long) {
                 startActivity(AddressBookActivity.createIntent(this@AddressBookListActivity, friendId))
+            }
+
+            override fun onItemChecked(friendId: Long, isChecked: Boolean) {
+                friendInfoList = Observable.fromIterable(friendInfoList)
+                        .map {
+                            return@map if (it.friendInfo.id == friendId) {
+                                FriendInfoItem(friendInfo = it.friendInfo, isChecked = isChecked, deleteMode = it.deleteMode)
+                            } else {
+                                it
+                            }
+                        }
+                        .toList()
+                        .blockingGet() as ArrayList<FriendInfoItem>
             }
         })
 
@@ -112,7 +137,6 @@ class AddressBookListActivity : BaseActivity() {
                 true
             }
         }
-
     }
 
     private fun setupViewModelObserve() {
@@ -122,6 +146,8 @@ class AddressBookListActivity : BaseActivity() {
 
                 addressRecyclerView.visibility = View.VISIBLE
                 searchEmptyMessage.visibility = View.GONE
+                deleteMaterialButton.visibility = View.GONE
+                defaultMaterialButton.visibility = View.VISIBLE
 
                 friendInfoList.add(it)
                 controller.setData(friendInfoList)
@@ -129,16 +155,35 @@ class AddressBookListActivity : BaseActivity() {
         }
     }
 
-    private fun setupMaterialButton() {
-        materialButton.setOnClickListener(object : RaccoonDoubleMaterialButton.OnDoubleButtonClickListener {
+    private fun setupButtons() {
+        defaultMaterialButton.setOnClickListener(object : RaccoonDoubleMaterialButton.OnDoubleButtonClickListener {
             override fun onLeftClick() {
-                showToast("Coming Soon")
+                friendInfoList = createDeleteMode(true)
+
+                controller.setData(friendInfoList)
+
+                deleteMaterialButton.visibility = View.VISIBLE
+                defaultMaterialButton.visibility = View.GONE
             }
 
             override fun onRightClick() {
                 startActivity(CreateAddressBookActivity.createIntent(this@AddressBookListActivity))
             }
         })
+
+        deleteMaterialButton.setClickListener(View.OnClickListener {
+            if (friendInfoList.isNotEmpty()) {
+                viewModel.removeAndGetAllFriendInfo(friendInfoList)
+                friendInfoList.clear()
+            }
+        })
+    }
+
+    private fun createDeleteMode(deleteMode: Boolean): ArrayList<FriendInfoItem> {
+        return Observable.fromIterable(friendInfoList)
+                .map { FriendInfoItem(friendInfo = it.friendInfo, deleteMode = deleteMode) }
+                .toList()
+                .blockingGet() as ArrayList<FriendInfoItem>
     }
 
     companion object {
