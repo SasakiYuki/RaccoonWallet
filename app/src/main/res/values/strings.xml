@@ -122,46 +122,21 @@
     <string name="calculator_error">Error</string>
     <string name="calculator_amount">金額</string>
     <string name="calculator_send_user">送り先</string>
-    <string name="calculator_error_max">最大値の取得に失敗しました。ネットワーク環境をご確認ください。</string>
 
-    <!-- NemConverterActivity -->
-    <string name="nem_converter_activity_title">NEM/JPY 通貨コンバータ</string>
-    <string name="nem_converter_number_input_error">数字以外入力できません</string>
     <string name="nem_converter_error_price">取得できませんでした</string>
-    <string name="nem_converter_current_nem_price">1 NEM = %1$s JPY (Zaif)</string>
 
     <!-- ReceiveFragment -->
     <string name="receive_fragment_address">Your Address</string>
     <string name="receive_fragment_address_toast">Address Copied</string>
 
-    <!-- invoiceActivity -->
-    <string name="invoice_activity_title">請求書の発行</string>
-    <string name="invoice_activity_hint_name">名前</string>
-    <string name="invoice_activity_hint_address">アドレス</string>
-    <string name="invoice_activity_hint_count">数量</string>
-    <string name="invoice_activity_hint_message">メッセージ</string>
-
     <!-- SelectWalletActivity -->
-    <string name="select_wallet_activity_header_main">Hi,Wallet maintenance?</string>
     <string name="select_wallet_activity_create_new_wallet">Create New Wallet</string>
     <string name="select_wallet_activity_login">LOGIN</string>
     <string name="select_wallet_empty_title">ウォレットがないみたい。</string>
     <string name="select_wallet_empty_message">上のボタンからウォレットを作成するか\nアカウントをリンクすると、ここに一覧で表示されるよ。</string>
 
-    <!-- InstantSendNEMActivity -->
-    <string name="instant_send_nem_activity_title">簡易送金</string>
-    <string name="instant_send_nem_activity_setting_account">設定済みアドレス</string>
-    <string name="instant_send_nem_activity_name">名前:</string>
-    <string name="instant_send_nem_activity_address">アドレス:</string>
-    <string name="instant_send_nem_balance">残高</string>
-    <string name="instant_send_nem_change_address">変更</string>
-
     <!-- TransactionListActivity -->
     <string name="transaction_list_activity_title">トランザクション一覧</string>
-    <string name="transaction_list_activity_row_multisig_transaction">これはマルチシグトランザクションです</string>
-    <string name="transaction_list_activity_row_unconfirmed">oops!まだ未承認のトランザクション</string>
-    <string name="transaction_list_activity_row_address">アドレス</string>
-    <string name="transaction_list_activity_row_message">メッセージ</string>
     <string name="transaction_list_activity_empty_title">おっと。まだ取引はないみたい。</string>
     <string name="transaction_list_activity_empty_message">トランザクションが発生したら、\nここに一覧で表示されるよ。</string>
 
@@ -187,7 +162,6 @@
     <string name="send_top_fragment_send">送信先</string>
     <string name="send_top_fragment_hint">送信先アドレスを入力</string>
     <string name="send_top_fragment_address_error">有効なアドレスではありません</string>
-    <string name="send_top_fragment_not_select_wallet">ウォレットが選択されていません</string>
     <string name="send_top_fragment_confirm_title">気をつけて。送り先はニュービーだ。</string>
     <string name="send_top_fragment_confirm_message">君が送ろうとしているアドレスは、これまで一度もブロックチェーン上で活動していない新参者みたいだね。とはいえアドレスがちゃんとした形式なら、送金は可能だよ。\nアドレスは正しいか、送り先は信頼できるか、よく確かめてから手続きしてね。</string>
     <string name="send_top_fragment_amount_confirm_title">おっと、数量が0XEMだ</string>
@@ -208,6 +182,8 @@
     <string name="select_send_mode_fragment_message_title">Message SEND</string>
     <string name="select_send_mode_fragment_message_hint">1024文字以内。取引所への認証番号にも使うよ。</string>
     <string name="select_send_mode_fragment_message_message">トランザクションにメッセージを添えます</string>
+
+    //todo
 
     <!-- SelectMessageTypeFragment -->
     <string name="select_message_type_fragment_title">メッセージタイプを選択</string>
