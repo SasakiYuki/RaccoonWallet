@@ -256,16 +256,11 @@
     <string name="choose_start_security_fragment_dialog_title_second">ほんとに？</string>
     <string name="choose_start_security_fragment_dialog_message_second">ほんとにほんとだね？止めはしないよ。\nもしウォレットのバックアップやPINコードを設定したくなったら、ウォレットバーやメニューのアプリ設定からいつでも行えるよ。それにレッスンもアプリ設定のセキュリティの項目から受講できるからね。</string>
 
-    <!-- PrivateKeyStoreSupportActivity -->
-    <string name="private_key_store_support_hero_message">Backup? You\'re smart!</string>
-
     <!-- TutorialDescriptionFragment -->
     <string name="tutorial_description_fragment_title">セキュリティレッスン</string>
     <string name="tutorial_description_fragment_main">やあ。セキュリティレッスンを受けに来たのかい？\n感心感心。\nよーし、それじゃあ早速やっていこう。\n\nじゃあ、まず最初に君のことを教えてくれないかい？\n次の画面で自分に合うものを選択してくれ。\n特別にみんなに最適なレッスン用意したからさ。</string>
-    <string name="tutorial_description_fragment_button">ウォレットのバックアップ</string>
 
     <!-- PrivateKeyDescriptionFragment -->
-    <string name="private_key_description_fragment_title">秘密鍵について</string>
     <string name="private_key_description_fragment_description_1">プライベートキー(秘密鍵)について</string>
     <string name="private_key_description_fragment_description">プライベートキー（秘密鍵）はあなたのアカウント情報において最も重要であり、機密事項として注意して取り扱わなければなりません。\n\nプライベートキーは、関連する資金と資産を制御し、あなたのアカウントを元に戻すために必要なものであり、この知識は誰もが身につける必要があります。\n\nこのプライベートキーは、決してなくさないようにしてください。 また絶対に外部に漏れないように注意して扱ってください。</string>
 
@@ -306,7 +301,6 @@
     <string name="about_activity_official_discord">公式DISCORDサーバー｜紹介リンク</string>
     <string name="about_activity_official_licence">オープンソースライセンス</string>
     <string name="about_activity_official_review">レビューを書く</string>
-    <string name="about_activity_terms_of_service"><u>利用規約とプライバシーポリシー</u></string>
     <string name="about_activity_review_title">毎度、どうも。</string>
     <string name="about_activity_review_message">RaccoonWalletを利用してくれてありがとう。\n突然だけど、もしよかったらレビューを書いてくれないかい？\n書いてくれた君には特別に、ラクーンエバンジェリスト・ライセンスを贈呈しよう。\n…何かよこせって？もうライセンスはあなたの心に届いているようだけど？</string>
     <string name="about_activity_review_button">レビューを書く</string>
@@ -320,14 +314,12 @@
     <string name="tutorial_login_description_fragment_description">NEMユーザーのあなた！\nラクーンウォレットを選んでくれて嬉しいよ。 すでによく知っている君には、\n僕から説明することはあまりないかな。\nここの画面から、PINコードを設定できるから、\nサクッと設定しといてくれ。\n\nもし秘密鍵のバックアップを取り忘れてたなら、初心者のカードからレッスンを受けてね。\n</string>
 
     <!-- TutorialRaccoonDescriptionFragment -->
-    <string name="tutorial_raccoon_description_fragment_title">また君か～</string>
     <string name="tutorial_raccoon_description_fragment_description">あっ、なんだ君か。\n人にものを教えるのって大変だよね。\nなんでも３倍理解してないとダメだとか。\n僕の苦労も報われるといいだけど。そう思わない？\n\nえ？秘密鍵のバックアップ？次の画面だよ。\nそうそう、それでさ～この間さ～...</string>
 
     <!-- ImportSecretKeyFragment -->
     <string name="import_secret_key_fragment_title">秘密鍵のインポート</string>
     <string name="import_secret_key_fragment_message">開けゴマ！\n1. NEMの秘密鍵を入力する。\nもしくはQRコードで読み取りましょう。\n2. あなたのNEMアカウントをラクーンにリンクします！</string>
     <string name="import_secret_key_fragment_hint">Enter secret key</string>
-    <string name="import_secret_key_fragment_empty_error">秘密鍵を入力</string>
     <string name="import_secret_key_fragment_policy_message">アプリの利用を開始する前に、ご確認ください。</string>
     <string name="import_secret_key_fragment_policy_button"><u>利用規約とプライバシーポリシー</u></string>
     <string name="import_secret_key_invalid_password">パスワードが一致しません</string>
@@ -488,7 +480,6 @@
     <string name="wallet_detail_public_key_empty">未取得</string>
 
     <!-- MyProfileInfoFragment -->
-    <string name="my_profile_info_fragment_friend">フレンド</string>
     <string name="my_profile_info_fragment_wallet">ウォレット</string>
     <string name="my_profile_info_fragment_guest">GUEST</string>
     <string name="my_profile_info_fragment_guest_sub">ゲスト</string>
@@ -507,7 +498,6 @@
 
     <!-- WalletRemoveActivity -->
     <string name="wallet_remove_activity_title">削除</string>
-    <string name="wallet_remove_title">ウォレットの削除について</string>
     <string name="wallet_remove_message">ウォレットを削除します。秘密鍵がないと復元できなくなります。\n本当にウォレットを削除しますか？</string>
     <string name="wallet_remove_button">Remove</string>
 
@@ -574,30 +564,6 @@
     <string name="address_book_friend_info_title">プロフィール</string>
 
     <!--Dialog-->
-    <string name="dialog_update_forward_title">アプリのアップデートがあります</string>
-    <string name="dialog_update_forward_button">アップデートする</string>
-    <string name="dialog_add_goods_name_hint">品名</string>
-    <string name="dialog_add_goods_price_hint">価格</string>
-    <string name="dialog_add_goods_nem_mode">ねむもーど</string>
-    <string name="dialog_add_goods_jpy_mode">えんもーど</string>
-    <string name="dialog_count_goods_count">購入個数</string>
-    <string name="dialog_count_error">個数が未入力です</string>
-    <string name="dialog_address_name_hint">ウォレット名（任意の名前）</string>
-    <string name="dialog_address_hint">アドレス</string>
-    <string name="dialog_address_valid_name_error">名前が未入力です</string>
-    <string name="dialog_address_valid_address_error">アドレスが未入力です</string>
-    <string name="dialog_main_confirm_title">確認</string>
-    <string name="dialog_main_confirm_message_sub_total">小計をリセットしてよろしいですか？</string>
-    <string name="dialog_main_confirm_message_goods_delete">このアイテムを削除してよろしいですか？</string>
-    <string name="dialog_select_import_address_not_use_secret_key">いずれの方法でも秘密鍵の情報は取得しません</string>
-    <string name="dialog_select_import_address_configured_address">設定済みのアドレスを確認する</string>
-    <string name="dialog_select_import_address_not_auto">手動入力</string>
-    <string name="dialog_select_import_address_auto">QRコード読み取り</string>
-    <string name="dialog_select_import_address_auto_description">NanoWalletの「アカウント情報をQRで共有」を読み込む\nXEMBookの「NEMアドレス」を読み込む</string>
-    <string name="dialog_address_confirm_name">名前</string>
-    <string name="dialog_address_confirm_address">アドレス</string>
-    <string name="dialog_configured_address_name">名前は設定されていません</string>
-    <string name="dialog_current_nem_price_for_zaif">1 NEM = %1$s JPY (Zaif)</string>
     <string name="dialog_confirm_display_twice">再度表示させない</string>
     <string name="dialog_confirm_title">message</string>
 </resources>
