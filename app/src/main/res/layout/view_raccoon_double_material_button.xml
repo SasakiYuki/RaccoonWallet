@@ -36,8 +36,8 @@
         android:id="@+id/leftContainer"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginRight="@dimen/space_normal_half"
         android:elevation="8dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="@id/leftRootView"
         app:layout_constraintRight_toRightOf="@id/leftRootView"
         app:layout_constraintTop_toTopOf="@id/leftRootView">
@@ -81,8 +81,9 @@
         android:id="@+id/rightContainer"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginLeft="@dimen/space_normal_half"
         android:elevation="8dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toLeftOf="@id/rightRootView"
         app:layout_constraintBottom_toBottomOf="@id/rightRootView"
         app:layout_constraintLeft_toRightOf="@id/leftRootView"
         app:layout_constraintTop_toTopOf="@id/rightRootView">
