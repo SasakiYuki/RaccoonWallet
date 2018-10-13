@@ -215,7 +215,7 @@
     <string name="select_message_type_fragment_title">メッセージタイプを選択</string>
     <string name="select_message_type_fragment_sub_title">メッセージを暗号化しますか？</string>
     <string name="select_message_type_fragment_normal_message_title">通常のメッセージ</string>
-    <string name="select_message_type_fragment_normal_message_description">通常のメッセージです。\n取引所への認証番号を入力する際は、必ずこちらで行いましょう。</string>
+    <string name="select_message_type_fragment_normal_message_description">通常のメッセージです。\n取引所への認証番号を入力する際は、<u>必ずこちらで行いましょう。</u></string>
     <string name="select_message_type_fragment_crypt_message_title">暗号化メッセージ</string>
     <string name="select_message_type_fragment_crypt_message_description">軍事レベルの暗号化技術でプライバシーを確保しましょう。</string>
 
