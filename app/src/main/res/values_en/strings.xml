@@ -23,17 +23,6 @@
     <string name="com_success">成功</string>
     <string name="com_failed">失敗</string>
     <string name="com_coming_soon">Coming Soon!</string>
-    <string name="com_name">名前</string>
-    <string name="com_name_ruby">なまえ</string>
-    <string name="com_phone_number">電話番号</string>
-    <string name="com_mail_address">メールアドレス</string>
-    <string name="com_add">追加</string>
-    <string name="com_save">保存</string>
-    <string name="com_currency">通貨</string>
-    <string name="com_edit">編集</string>
-    <string name="com_select">選択</string>
-    <string name="com_complete">完了</string>
-    <string name="com_delete">削除</string>
 
     <!-- Menu -->
     <string name="menu_search">検索</string>
@@ -63,13 +52,11 @@
     <string name="main_navigation_null">ウォレット未選択</string>
 
     <!-- FirstTutorialActivity -->
-    <string name="first_tutorial_button">はじめる</string>
-    <string name="first_tutorial_title1">はじめまして</string>
-    <string name="first_tutorial_title2">信頼の革新を手のひらに</string>
-    <string name="first_tutorial_title3">すべての人に経済を。</string>
-    <string name="first_tutorial_message1">お会いできて光栄です。\nブロックチェーンを使った新しい経済活動を\n一緒にはじめましょう。</string>
-    <string name="first_tutorial_message2">すべてが暗号通貨ベースで設計され,\nすべてが新しい考え方で動く、\nニューエコノミープラットフォーム。\n魅力的な体験は、ここから始まります。</string>
-    <string name="first_tutorial_message3">自由と共創の新経済が待っています。</string>
+    <string name="first_tutorial_button">GET STARTED</string>
+    <string name="first_tutorial_title">Hello,NEM. Hello,UX.</string>
+    <string name="first_tutorial_message1">支払いの新世代へ。</string>
+    <string name="first_tutorial_message2">信頼の革新を手のひらに。</string>
+    <string name="first_tutorial_message3">愉快でイマドキな金融の形。</string>
 
     <string name="fragment_qr_lab_dentaku">指定金額を受けとる</string>
     <string name="fragment_qr_lab_sell_list">売り物リスト機能を使う</string>
@@ -91,13 +78,13 @@
     <!-- MosaicListActivity -->
     <string name="activity_mosaic_list_title">モザイクギャラリー</string>
     <string name="activity_mosaic_empty_title">モザイクなど存在しない。</string>
-    <string name="activity_mosaic_empty_description">お見せできるモザイクは、今のところなさそうです。\nすてきなギャラリーになるよう、\nコレクションに励んでみましょう！</string>
+    <string name="activity_mosaic_empty_description">お見せできるモザイクは、これっぽっちもないよ。\n涙がちょちょ切れるほどコレクションに励もう。</string>
 
     <!-- PinCodeFragment -->
-    <string name="pin_code_fragment_enter">PINを入力</string>
-    <string name="pin_code_fragment_confirm">PINの確認</string>
+    <string name="pin_code_fragment_enter">Enter PIN</string>
+    <string name="pin_code_fragment_confirm">Confirm PIN</string>
     <string name="pin_code_setting_success">設定完了しました</string>
-    <string name="pin_code_setting_confirm_error">PIN Codeが一致しません。\nもう一度入力してください。</string>
+    <string name="pin_code_setting_confirm_error">PIN Codeが一致しません。もう一度</string>
 
     <!-- CalculatorActivity -->
     <string name="calculator_title">金額の指定</string>
@@ -134,7 +121,7 @@
 
     <!-- ReceiveFragment -->
     <string name="receive_fragment_address">Your Address</string>
-    <string name="receive_fragment_address_toast">アドレスをコピーしました</string>
+    <string name="receive_fragment_address_toast">Address Copied</string>
 
     <!-- invoiceActivity -->
     <string name="invoice_activity_title">請求書の発行</string>
@@ -145,10 +132,10 @@
 
     <!-- SelectWalletActivity -->
     <string name="select_wallet_activity_header_main">Hi,Wallet maintenance?</string>
-    <string name="select_wallet_activity_create_new_wallet">ウォレットを新しく作る</string>
-    <string name="select_wallet_activity_login">秘密鍵からインポート</string>
+    <string name="select_wallet_activity_create_new_wallet">Create New Wallet</string>
+    <string name="select_wallet_activity_login">LOGIN</string>
     <string name="select_wallet_empty_title">ウォレットがないみたい。</string>
-    <string name="select_wallet_empty_message">上のボタンからウォレットを作成するか\nアカウントをリンクすると、ここに一覧で表示されますよ。</string>
+    <string name="select_wallet_empty_message">上のボタンからウォレットを作成するか\nアカウントをリンクすると、ここに一覧で表示されるよ。</string>
 
     <!-- InstantSendNEMActivity -->
     <string name="instant_send_nem_activity_title">簡易送金</string>
@@ -164,8 +151,8 @@
     <string name="transaction_list_activity_row_unconfirmed">oops!まだ未承認のトランザクション</string>
     <string name="transaction_list_activity_row_address">アドレス</string>
     <string name="transaction_list_activity_row_message">メッセージ</string>
-    <string name="transaction_list_activity_empty_title">おっと、まだ取引はないようです。</string>
-    <string name="transaction_list_activity_empty_message">トランザクションが発生したら、\nここに一覧で表示されます。</string>
+    <string name="transaction_list_activity_empty_title">おっと。まだ取引はないみたい。</string>
+    <string name="transaction_list_activity_empty_message">トランザクションが発生したら、\nここに一覧で表示されるよ。</string>
 
     <!-- TransactionDetailFragment -->
     <string name="transaction_detail_title">トランザクション詳細</string>
@@ -190,19 +177,19 @@
     <string name="send_top_fragment_hint">送信先アドレスを入力</string>
     <string name="send_top_fragment_address_error">有効なアドレスではありません</string>
     <string name="send_top_fragment_not_select_wallet">ウォレットが選択されていません</string>
-    <string name="send_top_fragment_confirm_title">おっと、気をつけて。</string>
-    <string name="send_top_fragment_confirm_message">あなたが送ろうとしているアドレスは、これまで一度もブロックチェーン上で活動していない初心者のようです。とはいえアドレスがちゃんとした形式なら送金は可能ですから、ご安心ください。\nアドレスは正しいか、送り先は信頼できるか、よく確かめてから手続きしてくださいね。</string>
-    <string name="send_top_fragment_amount_confirm_title">おっと、数量が0XEMのようです</string>
-    <string name="send_top_fragment_amount_confirm_message">0XEM送信しようとしてしていますが、問題ありませんか？</string>
+    <string name="send_top_fragment_confirm_title">気をつけて。送り先はニュービーだ。</string>
+    <string name="send_top_fragment_confirm_message">君が送ろうとしているアドレスは、これまで一度もブロックチェーン上で活動していない新参者みたいだね。とはいえアドレスがちゃんとした形式なら、送金は可能だよ。\nアドレスは正しいか、送り先は信頼できるか、よく確かめてから手続きしてね。</string>
+    <string name="send_top_fragment_amount_confirm_title">おっと、数量が0XEMだ</string>
+    <string name="send_top_fragment_amount_confirm_message">君は今0XEM送信しようとしているけど、問題ないかい？</string>
     <string name="send_top_fragment_amount_confirm_dialog_positive">はい</string>
     <string name="send_top_fragment_amount_confirm_dialog_negative">いいえ</string>
-    <string name="send_top_fragment_message_confirm_title">メッセージに何も入力されていないようです</string>
-    <string name="send_top_fragment_message_confirm_message">メッセージを空で送ろうとしています。\nこのまま送ってもいいですか？</string>
+    <string name="send_top_fragment_message_confirm_title">メッセージが空になっているぞ！</string>
+    <string name="send_top_fragment_message_confirm_message">君は今メッセージを空で送ろうとしている。\nこのまま送ってもいいかい？</string>
     <string name="send_top_fragment_message_confirm_dialog_positive">はい</string>
     <string name="send_top_fragment_message_confirm_dialog_negative">添付する</string>
 
     <!-- SelectSendModeFragment -->
-    <string name="select_send_mode_fragment_title">送信モードを選んでください</string>
+    <string name="select_send_mode_fragment_title">送信モードを選んでね</string>
     <string name="select_send_mode_fragment_sub_title">メッセージを添付しますか？</string>
     <string name="select_send_mode_fragment_standard_title">STANDARD SEND</string>
     <string name="select_send_mode_fragment_standard_hint">メッセージは添付せず送金します。</string>
@@ -213,11 +200,10 @@
 
     <!-- SelectMessageTypeFragment -->
     <string name="select_message_type_fragment_title">メッセージタイプを選択</string>
-    <string name="select_message_type_fragment_sub_title">メッセージを暗号化しますか？</string>
     <string name="select_message_type_fragment_normal_message_title">通常のメッセージ</string>
-    <string name="select_message_type_fragment_normal_message_description">通常のメッセージです。\n取引所への認証番号を入力する際は、必ずこちらで行いましょう。</string>
+    <string name="select_message_type_fragment_normal_message_description">普通のお手紙です。\nお礼の言葉を添えたりするときは、こっちでいいと思うよ。\n認証番号もこっち。</string>
     <string name="select_message_type_fragment_crypt_message_title">暗号化メッセージ</string>
-    <string name="select_message_type_fragment_crypt_message_description">軍事レベルの暗号化技術でプライバシーを確保しましょう。</string>
+    <string name="select_message_type_fragment_crypt_message_description">軍事レベルの暗号化技術でプライバシーを確保しましょう。認証番号などに使う場合は、問題の原因になるからオススメしないよ！</string>
 
     <!-- EnterSendFragment -->
     <string name="enter_send_fragment_title">金額を入力</string>
@@ -327,7 +313,7 @@
 
     <!-- AboutActivity -->
     <string name="about_activity_title">About This APP</string>
-    <string name="about_activity_message">信頼性が高く、\n使いやすいUIで、\n仮想通貨をもっと楽しく。\n\nラクーンウォレットは、これら３つを目標に作られた暗号通貨ウォレットです。</string>
+    <string name="about_activity_message">信頼性が高く、\n使いやすいUIで、\n仮想通貨をもっと楽しく。\n\nラクーンウォレットは、これら３つを目標に作られた仮 想通貨ウォレットです。</string>
     <string name="about_activity_section_header">RaccoonWallet</string>
     <string name="about_activity_official_web_page">公式サイト｜raccoonwallet.com</string>
     <string name="about_activity_official_discord">公式DISCORDサーバー｜紹介リンク</string>
@@ -352,8 +338,8 @@
 
     <!-- ImportSecretKeyFragment -->
     <string name="import_secret_key_fragment_title">秘密鍵のインポート</string>
-    <string name="import_secret_key_fragment_message">こんにちは、親愛なるクリプトコイナー。\n1. リンクしたい仮想通貨の秘密鍵を入力する。\nもしくはQRコードを華麗に読み取りましょう。\n2. あなたの仮想通貨アカウントをラクーンにリンクします。</string>
-    <string name="import_secret_key_fragment_hint">秘密鍵を入力</string>
+    <string name="import_secret_key_fragment_message">開けゴマ！\n1. NEMの秘密鍵を入力する。\nもしくはQRコードで読み取りましょう。\n2. あなたのNEMアカウントをラクーンにリンクします！</string>
+    <string name="import_secret_key_fragment_hint">Enter secret key</string>
     <string name="import_secret_key_fragment_empty_error">秘密鍵を入力</string>
     <string name="import_secret_key_fragment_policy_message">アプリの利用を開始する前に、ご確認ください。</string>
     <string name="import_secret_key_fragment_policy_button"><u>利用規約とプライバシーポリシー</u></string>
@@ -395,8 +381,7 @@
 
     <!-- CompleteImportWalletActivity -->
     <string name="complete_import_wallet_activity_title">リンク完了</string>
-    <string name="complete_import_wallet_activity_message">おめでとうございます！\n以上でリンク作業は完了しました。\nウォレットの変更や追加をしたい場合は、\nウォレットバーのボタンから管理画面に\n
-アクセスしてみてください。\nもし時間があるなら、この後のセキュリティレッスンの受講をオススメします。PINコードの設定やウォレットのバックアップを行います。</string>
+    <string name="complete_import_wallet_activity_message">いいセンスだ。\n以上でリンク作業は完了しました。\nウォレットの変更や追加をしたい場合は、\nウォレットバーのボタンから管理画面に\nアクセスしてみてくださいね。\nもし時間があるなら、この後のセキュリティレッスンの受講をオススメします。PINコードの設定やウォレットのバックアップを行うぞ。</string>
     <string name="complete_import_wallet_activity_lesson_button">セキュリティレッスン</string>
 
     <!-- QrScanFragment -->
@@ -436,12 +421,6 @@
     <string name="setting_home_app_lock">起動時にPIN入力を要求する</string>
     <string name="setting_home_security_lesson">セキュリティレッスンを受ける</string>
 
-    <!-- SelectModeAddWalletActivity -->
-    <string name="select_mode_add_wallet_title">どうやって設定する？</string>
-    <string name="select_mode_add_wallet_from_wallet">ウォレットから登録する</string>
-    <string name="select_mode_add_wallet_direct">直接入力する</string>
-    <string name="select_mode_add_wallet_no_wallet">ウォレットを作成してください</string>
-
     <!-- SelectNode -->
     <string name="setting_node_title">ノード選択</string>
 
@@ -460,25 +439,6 @@
     <!-- InstantPinCodeFragment -->
     <string name="instant_pin_code_message">PINを入力して送金を確定する</string>
 
-    <!-- MyAddressProfileActivity -->
-    <string name="my_address_profile_activity_tab_wallet">ウォレット</string>
-    <string name="my_address_profile_activity_tab_profile">プロフィール</string>
-    <string name="my_address_profile_activity_title_initial">GUEST\nゲスト</string>
-    <string name="my_address_profile_activity_title_initial_guest">GUEST</string>
-    <string name="my_address_profile_activity_title_initial_bottom_guest">ゲスト</string>
-    <string name="my_address_profile_activity_bottom_button_add">追加</string>
-    <string name="my_address_profile_activity_bottom_button_edit">編集</string>
-    <string name="my_address_profile_activity_bottom_button_complete">完了</string>
-
-    <!-- MyWalletInfoFragment -->
-    <string name="my_wallet_info_fragment_address_copied_toast">Address Copied</string>
-
-    <!-- MyWalletInfoFragmentBottomSheet -->
-    <string name="bottom_my_wallet_info_copy">コピー</string>
-    <string name="bottom_my_wallet_info_send">送金</string>
-    <string name="bottom_my_wallet_info_edit">編集</string>
-    <string name="bottom_my_wallet_info_delete">削除</string>
-
     <!-- WalletSettingFragment -->
     <string name="wallet_setting_fragment_title">ウォレットの設定</string>
     <string name="wallet_setting_currency_title">NEM/XEM</string>
@@ -492,21 +452,6 @@
     <string name="wallet_setting_type_multisig">WalletType : Multisig</string>
     <string name="wallet_setting_address_title">アドレス</string>
 
-    <!-- ProfileAddressAddActivity -->
-    <string name="profile_address_add_activity_title">ウォレットを設定</string>
-    <string name="profile_address_add_activity_header_title_nem">NEM/XEM</string>
-    <string name="profile_address_add_activity_main_content_title">ウォレット情報の入力</string>
-    <string name="profile_address_add_activity_main_content_name_hint">ウォレット名を入力</string>
-    <string name="profile_address_add_activity_main_content_address_hint">アドレスを入力</string>
-    <string name="profile_address_add_activity_main_content_attribute_title">ウォレット属性の設定</string>
-    <string name="profile_address_add_activity_main_content_attribute_master">Master</string>
-
-    <!-- SelectMyProfileAddressAddActivity -->
-    <string name="select_my_profile_address_add_activity_title">登録するウォレットを選択</string>
-    <string name="select_my_profile_address_add_activity_bottom_button">完了</string>
-    <string name="select_my_profile_address_add_activity_empty_title">登録できるウォレットはありません</string>
-    <string name="select_my_profile_address_add_activity_empty_description">ウォレットが作成されていないか、すでにすべてのウォレットが登録済みです。</string>
-
     <!-- WalletDetailFragment -->
     <string name="wallet_detail_fragment_title">ウォレットの詳細</string>
     <string name="wallet_detail_general">一般情報</string>
@@ -515,23 +460,8 @@
     <string name="wallet_detail_public_key">公開鍵</string>
     <string name="wallet_detail_public_key_empty">未取得</string>
 
-    <!-- MyProfileInfoFragment -->
-    <string name="my_profile_info_fragment_friend">フレンド</string>
-    <string name="my_profile_info_fragment_wallet">ウォレット</string>
-    <string name="my_profile_info_fragment_guest">GUEST</string>
-    <string name="my_profile_info_fragment_guest_sub">ゲスト</string>
-    <string name="my_profile_info_fragment_setting_wallet">マスターウォレットが設定されていません。</string>
-    <string name="my_profile_info_fragment_change_user_screen">背景を変更</string>
-    <string name="my_profile_info_fragment_change_user_icon">アイコンを変更</string>
-    <string name="my_profile_info_fragment_alert_dialog_title">マークについて</string>
-    <string name="my_profile_info_fragment_alert_dialog_message">王冠マーク(master)は、すべての通貨・ウォレットの中でも個人の代表的なアドレスを示しています。</string>
-
     <!-- WalletBackupActivity -->
     <string name="wallet_backup_activity_title">バックアップ</string>
-
-    <!-- MyAddressProfileActivity -->
-    <string name="my_address_profile_activity_empty_title">リストは、まだ空っぽです</string>
-    <string name="my_address_profile_activity_empty_description">ここは、自分のウォレットを整理する場所です。 ボタンからウォレットを追加したり、プロフィールタブから 自分のデータを入力できるよ。</string>
 
     <!-- WalletRemoveActivity -->
     <string name="wallet_remove_activity_title">削除</string>
@@ -575,31 +505,6 @@
     <string name="donate_detail_fragment_rhime_message">Raccoonの名付け親。デザイナー。\nこのアプリふざけてんなぁと思ったら、この人のせい。\nラクーンにおけるデザインの大体は、この人が作った。\n使いやすいアプリの構造を考えたりする情報アーキテクチャも兼任した。\n\n・総合コンテンツデザイナー\n・Android / iOSアプリのIA/UI/UXデザイン\n・ビジュアルデザイン/ブランディング（ロゴ・サイト）</string>
     <string name="donate_detail_fragment_ios_message">Raccoonの命綱。iOSエンジニア。最強の後衛。\n将棋で例えるなら飛車。\nラクーンを林檎の楽園へといざなう。\n\n・Android→iOS版アプリ移植・開発主任\n・nem-kotlinの創造主。</string>
     <string name="donate_detail_fragment_donate">Donate</string>
-
-    <!-- AddressBookListActivity -->
-    <string name="address_book_list_activity_title">フレンドリスト</string>
-    <string name="address_book_list_search_friend_hint">フレンドの検索</string>
-    <string name="address_book_list_search_empty_message">検索結果がありません</string>
-    <string name="address_book_list_search_chip_all">すべて</string>
-    <string name="address_book_list_search_chip_local">ローカル</string>
-    <string name="address_book_list_search_chip_twitter">Twitter</string>
-    <string name="address_book_list_sort_first">A-Z</string>
-    <string name="address_book_list_sort_second">よく送る順</string>
-
-    <!-- CreateFriend -->
-    <string name="create_friend_address_title">プロフィール</string>
-    <string name="create_friend_wallet_title">ウォレット</string>
-    <string name="create_friend_input_error_message">プロフィールを登録してください</string>
-    <string name="create_friend_address_cooperation_title">連携</string>
-    <string name="create_friend_address_change_icon_title">アイコンを変更</string>
-    <string name="create_friend_address_input_title">プロフィールを入力しましょう！</string>
-    <string name="create_friend_address_input_error">入力してください</string>
-    <string name="create_friend_wallet_count_title">ウォレット</string>
-    <string name="create_friend_wallet_empty_title">リストは、まだ空っぽです</string>
-
-    <!-- AddressBook -->
-    <string name="address_book_friend_wallet_title">ウォレット</string>
-    <string name="address_book_friend_info_title">プロフィール</string>
 
     <!--Dialog-->
     <string name="dialog_update_forward_title">アプリのアップデートがあります</string>

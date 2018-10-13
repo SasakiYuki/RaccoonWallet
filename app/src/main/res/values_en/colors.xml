@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#00c3b2</color>
+
+    <color name="nemGreen">#00c3b2</color>
+    <color name="nemOrange">#f7a800</color>
+    <color name="nemBlue">#66B1E6</color>
+    <color name="nemGreenSelected">#009f91</color>
+    <color name="qrLabPurple">#5A2192</color>
+
+    <color name="textBlack">#212121</color>
+    <color name="colorLightGray">#37000000</color>
+    <color name="colorDarkWhite">#666666</color>
+    <color name="colorDivider">#6f6f6f</color>
+    <color name="colorDividerLight">#f4f4f4</color>
+    <color name="simpleBackground">#F2F2F2</color>
+    <color name="colorErrorOrange">@color/textOrange</color>
+
+    <color name="textGray">#666666</color>
+    <color name="textGrayDark">#777777</color>
+    <color name="textLightGray">#A2A2A2</color>
+    <color name="hintGray">#aaaaaa</color>
+    <color name="toolbarTextColor">#4D4D4D</color>
+    <color name="textOrange">#E06148</color>
+    <color name="gray_medium">#9e9e9e</color>
+    <color name="shapeGray">#DFDFDF</color>
+
+    <color name="textLightGreen">#00CBBD</color>
+
+    <color name="colorTransactionRed">#D16850</color>
+    <color name="colorTransactionGreen">#79DE92</color>
+
+    <color name="calculatorGray">#f2f2f2</color>
+
+    <color name="buttonDisable">#929292</color>
+
+    <color name="indicator_not_selected">#20ffffff</color>
+    <color name="empty_gray">#AAAAAA</color>
+</resources>
