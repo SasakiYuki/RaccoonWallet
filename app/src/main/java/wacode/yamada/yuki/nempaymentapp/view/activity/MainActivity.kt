@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -334,7 +335,10 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     private fun changeSendTopFragment(address: String) {
         viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
         val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
-        (fragment as SendTopFragment).putAddressEditText(address)
+
+        Handler().postDelayed({
+            (fragment as SendTopFragment).putAddressEditText(address)
+        }, 100)
     }
 
     override fun onQrScanResult(result: BarcodeResult?) {
