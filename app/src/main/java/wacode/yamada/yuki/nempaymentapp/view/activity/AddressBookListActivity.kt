@@ -1,5 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -72,7 +73,7 @@ class AddressBookListActivity : BaseActivity() {
         val dividerItemDecoration = DividerItemDecoration(addressRecyclerView.context, LinearLayoutManager(this).orientation)
         controller = AddressBookListController(object : AddressBookListController.OnAddressBookClickListener {
             override fun onClickItem(friendId: Long) {
-                startActivity(AddressBookActivity.createIntent(this@AddressBookListActivity, friendId))
+                startActivityForResult(AddressBookActivity.createIntent(this@AddressBookListActivity, friendId), AddressBookActivity.REQUEST_CODE_ADDRESS_BOOK)
             }
 
             override fun onItemChecked(friendId: Long, isChecked: Boolean) {
@@ -184,6 +185,18 @@ class AddressBookListActivity : BaseActivity() {
                 .map { FriendInfoItem(friendInfo = it.friendInfo, deleteMode = deleteMode) }
                 .toList()
                 .blockingGet() as ArrayList<FriendInfoItem>
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                AddressBookActivity.REQUEST_CODE_ADDRESS_BOOK ->
+                        finish()
+            }
+        }
     }
 
     companion object {

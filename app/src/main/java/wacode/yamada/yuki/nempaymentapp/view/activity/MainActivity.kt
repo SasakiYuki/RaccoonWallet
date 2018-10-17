@@ -30,6 +30,7 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import org.jsoup.Jsoup
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.event.SendEvent
 import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
 import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
@@ -74,18 +75,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         setupRxBus()
     }
 
-    private fun showRequestOpenScreen() {
-        if (!intent.hasExtra(INTENT_PARAMS_OPEN_TYPE)) return
-
-        when (intent.getSerializableExtra(INTENT_PARAMS_OPEN_TYPE) as OpenScreenType) {
-            OpenScreenType.SEND -> {
-                closeDrawerAndMoveHome()
-                val address = intent.getStringExtra(INTENT_SEND_ADDRESS)
-                changeSendTopFragment(address)
-            }
-        }
-    }
-
     private fun parseIntent() {
         val paymentQrEntity = PaymentQREntity.convert(intent)
         paymentQrEntity?.let {
@@ -109,6 +98,14 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
                         RxBusEvent.SELECT, RxBusEvent.REMOVE -> {
                             setupNavigationRecyclerView()
                         }
+                    }
+                }
+        RxBus.receive(SendEvent::class.java)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it is SendEvent.SendFromWalletInfo) {
+                        drawerLayout.closeDrawers()
+                        changeSendTopFragment(it.walletInfo.walletAddress)
                     }
                 }
     }
@@ -263,8 +260,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
                 ReviewAppealUtils.saveAlreadyShownReviewDialog(this)
                 ReviewAppealUtils.createReviewDialog(this, supportFragmentManager, viewModel)
             }
-
-            showRequestOpenScreen()
         }
         parseIntent()
     }
@@ -380,8 +375,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         const val SP_IS_FIRST_RACCOON = "sp_is_first_raccoon"
         private const val HOME_POSITION = 2
         private const val ARG_SHOULD_SHOW_SPLASH = "args_show_splash"
-        private const val INTENT_PARAMS_OPEN_TYPE = "intent_params_open_type"
-        private const val INTENT_SEND_ADDRESS = "intent_send_address"
 
         fun createIntent(context: Context) = Intent(context, MainActivity::class.java)
 
@@ -390,20 +383,5 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             intent.putExtra(ARG_SHOULD_SHOW_SPLASH, showSplash)
             return intent
         }
-
-        fun createIntentAtSendFragment(context: Context, address: String): Intent {
-            val intent = createIntent(context)
-            intent.apply {
-                putExtra(ARG_SHOULD_SHOW_SPLASH, false)
-                putExtra(INTENT_SEND_ADDRESS, address)
-                putExtra(INTENT_PARAMS_OPEN_TYPE, OpenScreenType.SEND)
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }
-            return intent
-        }
-    }
-
-    private enum class OpenScreenType {
-        SEND
     }
 }
