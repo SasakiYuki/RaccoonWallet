@@ -181,6 +181,7 @@ class AddressBookActivity : BaseActivity(), HasSupportFragmentInjector, OnFriend
 
     companion object {
         private const val REQUEST_CODE_DROP_IMAGE = 1000
+        const val REQUEST_CODE_ADDRESS_BOOK = 109
         private const val INTENT_FRIEND_ID = "intent_friend_id"
 
         fun createIntent(context: Context, friendId: Long): Intent {

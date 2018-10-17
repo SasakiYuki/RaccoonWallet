@@ -14,10 +14,11 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_friend_wallet.*
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
+import wacode.yamada.yuki.nempaymentapp.event.SendEvent
 import wacode.yamada.yuki.nempaymentapp.extentions.copyClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.room.address.WalletInfo
-import wacode.yamada.yuki.nempaymentapp.view.activity.MainActivity
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.view.activity.OnFriendDataChangeCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.profile.ProfileAddressAddActivity
 import wacode.yamada.yuki.nempaymentapp.view.controller.WalletInfoClickListener
@@ -108,7 +109,9 @@ class FriendWalletFragment : BaseFragment() {
 
     private fun onClickSendRow(walletInfo: WalletInfo) {
         context?.let {
-            startActivity(MainActivity.createIntentAtSendFragment(it, walletInfo.walletAddress))
+            RxBus.send(SendEvent.SendFromWalletInfo(walletInfo))
+            activity?.setResult(Activity.RESULT_OK, Intent())
+            finish()
         }
     }
 
