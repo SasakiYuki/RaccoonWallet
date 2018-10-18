@@ -23,6 +23,10 @@ class SendTopFragment : BaseFragment() {
     private val compositeDisposable = CompositeDisposable()
     override fun layoutRes() = R.layout.fragment_send_top
 
+    private val address by lazy {
+        arguments?.getString(ARG_ADDRESS)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
@@ -50,6 +54,7 @@ class SendTopFragment : BaseFragment() {
                         clearButton.visibility = View.GONE
                     }
                 }
+        addressEditText.setText(address)
     }
 
     fun putAddressEditText(address: String) {
@@ -206,10 +211,12 @@ class SendTopFragment : BaseFragment() {
 
     companion object {
         const val VIEW_PAGER_POSITION = 3
-        fun newInstance(): SendTopFragment {
+        private const val ARG_ADDRESS = "arg_address"
+        fun newInstance(address: String = ""): SendTopFragment {
             val fragment = SendTopFragment()
             val bundle = Bundle()
             bundle.putInt(ARG_CONTENTS_NAME_ID, R.string.select_wallet_activity_title)
+            bundle.putString(ARG_ADDRESS, address)
             fragment.arguments = bundle
             return fragment
         }

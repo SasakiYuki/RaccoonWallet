@@ -43,7 +43,7 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.AboutActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.MosaicListActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
-import wacode.yamada.yuki.nempaymentapp.view.adapter.ExampleFragmentPagerAdapter
+import wacode.yamada.yuki.nempaymentapp.view.adapter.TopFragmentPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.controller.DrawerListController
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
 import wacode.yamada.yuki.nempaymentapp.view.fragment.SplashFragment
@@ -72,18 +72,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
 
         showSplash()
         setupRxBus()
-    }
-
-    private fun showRequestOpenScreen() {
-        if (!intent.hasExtra(INTENT_PARAMS_OPEN_TYPE)) return
-
-        when (intent.getSerializableExtra(INTENT_PARAMS_OPEN_TYPE) as OpenScreenType) {
-            OpenScreenType.SEND -> {
-                closeDrawerAndMoveHome()
-                val address = intent.getStringExtra(INTENT_SEND_ADDRESS)
-                changeSendTopFragment(address)
-            }
-        }
     }
 
     private fun parseIntent() {
@@ -152,7 +140,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     }
 
     private fun setupViewPager() {
-        val adapter = ExampleFragmentPagerAdapter(supportFragmentManager)
+        val adapter = TopFragmentPagerAdapter(supportFragmentManager)
         viewpager.adapter = adapter
         tabLayout.setupWithViewPager(viewpager)
         viewpager.currentItem = HOME_POSITION
@@ -263,8 +251,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
                 ReviewAppealUtils.saveAlreadyShownReviewDialog(this)
                 ReviewAppealUtils.createReviewDialog(this, supportFragmentManager, viewModel)
             }
-
-            showRequestOpenScreen()
         }
         parseIntent()
     }
@@ -327,13 +313,13 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
 
     private fun changeSendTopFragment(paymentQREntity: PaymentQREntity) {
         viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
-        val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
+        val fragment = (viewpager.adapter as TopFragmentPagerAdapter).getItem(viewpager.currentItem)
         (fragment as SendTopFragment).putQRScanItems(paymentQREntity)
     }
 
     private fun changeSendTopFragment(address: String) {
         viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
-        val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
+        val fragment = (viewpager.adapter as TopFragmentPagerAdapter).getItem(viewpager.currentItem)
         (fragment as SendTopFragment).putAddressEditText(address)
     }
 
@@ -380,8 +366,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         const val SP_IS_FIRST_RACCOON = "sp_is_first_raccoon"
         private const val HOME_POSITION = 2
         private const val ARG_SHOULD_SHOW_SPLASH = "args_show_splash"
-        private const val INTENT_PARAMS_OPEN_TYPE = "intent_params_open_type"
-        private const val INTENT_SEND_ADDRESS = "intent_send_address"
 
         fun createIntent(context: Context) = Intent(context, MainActivity::class.java)
 
@@ -390,20 +374,5 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             intent.putExtra(ARG_SHOULD_SHOW_SPLASH, showSplash)
             return intent
         }
-
-        fun createIntentAtSendFragment(context: Context, address: String): Intent {
-            val intent = createIntent(context)
-            intent.apply {
-                putExtra(ARG_SHOULD_SHOW_SPLASH, false)
-                putExtra(INTENT_SEND_ADDRESS, address)
-                putExtra(INTENT_PARAMS_OPEN_TYPE, OpenScreenType.SEND)
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }
-            return intent
-        }
-    }
-
-    private enum class OpenScreenType {
-        SEND
     }
 }
