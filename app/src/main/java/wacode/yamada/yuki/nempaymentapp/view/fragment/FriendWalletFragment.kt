@@ -108,7 +108,7 @@ class FriendWalletFragment : BaseFragment() {
 
     private fun onClickSendRow(walletInfo: WalletInfo) {
         context?.let {
-            startActivity(SendTopActivity.createIntent(it,walletInfo.walletAddress))
+            startActivity(SendTopActivity.createIntent(it, walletInfo.walletAddress))
         }
     }
 
