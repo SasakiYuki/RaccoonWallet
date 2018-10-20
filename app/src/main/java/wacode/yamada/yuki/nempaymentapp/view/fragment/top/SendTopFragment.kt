@@ -145,11 +145,21 @@ class SendTopFragment : BaseFragment() {
                     .subscribe {
                         when (it) {
                             SelectDialogButton.POSITIVE -> {
-                                //メッセージを添付するかどうかを選択する画面に遷移
-                                when (SendStatusUtils.isAvailable(activity)) {
-                                    SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(activity, activity.supportFragmentManager)
-                                    SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(activity, activity.supportFragmentManager)
-                                    SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(activity, address, publicKey, SendType.SELECT_MODE, entity))
+                                val paymentQrItem = PaymentQrItem.createItem(entity)
+                                if (paymentQrItem.existMessage()) {
+                                    //メッセージを添付するかどうかを選択する画面に遷移
+                                    when (SendStatusUtils.isAvailable(activity)) {
+                                        SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(activity, activity.supportFragmentManager)
+                                        SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(activity, activity.supportFragmentManager)
+                                        SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(activity, address, publicKey, SendType.SELECT_MODE, entity))
+                                    }
+                                } else {
+                                    //送金確認画面に遷移
+                                    when (SendStatusUtils.isAvailable(activity)) {
+                                        SendStatusUtils.Status.PIN_CODE_ERROR -> SendStatusUtils.showPinCodeErrorDialog(activity, activity!!.supportFragmentManager)
+                                        SendStatusUtils.Status.SELECT_WALLET_ERROR -> SendStatusUtils.showWalletErrorDialog(activity, activity!!.supportFragmentManager)
+                                        SendStatusUtils.Status.OK -> startActivity(SendActivity.createIntent(activity, address, publicKey, SendType.CONFIRM, entity))
+                                    }
                                 }
                             }
                             SelectDialogButton.NEGATIVE -> {
