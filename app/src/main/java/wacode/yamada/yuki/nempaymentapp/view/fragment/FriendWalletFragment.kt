@@ -93,7 +93,6 @@ class FriendWalletFragment : BaseFragment() {
             walletInfoLiveData.observe(this@FriendWalletFragment, Observer {
                 it ?: return@Observer
 
-                hideEmptyView()
                 addListItem(it)
             })
         }
@@ -138,6 +137,8 @@ class FriendWalletFragment : BaseFragment() {
         if (activity is OnFriendDataChangeCallback) {
             (activity as OnFriendDataChangeCallback).onFriendWalletChanged(walletList.size)
         }
+
+        hideEmptyView()
     }
 
     private fun showEmptyView() {
