@@ -169,8 +169,7 @@ class HomeFragment : BaseFragment() {
         }
 
         showHarvestButton.setOnClickListener {
-            startActivity(CreateAddressBookActivity.createIntent(context!!))
-//            context?.showToast(R.string.com_coming_soon)
+            context?.showToast(R.string.com_coming_soon)
         }
     }
 
