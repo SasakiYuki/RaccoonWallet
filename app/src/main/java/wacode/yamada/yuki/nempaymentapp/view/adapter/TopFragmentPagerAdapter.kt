@@ -26,7 +26,7 @@ class TopFragmentPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     }
 
     override fun getCount(): Int {
-        return 5
+        return list.size
     }
 }
 
