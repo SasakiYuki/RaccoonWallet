@@ -45,10 +45,12 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
     internal class TransactionSpaceHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     fun addItem(transactionEntity: TransactionAppEntity) {
-        transactionList.add(transactionEntity)
-        addDate(transactionEntity.date)
-        Collections.sort(transactionList, DateComparator())
-        notifyDataSetChanged()
+        if (!transactionList.contains(transactionEntity)) {
+            transactionList.add(transactionEntity)
+            addDate(transactionEntity.date)
+            Collections.sort(transactionList, DateComparator())
+            notifyDataSetChanged()
+        }
     }
 
     fun clearItems() {

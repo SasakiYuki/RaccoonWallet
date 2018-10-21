@@ -70,40 +70,6 @@ object TransactionAppConverter {
             getMessageType(it.transaction)
     )
 
-    fun convert(it: TransactionMetaDataPair, transactionType: TransactionType, accountMetaDataPair: AccountMetaDataPair) = TransactionAppEntity(
-            transactionType,
-            it.meta.height,
-            it.meta.hash.data,
-            getDate(it.transaction),
-            getFee(it.transaction),
-            getAmount(it.transaction),
-            it.transaction.signer,
-            getSenderAddress(it.transaction, accountMetaDataPair),
-            getRecipientAddress(it.transaction),
-            isMultisig(it.transaction),
-            getMessage(it.transaction),
-            getTimeStamp(it.transaction),
-            getMosaicList(it.transaction),
-            getMessageType(it.transaction)
-    )
-
-    fun convert(it: UnconfirmedTransactionMetaDataPair, transactionType: TransactionType, accountMetaDataPair: AccountMetaDataPair) = TransactionAppEntity(
-            transactionType,
-            null,
-            it.meta.data,
-            getDate(it.transaction),
-            getFee(it.transaction),
-            getAmount(it.transaction),
-            it.transaction.signer,
-            getSenderAddress(it.transaction, accountMetaDataPair),
-            getRecipientAddress(it.transaction),
-            isMultisig(it.transaction),
-            getMessage(it.transaction),
-            getTimeStamp(it.transaction),
-            getMosaicList(it.transaction),
-            getMessageType(it.transaction)
-    )
-
     private fun isInComing(myAddress: String, transactionMetaDataPair: TransactionMetaDataPair): TransactionType {
         return if (myAddress == transactionMetaDataPair.transaction.recipient) TransactionType.INCOMING else TransactionType.OUTGOING
     }
