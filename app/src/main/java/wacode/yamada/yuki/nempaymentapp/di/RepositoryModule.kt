@@ -21,6 +21,8 @@ class RepositoryModule {
     @Singleton
     fun provideAddressBookRepository() = AddressBookRepository()
 
+    @Provides
+    @Singleton
     fun provideTransactionRepository(transactionService: TransactionService) = TransactionRepository(transactionService)
 
     @Provides
@@ -34,7 +36,7 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideMyProfileRepository(context: Context) = MyProfileRepository(context)
-    
+
     @Provides
     @Singleton
     fun provideMyAddressRepository() = MyAddressRepository()

@@ -1,16 +1,20 @@
 package wacode.yamada.yuki.nempaymentapp.view.fragment
 
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import com.ryuta46.nemkotlin.model.AccountMetaDataPair
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_transaction_list.*
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
 import wacode.yamada.yuki.nempaymentapp.model.TransactionAppEntity
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
@@ -19,14 +23,26 @@ import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
 import wacode.yamada.yuki.nempaymentapp.utils.TransactionAppConverter
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.TransactionCallback
 import wacode.yamada.yuki.nempaymentapp.view.adapter.TransactionAdapter
+import wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionListViewModel
+import javax.inject.Inject
 
 
 class TransactionListFragment : BaseFragment() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var transactionListViewModel: TransactionListViewModel
     private val adapter = TransactionAdapter()
     private val compositeDisposable = CompositeDisposable()
 
     override fun layoutRes() = R.layout.fragment_transaction_list
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+
+        transactionListViewModel = ViewModelProviders.of(this, viewModelFactory).get(TransactionListViewModel::class.java)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
