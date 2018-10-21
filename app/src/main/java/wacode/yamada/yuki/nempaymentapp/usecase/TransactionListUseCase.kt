@@ -7,10 +7,8 @@ import javax.inject.Inject
 
 
 class TransactionListUseCase @Inject constructor(private val transactionRepository: TransactionRepository, private val accountRepository: AccountRepository) {
-    fun getAllTransaction(address: String) = transactionRepository.getAllTransaction(address = address)
+    fun getAllTransaction(address: String, id: Int) = transactionRepository.getAllTransaction(address = address, id = id)
             .flatMapObservable { Observable.fromIterable(it) }
-
-    fun getAllTransactionFromId(address: String, id: Int) = transactionRepository.getAllTransaction(address = address, id = id)
 
     fun getUnconfirmedTransactions(address: String) = transactionRepository.getUnconfirmedTransactions(address)
             .flatMapObservable { Observable.fromIterable(it) }

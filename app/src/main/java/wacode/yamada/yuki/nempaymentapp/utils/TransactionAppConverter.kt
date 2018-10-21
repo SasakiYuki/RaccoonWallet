@@ -33,7 +33,8 @@ object TransactionAppConverter {
             getMessage(it.transaction),
             getTimeStamp(it.transaction),
             getMosaicList(it.transaction),
-            getMessageType(it.transaction)
+            getMessageType(it.transaction),
+            getTransactionId(it)
     )
 
     fun convert(transactionType: TransactionType, it: TransactionMetaDataPair) = TransactionAppEntity(
@@ -50,7 +51,8 @@ object TransactionAppConverter {
             getMessage(it.transaction),
             getTimeStamp(it.transaction),
             getMosaicList(it.transaction),
-            getMessageType(it.transaction)
+            getMessageType(it.transaction),
+            getTransactionId(it)
     )
 
     fun convert(transactionType: TransactionType, it: UnconfirmedTransactionMetaDataPair) = TransactionAppEntity(
@@ -69,6 +71,8 @@ object TransactionAppConverter {
             getMosaicList(it.transaction),
             getMessageType(it.transaction)
     )
+
+    private fun getTransactionId(transactionMetaDataPair: TransactionMetaDataPair) = transactionMetaDataPair.meta.id
 
     private fun isInComing(myAddress: String, transactionMetaDataPair: TransactionMetaDataPair): TransactionType {
         return if (myAddress == transactionMetaDataPair.transaction.recipient) TransactionType.INCOMING else TransactionType.OUTGOING

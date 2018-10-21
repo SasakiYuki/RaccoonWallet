@@ -15,6 +15,7 @@ import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.TransactionCallback
 import wacode.yamada.yuki.nempaymentapp.view.adapter.TransactionAdapter
+import wacode.yamada.yuki.nempaymentapp.view.paging.TransactionPagingListener
 import wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionListViewModel
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ class TransactionListFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var transactionListViewModel: TransactionListViewModel
+    private lateinit var viewModel: TransactionListViewModel
     private val adapter = TransactionAdapter()
 
     private val wallet by lazy {
@@ -36,7 +37,7 @@ class TransactionListFragment : BaseFragment() {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
 
-        transactionListViewModel = ViewModelProviders.of(this, viewModelFactory).get(TransactionListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TransactionListViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,17 +48,18 @@ class TransactionListFragment : BaseFragment() {
         setupSwipeRefreshView()
         setupViewModelObserve()
 
-        if (adapter.itemCount == adapter.HEADER_SIZE) {
+        if (adapter.itemCount == TransactionAdapter.HEADER_SIZE) {
             transactionEmptyView.visibility = View.VISIBLE
-            transactionListViewModel.getInitialLoading(wallet.address)
+            viewModel.getInitialLoading(wallet.address)
         }
     }
 
     private fun setupViewModelObserve() {
-        transactionListViewModel.run {
+        viewModel.run {
             transactionLiveData.observe(this@TransactionListFragment, Observer {
                 it ?: return@Observer
 
+                transactionRecyclerView.tag = false
                 transactionEmptyView.visibility = View.GONE
                 adapter.addItem(it)
             })
@@ -71,16 +73,25 @@ class TransactionListFragment : BaseFragment() {
 
     private fun setupSwipeRefreshView() {
         swipeRefreshLayout.setOnRefreshListener {
-            transactionEmptyView.visibility = View.VISIBLE
-            adapter.clearItems()
-            transactionListViewModel.getInitialLoading(wallet.address)
+            transactionRecyclerView.tag = true
             swipeRefreshLayout.isRefreshing = false
+            transactionEmptyView.visibility = View.VISIBLE
+
+            adapter.clearItems()
+            viewModel.getInitialLoading(wallet.address)
         }
     }
 
     private fun setupRecyclerView() {
         transactionRecyclerView.adapter = adapter
         transactionRecyclerView.layoutManager = LinearLayoutManager(context)
+        transactionRecyclerView.tag = false
+
+        transactionRecyclerView.addOnScrollListener(object : TransactionPagingListener(transactionRecyclerView.layoutManager as LinearLayoutManager) {
+            override fun onLoadMore() {
+                viewModel.getLoadMore(wallet.address, adapter.getLastTransactionId())
+            }
+        })
 
         adapter.onClickHandlers = {
             val listener = this@TransactionListFragment.activity as TransactionCallback

@@ -29,11 +29,22 @@ class TransactionListViewModel @Inject constructor(private val useCase: Transact
                 }).let { addDisposable(it) }
     }
 
+    fun getLoadMore(address: String, transactionId: Int) {
+        getAllTransaction(address = address, id = transactionId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    transactionLiveData.value = it
+                }, {
+                    it.printStackTrace()
+                }).let { addDisposable(it) }
+    }
+
     private fun getUnconfirmedTransactions(address: String) = useCase.getUnconfirmedTransactions(address)
             .map { TransactionAppConverter.convert(TransactionType.UNCONFIRMED, it) }
 
-    private fun getAllTransaction(address: String): Observable<TransactionAppEntity> {
-        return useCase.getAllTransaction(address)
+    private fun getAllTransaction(address: String, id: Int = -1): Observable<TransactionAppEntity> {
+        return useCase.getAllTransaction(address = address, id = id)
                 .flatMap { transition ->
                     return@flatMap if (transition.transaction.recipient.isNullOrEmpty()) {
                         if (transition.transaction.otherTrans?.recipient != address) {

@@ -19,14 +19,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), TransactionRowEventHandler {
-    val HEADER_SIZE = 1
     private val transactionList: ArrayList<TransactionAppEntity> = ArrayList()
     private var onDateChangeListener: OnDateChangeListener? = null
     private var detachedOldPosition = -1
     private var attachOldPosition = -1
 
     var onClickHandlers: ((TransactionAppEntity) -> Unit)? = null
-    var onLongCLickHandlers: ((TransactionAppEntity) -> Unit)? = null
 
     interface OnDateChangeListener {
         fun showDateLabel(date: String)
@@ -35,7 +33,7 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
     }
 
     internal class TransactionRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding: ViewDataBinding? = DataBindingUtil.bind<ViewDataBinding>(itemView)
+        val binding: ViewDataBinding? = DataBindingUtil.bind(itemView)
     }
 
     internal class TransactionDateRowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -43,25 +41,6 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
     }
 
     internal class TransactionSpaceHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    fun addItem(transactionEntity: TransactionAppEntity) {
-        if (!transactionList.contains(transactionEntity)) {
-            transactionList.add(transactionEntity)
-            addDate(transactionEntity.date)
-            Collections.sort(transactionList, DateComparator())
-            notifyDataSetChanged()
-        }
-    }
-
-    fun clearItems() {
-        transactionList.clear()
-        attachOldPosition = -1
-        detachedOldPosition = -1
-    }
-
-    fun setDateChangeListener(listener: OnDateChangeListener) {
-        this.onDateChangeListener = listener
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -142,14 +121,41 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
 
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) {
-            VIEW_TYPE_SPACE
-        } else if (checkDateViewType(position)) {
-            VIEW_TYPE_DATE
-        } else {
-            VIEW_TYPE_NORMAL
+        return when {
+            position == 0 -> VIEW_TYPE_SPACE
+            checkDateViewType(position) -> VIEW_TYPE_DATE
+            else -> VIEW_TYPE_NORMAL
         }
     }
+
+    override fun getItemCount() = transactionList.size + HEADER_SIZE
+
+    override fun onTransactionClick(view: View, viewModel: TransactionViewModel) {
+        onClickHandlers?.let {
+            it(viewModel.transactionAppEntity)
+        }
+    }
+
+    fun addItem(transactionEntity: TransactionAppEntity) {
+        if (!transactionList.contains(transactionEntity)) {
+            transactionList.add(transactionEntity)
+            addDate(transactionEntity.date)
+            Collections.sort(transactionList, DateComparator())
+            notifyDataSetChanged()
+        }
+    }
+
+    fun clearItems() {
+        transactionList.clear()
+        attachOldPosition = -1
+        detachedOldPosition = -1
+    }
+
+    fun setDateChangeListener(listener: OnDateChangeListener) {
+        this.onDateChangeListener = listener
+    }
+
+    fun getLastTransactionId() = transactionList.last().transactionId
 
     private fun checkDateViewType(position: Int): Boolean {
         if (position == 1) return true
@@ -203,17 +209,10 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
         }
     }
 
-    override fun getItemCount() = transactionList.size + HEADER_SIZE
-
-    override fun onTransactionClick(view: View, viewModel: TransactionViewModel) {
-        onClickHandlers?.let {
-            it(viewModel.transactionAppEntity)
-        }
-    }
-
     companion object {
         const val VIEW_TYPE_SPACE = 0
         const val VIEW_TYPE_NORMAL = 1
         const val VIEW_TYPE_DATE = 2
+        const val HEADER_SIZE = 1
     }
 }
