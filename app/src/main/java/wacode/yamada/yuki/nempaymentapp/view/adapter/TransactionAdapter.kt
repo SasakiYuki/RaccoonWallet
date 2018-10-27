@@ -23,6 +23,7 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
     private var onDateChangeListener: OnDateChangeListener? = null
     private var detachedOldPosition = -1
     private var attachOldPosition = -1
+    private var showIndicator = false
 
     var onClickHandlers: ((TransactionAppEntity) -> Unit)? = null
 
@@ -42,6 +43,8 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
 
     internal class TransactionSpaceHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
+    internal class IndicatorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_DATE -> {
@@ -49,6 +52,9 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
             }
             VIEW_TYPE_SPACE -> {
                 TransactionSpaceHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_transaction_space, parent, false))
+            }
+            VIEW_TYPE_INDICATOR -> {
+                IndicatorViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_indicator, parent, false))
             }
             else -> {
                 TransactionRowViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_transaction, parent, false))
@@ -122,13 +128,20 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
 
     override fun getItemViewType(position: Int): Int {
         return when {
+            transactionList.size + HEADER_SIZE == position -> VIEW_TYPE_INDICATOR
             position == 0 -> VIEW_TYPE_SPACE
             checkDateViewType(position) -> VIEW_TYPE_DATE
             else -> VIEW_TYPE_NORMAL
         }
     }
 
-    override fun getItemCount() = transactionList.size + HEADER_SIZE
+    override fun getItemCount(): Int {
+        return if (showIndicator) {
+            transactionList.size + HEADER_SIZE + INDICATOR_SIZE
+        } else {
+            transactionList.size + HEADER_SIZE
+        }
+    }
 
     override fun onTransactionClick(view: View, viewModel: TransactionViewModel) {
         onClickHandlers?.let {
@@ -159,6 +172,10 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
 
     private fun checkDateViewType(position: Int): Boolean {
         if (position == 1) return true
+
+        if (position == transactionList.size + HEADER_SIZE) {
+            return false
+        }
 
         val model = transactionList[position - HEADER_SIZE]
         if (model.senderAddress.isNullOrEmpty() && model.recipientAddress.isNullOrEmpty()) {
@@ -209,10 +226,18 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
         }
     }
 
+    fun showIndicator(isShow: Boolean) {
+        showIndicator = isShow
+
+    }
+
     companion object {
         const val VIEW_TYPE_SPACE = 0
         const val VIEW_TYPE_NORMAL = 1
         const val VIEW_TYPE_DATE = 2
+        const val VIEW_TYPE_INDICATOR = 3
+
         const val HEADER_SIZE = 1
+        const val INDICATOR_SIZE = 1
     }
 }

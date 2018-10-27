@@ -36,6 +36,9 @@ class TransactionListViewModel @Inject constructor(private val useCase: Transact
                 .subscribe({
                     transactionLiveData.value = it
                 }, {
+                    if (it is IllegalArgumentException && it.message == ERROR_LIST_EMPTY){
+
+                    }
                     it.printStackTrace()
                 }).let { addDisposable(it) }
     }
@@ -80,5 +83,9 @@ class TransactionListViewModel @Inject constructor(private val useCase: Transact
                         }
                     }
                 }
+    }
+
+    companion object {
+        const val ERROR_LIST_EMPTY = "list is empty"
     }
 }

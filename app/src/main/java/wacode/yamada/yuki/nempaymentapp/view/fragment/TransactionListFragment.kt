@@ -60,6 +60,7 @@ class TransactionListFragment : BaseFragment() {
                 it ?: return@Observer
 
                 transactionRecyclerView.tag = false
+                adapter.showIndicator(true)
                 transactionEmptyView.visibility = View.GONE
                 adapter.addItem(it)
             })
