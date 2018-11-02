@@ -5,10 +5,8 @@ import android.arch.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import wacode.yamada.yuki.nempaymentapp.viewmodel.BalanceListViewModel
-import wacode.yamada.yuki.nempaymentapp.viewmodel.CropImageViewModel
-import wacode.yamada.yuki.nempaymentapp.viewmodel.EnterMosaicListViewModel
-import wacode.yamada.yuki.nempaymentapp.viewmodel.HomeViewModel
+import wacode.yamada.yuki.nempaymentapp.viewmodel.*
+
 
 @Suppress("unused")
 @Module
@@ -35,4 +33,55 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CropImageViewModel::class)
     abstract fun bindCropImageViewModel(viewModel: CropImageViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateAddressBookViewModel::class)
+    abstract fun bindCreateAddressBookViewModel(viewModel: CreateAddressBookViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddressBookViewModel::class)
+    abstract fun bindAddressBookViewModel(viewModel: AddressBookViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FriendInfoViewModel::class)
+    abstract fun bindFriendInfoViewModel(viewModel: FriendInfoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FriendWalletViewModel::class)
+    abstract fun bindFriendWalletViewModel(viewModel: FriendWalletViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileAddressAddViewModel::class)
+    abstract fun bindProfileAddressAddViewModel(viewModel: ProfileAddressAddViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddressBookListViewModel::class)
+    abstract fun bindAddressBookListViewModel(viewModel: AddressBookListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyAddressProfileViewModel::class)
+    abstract fun bindMyAddressProfileViewModel(viewModel: MyAddressProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyWalletInfoViewModel::class)
+    abstract fun bindMyWalletInfoViewModel(viewModel: MyWalletInfoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyProfileInfoViewModel::class)
+    abstract fun bindMyProfileInfoViewModel(viewModel: MyProfileInfoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SelectMyProfileAddressAddViewModel::class)
+    abstract fun bindSelectMyProfileAddressAddViewModel(viewModel:SelectMyProfileAddressAddViewModel): ViewModel
+
 }

@@ -10,7 +10,6 @@ import com.ryuta46.nemkotlin.model.HarvestInfo
 import com.ryuta46.nemkotlin.model.TransactionMetaDataPair
 import dagger.android.support.AndroidSupportInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -21,10 +20,11 @@ import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
 import wacode.yamada.yuki.nempaymentapp.utils.NemPricePreference
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.BalanceActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.CreateAddressBookActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.TransactionActivity
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleCallbackDoubleInterface
 import wacode.yamada.yuki.nempaymentapp.view.dialog.`interface`.SimpleNoInterface
@@ -38,7 +38,6 @@ class HomeFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
     private var shouldDoRefreshView = false
     private var wallet: Wallet? = null
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     private lateinit var homeViewModel: HomeViewModel
 
     override fun layoutRes() = R.layout.fragment_home
@@ -100,7 +99,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupRxBus() {
-        RxBusProvider.rxBus
+        RxBus
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { it ->
@@ -169,7 +168,9 @@ class HomeFragment : BaseFragment() {
             harvestEmptyView.visibility = View.VISIBLE
         }
 
-        showHarvestButton.setOnClickListener { context?.showToast(R.string.com_coming_soon) }
+        showHarvestButton.setOnClickListener {
+            context?.showToast(R.string.com_coming_soon)
+        }
     }
 
     private fun setupTransactionItems(list: List<TransactionMetaDataPair>) {
@@ -217,12 +218,6 @@ class HomeFragment : BaseFragment() {
                 context?.showToast(R.string.nem_converter_error_price)
             }
         })
-    }
-
-    override fun onPause() {
-        super.onPause()
-        compositeDisposable.clear()
-        hideProgressView()
     }
 
     companion object {

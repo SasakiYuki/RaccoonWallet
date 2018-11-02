@@ -9,8 +9,8 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.utils.RxBus
 import wacode.yamada.yuki.nempaymentapp.utils.RxBusEvent
-import wacode.yamada.yuki.nempaymentapp.utils.RxBusProvider
 
 class WalletRemoveActivity : BaseActivity() {
     override fun setLayout() = R.layout.activity_wallet_remove
@@ -32,7 +32,7 @@ class WalletRemoveActivity : BaseActivity() {
                     val wallet = NemPaymentApplication.database.walletDao().getById(getWalletId)
                     NemPaymentApplication.database.walletDao().delete(wallet)
                 }.await()
-                RxBusProvider.rxBus.send(RxBusEvent.REMOVE)
+                RxBus.send(RxBusEvent.REMOVE)
 
                 hideProgress()
                 finish()

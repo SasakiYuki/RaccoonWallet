@@ -23,7 +23,17 @@
     <string name="com_success">成功</string>
     <string name="com_failed">失敗</string>
     <string name="com_coming_soon">Coming Soon!</string>
+    <string name="com_name">名前</string>
+    <string name="com_name_ruby">なまえ</string>
+    <string name="com_phone_number">電話番号</string>
+    <string name="com_mail_address">メールアドレス</string>
+    <string name="com_add">追加</string>
     <string name="com_save">保存</string>
+    <string name="com_currency">通貨</string>
+    <string name="com_edit">編集</string>
+    <string name="com_select">選択</string>
+    <string name="com_complete">完了</string>
+    <string name="com_delete">削除</string>
 
     <!-- Menu -->
     <string name="menu_search">検索</string>
@@ -422,6 +432,12 @@
     <string name="setting_home_app_lock">起動時にPIN入力を要求する</string>
     <string name="setting_home_security_lesson">セキュリティレッスンを受ける</string>
 
+    <!-- SelectModeAddWalletActivity -->
+    <string name="select_mode_add_wallet_title">どうやって設定する？</string>
+    <string name="select_mode_add_wallet_from_wallet">ウォレットから登録する</string>
+    <string name="select_mode_add_wallet_direct">直接入力する</string>
+    <string name="select_mode_add_wallet_no_wallet">ウォレットを作成してください</string>
+
     <!-- SelectNode -->
     <string name="setting_node_title">ノード選択</string>
 
@@ -440,6 +456,25 @@
     <!-- InstantPinCodeFragment -->
     <string name="instant_pin_code_message">PINを入力して送金を確定する</string>
 
+    <!-- MyAddressProfileActivity -->
+    <string name="my_address_profile_activity_tab_wallet">ウォレット</string>
+    <string name="my_address_profile_activity_tab_profile">プロフィール</string>
+    <string name="my_address_profile_activity_title_initial">GUEST\nゲスト</string>
+    <string name="my_address_profile_activity_title_initial_guest">GUEST</string>
+    <string name="my_address_profile_activity_title_initial_bottom_guest">ゲスト</string>
+    <string name="my_address_profile_activity_bottom_button_add">追加</string>
+    <string name="my_address_profile_activity_bottom_button_edit">編集</string>
+    <string name="my_address_profile_activity_bottom_button_complete">完了</string>
+
+    <!-- MyWalletInfoFragment -->
+    <string name="my_wallet_info_fragment_address_copied_toast">Address Copied</string>
+
+    <!-- MyWalletInfoFragmentBottomSheet -->
+    <string name="bottom_my_wallet_info_copy">コピー</string>
+    <string name="bottom_my_wallet_info_send">送金</string>
+    <string name="bottom_my_wallet_info_edit">編集</string>
+    <string name="bottom_my_wallet_info_delete">削除</string>
+
     <!-- WalletSettingFragment -->
     <string name="wallet_setting_fragment_title">ウォレットの設定</string>
     <string name="wallet_setting_currency_title">NEM/XEM</string>
@@ -453,6 +488,21 @@
     <string name="wallet_setting_type_multisig">WalletType : Multisig</string>
     <string name="wallet_setting_address_title">アドレス</string>
 
+    <!-- ProfileAddressAddActivity -->
+    <string name="profile_address_add_activity_title">ウォレットを設定</string>
+    <string name="profile_address_add_activity_header_title_nem">NEM/XEM</string>
+    <string name="profile_address_add_activity_main_content_title">ウォレット情報の入力</string>
+    <string name="profile_address_add_activity_main_content_name_hint">ウォレット名を入力</string>
+    <string name="profile_address_add_activity_main_content_address_hint">アドレスを入力</string>
+    <string name="profile_address_add_activity_main_content_attribute_title">ウォレット属性の設定</string>
+    <string name="profile_address_add_activity_main_content_attribute_master">Master</string>
+
+    <!-- SelectMyProfileAddressAddActivity -->
+    <string name="select_my_profile_address_add_activity_title">登録するウォレットを選択</string>
+    <string name="select_my_profile_address_add_activity_bottom_button">完了</string>
+    <string name="select_my_profile_address_add_activity_empty_title">登録できるウォレットはありません</string>
+    <string name="select_my_profile_address_add_activity_empty_description">ウォレットが作成されていないか、すでにすべてのウォレットが登録済みです。</string>
+
     <!-- WalletDetailFragment -->
     <string name="wallet_detail_fragment_title">ウォレットの詳細</string>
     <string name="wallet_detail_general">一般情報</string>
@@ -461,8 +511,23 @@
     <string name="wallet_detail_public_key">公開鍵</string>
     <string name="wallet_detail_public_key_empty">未取得</string>
 
+    <!-- MyProfileInfoFragment -->
+    <string name="my_profile_info_fragment_friend">フレンド</string>
+    <string name="my_profile_info_fragment_wallet">ウォレット</string>
+    <string name="my_profile_info_fragment_guest">GUEST</string>
+    <string name="my_profile_info_fragment_guest_sub">ゲスト</string>
+    <string name="my_profile_info_fragment_setting_wallet">マスターウォレットが設定されていません。</string>
+    <string name="my_profile_info_fragment_change_user_screen">背景を変更</string>
+    <string name="my_profile_info_fragment_change_user_icon">アイコンを変更</string>
+    <string name="my_profile_info_fragment_alert_dialog_title">マークについて</string>
+    <string name="my_profile_info_fragment_alert_dialog_message">王冠マーク(master)は、すべての通貨・ウォレットの中でも個人の代表的なアドレスを示しています。</string>
+
     <!-- WalletBackupActivity -->
     <string name="wallet_backup_activity_title">バックアップ</string>
+
+    <!-- MyAddressProfileActivity -->
+    <string name="my_address_profile_activity_empty_title">リストは、まだ空っぽです</string>
+    <string name="my_address_profile_activity_empty_description">ここは、自分のウォレットを整理する場所です。 ボタンからウォレットを追加したり、プロフィールタブから 自分のデータを入力できるよ。</string>
 
     <!-- WalletRemoveActivity -->
     <string name="wallet_remove_activity_title">削除</string>
@@ -506,6 +571,31 @@
     <string name="donate_detail_fragment_rhime_message">Raccoonの名付け親。デザイナー。\nこのアプリふざけてんなぁと思ったら、この人のせい。\nラクーンにおけるデザインの大体は、この人が作った。\n使いやすいアプリの構造を考えたりする情報アーキテクチャも兼任した。\n\n・総合コンテンツデザイナー\n・Android / iOSアプリのIA/UI/UXデザイン\n・ビジュアルデザイン/ブランディング（ロゴ・サイト）</string>
     <string name="donate_detail_fragment_ios_message">Raccoonの命綱。iOSエンジニア。最強の後衛。\n将棋で例えるなら飛車。\nラクーンを林檎の楽園へといざなう。\n\n・Android→iOS版アプリ移植・開発主任\n・nem-kotlinの創造主。</string>
     <string name="donate_detail_fragment_donate">Donate</string>
+
+    <!-- AddressBookListActivity -->
+    <string name="address_book_list_activity_title">フレンドリスト</string>
+    <string name="address_book_list_search_friend_hint">フレンドの検索</string>
+    <string name="address_book_list_search_empty_message">検索結果がありません</string>
+    <string name="address_book_list_search_chip_all">すべて</string>
+    <string name="address_book_list_search_chip_local">ローカル</string>
+    <string name="address_book_list_search_chip_twitter">Twitter</string>
+    <string name="address_book_list_sort_first">A-Z</string>
+    <string name="address_book_list_sort_second">よく送る順</string>
+
+    <!-- CreateFriend -->
+    <string name="create_friend_address_title">プロフィール</string>
+    <string name="create_friend_wallet_title">ウォレット</string>
+    <string name="create_friend_input_error_message">プロフィールを登録してください</string>
+    <string name="create_friend_address_cooperation_title">連携</string>
+    <string name="create_friend_address_change_icon_title">アイコンを変更</string>
+    <string name="create_friend_address_input_title">プロフィールを入力しましょう！</string>
+    <string name="create_friend_address_input_error">入力してください</string>
+    <string name="create_friend_wallet_count_title">ウォレット</string>
+    <string name="create_friend_wallet_empty_title">リストは、まだ空っぽです</string>
+
+    <!-- AddressBook -->
+    <string name="address_book_friend_wallet_title">ウォレット</string>
+    <string name="address_book_friend_info_title">プロフィール</string>
 
     <!--Dialog-->
     <string name="dialog_update_forward_title">アプリのアップデートがあります</string>

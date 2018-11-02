@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/copy"
+        android:icon="@mipmap/icon_clipboard"
+        android:title="@string/bottom_my_wallet_info_copy" />
+    <item
+        android:id="@+id/send"
+        android:icon="@mipmap/icon_home_send_gray"
+        android:title="@string/bottom_my_wallet_info_send" />
+    <item
+        android:id="@+id/edit"
+        android:icon="@mipmap/icon_pencil"
+        android:title="@string/bottom_my_wallet_info_edit" />
+    <item
+        android:id="@+id/delete"
+        android:icon="@mipmap/icon_delete"
+        android:title="@string/bottom_my_wallet_info_delete" />
+
+</menu>

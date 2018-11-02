@@ -1,5 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.view.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -15,8 +16,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.airbnb.deeplinkdispatch.DeepLink
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.gson.Gson
 import com.journeyapps.barcodescanner.BarcodeResult
 import dagger.android.AndroidInjection
@@ -31,11 +30,11 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import org.jsoup.Jsoup
 import wacode.yamada.yuki.nempaymentapp.R
-import wacode.yamada.yuki.nempaymentapp.extentions.showToast
-import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
 import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
+import wacode.yamada.yuki.nempaymentapp.model.MyProfileEntity
 import wacode.yamada.yuki.nempaymentapp.model.PaymentQREntity
+import wacode.yamada.yuki.nempaymentapp.repository.MyProfileRepository.Companion.KEY_PREF_MY_PROFILE
 import wacode.yamada.yuki.nempaymentapp.types.MainBottomNavigationType
 import wacode.yamada.yuki.nempaymentapp.utils.*
 import wacode.yamada.yuki.nempaymentapp.view.activity.callback.QrScanCallback
@@ -43,7 +42,8 @@ import wacode.yamada.yuki.nempaymentapp.view.activity.callback.SplashCallback
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.AboutActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.MosaicListActivity
 import wacode.yamada.yuki.nempaymentapp.view.activity.drawer.RaccoonDonateActivity
-import wacode.yamada.yuki.nempaymentapp.view.adapter.ExampleFragmentPagerAdapter
+import wacode.yamada.yuki.nempaymentapp.view.activity.profile.MyAddressProfileActivity
+import wacode.yamada.yuki.nempaymentapp.view.adapter.TopFragmentPagerAdapter
 import wacode.yamada.yuki.nempaymentapp.view.controller.DrawerListController
 import wacode.yamada.yuki.nempaymentapp.view.dialog.RaccoonConfirmViewModel
 import wacode.yamada.yuki.nempaymentapp.view.fragment.SplashFragment
@@ -52,11 +52,12 @@ import javax.inject.Inject
 
 
 @DeepLink("https://raccoonwallet.com/payment?amount={amount}&addr={addr}&msg={msg}&name={name}")
-class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener , HasSupportFragmentInjector {
+class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListController.OnDrawerClickListener, HasSupportFragmentInjector {
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     private val compositeDisposable = CompositeDisposable()
     private lateinit var controller: DrawerListController
+
     private val shouldShowSplash by lazy {
         intent.getBooleanExtra(ARG_SHOULD_SHOW_SPLASH, true)
     }
@@ -68,6 +69,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
         showSplash()
         setupRxBus()
     }
@@ -87,7 +89,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     }
 
     private fun setupRxBus() {
-        RxBusProvider.rxBus
+        RxBus
                 .toObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { it ->
@@ -101,11 +103,12 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
 
     private fun setupNavigationRecyclerView() {
         async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(this@MainActivity) }
-                    .await()
+            val myProfileString = SharedPreferenceUtils[this@MainActivity, KEY_PREF_MY_PROFILE, Gson().toJson(MyProfileEntity())]
+            val myProfile = Gson().fromJson(myProfileString, MyProfileEntity::class.java)
             controller = DrawerListController(this@MainActivity,
-                    wallet?.address?.toDisplayAddress() ?: getString(R.string.main_navigation_null),
-                    wallet?.name ?: "")
+                    if (myProfile.name.isEmpty()) getString(R.string.my_address_profile_activity_title_initial_guest) else myProfile.name,
+                    myProfile.screenPath,
+                    myProfile.iconPath)
             navigationRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
             navigationRecyclerView.adapter = controller.adapter
             val drawerIconTypes = DrawerItemType.values()
@@ -113,6 +116,10 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             drawerIconTypes.mapTo(list) { DrawerEntity(ContextCompat.getDrawable(this@MainActivity, it.imageResource)!!, getString(it.titleResource), it.drawerType) }
             controller.setData(list)
         }
+    }
+
+    override fun onHeaderClick() {
+        startActivityForResult(MyAddressProfileActivity.createIntent(this), MyAddressProfileActivity.REQUEST_CODE_MY_ADDRESS_PROFILE_ACTIVITY)
     }
 
     override fun onRowClick(drawerEntity: DrawerEntity) {
@@ -123,7 +130,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             getString(R.string.main_navigation_donate) -> startActivity(RaccoonDonateActivity.createIntent(this))
             getString(R.string.main_navigation_help) -> showHelpWeb()
             getString(R.string.main_navigation_setting) -> startActivity(SettingActivity.getCallingIntent(this))
-            getString(R.string.main_navigation_address_book) -> showToast(R.string.com_coming_soon)
+            getString(R.string.main_navigation_address_book) -> startActivity(AddressBookListActivity.createIntent(this))
         }
     }
 
@@ -133,7 +140,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     }
 
     private fun setupViewPager() {
-        val adapter = ExampleFragmentPagerAdapter(supportFragmentManager)
+        val adapter = TopFragmentPagerAdapter(supportFragmentManager)
         viewpager.adapter = adapter
         tabLayout.setupWithViewPager(viewpager)
         viewpager.currentItem = HOME_POSITION
@@ -207,7 +214,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             setDrawableTint(imageView, color)
         }
         imageView.setImageDrawable(ContextCompat.getDrawable(this, items[position].drawableResource))
-        tab!!.setCustomView(tab1View)
+        tab!!.customView = tab1View
     }
 
     private fun setDrawableTint(imageView: ImageView, color: Int) {
@@ -306,8 +313,14 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
 
     private fun changeSendTopFragment(paymentQREntity: PaymentQREntity) {
         viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
-        val fragment = (viewpager.adapter as ExampleFragmentPagerAdapter).getItem(viewpager.currentItem)
+        val fragment = (viewpager.adapter as TopFragmentPagerAdapter).getItem(viewpager.currentItem)
         (fragment as SendTopFragment).putQRScanItems(paymentQREntity)
+    }
+
+    private fun changeSendTopFragment(address: String) {
+        viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
+        val fragment = (viewpager.adapter as TopFragmentPagerAdapter).getItem(viewpager.currentItem)
+        (fragment as SendTopFragment).putAddressEditText(address)
     }
 
     override fun onQrScanResult(result: BarcodeResult?) {
@@ -325,7 +338,19 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
             if (resultCode == RESULT_OK) {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
+        } else if (requestCode == MyAddressProfileActivity.REQUEST_CODE_MY_ADDRESS_PROFILE_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                data?.let {
+                    onMyAddressProfileResult(it)
+                }
+            }
         }
+    }
+
+    private fun onMyAddressProfileResult(intent: Intent) {
+        closeDrawerAndMoveHome()
+        val address = intent.getStringExtra(MyAddressProfileActivity.RESULT_PAYMENT_ADDRESS)
+        changeSendTopFragment(address)
     }
 
     override fun onPause() {
@@ -341,6 +366,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         const val SP_IS_FIRST_RACCOON = "sp_is_first_raccoon"
         private const val HOME_POSITION = 2
         private const val ARG_SHOULD_SHOW_SPLASH = "args_show_splash"
+
         fun createIntent(context: Context) = Intent(context, MainActivity::class.java)
 
         fun createIntent(context: Context, showSplash: Boolean): Intent {

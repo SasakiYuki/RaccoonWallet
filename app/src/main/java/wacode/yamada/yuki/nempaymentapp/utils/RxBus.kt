@@ -4,16 +4,18 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 
-class RxBus {
-    private val bus = PublishSubject.create<RxBusEvent>()
-
-    fun send(o: RxBusEvent) {
-        bus.onNext(o)
-    }
-
-    fun toObservable(): Observable<RxBusEvent> {
+object RxBus {
+    fun toObservable(): Observable<Any> {
         return bus
     }
+
+    private val bus: PublishSubject<Any> = PublishSubject.create()
+
+    fun send(event: Any) {
+        bus.onNext(event)
+    }
+
+    fun <T> receive(eventType: Class<T>): Observable<T> = bus.ofType(eventType)
 }
 
 enum class RxBusEvent {

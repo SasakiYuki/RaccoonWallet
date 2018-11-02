@@ -8,10 +8,14 @@
     android:paddingTop="8dp">
 
     <android.support.design.button.MaterialButton
-        android:id="@+id/materialButton"
+        android:id="@+id/defaultMaterialButton"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="192dp"
         android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/space_small"
+        android:layout_marginRight="@dimen/space_small"
+        android:layout_marginEnd="@dimen/space_small"
+        android:layout_marginStart="@dimen/space_small"
         android:backgroundTint="@android:color/white"
         android:contentDescription="@null"
         app:cornerRadius="24sp"
@@ -29,9 +33,9 @@
         android:elevation="8dp"
         android:padding="2dp"
         android:tint="@color/colorDarkWhite"
-        app:layout_constraintLeft_toLeftOf="@id/materialButton"
-        app:layout_constraintRight_toRightOf="@id/materialButton"
-        app:layout_constraintTop_toTopOf="@id/materialButton"
+        app:layout_constraintLeft_toLeftOf="@id/defaultMaterialButton"
+        app:layout_constraintRight_toRightOf="@id/defaultMaterialButton"
+        app:layout_constraintTop_toTopOf="@id/defaultMaterialButton"
         tools:src="@drawable/ic_check_black_24dp" />
 
     <TextView
@@ -42,8 +46,8 @@
         android:elevation="8dp"
         android:textColor="@color/colorDarkWhite"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/materialButton"
-        app:layout_constraintLeft_toLeftOf="@id/materialButton"
-        app:layout_constraintRight_toRightOf="@id/materialButton"
+        app:layout_constraintBottom_toBottomOf="@id/defaultMaterialButton"
+        app:layout_constraintLeft_toLeftOf="@id/defaultMaterialButton"
+        app:layout_constraintRight_toRightOf="@id/defaultMaterialButton"
         tools:text="編集" />
 </android.support.constraint.ConstraintLayout>

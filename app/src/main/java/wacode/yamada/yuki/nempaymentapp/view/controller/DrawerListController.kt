@@ -9,7 +9,7 @@ import wacode.yamada.yuki.nempaymentapp.model.epoxy.DrawerHeaderModel_
 import wacode.yamada.yuki.nempaymentapp.model.epoxy.DrawerRowModel_
 import wacode.yamada.yuki.nempaymentapp.model.epoxy.DrawerSectionModel_
 
-class DrawerListController(private val listener: OnDrawerClickListener, val address: String, val name: String) : TypedEpoxyController<List<DrawerEntity>>() {
+class DrawerListController(private val listener: OnDrawerClickListener, val name: String, val screenPath: String = "", val iconPath: String = "") : TypedEpoxyController<List<DrawerEntity>>() {
     @AutoModel
     lateinit var drawerHeaderModel: DrawerHeaderModel_
 
@@ -23,8 +23,13 @@ class DrawerListController(private val listener: OnDrawerClickListener, val addr
     }
 
     private fun addList(data: List<DrawerEntity>) {
-        drawerHeaderModel.address(address)
+        drawerHeaderModel
                 .name(name)
+                .screenPath(screenPath)
+                .iconPath(iconPath)
+                .onClickHeaderListener(View.OnClickListener {
+                    listener.onHeaderClick()
+                })
                 .addTo(this)
 
         val mainList = ArrayList<DrawerEntity>()
@@ -57,6 +62,7 @@ class DrawerListController(private val listener: OnDrawerClickListener, val addr
     }
 
     interface OnDrawerClickListener {
+        fun onHeaderClick()
         fun onRowClick(drawerEntity: DrawerEntity)
     }
 }

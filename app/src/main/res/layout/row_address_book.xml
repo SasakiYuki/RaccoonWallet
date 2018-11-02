@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="friendInfoItem"
+            type="wacode.yamada.yuki.nempaymentapp.rest.item.FriendInfoItem" />
+
+        <variable
+            name="itemClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="checkBoxChangeListener"
+            type="android.widget.CompoundButton.OnCheckedChangeListener" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        android:foreground="?selectableItemBackground"
+        android:onClick="@{itemClickListener}"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/iconRootView"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space_normal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleImageView"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_margin="@dimen/space_small"
+                android:elevation="2dp"
+                android:padding="2dp"
+                android:src="@mipmap/icon_default_profile" />
+
+            <ImageView
+                android:id="@+id/twitterAuthIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="-10dp"
+                android:layout_toRightOf="@id/circleImageView"
+                android:src="@mipmap/icon_twitter_authmark"
+                android:visibility="@{friendInfoItem.friendInfo.twitterAuth ? android.view.View.VISIBLE : android.view.View.GONE}" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/friendNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space_normal"
+            android:layout_toRightOf="@id/iconRootView"
+            android:text="@{friendInfoItem.friendInfo.name}"
+            android:textColor="@color/textGray"
+            android:textSize="15sp"
+            tools:text="Hoge hoge" />
+
+        <CheckBox
+            android:id="@+id/deleteCheckBox"
+            android:layout_width="wrap_content"
+            android:onCheckedChanged="@{checkBoxChangeListener}"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:checked="@{friendInfoItem.checked}"
+            android:layout_marginRight="@dimen/space_normal"
+            android:visibility="@{friendInfoItem.deleteMode ? android.view.View.VISIBLE : android.view.View.GONE}" />
+    </RelativeLayout>
+</layout>

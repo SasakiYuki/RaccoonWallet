@@ -1,11 +1,9 @@
 package wacode.yamada.yuki.nempaymentapp.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
-import wacode.yamada.yuki.nempaymentapp.repository.AccountRepository
-import wacode.yamada.yuki.nempaymentapp.repository.HarvestRepository
-import wacode.yamada.yuki.nempaymentapp.repository.MosaicRepository
-import wacode.yamada.yuki.nempaymentapp.repository.TransactionRepository
+import wacode.yamada.yuki.nempaymentapp.repository.*
 import wacode.yamada.yuki.nempaymentapp.rest.service.AccountService
 import wacode.yamada.yuki.nempaymentapp.rest.service.HarvestService
 import wacode.yamada.yuki.nempaymentapp.rest.service.MosaicService
@@ -21,6 +19,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
+    fun provideAddressBookRepository() = AddressBookRepository()
+
     fun provideTransactionRepository(transactionService: TransactionService) = TransactionRepository(transactionService)
 
     @Provides
@@ -30,5 +30,21 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideHarvestRepository(harvestService: HarvestService) = HarvestRepository(harvestService)
+
+    @Provides
+    @Singleton
+    fun provideMyProfileRepository(context: Context) = MyProfileRepository(context)
+    
+    @Provides
+    @Singleton
+    fun provideMyAddressRepository() = MyAddressRepository()
+
+    @Provides
+    @Singleton
+    fun provideWalletInfoRepository() = WalletInfoRepository()
+
+    @Provides
+    @Singleton
+    fun provideWalletRepository() = WalletRepository()
 }
 

@@ -38,4 +38,9 @@
 
     <color name="indicator_not_selected">#20ffffff</color>
     <color name="empty_gray">#AAAAAA</color>
+
+    <color name="around_gray">#707070</color>
+    <color name="gradient_gray">#8c000000</color>
+
+    <color name="twitter_blue">#55ACEE</color>
 </resources>
