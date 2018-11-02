@@ -94,7 +94,7 @@ class DonateDetailFragment : BaseFragment() {
     private fun setupRyutaMode() {
         context?.let {
             imageView.setImageDrawable(ContextCompat.getDrawable(it, R.mipmap.icon_ryuta))
-            nameTextView.text = getString(R.string.raccoon_donate_activity_ios)
+            nameTextView.text = getString(R.string.raccoon_donate_activity_ryuta)
             subTitleTextView.text = getString(R.string.raccoon_donate_activity_engineer)
             donateMainTextView.text = getString(R.string.donate_detail_fragment_ios_message)
         }

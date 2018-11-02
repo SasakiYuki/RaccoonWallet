@@ -262,55 +262,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         customTabsIntent.launchUrl(this, Uri.parse(url))
     }
 
-    private fun checkCurrentAppVersionFromStore() {
-        async(UI) {
-            var id = ""
-            bg {
-                try {
-                    val document = Jsoup.connect(getString(R.string.app_store_url)).get()
-                    id = document.getElementsByAttributeValue("itemprop", "softwareVersion").first().text()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }.await()
-            if (id.isNotEmpty() && getCurrentVersion().isNotEmpty()) {
-                try {
-                    val latestVersion = id.split(".")[3]
-                    val currentVersion = getCurrentVersion().split(".")[3]
-                    if (latestVersion != currentVersion && latestVersion == "x") {
-                        showUpdateDialog()
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
-
-    private fun showUpdateDialog() {
-        val materialDialog = MaterialDialog.Builder(this)
-        materialDialog.cancelable(false)
-        materialDialog
-                .title(getString(R.string.dialog_update_forward_title))
-                .positiveText(getString(R.string.dialog_update_forward_button))
-                .onPositive { dialog, _ ->
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_store_url))).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                    finish()
-                    dialog.dismiss()
-                }
-                .show()
-    }
-
-    private fun getCurrentVersion(): String {
-        var id = ""
-        try {
-            id = packageManager.getPackageInfo(packageName, 0).versionName
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return id
-    }
-
     private fun changeSendTopFragment(paymentQREntity: PaymentQREntity) {
         viewpager.currentItem = SendTopFragment.VIEW_PAGER_POSITION
         val fragment = (viewpager.adapter as TopFragmentPagerAdapter).getItem(viewpager.currentItem)
