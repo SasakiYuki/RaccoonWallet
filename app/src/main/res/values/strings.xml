@@ -124,46 +124,20 @@
     <string name="calculator_error">Error</string>
     <string name="calculator_amount">金額</string>
     <string name="calculator_send_user">送り先</string>
-    <string name="calculator_error_max">最大値の取得に失敗しました。ネットワーク環境をご確認ください。</string>
 
-    <!-- NemConverterActivity -->
-    <string name="nem_converter_activity_title">NEM/JPY 通貨コンバータ</string>
-    <string name="nem_converter_number_input_error">数字以外入力できません</string>
     <string name="nem_converter_error_price">取得できませんでした</string>
-    <string name="nem_converter_current_nem_price">1 NEM = %1$s JPY (Zaif)</string>
 
     <!-- ReceiveFragment -->
     <string name="receive_fragment_address">Your Address</string>
     <string name="receive_fragment_address_toast">アドレスをコピーしました</string>
 
-    <!-- invoiceActivity -->
-    <string name="invoice_activity_title">請求書の発行</string>
-    <string name="invoice_activity_hint_name">名前</string>
-    <string name="invoice_activity_hint_address">アドレス</string>
-    <string name="invoice_activity_hint_count">数量</string>
-    <string name="invoice_activity_hint_message">メッセージ</string>
-
     <!-- SelectWalletActivity -->
-    <string name="select_wallet_activity_header_main">Hi,Wallet maintenance?</string>
     <string name="select_wallet_activity_create_new_wallet">ウォレットを新しく作る</string>
-    <string name="select_wallet_activity_login">秘密鍵からインポート</string>
     <string name="select_wallet_empty_title">ウォレットがないみたい。</string>
     <string name="select_wallet_empty_message">上のボタンからウォレットを作成するか\nアカウントをリンクすると、ここに一覧で表示されますよ。</string>
 
-    <!-- InstantSendNEMActivity -->
-    <string name="instant_send_nem_activity_title">簡易送金</string>
-    <string name="instant_send_nem_activity_setting_account">設定済みアドレス</string>
-    <string name="instant_send_nem_activity_name">名前:</string>
-    <string name="instant_send_nem_activity_address">アドレス:</string>
-    <string name="instant_send_nem_balance">残高</string>
-    <string name="instant_send_nem_change_address">変更</string>
-
     <!-- TransactionListActivity -->
     <string name="transaction_list_activity_title">トランザクション一覧</string>
-    <string name="transaction_list_activity_row_multisig_transaction">これはマルチシグトランザクションです</string>
-    <string name="transaction_list_activity_row_unconfirmed">oops!まだ未承認のトランザクション</string>
-    <string name="transaction_list_activity_row_address">アドレス</string>
-    <string name="transaction_list_activity_row_message">メッセージ</string>
     <string name="transaction_list_activity_empty_title">おっと、まだ取引はないようです。</string>
     <string name="transaction_list_activity_empty_message">トランザクションが発生したら、\nここに一覧で表示されます。</string>
 
@@ -189,7 +163,6 @@
     <string name="send_top_fragment_send">送信先</string>
     <string name="send_top_fragment_hint">送信先アドレスを入力</string>
     <string name="send_top_fragment_address_error">有効なアドレスではありません</string>
-    <string name="send_top_fragment_not_select_wallet">ウォレットが選択されていません</string>
     <string name="send_top_fragment_confirm_title">おっと、気をつけて。</string>
     <string name="send_top_fragment_confirm_message">あなたが送ろうとしているアドレスは、これまで一度もブロックチェーン上で活動していない初心者のようです。とはいえアドレスがちゃんとした形式なら送金は可能ですから、ご安心ください。\nアドレスは正しいか、送り先は信頼できるか、よく確かめてから手続きしてくださいね。</string>
     <string name="send_top_fragment_amount_confirm_title">おっと、数量が0XEMのようです</string>
@@ -284,15 +257,10 @@
     <string name="choose_start_security_fragment_dialog_message_second">もしウォレットのバックアップやPINコードを設定したくなったら、ウォレットバーやメニューのアプリ設定からいつでも行えます。\nそれにセキュリティレッスンもアプリ設定のセキュリティの項目から受講できるので参照してみてくださいね。</string>
 
     <!-- PrivateKeyStoreSupportActivity -->
-    <string name="private_key_store_support_hero_message">バックアップですか？いい心がけですね！</string>
-
-    <!-- TutorialDescriptionFragment -->
     <string name="tutorial_description_fragment_title">セキュリティレッスン</string>
-    <string name="tutorial_description_fragment_main">やあ、セキュリティレッスンを受けに来たのかい？\n感心感心。\nよーし、それじゃあ早速やっていこう。\nここからは僕が担当するからね。\n\nじゃあ、まず最初に君のことを教えてくれないかい？\n次の画面で自分に合うものを選択してくれ。\n特別にみんなに最適なレッスン用意したからさ。</string>
-    <string name="tutorial_description_fragment_button">ウォレットのバックアップ</string>
+    <string name="tutorial_description_fragment_main">やあ。セキュリティレッスンを受けに来たのかい？\n感心感心。\nよーし、それじゃあ早速やっていこう。\n\nじゃあ、まず最初に君のことを教えてくれないかい？\n次の画面で自分に合うものを選択してくれ。\n特別にみんなに最適なレッスン用意したからさ。</string>
 
     <!-- PrivateKeyDescriptionFragment -->
-    <string name="private_key_description_fragment_title">秘密鍵について</string>
     <string name="private_key_description_fragment_description_1">プライベートキー(秘密鍵)について</string>
     <string name="private_key_description_fragment_description">プライベートキー（秘密鍵）はあなたのアカウント情報において最も重要であり、機密事項として注意して取り扱わなければなりません。\n\nプライベートキーは、関連する資金と資産を制御し、あなたのアカウントを元に戻すために必要なものであり、この知識は誰もが身につける必要があります。\n\nこのプライベートキーは、決してなくさないようにしてください。 また絶対に外部に漏れないように注意して扱ってください。</string>
 
@@ -334,7 +302,6 @@
     <string name="about_activity_official_discord">公式DISCORDサーバー｜紹介リンク</string>
     <string name="about_activity_official_licence">オープンソースライセンス</string>
     <string name="about_activity_official_review">レビューを書く</string>
-    <string name="about_activity_terms_of_service"><u>利用規約とプライバシーポリシー</u></string>
     <string name="about_activity_review_title">こんにちは。</string>
     <string name="about_activity_review_message">いつもRaccoonを利用していただき、ありがとうございます。突然ですが、都合のいいときで構いませんので、レビューをお願いすることはできますか？\nこのダイアログのボタンや、Aboutのページからいつでも投稿が可能です。\nあなたのご協力に感謝します。\nRaccoonより</string>
     <string name="about_activity_review_button">レビューを書く</string>
@@ -348,7 +315,6 @@
     <string name="tutorial_login_description_fragment_description">暗号通貨ユーザーのあなた！\nラクーンを選んでくれて嬉しいよ。 すでによく知っている君には、\n僕から説明することはあまりないかな。\nここの画面から、PINコードを設定できるから、\nサクッと設定しといてくれ。\n\nもし秘密鍵のバックアップを取り忘れてたなら、初心者のカードからレッスンを受けてね。\n</string>
 
     <!-- TutorialRaccoonDescriptionFragment -->
-    <string name="tutorial_raccoon_description_fragment_title">ラクーンユーザーの方へ</string>
     <string name="tutorial_raccoon_description_fragment_description">やあ、こんにちは。\nバックアップだね？\n次の画面から秘密鍵を確認できるよ。\nいつもありがとうね。</string>
 
     <!-- ImportSecretKeyFragment -->
@@ -356,6 +322,7 @@
     <string name="import_secret_key_fragment_message">こんにちは、親愛なるクリプトコイナー。\n1. リンクしたい仮想通貨の秘密鍵を入力する。\nもしくはQRコードを華麗に読み取りましょう。\n2. あなたの仮想通貨アカウントをラクーンにリンクします。</string>
     <string name="import_secret_key_fragment_hint">秘密鍵を入力</string>
     <string name="import_secret_key_fragment_empty_error">秘密鍵を入力</string>
+
     <string name="import_secret_key_fragment_policy_message">アプリの利用を開始する前に、ご確認ください。</string>
     <string name="import_secret_key_fragment_policy_button"><u>利用規約とプライバシーポリシー</u></string>
     <string name="import_secret_key_invalid_password">パスワードが一致しません</string>
@@ -517,7 +484,6 @@
     <string name="wallet_detail_public_key_empty">未取得</string>
 
     <!-- MyProfileInfoFragment -->
-    <string name="my_profile_info_fragment_friend">フレンド</string>
     <string name="my_profile_info_fragment_wallet">ウォレット</string>
     <string name="my_profile_info_fragment_guest">GUEST</string>
     <string name="my_profile_info_fragment_guest_sub">ゲスト</string>
@@ -536,7 +502,6 @@
 
     <!-- WalletRemoveActivity -->
     <string name="wallet_remove_activity_title">削除</string>
-    <string name="wallet_remove_title">ウォレットの削除について</string>
     <string name="wallet_remove_message">ウォレットを削除します。秘密鍵がないと復元できなくなります。\n本当にウォレットを削除しますか？</string>
     <string name="wallet_remove_button">削除</string>
 
@@ -575,8 +540,8 @@
 
     <string name="donate_detail_fragment_title">プロフィール</string>
     <string name="donate_detail_fragment_android_message">God of Raccoon。創造主でエンジニアです。\nすべてはココからはじまった。彼らがいなかったらラクーンは存在していない。\nRaccoonのAndroidエンジニアは二人。@YukiYamadaJPと@Riberd_Puzzle1です。\n\n・リードエンジニア / コア開発者\n・ベースアプリ（NEM総合アプリ） 開発\n・Android版アプリ開発</string>
-    <string name="donate_detail_fragment_yuki_message">God of Raccoon。創造主でエンジニアです。\nベースアプリのローンチと、ラクーンウォレットの総合的な開発・実装を担当しました。\nすべてはココからはじまりました。彼がいなかったらラクーンウォレットは存在していません。\n\n・リードエンジニア / コア開発者\n・ベースアプリ（NEM総合アプリ） 開発\n・Android版アプリ開発<string>
-        <string name="donate_detail_fragment_some_message">Raccoonの右腕。エンジニアです。\n暗号化技術を始めとしたロジック関連や画面実装を担当しました。\nこのアプリの安全は、彼のコードによって守られていると言っても過言ではありません。\n\n・コア開発者\n・Android版アプリ開発<string>
+    <string name="donate_detail_fragment_yuki_message">God of Raccoon。創造主でエンジニアです。\nベースアプリのローンチと、ラクーンウォレットの総合的な開発・実装を担当しました。\nすべてはココからはじまりました。彼がいなかったらラクーンウォレットは存在していません。\n\n・リードエンジニア / コア開発者\n・ベースアプリ（NEM総合アプリ） 開発\n・Android版アプリ開発</string>
+    <string name="donate_detail_fragment_some_message">Raccoonの右腕。エンジニアです。\n暗号化技術を始めとしたロジック関連や画面実装を担当しました。\nこのアプリの安全は、彼のコードによって守られていると言っても過言ではありません。\n\n・コア開発者\n・Android版アプリ開発</string>
     <string name="donate_detail_fragment_rhime_message">Raccoonの名付け親。デザイナーです。\nUI/UXデザイン（Android,iOS)、情報アーキテクチャ、Webサイト・ロゴ制作等のブランディングなどを担当しています。\n\n・総合コンテンツデザイナー\n・Android / iOSアプリのIA/UI/UXデザイン\n・ビジュアルデザイン/ブランディング（ロゴ・サイト）</string>
     <string name="donate_detail_fragment_ios_message">Raccoonの命綱。iOSエンジニアです。\n将棋で例えるなら飛車のような存在。\nラクーンウォレットがiPhoneでも使えるのは、ひとえに彼のおかげです。\nAndroid版アプリのPWA(Progressive Web Apps)移植、およびiOSへの移植・開発主任です。\n\n ・Android→iOS版アプリ移植・開発主任</string>
     <string name="donate_detail_fragment_donate">Donate</string>
@@ -607,30 +572,6 @@
     <string name="address_book_friend_info_title">プロフィール</string>
 
     <!--Dialog-->
-    <string name="dialog_update_forward_title">アプリのアップデートがあります</string>
-    <string name="dialog_update_forward_button">アップデートする</string>
-    <string name="dialog_add_goods_name_hint">品名</string>
-    <string name="dialog_add_goods_price_hint">価格</string>
-    <string name="dialog_add_goods_nem_mode">NEMモード</string>
-    <string name="dialog_add_goods_jpy_mode">円モード</string>
-    <string name="dialog_count_goods_count">購入個数</string>
-    <string name="dialog_count_error">個数が未入力です</string>
-    <string name="dialog_address_name_hint">ウォレット名（任意の名前）</string>
-    <string name="dialog_address_hint">アドレス</string>
-    <string name="dialog_address_valid_name_error">名前が未入力です</string>
-    <string name="dialog_address_valid_address_error">アドレスが未入力です</string>
-    <string name="dialog_main_confirm_title">確認</string>
-    <string name="dialog_main_confirm_message_sub_total">小計をリセットしてよろしいですか？</string>
-    <string name="dialog_main_confirm_message_goods_delete">このアイテムを削除してよろしいですか？</string>
-    <string name="dialog_select_import_address_not_use_secret_key">いずれの方法でも秘密鍵の情報は取得しません</string>
-    <string name="dialog_select_import_address_configured_address">設定済みのアドレスを確認する</string>
-    <string name="dialog_select_import_address_not_auto">手動入力</string>
-    <string name="dialog_select_import_address_auto">QRコード読み取り</string>
-    <string name="dialog_select_import_address_auto_description">NanoWalletの「アカウント情報をQRで共有」を読み込む\nXEMBookの「NEMアドレス」を読み込む</string>
-    <string name="dialog_address_confirm_name">名前</string>
-    <string name="dialog_address_confirm_address">アドレス</string>
-    <string name="dialog_configured_address_name">名前は設定されていません</string>
-    <string name="dialog_current_nem_price_for_zaif">1 NEM = %1$s JPY (Zaif)</string>
     <string name="dialog_confirm_display_twice">再度表示させない</string>
     <string name="dialog_confirm_title">message</string>
 </resources>
