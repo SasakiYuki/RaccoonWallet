@@ -64,6 +64,7 @@
 
     <!-- FirstTutorialActivity -->
     <string name="first_tutorial_button">はじめる</string>
+    <string name="first_tutorial_title">Hello,NEM. Hello,UX.</string>
     <string name="first_tutorial_title1">はじめまして</string>
     <string name="first_tutorial_title2">信頼の革新を手のひらに</string>
     <string name="first_tutorial_title3">すべての人に経済を。</string>
