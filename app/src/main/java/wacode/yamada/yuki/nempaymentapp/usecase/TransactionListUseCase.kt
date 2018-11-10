@@ -18,7 +18,13 @@ class TransactionListUseCase @Inject constructor(private val transactionReposito
             }
 
     fun getUnconfirmedTransactions(address: String) = transactionRepository.getUnconfirmedTransactions(address)
-            .flatMapObservable { Observable.fromIterable(it) }
+            .flatMapObservable {
+                return@flatMapObservable if (it.isEmpty()) {
+                    Observable.empty()
+                } else {
+                    Observable.fromIterable(it)
+                }
+            }
 
     fun getAccountAddressFromPublicKey(publicKey: String) = accountRepository.getAccountInfoFromPublicKey(publicKey)
             .map {

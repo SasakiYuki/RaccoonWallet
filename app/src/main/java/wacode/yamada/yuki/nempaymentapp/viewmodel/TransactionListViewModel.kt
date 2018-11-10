@@ -15,29 +15,38 @@ import javax.inject.Inject
 
 class TransactionListViewModel @Inject constructor(private val useCase: TransactionListUseCase) : BaseViewModel(), LoadingStatus by LoadingStatusImpl() {
     val transactionLiveData: MutableLiveData<TransactionAppEntity> = MutableLiveData()
+    val loadingStatusLiveData: MutableLiveData<LoadingStatus> = MutableLiveData()
 
     fun getInitialLoading(address: String) {
+        loadingStatusLiveData.value = LoadingStatus.INITIAL_LOADING
+
         getUnconfirmedTransactions(address)
                 .mergeWith(getAllTransaction(address))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .attachLoading()
                 .subscribe({
+                    loadingStatusLiveData.value = LoadingStatus.SUCCESS
                     transactionLiveData.value = it
                 }, {
+                    if (it is IllegalArgumentException && it.message == ERROR_LIST_EMPTY) {
+                        loadingStatusLiveData.value = LoadingStatus.EMPTY
+                    }
                     it.printStackTrace()
                 }).let { addDisposable(it) }
     }
 
     fun getLoadMore(address: String, transactionId: Int) {
+        loadingStatusLiveData.value = LoadingStatus.MORE_LOADING
+
         getAllTransaction(address = address, id = transactionId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    loadingStatusLiveData.value = LoadingStatus.SUCCESS
                     transactionLiveData.value = it
                 }, {
-                    if (it is IllegalArgumentException && it.message == ERROR_LIST_EMPTY){
-
+                    if (it is IllegalArgumentException && it.message == ERROR_LIST_EMPTY) {
+                        loadingStatusLiveData.value = LoadingStatus.COMPLETE
                     }
                     it.printStackTrace()
                 }).let { addDisposable(it) }
@@ -87,5 +96,13 @@ class TransactionListViewModel @Inject constructor(private val useCase: Transact
 
     companion object {
         const val ERROR_LIST_EMPTY = "list is empty"
+    }
+
+    enum class LoadingStatus {
+        INITIAL_LOADING,
+        MORE_LOADING,
+        SUCCESS,
+        COMPLETE,
+        EMPTY
     }
 }

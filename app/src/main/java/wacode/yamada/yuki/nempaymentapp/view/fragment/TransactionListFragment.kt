@@ -49,8 +49,7 @@ class TransactionListFragment : BaseFragment() {
         setupViewModelObserve()
 
         if (adapter.itemCount == TransactionAdapter.HEADER_SIZE) {
-            transactionEmptyView.visibility = View.VISIBLE
-            viewModel.getInitialLoading(wallet.address)
+            viewModel.getInitialLoading("NAKK6BAUEI7YLELPM3EYVQT6U3JL5LLM6IK5XBCE")
         }
     }
 
@@ -59,38 +58,53 @@ class TransactionListFragment : BaseFragment() {
             transactionLiveData.observe(this@TransactionListFragment, Observer {
                 it ?: return@Observer
 
-                transactionRecyclerView.tag = false
-                adapter.showIndicator(true)
-                transactionEmptyView.visibility = View.GONE
                 adapter.addItem(it)
             })
 
-            loadingStatus.observe(this@TransactionListFragment, Observer {
+            loadingStatusLiveData.observe(this@TransactionListFragment, Observer {
                 it ?: return@Observer
-                if (it) showProgress() else hideProgress()
+
+                when (it) {
+                    TransactionListViewModel.LoadingStatus.INITIAL_LOADING -> {
+                        swipeRefreshLayout.isRefreshing = false
+                        transactionRecyclerView.setTag(R.id.allow_loading, false)
+                        adapter.showIndicator(true)
+                    }
+                    TransactionListViewModel.LoadingStatus.MORE_LOADING -> {
+                        adapter.showIndicator(true)
+                        transactionRecyclerView.setTag(R.id.allow_loading, false)
+                    }
+                    TransactionListViewModel.LoadingStatus.SUCCESS -> {
+                        transactionRecyclerView.setTag(R.id.allow_loading, true)
+                    }
+                    TransactionListViewModel.LoadingStatus.EMPTY -> {
+                        adapter.showIndicator(false)
+                        transactionEmptyView.visibility = View.VISIBLE
+                        transactionRecyclerView.setTag(R.id.allow_loading, false)
+                    }
+                    TransactionListViewModel.LoadingStatus.COMPLETE -> {
+                        adapter.showIndicator(false)
+                        transactionRecyclerView.setTag(R.id.allow_loading, false)
+                    }
+                }
             })
         }
     }
 
     private fun setupSwipeRefreshView() {
         swipeRefreshLayout.setOnRefreshListener {
-            transactionRecyclerView.tag = true
-            swipeRefreshLayout.isRefreshing = false
-            transactionEmptyView.visibility = View.VISIBLE
-
             adapter.clearItems()
-            viewModel.getInitialLoading(wallet.address)
+            viewModel.getInitialLoading("NAKK6BAUEI7YLELPM3EYVQT6U3JL5LLM6IK5XBCE")
         }
     }
 
     private fun setupRecyclerView() {
         transactionRecyclerView.adapter = adapter
         transactionRecyclerView.layoutManager = LinearLayoutManager(context)
-        transactionRecyclerView.tag = false
 
         transactionRecyclerView.addOnScrollListener(object : TransactionPagingListener(transactionRecyclerView.layoutManager as LinearLayoutManager) {
             override fun onLoadMore() {
-                viewModel.getLoadMore(wallet.address, adapter.getLastTransactionId())
+                viewModel.getLoadMore("NAKK6BAUEI7YLELPM3EYVQT6U3JL5LLM6IK5XBCE", adapter.getLastTransactionId())
             }
         })
 

@@ -105,6 +105,8 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         super.onViewDetachedFromWindow(holder)
 
+        if (transactionList.isEmpty()) return
+
         if (holder.adapterPosition == 0) {
             onDateChangeListener!!.showDateLabel(parseDate(transactionList[0].date))
         }
@@ -229,6 +231,9 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
     fun showIndicator(isShow: Boolean) {
         showIndicator = isShow
 
+        if (!isShow) {
+            notifyItemRemoved(transactionList.size + HEADER_SIZE)
+        }
     }
 
     companion object {
