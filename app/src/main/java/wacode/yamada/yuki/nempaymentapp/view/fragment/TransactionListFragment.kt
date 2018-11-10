@@ -49,7 +49,7 @@ class TransactionListFragment : BaseFragment() {
         setupViewModelObserve()
 
         if (adapter.itemCount == TransactionAdapter.HEADER_SIZE) {
-            viewModel.getInitialLoading("NAKK6BAUEI7YLELPM3EYVQT6U3JL5LLM6IK5XBCE")
+            viewModel.getInitialLoading(wallet.address)
         }
     }
 
@@ -94,7 +94,7 @@ class TransactionListFragment : BaseFragment() {
     private fun setupSwipeRefreshView() {
         swipeRefreshLayout.setOnRefreshListener {
             adapter.clearItems()
-            viewModel.getInitialLoading("NAKK6BAUEI7YLELPM3EYVQT6U3JL5LLM6IK5XBCE")
+            viewModel.getInitialLoading(wallet.address)
         }
     }
 
@@ -104,7 +104,7 @@ class TransactionListFragment : BaseFragment() {
 
         transactionRecyclerView.addOnScrollListener(object : TransactionPagingListener(transactionRecyclerView.layoutManager as LinearLayoutManager) {
             override fun onLoadMore() {
-                viewModel.getLoadMore("NAKK6BAUEI7YLELPM3EYVQT6U3JL5LLM6IK5XBCE", adapter.getLastTransactionId())
+                viewModel.getLoadMore(wallet.address, adapter.getLastTransactionId())
             }
         })
 
