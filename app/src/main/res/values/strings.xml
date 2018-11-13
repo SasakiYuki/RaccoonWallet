@@ -293,7 +293,7 @@
     <string name="select_tutorial_level_fragment_login_description">ラクーンを選んでいただき感謝します</string>
     <string name="select_tutorial_level_fragment_raccoon_title">ラクーンユーザーです</string>
     <string name="select_tutorial_level_fragment_raccoon_subtitle">ウォレットのバックアップ</string>
-    <string name="select_tutorial_level_fragment_raccoon_description">いつもありがとう。今日もいい天気ですね。</string>
+    <string name="select_tutorial_level_fragment_raccoon_description">いつもありがとうございます。今日もいい天気ですね。</string>
 
     <!-- AboutActivity -->
     <string name="about_activity_title">About This APP</string>
@@ -343,7 +343,7 @@
     <string name="import_wallet_name_fragment_hint">Wallet name</string>
 
     <!-- TutorialPinCodeFragment -->
-    <string name="tutorial_pin_code_fragment_title">次はPINの設定だ！</string>
+    <string name="tutorial_pin_code_fragment_title">次はPINの設定です！</string>
     <string name="tutorial_pin_code_fragment_main">またお会いしましたね！\nウォレットのバックアップはできましたか？\nさあ次は、アプリのPINコード設定です。\n\nグッドラック！</string>
     <string name="tutorial_pin_code_fragment_button">PINコードの設定</string>
 
