@@ -92,7 +92,7 @@
     <!-- MosaicListActivity -->
     <string name="activity_mosaic_list_title">モザイクギャラリー</string>
     <string name="activity_mosaic_empty_title">モザイクがありません</string>
-    <string name="activity_mosaic_empty_description">お見せできるモザイクは、今のところなさそうです。\nすてきなギャラリーになるよう、\nコレクションに励んでみましょう！</string>
+    <string name="activity_mosaic_empty_description">お見せできるモザイクは、今のところないようです。</string>
 
     <!-- PinCodeFragment -->
     <string name="pin_code_fragment_enter">PINを入力</string>
@@ -129,13 +129,13 @@
     <string name="nem_converter_error_price">取得できませんでした</string>
 
     <!-- ReceiveFragment -->
-    <string name="receive_fragment_address">Your Address</string>
+    <string name="receive_fragment_address">あなたのアドレス</string>
     <string name="receive_fragment_address_toast">アドレスをコピーしました</string>
 
     <!-- SelectWalletActivity -->
     <string name="select_wallet_activity_create_new_wallet">ウォレットを新しく作る</string>
-    <string name="select_wallet_empty_title">ウォレットがないみたい。</string>
-    <string name="select_wallet_empty_message">上のボタンからウォレットを作成するか\nアカウントをリンクすると、ここに一覧で表示されますよ。</string>
+    <string name="select_wallet_empty_title">ウォレットがありません。</string>
+    <string name="select_wallet_empty_message">上のボタンからウォレットを作成するか\nアカウントをリンクすると、ここに一覧で表示されます。</string>
 
     <!-- TransactionListActivity -->
     <string name="transaction_list_activity_title">トランザクション一覧</string>
@@ -259,7 +259,7 @@
 
     <!-- PrivateKeyStoreSupportActivity -->
     <string name="tutorial_description_fragment_title">セキュリティレッスン</string>
-    <string name="tutorial_description_fragment_main">やあ。セキュリティレッスンを受けに来たのかい？\n感心感心。\nよーし、それじゃあ早速やっていこう。\n\nじゃあ、まず最初に君のことを教えてくれないかい？\n次の画面で自分に合うものを選択してくれ。\n特別にみんなに最適なレッスン用意したからさ。</string>
+    <string name="tutorial_description_fragment_main">ようこそいらっしゃいました！\nセキュリティレッスンですね？\n特別にみなさんに最適なレッスン用意してあります！\n早速やっていきましょう。\n\nそれでは、まず最初にあなたのことを教えてくれますか？\n次の画面でご自分に合うものを選択してみてください。</string>
 
     <!-- PrivateKeyDescriptionFragment -->
     <string name="private_key_description_fragment_description_1">プライベートキー(秘密鍵)について</string>
@@ -270,7 +270,7 @@
     <string name="private_key_display_fragment_description_1">スクリーンショットに撮るのは危険です。</string>
     <string name="private_key_display_fragment_description_2">\n\n紙に書き留める、またはパスワード管理アプリ・ソフトウェアを使って厳重に保管してください。</string>
     <string name="private_key_display_fragment_hint">Private Key</string>
-    <string name="private_key_display_fragment_copied_click">PrivateKey copied to clipboard.</string>
+    <string name="private_key_display_fragment_copied_click">秘密鍵をクリップボードにコピーしました</string>
 
     <!-- DisplayQRActivity -->
     <string name="display_qr_activity_title">My Wallet QR</string>
@@ -297,8 +297,8 @@
 
     <!-- AboutActivity -->
     <string name="about_activity_title">About This APP</string>
-    <string name="about_activity_message">信頼性が高く、\n使いやすいUIで、\n仮想通貨をもっと楽しく。\n\nラクーンは、これら３つを目標に作られた暗号通貨ウォレットです。</string>
-    <string name="about_activity_section_header">RaccoonWallet</string>
+    <string name="about_activity_message">信頼性が高く、\n使いやすいUIで、\n暗号通貨をもっと楽しく。\n\nラクーンは、これら３つを目標に作られた暗号通貨ウォレットです。</string>
+    <string name="about_activity_section_header">Raccoon</string>
     <string name="about_activity_official_web_page">公式サイト｜raccoonwallet.com</string>
     <string name="about_activity_official_discord">公式DISCORDサーバー｜紹介リンク</string>
     <string name="about_activity_official_licence">オープンソースライセンス</string>
@@ -309,18 +309,18 @@
 
     <!-- TutorialNewbieDescriptionFragment -->
     <string name="tutorial_newbie_description_fragment_title">初心者のあなたへ</string>
-    <string name="tutorial_newbie_description_fragment_description">これから暗号通貨をスタートする君へ捧ぐメッセージ！\n知っている人もいるかもしれないけど、秘密鍵というのは暗号通貨にとって、すごく大事なものなんだ。\nバックアップはしっかりね。\nそれからアプリ本体のPINコード。\nスマホをもし落としてしまったりしたとき、アプリにロックをかけておかないと、勝手に送金されてしまうかもしれないよ。\nどっちも大事だ。これから対策していくよ。\n準備はいいかい？\nそれじゃあ、やっていこう。</string>
+    <string name="tutorial_newbie_description_fragment_description">これから暗号通貨をスタートするあなたへ。\nまず暗号通貨にとって最も重要なものに”秘密鍵”というものがあります。\nこれは資産を管理するために必要で、絶対になくさないためにもバックアップが大切になってきます。\n\nそれからアプリ本体のPINコード。\nスマホをもし落としてしまったりしたとき、アプリにロックをかけておかないと、勝手に送金されてしまうかもしれません。\nこれから、この２つを対策していきます。\n準備はいいですか？</string>
 
     <!-- TutorialLoginDescriptionFragment -->
-    <string name="tutorial_login_description_fragment_title">暗号通貨玄人の方へ</string>
-    <string name="tutorial_login_description_fragment_description">暗号通貨ユーザーのあなた！\nラクーンを選んでくれて嬉しいよ。 すでによく知っている君には、\n僕から説明することはあまりないかな。\nここの画面から、PINコードを設定できるから、\nサクッと設定しといてくれ。\n\nもし秘密鍵のバックアップを取り忘れてたなら、初心者のカードからレッスンを受けてね。\n</string>
+    <string name="tutorial_login_description_fragment_title">暗号通貨に詳しいあなたへ</string>
+    <string name="tutorial_login_description_fragment_description">暗号通貨に詳しいあなたへ。\nRaccoonを選んでくれて嬉しいです。\nすでに暗号通貨に詳しいあなたには、\nこちらから説明することはあまりないかもしれませんね。\nここの画面から、PINコードの設定画面に移れますから、\n設定をお願いします。\n\nもし秘密鍵のバックアップを取り忘れてたなら、初心者のカードからレッスンを受けてくださいね。</string>
 
     <!-- TutorialRaccoonDescriptionFragment -->
-    <string name="tutorial_raccoon_description_fragment_description">やあ、こんにちは。\nバックアップだね？\n次の画面から秘密鍵を確認できるよ。\nいつもありがとうね。</string>
+    <string name="tutorial_raccoon_description_fragment_description">こんにちは。\nバックアップですね？\n次の画面から秘密鍵を確認できますよ。\nいつもありがとうございます。</string>
 
     <!-- ImportSecretKeyFragment -->
     <string name="import_secret_key_fragment_title">秘密鍵のインポート</string>
-    <string name="import_secret_key_fragment_message">こんにちは、親愛なるクリプトコイナー。\n1. リンクしたい仮想通貨の秘密鍵を入力する。\nもしくはQRコードを華麗に読み取りましょう。\n2. あなたの仮想通貨アカウントをラクーンにリンクします。</string>
+    <string name="import_secret_key_fragment_message">こんにちは、親愛なるクリプトコイナー。\n1. リンクしたい暗号通貨の秘密鍵を入力する。\nもしくはQRコードを読み取りましょう。\n2. あなたの暗号通貨アカウントをラクーンにリンクします。</string>
     <string name="import_secret_key_fragment_hint">秘密鍵を入力</string>
     <string name="import_secret_key_fragment_empty_error">秘密鍵を入力</string>
 
@@ -344,7 +344,7 @@
 
     <!-- TutorialPinCodeFragment -->
     <string name="tutorial_pin_code_fragment_title">次はPINの設定だ！</string>
-    <string name="tutorial_pin_code_fragment_main">また会ったな。\nウォレットのバックアップはできたかい？\nさあ次は、アプリのPINコード設定だ。\n\nグッドラック！</string>
+    <string name="tutorial_pin_code_fragment_main">またお会いしましたね！\nウォレットのバックアップはできましたか？\nさあ次は、アプリのPINコード設定です。\n\nグッドラック！</string>
     <string name="tutorial_pin_code_fragment_button">PINコードの設定</string>
 
     <!-- PinCodeSettingFragment -->
@@ -356,7 +356,7 @@
 
     <!-- CompletedPinCodeSettingFragmentment -->
     <string name="pin_code_setting_end_fragment_title">指紋認証の設定</string>
-    <string name="pin_code_setting_end_fragment_description">PIN設定できたみたいだね。\nいい調子だ。\nさてレッスンもこれで最後。\n\n実は合わせて指紋認証でアプリにアクセスできるように設定できるんだけど、ここで設定しておくかい？</string>
+    <string name="pin_code_setting_end_fragment_description">PIN設定ができたみたいですね。\nさてレッスンもこれで最後です。\n\n実は合わせて生体認証でアプリにアクセスできるように設定できるのですが、ここで設定しておきますか？</string>
     <string name="pin_code_setting_end_fragment_button_finger">指紋認証を設定する</string>
     <string name="pin_code_setting_end_fragment_button_end">レッスンを終える</string>
     <string name="pin_code_setting_end_not_available_title">おっと！</string>
@@ -364,8 +364,7 @@
 
     <!-- CompleteImportWalletActivity -->
     <string name="complete_import_wallet_activity_title">リンク完了</string>
-    <string name="complete_import_wallet_activity_message">おめでとうございます！\n以上でリンク作業は完了しました。\nウォレットの変更や追加をしたい場合は、\nウォレットバーのボタンから管理画面に\n
-アクセスしてみてください。\nもし時間があるなら、この後のセキュリティレッスンの受講をオススメします。PINコードの設定やウォレットのバックアップを行います。</string>
+    <string name="complete_import_wallet_activity_message">おめでとうございます！\n以上でリンク作業は完了しました。\nウォレットの変更や追加をしたい場合は、\nウォレットバーのボタンから管理画面に\nアクセスしてみてください。\nもし時間があるなら、この後のセキュリティレッスンの受講をオススメします。PINコードの設定やウォレットのバックアップを行います。</string>
     <string name="complete_import_wallet_activity_lesson_button">セキュリティレッスン</string>
 
     <!-- QrScanFragment -->
@@ -373,10 +372,10 @@
     <string name="qr_scan_fragment_scan_error">QRコードのスキャンに失敗しました</string>
 
     <!-- WalletCreatedFragment -->
-    <string name="wallet_created_fragment_title">お疲れ様！</string>
-    <string name="wallet_created_fragment_description_newbie">すばらしい！！\nこれで君も立派なクリプトコイナーというわけだ。\n感慨深いね。\n\nてなわけで、セキュリティレッスンは以上で終わり。\n暇があったらメニューからヘルプも覗くと良いよ。\nまあ後は使いながら覚えていってくれ。\n月に叢雲花に風。\nさよならだけが人生さ。\nまた会おうぜ。グッドラック。</string>
-    <string name="wallet_created_fragment_description_login">レッスンお疲れ様。仮想通貨の活動をラクーンで行うことを選択した君を後悔させないように頑張るよ。\nこのウォレット自体の使い方は、メニューからアクセスできるヘルプから学習してほしい。\n\nゆく河の流れは絶えずして、しかももとの水にあらず。\nいづかたより来たりて、いづかたへか去る君との出会いに感謝するよ。\nグッドラック。</string>
-    <string name="wallet_created_fragment_description_raccoon">いつもラクーンウォレットを使ってくれてありがとう。\n\nてなわけで、セキュリティレッスンは以上で終わり。\nウォレットにもそろそろ慣れてきたんじゃないかい？\nとはいえ事前の対策を疎かにはしないでね。\n\n曾子曰く、人生とは、\n死而後巳（死してのち巳む）。\nくたばって初めて油断できるのさ。\nまた会おうぜ。グッドラック。</string>
+    <string name="wallet_created_fragment_title">お疲れ様でした。</string>
+    <string name="wallet_created_fragment_description_newbie">お疲れ様でした。\n以上でセキュリティレッスンは終わりになります。\n\nもし分からないことがあったら、メニューからヘルプを参照してみてくださいね。\n\nあなたに良い暗号通貨ライフが訪れることを\nお祈りしています！</string>
+    <string name="wallet_created_fragment_description_login">お疲れ様でした。\n以上でセキュリティレッスンは終わりになります。\nこのウォレット自体の使い方は、メニューからアクセスできるヘルプからアクセスできますので、参照してみてください。\n\nあなたの暗号通貨ライフが\nこれからも良いものであることをお祈りしています！\n</string>
+    <string name="wallet_created_fragment_description_raccoon">いつもラクーンを使っていただき\nありがとうございます。\n以上でセキュリティレッスンは終わりになります。\n\nこれからも、あなたの暗号通貨ライフが\n良いものであることをラクーンはお祈りしています。</string>
 
     <!-- Fingerprint -->
     <string name="fingerprint_authenticate_title">指紋認証でロックを解除します</string>
@@ -406,7 +405,7 @@
     <string name="setting_home_security_lesson">セキュリティレッスンを受ける</string>
 
     <!-- SelectModeAddWalletActivity -->
-    <string name="select_mode_add_wallet_title">どうやって設定する？</string>
+    <string name="select_mode_add_wallet_title">どうやって設定しますか？</string>
     <string name="select_mode_add_wallet_from_wallet">ウォレットから登録する</string>
     <string name="select_mode_add_wallet_direct">直接入力する</string>
     <string name="select_mode_add_wallet_no_wallet">ウォレットを作成してください</string>
@@ -540,11 +539,11 @@
     <string name="raccoon_donate_activity_ios_engineer">iOSエンジニア</string>
 
     <string name="donate_detail_fragment_title">プロフィール</string>
-    <string name="donate_detail_fragment_android_message">God of Raccoon。創造主でエンジニアです。\nすべてはココからはじまった。彼らがいなかったらラクーンは存在していない。\nRaccoonのAndroidエンジニアは二人。@YukiYamadaJPと@Riberd_Puzzle1です。\n\n・リードエンジニア / コア開発者\n・ベースアプリ（NEM総合アプリ） 開発\n・Android版アプリ開発</string>
-    <string name="donate_detail_fragment_yuki_message">God of Raccoon。創造主でエンジニアです。\nベースアプリのローンチと、ラクーンウォレットの総合的な開発・実装を担当しました。\nすべてはココからはじまりました。彼がいなかったらラクーンウォレットは存在していません。\n\n・リードエンジニア / コア開発者\n・ベースアプリ（NEM総合アプリ） 開発\n・Android版アプリ開発</string>
-    <string name="donate_detail_fragment_some_message">Raccoonの右腕。エンジニアです。\n暗号化技術を始めとしたロジック関連や画面実装を担当しました。\nこのアプリの安全は、彼のコードによって守られていると言っても過言ではありません。\n\n・コア開発者\n・Android版アプリ開発</string>
-    <string name="donate_detail_fragment_rhime_message">Raccoonの名付け親。デザイナーです。\nUI/UXデザイン（Android,iOS)、情報アーキテクチャ、Webサイト・ロゴ制作等のブランディングなどを担当しています。\n\n・総合コンテンツデザイナー\n・Android / iOSアプリのIA/UI/UXデザイン\n・ビジュアルデザイン/ブランディング（ロゴ・サイト）</string>
-    <string name="donate_detail_fragment_ios_message">Raccoonの命綱。iOSエンジニアです。\n将棋で例えるなら飛車のような存在。\nラクーンウォレットがiPhoneでも使えるのは、ひとえに彼のおかげです。\nAndroid版アプリのPWA(Progressive Web Apps)移植、およびiOSへの移植・開発主任です。\n\n ・Android→iOS版アプリ移植・開発主任</string>
+    <string name="donate_detail_fragment_android_message">Androidエンジニア\n@YukiYamadaJP\n@Riberd_Puzzle1\n\n・Android版アプリ開発</string>
+    <string name="donate_detail_fragment_yuki_message">エンジニア\n・ベースアプリ開発\n・Android版アプリ開発</string>
+    <string name="donate_detail_fragment_some_message">エンジニア\n・Android版アプリ開発</string>
+    <string name="donate_detail_fragment_rhime_message">デザイナー\n・Android / iOSアプリのIA/UI/UXデザイン\n・ビジュアルデザイン/ブランディング</string>
+    <string name="donate_detail_fragment_ios_message">エンジニア\n・iOS版開発主任\n・PWA(Progressive Web Apps)開発</string>
     <string name="donate_detail_fragment_donate">Donate</string>
 
     <!-- AddressBookListActivity -->
