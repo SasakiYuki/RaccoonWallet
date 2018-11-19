@@ -6,6 +6,15 @@
 - [HomePage](https://raccoonwallet.com/)
 - [Medium](https://medium.com/raccoonwallet)
 
+# Issue
+Issueを立てるのは自由です。疑問やバグなどがあれば気軽に立ててください。
+開発中ステータス or バグ or 重要タグ　が付いていない
+かつ　
+一定期間（２週間）コメントや議論がない
+場合は整理のためにクローズします。
+しかし、必要であれば再オープンするのは悪いことではありません🤖
+
+
 # RaccoonWalletDeeplink
 
 RaccoonWalletはなんちゃってDeeplinkが扱えます。
