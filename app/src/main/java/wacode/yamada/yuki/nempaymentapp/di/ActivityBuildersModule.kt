@@ -56,4 +56,8 @@ internal abstract class ActivityBuildersModule {
     @ActivityScope
     @ContributesAndroidInjector
     abstract fun bindSelectMyProfileAddressAddActivity(): SelectMyProfileAddressAddActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [(TransactionActivityModule::class), (TransactionListModule::class)])
+    abstract fun bindTransactionActivity(): TransactionActivity
 }

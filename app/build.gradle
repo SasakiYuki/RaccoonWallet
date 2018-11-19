@@ -20,8 +20,8 @@ android {
     defaultConfig {
         applicationId "wacode.yamada.yuki.nempaymentapp"
         minSdkVersion 22
-        versionCode 24
-        versionName "2.0.10.0"
+        versionCode 25
+        versionName "2.0.10.1"
         targetSdkVersion 28
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -93,7 +93,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     implementation 'com.applovin:applovin-sdk:+'
-    implementation 'com.ryuta46:nem-kotlin:0.4.0'
+    implementation 'com.ryuta46:nem-kotlin:0.4.2'
     implementation 'com.madgag.spongycastle:prov:1.51.0.0'
     implementation 'com.madgag.spongycastle:core:1.51.0.0'
     implementation 'net.i2p.crypto:eddsa:0.2.0'

@@ -82,6 +82,10 @@ internal abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SelectMyProfileAddressAddViewModel::class)
-    abstract fun bindSelectMyProfileAddressAddViewModel(viewModel:SelectMyProfileAddressAddViewModel): ViewModel
+    abstract fun bindSelectMyProfileAddressAddViewModel(viewModel: SelectMyProfileAddressAddViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(TransactionListViewModel::class)
+    abstract fun bindTransactionListViewModel(viewModel: TransactionListViewModel): ViewModel
 }

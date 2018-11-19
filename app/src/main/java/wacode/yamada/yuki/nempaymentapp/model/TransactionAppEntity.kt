@@ -18,5 +18,6 @@ data class TransactionAppEntity(
         val message: String?,
         val timeStamp: Long,
         val mosaicList: ArrayList<MosaicAppEntity>,
-        val messageType: Int?
+        val messageType: Int?,
+        val transactionId: Int = 0
 ) : Serializable

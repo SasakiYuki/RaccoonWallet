@@ -10,7 +10,7 @@ class HomeUseCase @Inject constructor(
         private val accountRepository: AccountRepository,
         private val harvestRepository: HarvestRepository) {
 
-    fun getAllTransaction(address: String) = transactionRepository.geAllTransaction(address)
+    fun getAllTransaction(address: String) = transactionRepository.getAllTransaction(address)
 
     fun getAccountInfo(address: String) = accountRepository.getAccountInfo(address)
 
