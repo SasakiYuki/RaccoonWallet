@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_select_wallet.*
 import kotlinx.coroutines.experimental.android.UI
@@ -12,6 +13,7 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.event.WalletBackBarEvent
 import wacode.yamada.yuki.nempaymentapp.model.SimpleWalletEntity
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
@@ -23,6 +25,7 @@ import wacode.yamada.yuki.nempaymentapp.view.controller.WalletListController
 class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListClickListener {
     private lateinit var controller: WalletListController
     private val compositeDisposable = CompositeDisposable()
+    private var intentAnimation = IntentAnimation.SLIDE_IN
 
     override fun setLayout() = R.layout.activity_select_wallet
 
@@ -34,17 +37,43 @@ class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListCl
         setToolbarTitle(R.string.select_wallet_activity_title)
         setupRecyclerView()
         getWalletList()
+        setupRxBus()
+    }
+
+    private fun setupRxBus() {
+        compositeDisposable.add(
+                RxBus.receive(WalletBackBarEvent::class.java)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            intentAnimation = IntentAnimation.SLIDE_IN
+                        }
+        )
     }
 
     override fun onResume() {
         super.onResume()
-        overridePendingTransition(R.anim.anim_slide_in_down, R.anim.anim_slide_out_down)
+        when (intentAnimation) {
+            IntentAnimation.SLIDE_IN ->
+                overridePendingTransition(R.anim.anim_slide_in_down, R.anim.anim_slide_out_down)
+            IntentAnimation.SLIDE_RIGHT ->
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right)
+        }
         getWalletList()
     }
 
     override fun onPause() {
         super.onPause()
-        overridePendingTransition(R.anim.anim_slide_in_up, R.anim.anim_slide_out_up)
+        when (intentAnimation) {
+            IntentAnimation.SLIDE_IN ->
+                overridePendingTransition(R.anim.anim_slide_in_up, R.anim.anim_slide_out_up)
+            IntentAnimation.SLIDE_RIGHT ->
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 
     private fun getWalletList() {
@@ -127,11 +156,13 @@ class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListCl
     }
 
     override fun onClickCreateButton() {
+        intentAnimation = IntentAnimation.SLIDE_IN
         startActivity(ChooseCreateOrScanWalletActivity.createIntent(this, false))
     }
 
     override fun onClickSettingButton(id: Long, isMultisig: Boolean) {
         onClickRow(id)
+        intentAnimation = IntentAnimation.SLIDE_RIGHT
         startActivity(WalletSettingActivity.getCallingIntent(this@SelectWalletActivity.baseContext, id, isMultisig))
     }
 
@@ -143,5 +174,10 @@ class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListCl
 
     companion object {
         fun createIntent(context: Context) = Intent(context, SelectWalletActivity::class.java)
+    }
+
+    enum class IntentAnimation {
+        SLIDE_IN,
+        SLIDE_RIGHT
     }
 }
