@@ -99,6 +99,13 @@ class TransactionDetailFragment : BaseFragment() {
             entity.senderAddress!!.copyClipBoard(secondSenderAddressText.context)
             secondSenderAddressText.context.showToast(R.string.com_copied)
         }
+
+        hashText.setOnClickListener {
+            entity.hash?.let {
+                it.copyClipBoard(secondSenderAddressText.context)
+                hashText.context.showToast(R.string.com_copied)
+            }
+        }
     }
 
     private fun setupAmount(entity: TransactionAppEntity) {
