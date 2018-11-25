@@ -1,7 +1,6 @@
 package wacode.yamada.yuki.nempaymentapp.utils
 
 import com.ryuta46.nemkotlin.enums.MessageType
-import com.ryuta46.nemkotlin.model.AccountMetaDataPair
 import com.ryuta46.nemkotlin.model.GeneralTransaction
 import com.ryuta46.nemkotlin.model.TransactionMetaDataPair
 import com.ryuta46.nemkotlin.model.UnconfirmedTransactionMetaDataPair
@@ -12,6 +11,7 @@ import wacode.yamada.yuki.nempaymentapp.extentions.getNemStartDateTimeLong
 import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
 import wacode.yamada.yuki.nempaymentapp.model.MosaicAppEntity
 import wacode.yamada.yuki.nempaymentapp.model.TransactionAppEntity
+import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
 import wacode.yamada.yuki.nempaymentapp.types.TransactionType
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,7 +37,7 @@ object TransactionAppConverter {
             getTransactionId(it)
     )
 
-    fun convert(transactionType: TransactionType, it: TransactionMetaDataPair) = TransactionAppEntity(
+    fun convert(transactionType: TransactionType, it: TransactionMetaDataPair, senderAddress: String, mosaicItems: List<MosaicFullItem>) = TransactionAppEntity(
             transactionType,
             it.meta.height,
             it.meta.hash.data,
@@ -45,7 +45,7 @@ object TransactionAppConverter {
             getFee(it.transaction),
             getAmount(it.transaction),
             it.transaction.signer,
-            "",
+            senderAddress,
             getRecipientAddress(it.transaction),
             isMultisig(it.transaction),
             getMessage(it.transaction),
@@ -120,20 +120,6 @@ object TransactionAppConverter {
                 return it.toDisplayAddress()
             }
             return null
-        }
-    }
-
-    private fun getSenderAddress(generalTransaction: GeneralTransaction, accountMetaDataPair: AccountMetaDataPair): String? {
-        if (isMultisig(generalTransaction)) {
-            if (accountMetaDataPair.meta.cosignatoryOf.isNotEmpty()) {
-                accountMetaDataPair.meta.cosignatoryOf[0].address?.let {
-                    return it.toDisplayAddress()
-                }
-            } else {
-                return null
-            }
-        } else {
-            return accountMetaDataPair.account.address.toDisplayAddress()
         }
     }
 

@@ -2,12 +2,15 @@ package wacode.yamada.yuki.nempaymentapp.usecase
 
 import io.reactivex.Observable
 import wacode.yamada.yuki.nempaymentapp.repository.AccountRepository
+import wacode.yamada.yuki.nempaymentapp.repository.MosaicRepository
 import wacode.yamada.yuki.nempaymentapp.repository.TransactionRepository
 import wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionListViewModel
 import javax.inject.Inject
 
 
-class TransactionListUseCase @Inject constructor(private val transactionRepository: TransactionRepository, private val accountRepository: AccountRepository) {
+class TransactionListUseCase @Inject constructor(private val transactionRepository: TransactionRepository,
+                                                 private val accountRepository: AccountRepository, private val mosaicRepository: MosaicRepository) {
+
     fun getAllTransaction(address: String, id: Int) = transactionRepository.getAllTransaction(address = address, id = id)
             .flatMapObservable {
                 return@flatMapObservable if (it.isEmpty()) {
@@ -31,4 +34,7 @@ class TransactionListUseCase @Inject constructor(private val transactionReposito
                 it.account.address
             }
             .toObservable()
+
+    fun getNamespaceMosaics(nameSpace: String) =
+            mosaicRepository.getNamespaceMosaics(nameSpace)
 }

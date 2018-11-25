@@ -1,12 +1,17 @@
 package wacode.yamada.yuki.nempaymentapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import com.ryuta46.nemkotlin.model.TransactionMetaDataPair
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatus
 import wacode.yamada.yuki.nempaymentapp.extentions.LoadingStatusImpl
 import wacode.yamada.yuki.nempaymentapp.model.TransactionAppEntity
+import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
+import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicItem
+import wacode.yamada.yuki.nempaymentapp.rest.model.MosaicAppEntity
 import wacode.yamada.yuki.nempaymentapp.types.TransactionType
 import wacode.yamada.yuki.nempaymentapp.usecase.TransactionListUseCase
 import wacode.yamada.yuki.nempaymentapp.utils.TransactionAppConverter
@@ -38,7 +43,7 @@ class TransactionListViewModel @Inject constructor(private val useCase: Transact
     fun getLoadMore(address: String, transactionId: Int) {
         loadingStatusLiveData.value = LoadingStatus.MORE_LOADING
 
-        getAllTransaction(address = address, id = transactionId)
+        getAllTransaction(myAddress = address, id = transactionId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -55,43 +60,87 @@ class TransactionListViewModel @Inject constructor(private val useCase: Transact
     private fun getUnconfirmedTransactions(address: String) = useCase.getUnconfirmedTransactions(address)
             .map { TransactionAppConverter.convert(TransactionType.UNCONFIRMED, it) }
 
-    private fun getAllTransaction(address: String, id: Int = -1): Observable<TransactionAppEntity> {
-        return useCase.getAllTransaction(address = address, id = id)
-                .flatMap { transition ->
-                    return@flatMap if (transition.transaction.recipient.isNullOrEmpty()) {
-                        if (transition.transaction.otherTrans?.recipient != address) {
-                            Observable.just(transition)
-                                    .map {
-                                        val appEntity = TransactionAppConverter.convert(TransactionType.OUTGOING, transition)
-                                        appEntity.senderAddress = address
-                                        return@map appEntity
-                                    }
-                        } else {
-                            useCase.getAccountAddressFromPublicKey(transition.transaction.signer)
-                                    .map {
-                                        val appEntity = TransactionAppConverter.convert(TransactionType.INCOMING, transition)
-                                        appEntity.senderAddress = it
-                                        return@map appEntity
-                                    }
-                        }
-                    } else {
-                        return@flatMap if (transition.transaction.recipient != address) {
-                            Observable.just(transition)
-                                    .map {
-                                        val appEntity = TransactionAppConverter.convert(TransactionType.OUTGOING, transition)
-                                        appEntity.senderAddress = address
-                                        return@map appEntity
-                                    }
-                        } else {
-                            useCase.getAccountAddressFromPublicKey(transition.transaction.signer)
-                                    .map {
-                                        val appEntity = TransactionAppConverter.convert(TransactionType.INCOMING, transition)
-                                        appEntity.senderAddress = it
-                                        return@map appEntity
-                                    }
-                        }
-                    }
+//    private fun getAllTransaction(address: String, id: Int = -1): Observable<TransactionAppEntity> {
+//        return useCase.getAllTransaction(address = address, id = id)
+//                .flatMap { transition ->
+//                    return@flatMap if (transition.transaction.recipient.isNullOrEmpty()) {
+//                        if (transition.transaction.otherTrans?.recipient != address) {
+//                            Observable.just(transition)
+//                                    .map {
+//                                        return@map TransactionAppConverter.convert(TransactionType.OUTGOING, transition, address)
+//                                    }
+//                        } else {
+//                            useCase.getAccountAddressFromPublicKey(transition.transaction.signer)
+//                                    .map {
+//                                        return@map TransactionAppConverter.convert(TransactionType.INCOMING, transition, it)
+//                                    }
+//                        }
+//                    } else {
+//                        return@flatMap if (transition.transaction.recipient != address) {
+//                            Observable.just(transition)
+//                                    .map {
+//                                        return@map TransactionAppConverter.convert(TransactionType.OUTGOING, transition, address)
+//                                    }
+//                        } else {
+//                            useCase.getAccountAddressFromPublicKey(transition.transaction.signer)
+//                                    .map {
+//                                        return@map TransactionAppConverter.convert(TransactionType.INCOMING, transition, it)
+//                                    }
+//                        }
+//                    }
+//                }
+//    }
+
+    private fun getAllTransaction(myAddress: String, id: Int = -1): Observable<TransactionAppEntity> {
+        return useCase.getAllTransaction(address = myAddress, id = id)
+                .flatMap { transactionPair ->
+                    getSenderAddress(myAddress, transactionPair)
+                            .zipWith(getFullMosaicItems(transactionPair), BiFunction { senderAddress: String, mosaicItems: List<MosaicFullItem> ->
+                                return@BiFunction if (transactionPair.transaction.recipient.isNullOrEmpty() &&
+                                        (transactionPair.transaction.otherTrans?.recipient != myAddress || transactionPair.transaction.recipient != myAddress)) {
+
+                                    TransactionAppConverter.convert(TransactionType.OUTGOING, transactionPair, senderAddress, mosaicItems)
+                                } else {
+                                    TransactionAppConverter.convert(TransactionType.INCOMING, transactionPair, senderAddress, mosaicItems)
+                                }
+                            })
                 }
+    }
+
+    private fun getSenderAddress(address: String, transactionPair: TransactionMetaDataPair): Observable<String> {
+        return if (transactionPair.transaction.recipient.isNullOrEmpty()) {
+            if (transactionPair.transaction.otherTrans?.recipient != address) {
+                Observable.just(address)
+            } else {
+                useCase.getAccountAddressFromPublicKey(transactionPair.transaction.signer)
+            }
+        } else {
+            if (transactionPair.transaction.recipient != address) {
+                Observable.just(address)
+            } else {
+                useCase.getAccountAddressFromPublicKey(transactionPair.transaction.signer)
+            }
+        }
+    }
+
+    private fun getFullMosaicItems(transactionPair: TransactionMetaDataPair): Observable<List<MosaicFullItem>> {
+        return if (transactionPair.transaction.mosaics == null) {
+            Observable.just(ArrayList())
+        } else {
+            Observable.fromIterable(transactionPair.transaction.mosaics)
+                    .flatMap { transactionMosaic ->
+                        useCase.getNamespaceMosaics(transactionMosaic.mosaicId.namespaceId)
+                                .flatMap { Observable.fromIterable(it) }
+                                .filter { response ->
+                                    response.mosaic.id.fullName == transactionMosaic.mosaicId.fullName
+                                }
+                                .map {
+                                    MosaicFullItem(it.mosaic.divisibility!!, MosaicItem(MosaicAppEntity.convert(transactionMosaic)))
+                                }
+                    }
+                    .toList()
+                    .toObservable()
+        }
     }
 
     companion object {

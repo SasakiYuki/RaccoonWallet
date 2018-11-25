@@ -1,5 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.model
 
+import com.ryuta46.nemkotlin.enums.MessageType
+import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
 import wacode.yamada.yuki.nempaymentapp.types.TransactionType
 import java.io.Serializable
 
@@ -21,3 +23,22 @@ data class TransactionAppEntity(
         val messageType: Int?,
         val transactionId: Int = 0
 ) : Serializable
+
+
+//data class TransactionAppEntity(
+//        val transactionType: TransactionType,
+//        val block: Int = 0,
+//        val hash: String = "",
+//        val date: String = "",
+//        val fee: String = "",
+//        val amount: String = "",
+//        val signer: String = "",
+//        var senderAddress: String = "",
+//        val recipientAddress: String = "",
+//        val isMultisig: Boolean = false,
+//        val message: String = "",
+//        val timeStamp: Long = 0,
+//        val mosaicList: ArrayList<MosaicFullItem>,
+//        val messageType: MessageType,
+//        val transactionId: Int = 0
+//) : Serializable
