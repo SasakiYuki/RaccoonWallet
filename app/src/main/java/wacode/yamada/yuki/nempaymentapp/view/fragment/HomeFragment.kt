@@ -200,7 +200,6 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-
     private fun setupAccountViews(accountMetaDataPair: AccountMetaDataPair?) {
         accountMetaDataPair?.let {
             balanceText.text = NumberFormat.getNumberInstance().format(it.account.balance.convertNEMFromMicroToDouble())

@@ -11,10 +11,6 @@
         <variable
             name="handlers"
             type="wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionRowEventHandler" />
-
-        <variable
-            name="longHandlers"
-            type="wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionRowLongEventHandler" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

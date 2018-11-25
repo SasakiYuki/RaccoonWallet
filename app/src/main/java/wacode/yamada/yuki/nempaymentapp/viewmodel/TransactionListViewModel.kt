@@ -1,6 +1,7 @@
 package wacode.yamada.yuki.nempaymentapp.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import com.ryuta46.nemkotlin.model.MosaicId
 import com.ryuta46.nemkotlin.model.TransactionMetaDataPair
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -60,48 +61,23 @@ class TransactionListViewModel @Inject constructor(private val useCase: Transact
     private fun getUnconfirmedTransactions(address: String) = useCase.getUnconfirmedTransactions(address)
             .map { TransactionAppConverter.convert(TransactionType.UNCONFIRMED, it) }
 
-//    private fun getAllTransaction(address: String, id: Int = -1): Observable<TransactionAppEntity> {
-//        return useCase.getAllTransaction(address = address, id = id)
-//                .flatMap { transition ->
-//                    return@flatMap if (transition.transaction.recipient.isNullOrEmpty()) {
-//                        if (transition.transaction.otherTrans?.recipient != address) {
-//                            Observable.just(transition)
-//                                    .map {
-//                                        return@map TransactionAppConverter.convert(TransactionType.OUTGOING, transition, address)
-//                                    }
-//                        } else {
-//                            useCase.getAccountAddressFromPublicKey(transition.transaction.signer)
-//                                    .map {
-//                                        return@map TransactionAppConverter.convert(TransactionType.INCOMING, transition, it)
-//                                    }
-//                        }
-//                    } else {
-//                        return@flatMap if (transition.transaction.recipient != address) {
-//                            Observable.just(transition)
-//                                    .map {
-//                                        return@map TransactionAppConverter.convert(TransactionType.OUTGOING, transition, address)
-//                                    }
-//                        } else {
-//                            useCase.getAccountAddressFromPublicKey(transition.transaction.signer)
-//                                    .map {
-//                                        return@map TransactionAppConverter.convert(TransactionType.INCOMING, transition, it)
-//                                    }
-//                        }
-//                    }
-//                }
-//    }
-
     private fun getAllTransaction(myAddress: String, id: Int = -1): Observable<TransactionAppEntity> {
         return useCase.getAllTransaction(address = myAddress, id = id)
                 .flatMap { transactionPair ->
                     getSenderAddress(myAddress, transactionPair)
                             .zipWith(getFullMosaicItems(transactionPair), BiFunction { senderAddress: String, mosaicItems: List<MosaicFullItem> ->
-                                return@BiFunction if (transactionPair.transaction.recipient.isNullOrEmpty() &&
-                                        (transactionPair.transaction.otherTrans?.recipient != myAddress || transactionPair.transaction.recipient != myAddress)) {
-
-                                    TransactionAppConverter.convert(TransactionType.OUTGOING, transactionPair, senderAddress, mosaicItems)
+                                return@BiFunction if (transactionPair.transaction.recipient.isNullOrEmpty()) {
+                                    if (transactionPair.transaction.otherTrans?.recipient != myAddress) {
+                                        TransactionAppConverter.convert(TransactionType.OUTGOING, transactionPair, senderAddress, mosaicItems)
+                                    } else {
+                                        TransactionAppConverter.convert(TransactionType.INCOMING, transactionPair, senderAddress, mosaicItems)
+                                    }
                                 } else {
-                                    TransactionAppConverter.convert(TransactionType.INCOMING, transactionPair, senderAddress, mosaicItems)
+                                    if (transactionPair.transaction.recipient != myAddress) {
+                                        TransactionAppConverter.convert(TransactionType.OUTGOING, transactionPair, senderAddress, mosaicItems)
+                                    } else {
+                                        TransactionAppConverter.convert(TransactionType.INCOMING, transactionPair, senderAddress, mosaicItems)
+                                    }
                                 }
                             })
                 }
@@ -130,12 +106,19 @@ class TransactionListViewModel @Inject constructor(private val useCase: Transact
             Observable.fromIterable(transactionPair.transaction.mosaics)
                     .flatMap { transactionMosaic ->
                         useCase.getNamespaceMosaics(transactionMosaic.mosaicId.namespaceId)
-                                .flatMap { Observable.fromIterable(it) }
-                                .filter { response ->
-                                    response.mosaic.id.fullName == transactionMosaic.mosaicId.fullName
+                                .flatMap { listPair ->
+                                    when {
+                                        listPair.isNotEmpty() -> Observable.fromIterable(listPair)
+                                                .map { Pair(it.mosaic.id.fullName, it.mosaic.divisibility) }
+                                        transactionMosaic.mosaicId.fullName == MosaicId("nem", "xem").fullName -> Observable.just(Pair(MosaicId("nem", "xem").fullName, 2))
+                                        else -> Observable.empty<Pair<String, Int>>()
+                                    }
+                                }
+                                .filter { pair ->
+                                    pair.first == transactionMosaic.mosaicId.fullName
                                 }
                                 .map {
-                                    MosaicFullItem(it.mosaic.divisibility!!, MosaicItem(MosaicAppEntity.convert(transactionMosaic)))
+                                    MosaicFullItem(it.second!!, MosaicItem(MosaicAppEntity.convert(transactionMosaic)))
                                 }
                     }
                     .toList()

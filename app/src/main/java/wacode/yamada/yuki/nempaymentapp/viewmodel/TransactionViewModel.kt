@@ -1,70 +1,48 @@
 package wacode.yamada.yuki.nempaymentapp.viewmodel
 
 import android.view.View
-import wacode.yamada.yuki.nempaymentapp.model.MosaicAppEntity
-import wacode.yamada.yuki.nempaymentapp.types.TransactionType
 import wacode.yamada.yuki.nempaymentapp.model.TransactionAppEntity
+import wacode.yamada.yuki.nempaymentapp.types.TransactionType
 import java.text.SimpleDateFormat
 
 interface TransactionRowEventHandler {
     fun onTransactionClick(view: View, viewModel: TransactionViewModel)
 }
 
-interface TransactionRowLongEventHandler {
-    fun onTransactionLongClick(view: View, viewModel: TransactionViewModel): Boolean
-}
-
 data class TransactionViewModel(val transactionAppEntity: TransactionAppEntity) {
 
-    fun isReceiveNem() = transactionAppEntity.transactionType.equals(TransactionType.INCOMING) || transactionAppEntity.transactionType.equals(TransactionType.UNCONFIRMED)
+    fun isReceiveNem() = transactionAppEntity.transactionType == TransactionType.INCOMING || transactionAppEntity.transactionType == TransactionType.UNCONFIRMED
 
     fun amount(): String {
-        transactionAppEntity.amount?.let {
-            return it + " XEM"
+        return if (transactionAppEntity.amount.isNotEmpty()) {
+            transactionAppEntity.amount + " XEM"
+        } else {
+            "取引量不明"
         }
-        return "取引量不明"
     }
 
     fun isUnconfirm() = transactionAppEntity.transactionType == TransactionType.UNCONFIRMED
 
     fun address(): String {
-        if (isReceiveNem()) {
-            transactionAppEntity.senderAddress?.let {
-                return it
-            }
+        return if (isReceiveNem()) {
+            transactionAppEntity.senderAddress
         } else {
-            transactionAppEntity.recipientAddress?.let {
-                return it
-            }
+            transactionAppEntity.recipientAddress
         }
-        return "アドレス不明"
     }
 
-    fun message(): String {
-        transactionAppEntity.message?.let {
-            return it
-        }
-        return "no message"
-    }
+    fun multisig() = transactionAppEntity.isMultisig
 
-    fun multisig(): Boolean {
-        return transactionAppEntity.isMultisig
-    }
+    fun isMessage() = !transactionAppEntity.message.isEmpty()
 
-    fun isMessage(): Boolean {
-        transactionAppEntity.message?.let {
-            return true
-        }
-        return false
-    }
-
-    fun isMosaic() = !transactionAppEntity.mosaicList.isEmpty()
+    fun isMosaic() = transactionAppEntity.mosaicList.isNotEmpty()
 
     fun date(): String {
-        transactionAppEntity.date?.let {
-            val date = SimpleDateFormat("MM/dd,yyyy k:mm;ss").parse(it)
+        return if (transactionAppEntity.date.isNotEmpty()) {
+            val date = SimpleDateFormat("MM/dd,yyyy k:mm;ss").parse(transactionAppEntity.date)
             return SimpleDateFormat("k:mm").format(date)
+        } else {
+            "日付不明"
         }
-        return "日付不明"
     }
 }
