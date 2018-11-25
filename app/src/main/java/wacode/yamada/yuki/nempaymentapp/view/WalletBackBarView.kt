@@ -11,6 +11,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
+import wacode.yamada.yuki.nempaymentapp.event.WalletBackBarEvent
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicro
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
 import wacode.yamada.yuki.nempaymentapp.utils.NemCommons
@@ -50,6 +51,7 @@ class WalletBackBarView(context: Context?, attrs: AttributeSet?, defStyleAttr: I
         }
 
         fab.setOnClickListener {
+            RxBus.send(WalletBackBarEvent())
             (context as AppCompatActivity).finish()
         }
 
