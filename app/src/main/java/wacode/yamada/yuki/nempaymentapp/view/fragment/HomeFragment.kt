@@ -11,9 +11,10 @@ import com.ryuta46.nemkotlin.model.TransactionMetaDataPair
 import dagger.android.support.AndroidSupportInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
@@ -91,8 +92,10 @@ class HomeFragment : BaseFragment() {
 
     private fun setupWallet() {
         context?.let {
-            async(UI) {
-                wallet = bg { WalletManager.getSelectedWallet(it) }.await()
+            CoroutineScope(Dispatchers.Main).launch {
+                wallet = async(Dispatchers.IO){
+                    WalletManager.getSelectedWallet(it)
+                }.await()
                 setupViews()
             }
         }
@@ -120,8 +123,10 @@ class HomeFragment : BaseFragment() {
 
     private fun setupViews() {
         showTransactionButton.setOnClickListener {
-            async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(showTransactionButton.context) }.await()
+            CoroutineScope(Dispatchers.Main).launch {
+                val wallet = async(Dispatchers.IO) {
+                    WalletManager.getSelectedWallet(showTransactionButton.context)
+                }.await()
                 when {
                     wallet == null -> showTransactionButton.context.showToast(R.string.home_fragment_not_select_wallet)
                     else -> startActivity(TransactionActivity.getCallingIntent(showTransactionButton.context, wallet!!))

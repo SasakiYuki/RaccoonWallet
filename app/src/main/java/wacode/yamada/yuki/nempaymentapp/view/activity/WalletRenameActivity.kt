@@ -5,9 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_wallet_rename.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
@@ -35,8 +36,8 @@ class WalletRenameActivity : BaseActivity() {
 
         checkButton.setOnClickListener {
             showProgress()
-            async(UI) {
-                bg {
+            CoroutineScope(Dispatchers.Main).launch {
+                async(Dispatchers.IO) {
                     val wallet = NemPaymentApplication.database.walletDao().getById(getWalletId)
                     val newWallet = Wallet(
                             id = wallet.id,
@@ -48,7 +49,6 @@ class WalletRenameActivity : BaseActivity() {
 
                     NemPaymentApplication.database.walletDao().update(newWallet)
                 }.await()
-
                 RxBus.send(RxBusEvent.RENAME)
 
                 hideProgress()

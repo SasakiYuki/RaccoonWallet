@@ -7,9 +7,10 @@ import android.view.View
 import android.widget.LinearLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.view_wallet_back_bar.view.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicro
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
@@ -74,16 +75,12 @@ class WalletBackBarView(context: Context?, attrs: AttributeSet?, defStyleAttr: I
 
     private fun setupWalletName() {
         walletBarTextView.tag = WalletBarView.WalletBarType.NAME
+        CoroutineScope(Dispatchers.Main).launch {
 
-        async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(this@WalletBackBarView.context) }
-                    .await()
-
-            walletBarTextView.text = if (wallet == null) {
-                this@WalletBackBarView.context.getString(R.string.wallet_bar_name_error)
-            } else {
-                wallet.name
-            }
+            val wallet = async(Dispatchers.IO) {
+                WalletManager.getSelectedWallet(context)
+            }.await()
+            walletBarTextView.text = wallet?.name ?: this@WalletBackBarView.context.getString(R.string.wallet_bar_name_error)
         }
     }
 
@@ -108,9 +105,11 @@ class WalletBackBarView(context: Context?, attrs: AttributeSet?, defStyleAttr: I
     private fun fetchNemBalance() {
         nemBalance = null
 
-        async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(this@WalletBackBarView.context) }
-                    .await()
+        CoroutineScope(Dispatchers.Main).launch {
+
+            val wallet = async(Dispatchers.IO) {
+                WalletManager.getSelectedWallet(context)
+            }.await()
 
             NemCommons.getAccountInfo(wallet!!.address)
                     .subscribe({
@@ -123,10 +122,11 @@ class WalletBackBarView(context: Context?, attrs: AttributeSet?, defStyleAttr: I
     }
 
     private fun fetchAndSetBalance() {
-        async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(this@WalletBackBarView.context) }
-                    .await()
+        CoroutineScope(Dispatchers.Main).launch {
 
+            val wallet = async(Dispatchers.IO) {
+                WalletManager.getSelectedWallet(context)
+            }.await()
             NemCommons.getAccountInfo(wallet!!.address)
                     .subscribe({
                         val balance = it.account.balance.convertNEMFromMicro().toString()

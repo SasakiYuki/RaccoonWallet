@@ -4,9 +4,10 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_send_finish.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.MainActivity
@@ -29,8 +30,10 @@ class SendFinishFragment : BaseFragment() {
             finish()
         }
         transactionButton.setOnClickListener {
-            async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(transactionButton.context) }.await()
+            CoroutineScope(Dispatchers.Main).launch {
+                val wallet = async(Dispatchers.IO) {
+                    WalletManager.getSelectedWallet(transactionButton.context)
+                }.await()
                 wallet?.let {
                     startActivity(TransactionActivity.getCallingIntent(transactionButton.context,wallet))
                 }

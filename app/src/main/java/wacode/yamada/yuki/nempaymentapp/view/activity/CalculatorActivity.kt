@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
 import kotlinx.android.synthetic.main.activity_calclator.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.contract.CalculationContract
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
@@ -58,16 +59,21 @@ class CalculatorActivity : BaseActivity(), CalculationContract.View {
         }
         btnMAX.setOnClickListener {
             val dialog = showLoadingDialogFragment()
-            async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(this@CalculatorActivity) }.await()
-                NemCommons.getAccountInfo(wallet!!.address)
-                        .subscribe({ response ->
-                            dialog.dismiss()
-                            addString(response.account.balance.toString())
-                        }, { e ->
-                            e.printStackTrace()
-                            this@CalculatorActivity.showToast(R.string.calculator_error)
-                        })
+            CoroutineScope(Dispatchers.Main).launch {
+
+                val wallet = async(Dispatchers.IO) {
+                    WalletManager.getSelectedWallet(this@CalculatorActivity)
+                }.await()
+                wallet?.let {
+                    NemCommons.getAccountInfo(it.address)
+                            .subscribe({ response ->
+                                dialog.dismiss()
+                                addString(response.account.balance.toString())
+                            }, { e ->
+                                e.printStackTrace()
+                                this@CalculatorActivity.showToast(R.string.calculator_error)
+                            })
+                }
             }
         }
     }

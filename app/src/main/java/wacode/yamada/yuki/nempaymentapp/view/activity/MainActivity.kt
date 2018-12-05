@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
-import com.afollestad.materialdialogs.MaterialDialog
 import com.airbnb.deeplinkdispatch.DeepLink
 import com.google.gson.Gson
 import com.journeyapps.barcodescanner.BarcodeResult
@@ -25,10 +24,9 @@ import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
-import org.jsoup.Jsoup
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
@@ -102,7 +100,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     }
 
     private fun setupNavigationRecyclerView() {
-        async(UI) {
+        CoroutineScope(Dispatchers.Main).launch {
             val myProfileString = SharedPreferenceUtils[this@MainActivity, KEY_PREF_MY_PROFILE, Gson().toJson(MyProfileEntity())]
             val myProfile = Gson().fromJson(myProfileString, MyProfileEntity::class.java)
             controller = DrawerListController(this@MainActivity,

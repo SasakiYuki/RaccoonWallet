@@ -15,9 +15,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_enter_send.*
 import kotlinx.android.synthetic.main.view_multi_calculator.view.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
@@ -78,9 +79,10 @@ class EnterSendFragment : BaseFragment(), MosaicListController.OnMosaicListClick
         recycler.adapter = controller.adapter
 
         context?.let {
-            async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(it) }
-                        .await()
+            CoroutineScope(Dispatchers.Main).launch {
+                val wallet = async(Dispatchers.IO) {
+                    WalletManager.getSelectedWallet(it)
+                }.await()
                 enterMosaicListViewModel.getOwnedMosaicFullData(wallet!!.address)
             }
         }

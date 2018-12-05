@@ -6,9 +6,10 @@ import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_display_qr.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.convertMicroNEM
 import wacode.yamada.yuki.nempaymentapp.extentions.generateQRCode
@@ -75,8 +76,10 @@ class DisplayQRActivity : BaseActivity() {
     }
 
     private fun getSelectedWallet() {
-        async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(this@DisplayQRActivity) }.await()
+        CoroutineScope(Dispatchers.Main).launch {
+            val wallet = async(Dispatchers.IO) {
+                WalletManager.getSelectedWallet(this@DisplayQRActivity)
+            }.await()
             wallet?.let {
                 putQRImage(wallet)
                 setupMyAddress(wallet)

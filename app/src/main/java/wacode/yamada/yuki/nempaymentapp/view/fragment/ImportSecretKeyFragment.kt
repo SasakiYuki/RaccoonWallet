@@ -10,9 +10,10 @@ import com.ryuta46.nemkotlin.enums.Version
 import com.ryuta46.nemkotlin.util.ConvertUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_import_secret_key.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
@@ -45,7 +46,7 @@ class ImportSecretKeyFragment : BaseFragment() {
         }
 
         nextButton.setOnClickListener {
-            async(UI) {
+            CoroutineScope(Dispatchers.Main).launch {
                 showProgress()
                 try {
                     val rawKey = secretKeyEditText.text.toString()
@@ -55,7 +56,9 @@ class ImportSecretKeyFragment : BaseFragment() {
                         rawKey
                     }
 
-                    bg { AccountGenerator.fromSeed(ConvertUtils.swapByteArray(privateKey.toHexByteArray()), Version.Main) }.await()
+                    async(Dispatchers.IO) {
+                        AccountGenerator.fromSeed(ConvertUtils.swapByteArray(privateKey.toHexByteArray()), Version.Main)
+                    }.await()
                     hideProgress()
                     callback.onReplaceImportWalletName(privateKey.toByteArray(Charsets.UTF_8))
                 } catch (e: Exception) {
