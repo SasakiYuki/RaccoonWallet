@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
+        android:visibility="gone"
         android:src="@mipmap/icon_harvest_notification" />
 
     <TextView

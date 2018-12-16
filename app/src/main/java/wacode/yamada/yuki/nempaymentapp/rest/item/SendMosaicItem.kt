@@ -19,7 +19,21 @@ class SendMosaicItem(mosaicItem: MosaicItem, val amount: Double) : Serializable 
     fun mosaicName() = name
     fun nameSpace() = namespaceId
     private fun getFullName() = "$namespaceId:$name"
-    fun getFormattedAmount() = NumberFormat.getNumberInstance().format(amount) + " " + getFullName()
+    fun getFormattedAmount(): String {
+        val numberFormat = NumberFormat.getNumberInstance()
+        val count = if ((amount % 1)  == 0.0) 0 else countUpAmountDecimalPoint(amount.toString())
+        numberFormat.minimumFractionDigits = count
+        return numberFormat.format(amount) + " " + getFullName()
+    }
+
+    private fun countUpAmountDecimalPoint(amountString: String): Int {
+        if (amountString.matches(Regex("^.*\\.0+$"))) {
+            return 0
+        }
+
+        val index = amountString.indexOf(".")
+        return amountString.substring(index + 1).length
+    }
 
     companion object {
         fun createNEMXEMItem(amount: Double) = SendMosaicItem(MosaicItem(MosaicAppEntity(MosaicIdAppEntity("nem", "xem"), 0)), amount)

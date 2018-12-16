@@ -164,6 +164,7 @@ class HomeFragment : BaseFragment() {
     private fun setupHarvestItem(list: List<HarvestInfo>) {
         if (list.isNotEmpty()) {
             miniHarvestItemView.setupHarvest(list[0])
+            harvestEmptyView.visibility = View.GONE
         } else {
             harvestEmptyView.visibility = View.VISIBLE
         }
