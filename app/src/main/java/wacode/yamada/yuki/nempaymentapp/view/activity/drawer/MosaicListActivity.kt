@@ -9,9 +9,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_mosaic_list.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.rest.ApiManager
 import wacode.yamada.yuki.nempaymentapp.rest.model.MosaicEntity
@@ -73,9 +74,10 @@ class MosaicListActivity : BaseActivity() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             nemGalleryMosaicList.addAll(it)
-                            async(UI) {
-                                val wallet = bg { WalletManager.getSelectedWallet(this@MosaicListActivity) }
-                                        .await()
+                            CoroutineScope(Dispatchers.Main).launch {
+                                val wallet = async(Dispatchers.IO) {
+                                    WalletManager.getSelectedWallet(this@MosaicListActivity)
+                                }.await()
                                 wallet?.let {
                                     getOwnedMosaic(it.address)
                                 }

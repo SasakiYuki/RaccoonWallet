@@ -9,9 +9,10 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.ryuta46.nemkotlin.account.AccountGenerator
 import com.ryuta46.nemkotlin.enums.Version
 import com.ryuta46.nemkotlin.util.ConvertUtils
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.spongycastle.crypto.InvalidCipherTextException
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.hexToString
@@ -64,7 +65,7 @@ class WalletImportActivity : BaseFragmentActivity(), ImportWalletCallback, QrSca
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_PASSWORD) {
-            async(UI) {
+            CoroutineScope(Dispatchers.Main).launch {
                 showProgress()
                 val password = data!!.getByteArrayExtra(ImportWalletPasswordActivity.KEY_PASSWORD).toString(Charsets.UTF_8)
                 walletEntity?.let { it ->
@@ -77,7 +78,10 @@ class WalletImportActivity : BaseFragmentActivity(), ImportWalletCallback, QrSca
                         }
 
                         val account = AccountGenerator.fromSeed(ConvertUtils.swapByteArray(privateKey.toHexByteArray()), Version.Main)
-                        bg { WalletManager.save(this@WalletImportActivity, account, it.data.name) }.await()
+
+                        async(Dispatchers.IO) {
+                            WalletManager.save(this@WalletImportActivity, account, it.data.name)
+                        }.await()
                         navigateCompleteImportWallet()
                     } catch (e: InvalidCipherTextException) {
                         e.printStackTrace()
@@ -88,8 +92,8 @@ class WalletImportActivity : BaseFragmentActivity(), ImportWalletCallback, QrSca
                         showToast(R.string.import_secret_key_import_error)
                         onBackPressed()
                     }
+                    hideProgress()
                 }
-                hideProgress()
             }
         } else {
             onBackPressed()

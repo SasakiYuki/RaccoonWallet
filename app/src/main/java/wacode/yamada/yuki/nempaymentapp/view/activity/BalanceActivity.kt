@@ -9,9 +9,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_balance.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.di.ViewModelFactory
 import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
@@ -37,12 +38,16 @@ class BalanceActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(BalanceListViewModel::class.java)
 
         setupViewModelObserve()
-        async(UI) {
-            val wallet = bg { WalletManager.getSelectedWallet(this@BalanceActivity) }.await()
+        CoroutineScope(Dispatchers.Main).launch {
+
+            val wallet = async(Dispatchers.IO) {
+                WalletManager.getSelectedWallet(this@BalanceActivity)
+            }.await()
             wallet?.let {
                 viewModel.getOwnedMosaicFullData(it.address)
             }
         }
+
         setupViews()
     }
 

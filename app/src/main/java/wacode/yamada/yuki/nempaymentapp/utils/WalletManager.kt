@@ -2,9 +2,10 @@ package wacode.yamada.yuki.nempaymentapp.utils
 
 import android.content.Context
 import com.ryuta46.nemkotlin.account.Account
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.extentions.getId
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
@@ -25,8 +26,9 @@ object WalletManager {
                 publicKey = account.publicKeyString,
                 encryptedSecretKey = encryptData,
                 address = account.address)
-        async(UI) {
-            bg {
+
+        CoroutineScope(Dispatchers.Main).launch {
+            async(Dispatchers.IO) {
                 NemPaymentApplication.database.walletDao().insert(wallet)
                 val wallets = NemPaymentApplication.database.walletDao().findAll()
                 for (item in wallets) {
@@ -74,10 +76,8 @@ object WalletManager {
         SharedPreferenceUtils.put(context, SP_SELECTED_WALLET_ID, id)
     }
 
-    fun getSelectedWallet(context: Context): Wallet? {
-        val id = SharedPreferenceUtils[context, SP_SELECTED_WALLET_ID, 0L]
-        return NemPaymentApplication.database.walletDao().getById(id)
-    }
+    fun getSelectedWallet(context: Context):Wallet? =
+            NemPaymentApplication.database.walletDao().getById(SharedPreferenceUtils[context, SP_SELECTED_WALLET_ID, 0L])
 
     fun getSelectedWalletId(context: Context): Long {
         return SharedPreferenceUtils[context, SP_SELECTED_WALLET_ID, 0L]

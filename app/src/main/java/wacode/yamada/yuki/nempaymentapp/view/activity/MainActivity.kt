@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
-import com.afollestad.materialdialogs.MaterialDialog
 import com.airbnb.deeplinkdispatch.DeepLink
 import com.google.gson.Gson
 import com.journeyapps.barcodescanner.BarcodeResult
@@ -25,10 +24,9 @@ import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
-import org.jsoup.Jsoup
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.model.DrawerEntity
 import wacode.yamada.yuki.nempaymentapp.model.DrawerItemType
@@ -102,7 +100,7 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
     }
 
     private fun setupNavigationRecyclerView() {
-        async(UI) {
+        CoroutineScope(Dispatchers.Main).launch {
             val myProfileString = SharedPreferenceUtils[this@MainActivity, KEY_PREF_MY_PROFILE, Gson().toJson(MyProfileEntity())]
             val myProfile = Gson().fromJson(myProfileString, MyProfileEntity::class.java)
             controller = DrawerListController(this@MainActivity,
@@ -260,55 +258,6 @@ class MainActivity : BaseActivity(), SplashCallback, QrScanCallback, DrawerListC
         val builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()
         customTabsIntent.launchUrl(this, Uri.parse(url))
-    }
-
-    private fun checkCurrentAppVersionFromStore() {
-        async(UI) {
-            var id = ""
-            bg {
-                try {
-                    val document = Jsoup.connect(getString(R.string.app_store_url)).get()
-                    id = document.getElementsByAttributeValue("itemprop", "softwareVersion").first().text()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }.await()
-            if (id.isNotEmpty() && getCurrentVersion().isNotEmpty()) {
-                try {
-                    val latestVersion = id.split(".")[3]
-                    val currentVersion = getCurrentVersion().split(".")[3]
-                    if (latestVersion != currentVersion && latestVersion == "x") {
-                        showUpdateDialog()
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
-
-    private fun showUpdateDialog() {
-        val materialDialog = MaterialDialog.Builder(this)
-        materialDialog.cancelable(false)
-        materialDialog
-                .title(getString(R.string.dialog_update_forward_title))
-                .positiveText(getString(R.string.dialog_update_forward_button))
-                .onPositive { dialog, _ ->
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_store_url))).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                    finish()
-                    dialog.dismiss()
-                }
-                .show()
-    }
-
-    private fun getCurrentVersion(): String {
-        var id = ""
-        try {
-            id = packageManager.getPackageInfo(packageName, 0).versionName
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return id
     }
 
     private fun changeSendTopFragment(paymentQREntity: PaymentQREntity) {

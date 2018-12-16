@@ -7,9 +7,10 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_private_key_display.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
@@ -29,9 +30,10 @@ class WalletBackupFragment : BaseFragment() {
 
         arguments?.let {
             val walletId = it.getLong(KEY_WALLET_ID)
-            async(UI) {
-                val wallet = bg { NemPaymentApplication.database.walletDao().getById(walletId) }
-                        .await()
+            CoroutineScope(Dispatchers.Main).launch {
+                val wallet = async(Dispatchers.IO) {
+                    NemPaymentApplication.database.walletDao().getById(walletId)
+                }.await()
                 textView.text = WalletManager.getPrivateKey(textView.context, wallet)
 
                 hideProgress()

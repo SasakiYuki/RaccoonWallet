@@ -22,9 +22,10 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_send_confirm.*
 import kotlinx.android.synthetic.main.view_send_fingerprint_default.*
 import kotlinx.android.synthetic.main.view_send_fingerprint_error.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.convertMicroNEM
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
@@ -276,9 +277,10 @@ class SendConfirmFragment : BaseFragment() {
         renderStages(Stage.SUCCESS)
 
         context?.let {
-            async(UI) {
-                val wallet = bg { WalletManager.getSelectedWallet(it) }
-                        .await()
+            CoroutineScope(Dispatchers.Main).launch {
+                val wallet = async(Dispatchers.IO) {
+                    WalletManager.getSelectedWallet(it)
+                }.await()
                 val account = NemCommons.createAccount(WalletManager.getPrivateKey(wallet!!, pin))
                 getQuantityAndSupply(account)
             }
@@ -358,8 +360,8 @@ class SendConfirmFragment : BaseFragment() {
                         hideProgress()
                         e.printStackTrace()
                     })?.let {
-                compositeDisposable.add(it)
-            }
+                        compositeDisposable.add(it)
+                    }
         }
     }
 

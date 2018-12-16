@@ -6,9 +6,10 @@ import com.ryuta46.nemkotlin.account.Account
 import com.ryuta46.nemkotlin.account.AccountGenerator
 import com.ryuta46.nemkotlin.enums.Version
 import kotlinx.android.synthetic.main.fragment_created_wallet.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.toDisplayAddress
@@ -25,14 +26,13 @@ class CreatedWalletFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showProgress()
-        async(UI) {
-            bg {
+        CoroutineScope(Dispatchers.Main).launch {
+            async(Dispatchers.IO) {
                 account = createWallet()
                 arguments?.let {
                     WalletManager.save(view.context, account, it.getString(KEY_WALLET_NAME))
                 }
             }.await()
-
             showWalletAddress(account)
             hideProgress()
         }
@@ -41,10 +41,10 @@ class CreatedWalletFragment : BaseFragment() {
 
     private fun setupButton() {
         button.setOnClickListener {
-            async(UI) {
+            CoroutineScope(Dispatchers.Main).launch {
                 var count = 0
-                bg {
-                    count = NemPaymentApplication.database.walletDao().getSize()
+                count = async(Dispatchers.IO) {
+                    NemPaymentApplication.database.walletDao().getSize()
                 }.await()
 
                 if (count == 0) {

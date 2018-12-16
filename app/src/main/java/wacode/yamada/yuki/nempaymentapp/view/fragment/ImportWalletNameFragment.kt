@@ -7,9 +7,10 @@ import com.ryuta46.nemkotlin.enums.Version
 import com.ryuta46.nemkotlin.util.ConvertUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_import_wallet_name.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.isNotTextEmptyObservable
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
@@ -34,13 +35,12 @@ class ImportWalletNameFragment : BaseFragment() {
                 })
 
         submitButton.setOnClickListener {
-            async(UI) {
+            CoroutineScope(Dispatchers.Main).launch {
                 showProgress()
-                bg {
+                async(Dispatchers.IO){
                     val account = AccountGenerator.fromSeed(ConvertUtils.swapByteArray(ConvertUtils.toByteArray(secretKey.toString(Charsets.UTF_8))), Version.Main)
                     WalletManager.save(submitButton.context, account, walletNameEditText.text.toString())
                 }.await()
-
                 hideProgress()
                 (this@ImportWalletNameFragment.context as ImportWalletCallback).navigateCompleteImportWallet()
             }

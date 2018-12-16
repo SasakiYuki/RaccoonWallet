@@ -5,9 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_select_mode_add_wallet.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
@@ -29,10 +30,12 @@ class SelectModeAddWalletActivity : BaseActivity() {
 
     private fun setupButtons() {
         topCardButton.setOnClickListener {
-            async(UI) {
-                val selectedWalletId = bg { WalletManager.getSelectedWalletId(this@SelectModeAddWalletActivity) }
-                        .await()
-                if (selectedWalletId == 0L) {
+            CoroutineScope(Dispatchers.Main).launch {
+
+                val walletId = async(Dispatchers.IO) {
+                    WalletManager.getSelectedWalletId(this@SelectModeAddWalletActivity)
+                }.await()
+                if (walletId == 0L) {
                     this@SelectModeAddWalletActivity.showToast(R.string.select_mode_add_wallet_no_wallet)
                 } else {
                     val intent = Intent()

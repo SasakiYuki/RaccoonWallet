@@ -69,7 +69,7 @@ class FriendWalletFragment : BaseFragment() {
     }
 
     private fun setupViews() {
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        view.recyclerView.layoutManager = LinearLayoutManager(context)
         controller = WalletInfoListController(object : WalletInfoClickListener {
             override fun onRowClick(walletInfo: WalletInfo) {
                 val fragment = BottomSheetListDialogFragment.newInstance(getString(R.string.bottom_my_wallet_info_copy), R.menu.bottom_my_wallet_info) { fragment, itemId ->

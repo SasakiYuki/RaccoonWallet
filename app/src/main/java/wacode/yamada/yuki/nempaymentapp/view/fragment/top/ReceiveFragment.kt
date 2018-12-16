@@ -3,9 +3,10 @@ package wacode.yamada.yuki.nempaymentapp.view.fragment.top
 import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_receive.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.copyClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.generateQRCode
@@ -49,13 +50,14 @@ class ReceiveFragment : BaseFragment() {
 
     private fun getSelectedWallet(walletId: Long = NOT_EXIST_WALLET_ID) {
         context?.let {
-            async(UI) {
-                val wallet = if (walletId == NOT_EXIST_WALLET_ID) {
-                    bg { WalletManager.getSelectedWallet(it) }.await()
-                } else {
-                    bg { WalletManager.getWalletbyId(walletId) }.await()
-                }
-
+            CoroutineScope(Dispatchers.Main).launch {
+                val wallet = async(Dispatchers.IO) {
+                    return@async if (walletId == NOT_EXIST_WALLET_ID) {
+                        WalletManager.getSelectedWallet(it)
+                    } else {
+                        WalletManager.getWalletbyId(walletId)
+                    }
+                }.await()
                 wallet?.let {
                     putQRImage(it)
                     setupMyAddress(it)

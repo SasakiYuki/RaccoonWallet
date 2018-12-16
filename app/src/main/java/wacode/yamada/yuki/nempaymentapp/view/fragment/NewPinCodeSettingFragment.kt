@@ -5,9 +5,10 @@ import android.view.View
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_pin_code.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.extentions.getDrawable
@@ -132,8 +133,8 @@ class NewPinCodeSettingFragment : BaseFragment() {
 
         val dao = NemPaymentApplication.database.walletDao()
         context?.let { context ->
-            async(UI) {
-                bg {
+            CoroutineScope(Dispatchers.Main).launch {
+                async(Dispatchers.IO) {
                     val list = dao.findAll()
                     Observable.fromIterable(list)
                             .subscribe { it ->

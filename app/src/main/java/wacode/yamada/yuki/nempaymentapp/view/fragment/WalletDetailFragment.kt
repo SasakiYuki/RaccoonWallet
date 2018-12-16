@@ -5,9 +5,10 @@ import android.view.View
 import com.ryuta46.nemkotlin.model.AccountMetaDataPair
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_wallet_detail.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.room.wallet.Wallet
@@ -29,9 +30,9 @@ class WalletDetailFragment : BaseFragment() {
         var wallet: Wallet? = null
         arguments?.let {
             val walletId = it.getLong(KEY_WALLET_ID)
-            async(UI) {
-                bg {
-                    wallet = NemPaymentApplication.database.walletDao().getById(walletId)
+            CoroutineScope(Dispatchers.Main).launch {
+                wallet = async(Dispatchers.IO) {
+                    NemPaymentApplication.database.walletDao().getById(walletId)
                 }.await()
                 fetchWalletDetailFromApi(wallet)
             }

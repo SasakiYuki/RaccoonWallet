@@ -7,9 +7,10 @@ import android.support.v7.widget.LinearLayoutManager
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_select_wallet.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.NemPaymentApplication
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.model.SimpleWalletEntity
@@ -49,10 +50,11 @@ class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListCl
 
     private fun getWalletList() {
         showProgress()
-        async(UI) {
-            val wallets = bg { NemPaymentApplication.database.walletDao().findAll() }
-                    .await()
-            fetchWalletInfo(wallets)
+        CoroutineScope(Dispatchers.Main).launch {
+            async(Dispatchers.IO) {
+                val wallets = NemPaymentApplication.database.walletDao().findAll()
+                fetchWalletInfo(wallets)
+            }.await()
         }
     }
 
@@ -83,7 +85,7 @@ class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListCl
     }
 
     private fun updateWallet(wallet: Wallet) {
-        async(UI) {
+        CoroutineScope(Dispatchers.Main).launch {
             val newWallet = Wallet(
                     id = wallet.id,
                     salt = wallet.salt,
@@ -93,7 +95,7 @@ class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListCl
                     name = wallet.name,
                     isMultisig = true
             )
-            bg {
+            async(Dispatchers.IO) {
                 NemPaymentApplication.database.walletDao().update(newWallet)
             }.await()
             renderList()
@@ -106,8 +108,10 @@ class SelectWalletActivity : BaseActivity(), WalletListController.OnWalletListCl
     }
 
     private fun renderList() {
-        async(UI) {
-            val wallets = bg { NemPaymentApplication.database.walletDao().findAll() }.await()
+        CoroutineScope(Dispatchers.Main).launch {
+            val wallets = async(Dispatchers.IO) {
+                return@async NemPaymentApplication.database.walletDao().findAll()
+            }.await()
             val selectedWalletId = WalletManager.getSelectedWalletId(this@SelectWalletActivity.applicationContext)
 
             val array = Observable.fromIterable(wallets)

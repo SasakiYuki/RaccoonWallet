@@ -13,9 +13,10 @@ import android.widget.TextView
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.view_calculator_title.*
 import kotlinx.android.synthetic.main.view_multi_calculator.view.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.contract.CalculationContract
 import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
@@ -197,10 +198,11 @@ class MultiCalculatorView(context: Context?, attrs: AttributeSet?, defStyleAttr:
     }
 
     private fun getAccountInfoAndSetAmount() {
-        async(UI) {
+        CoroutineScope(Dispatchers.Main).launch {
             val dialog = showLoadingDialogFragment()
-            val wallet = bg { WalletManager.getSelectedWallet(context = getContext()) }
-                    .await()
+            val wallet = async(Dispatchers.IO) {
+                WalletManager.getSelectedWallet(context)
+            }.await()
             compositeDisposable.add(
                     NemCommons.getAccountInfo(wallet!!.address)
                             .subscribe({ it ->
@@ -208,7 +210,7 @@ class MultiCalculatorView(context: Context?, attrs: AttributeSet?, defStyleAttr:
                                 setAmountFromString(it.account.balance.convertNEMFromMicroToDouble().toString())
                             }, { e ->
                                 dialog.dismiss()
-                                getContext().showToast(R.string.enter_send_fragment_xem_amount_error)
+                                context.showToast(R.string.enter_send_fragment_xem_amount_error)
                             }))
         }
     }
