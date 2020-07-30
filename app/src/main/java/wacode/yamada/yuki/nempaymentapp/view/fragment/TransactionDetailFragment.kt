@@ -7,27 +7,25 @@ import android.os.Bundle
 import android.view.View
 import com.ryuta46.nemkotlin.account.AccountGenerator
 import com.ryuta46.nemkotlin.account.MessageEncryption
-import com.ryuta46.nemkotlin.enums.MessageType
 import com.ryuta46.nemkotlin.enums.Version
-import com.ryuta46.nemkotlin.model.MosaicId
 import com.ryuta46.nemkotlin.util.ConvertUtils
-import kotlinx.android.synthetic.main.fragment_transaction_detail.*
 import kotlinx.coroutines.experimental.android.UI
+import kotlinx.android.synthetic.main.fragment_transaction_detail.*
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import wacode.yamada.yuki.nempaymentapp.R
-import wacode.yamada.yuki.nempaymentapp.extentions.convertNEMFromMicroToDouble
 import wacode.yamada.yuki.nempaymentapp.extentions.copyClipBoard
 import wacode.yamada.yuki.nempaymentapp.extentions.getColor
 import wacode.yamada.yuki.nempaymentapp.extentions.showToast
 import wacode.yamada.yuki.nempaymentapp.helper.PinCodeHelper
-import wacode.yamada.yuki.nempaymentapp.model.MosaicAppEntity
 import wacode.yamada.yuki.nempaymentapp.model.TransactionAppEntity
+import wacode.yamada.yuki.nempaymentapp.rest.item.MosaicFullItem
 import wacode.yamada.yuki.nempaymentapp.types.TransactionType
 import wacode.yamada.yuki.nempaymentapp.utils.AesCryptographer
 import wacode.yamada.yuki.nempaymentapp.utils.PinCodeProvider
 import wacode.yamada.yuki.nempaymentapp.utils.WalletManager
 import wacode.yamada.yuki.nempaymentapp.view.activity.NewCheckPinCodeActivity
+import wacode.yamada.yuki.nempaymentapp.view.activity.SendMessageType
 
 
 class TransactionDetailFragment : BaseFragment() {
@@ -111,10 +109,14 @@ class TransactionDetailFragment : BaseFragment() {
     private fun setupAmount(entity: TransactionAppEntity) {
         val prefix = if (entity.transactionType == TransactionType.OUTGOING) "-" else "+"
         val prefixColor = if (entity.transactionType == TransactionType.OUTGOING) R.color.colorTransactionRed else R.color.colorTransactionGreen
-        if (entity.amount.isNullOrEmpty()) {
+        if (entity.amount.isEmpty()) {
             firstAmountText.text = getString(R.string.transaction_detail_non_amount)
             secondAmountText.text = getString(R.string.transaction_detail_second_non_amount)
         } else {
+            if (entity.mosaicList.isNotEmpty()) {
+                secondAmountText.setVisibility(View.GONE)
+            }
+
             firstAmountText.text = getString(R.string.transaction_detail_first_amount, entity.amount)
             secondAmountText.text = getString(R.string.transaction_detail_second_amount, entity.amount)
             prefixText.text = prefix
@@ -135,24 +137,15 @@ class TransactionDetailFragment : BaseFragment() {
         }
     }
 
-    private fun convertMosaics(mosaics: ArrayList<MosaicAppEntity>): String {
+    private fun convertMosaics(mosaics: List<MosaicFullItem>): String {
         return buildString {
             append(getString(R.string.transaction_detail_mosaic_count, mosaics.size))
 
             for (mosaic in mosaics) {
                 append("\n")
-
-                val name = getString(R.string.transaction_detail_mosaic_name, mosaic.mosaicIdAppEntity.name)
-                val amount = if (mosaic.mosaicIdAppEntity.fullName == MosaicId("nem", "xem").fullName) {
-                    getString(R.string.transaction_detail_mosaic_amount, mosaic.quantity.convertNEMFromMicroToDouble().toString())
-
-                } else {
-                    mosaic.quantity.toString()
-                }
-
-                append(name)
-                append("   ")
-                append(amount)
+                append(getString(R.string.transaction_detail_mosaic_name, mosaic.getFullName()))
+                append("\u3000")
+                append(mosaic.getMosaicBalance())
             }
         }
     }
@@ -164,7 +157,7 @@ class TransactionDetailFragment : BaseFragment() {
         } else {
             massageCheckRootView.visibility = View.VISIBLE
 
-            if (entity.messageType == MessageType.Encrypted.rawValue) {
+            if (entity.messageType == SendMessageType.CRYPT) {
                 messageText.visibility = View.GONE
                 decryptButton.visibility = View.VISIBLE
             } else {

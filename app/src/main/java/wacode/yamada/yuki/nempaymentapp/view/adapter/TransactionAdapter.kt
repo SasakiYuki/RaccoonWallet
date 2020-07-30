@@ -12,6 +12,7 @@ import wacode.yamada.yuki.nempaymentapp.R
 import wacode.yamada.yuki.nempaymentapp.model.TransactionAppEntity
 import wacode.yamada.yuki.nempaymentapp.types.TransactionType
 import wacode.yamada.yuki.nempaymentapp.utils.DateComparator
+import wacode.yamada.yuki.nempaymentapp.view.activity.SendMessageType
 import wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionRowEventHandler
 import wacode.yamada.yuki.nempaymentapp.viewmodel.TransactionViewModel
 import java.text.SimpleDateFormat
@@ -180,7 +181,7 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
         }
 
         val model = transactionList[position - HEADER_SIZE]
-        if (model.senderAddress.isNullOrEmpty() && model.recipientAddress.isNullOrEmpty()) {
+        if (model.senderAddress.isEmpty() && model.recipientAddress.isEmpty()) {
             return true
         }
 
@@ -207,20 +208,9 @@ class TransactionAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Tran
         val date1 = sdf.format(targetDate.time)
 
         val model = TransactionAppEntity(
-                TransactionType.OUTGOING,
-                null,
-                null,
-                date1,
-                null,
-                null,
-                null,
-                null,
-                null,
-                false,
-                null,
-                0,
-                ArrayList(),
-                null
+                transactionType = TransactionType.OUTGOING,
+                date = date1,
+                messageType = SendMessageType.NONE
         )
 
         if (!transactionList.contains(model)) {
